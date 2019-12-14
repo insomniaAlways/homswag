@@ -1,1 +1,5 @@
-export const items = [];
+export const items = {
+  isLoading: false,
+  payload: [],
+  error: null
+};

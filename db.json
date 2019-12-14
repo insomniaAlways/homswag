@@ -1,0 +1,1641 @@
+{
+  "category": [
+    {
+      "id": 1,
+      "name": "bleaching",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=1"
+      }
+    },
+    {
+      "id": 2,
+      "name": "women hair cut",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=2"
+      }
+    },
+    {
+      "id": 3,
+      "name": "texture change",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=3"
+      }
+    },
+    {
+      "id": 4,
+      "name": "rica waxing",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=4"
+      }
+    },
+    {
+      "id": 5,
+      "name": "manicure",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=5"
+      }
+    },
+    {
+      "id": 6,
+      "name": "keratin",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=6"
+      }
+    },
+    {
+      "id": 7,
+      "name": "honey waxing",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=7"
+      }
+    },
+    {
+      "id": 8,
+      "name": "hair spa and treatment",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=8"
+      }
+    },
+    {
+      "id": 9,
+      "name": "face / skin",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=9"
+      }
+    },
+    {
+      "id": 10,
+      "name": "detan",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=10"
+      }
+    },
+    {
+      "id": 11,
+      "name": "creative color & highlights",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=11"
+      }
+    },
+    {
+      "id": 12,
+      "name": "threading",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=12"
+      }
+    },
+    {
+      "id": 13,
+      "name": "scalp treatment",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=13"
+      }
+    },
+    {
+      "id": 14,
+      "name": "quick fix hair treatment",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=14"
+      }
+    },
+    {
+      "id": 15,
+      "name": "de stress - relax",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=15"
+      }
+    },
+    {
+      "id": 16,
+      "name": "hair styling",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=16"
+      }
+    },
+    {
+      "id": 17,
+      "name": "color",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=17"
+      }
+    },
+    {
+      "id": 18,
+      "name": "pedicure",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=18"
+      }
+    },
+    {
+      "id": 19,
+      "name": "body polishing",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=19"
+      }
+    },
+    {
+      "id": 20,
+      "name": "body massage",
+      "items": {
+        "links": "http://localhost:3000/items?category_id=20"
+      }
+    }
+  ],
+  "items" : [
+    {
+      "name": "Face and Neck",
+      "mrp": "399",
+      "price": "299",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Full arms",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Half Arms",
+      "mrp": "199",
+      "price": "169",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Full Legs",
+      "mrp": "599",
+      "price": "449",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Half Legs",
+      "mrp": "499",
+      "price": "349",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Full Back",
+      "mrp": "399",
+      "price": "349",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Half Back",
+      "mrp": "299",
+      "price": "249",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Full Front",
+      "mrp": "399",
+      "price": "349",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Half Front",
+      "mrp": "299",
+      "price": "249",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Full Body",
+      "mrp": "2,499",
+      "price": "1,699",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "bleaching",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=1"
+        }
+      }
+    },
+    {
+      "name": "Creative Layer cut",
+      "mrp": "799",
+      "price": "499",
+      "category_id": 2,
+      "category": {
+        "id": 2,
+        "name": "women hair cut",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=2"
+        }
+      }
+    },
+    {
+      "name": "One length / Deep u Cut",
+      "mrp": "349",
+      "price": "200",
+      "category_id": 2,
+      "category": {
+        "id": 2,
+        "name": "women hair cut",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=2"
+        }
+      }
+    },
+    {
+      "name": "Kid Hair Cut Age Below 12 Years -",
+      "mrp": "299",
+      "price": "200",
+      "category_id": 2,
+      "category": {
+        "id": 2,
+        "name": "women hair cut",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=2"
+        }
+      }
+    },
+    {
+      "name": "Smoothening ( Shoulder Length )",
+      "mrp": "3,999",
+      "price": "2,999",
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "texture change",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=3"
+        }
+      }
+    },
+    {
+      "name": "Smoothening ( Below Shoulder Length )",
+      "mrp": "5,499",
+      "price": "4,499",
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "texture change",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=3"
+        }
+      }
+    },
+    {
+      "name": "Smoothening (Long Length )",
+      "mrp": "7,999",
+      "price": "6,999",
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "texture change",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=3"
+        }
+      }
+    },
+    {
+      "name": "Straightening ( Shoulder Length )",
+      "mrp": "3,999",
+      "price": "2,999",
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "texture change",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=3"
+        }
+      }
+    },
+    {
+      "name": "Straightening ( Below shoulder Length )",
+      "mrp": "5,499",
+      "price": "4,499",
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "texture change",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=3"
+        }
+      }
+    },
+    {
+      "name": "Straightening ( Long Length )",
+      "mrp": "7,999",
+      "price": "6,999",
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "texture change",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=3"
+        }
+      }
+    },
+    {
+      "name": "Full Arms",
+      "mrp": "399",
+      "price": "299",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Half Arms",
+      "mrp": "299",
+      "price": "199",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Full Legs",
+      "mrp": "649",
+      "price": "349",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Half Legs",
+      "mrp": "549",
+      "price": "299",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Under Arms",
+      "mrp": "149",
+      "price": "99",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Full back",
+      "mrp": "499",
+      "price": "399",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Full Front",
+      "mrp": "449",
+      "price": "399",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Stomach",
+      "mrp": "399",
+      "price": "399",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Bikini Line",
+      "mrp": "249",
+      "price": "199",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Bikini",
+      "mrp": "1,099",
+      "price": "899",
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "rica waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=4"
+        }
+      }
+    },
+    {
+      "name": "Cut & File",
+      "mrp": "199",
+      "price": "99",
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "manicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=5"
+        }
+      }
+    },
+    {
+      "name": "French",
+      "mrp": "299",
+      "price": "199",
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "manicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=5"
+        }
+      }
+    },
+    {
+      "name": "Aroma",
+      "mrp": "449",
+      "price": "249",
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "manicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=5"
+        }
+      }
+    },
+    {
+      "name": "Detan",
+      "mrp": "599",
+      "price": "399",
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "manicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=5"
+        }
+      }
+    },
+    {
+      "name": "Bubblegum - Spa",
+      "mrp": "799",
+      "price": "499",
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "manicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=5"
+        }
+      }
+    },
+    {
+      "name": "Shoulder Length",
+      "mrp": "5,499",
+      "price": "4,999",
+      "category_id": 6,
+      "category": {
+        "id": 6,
+        "name": "keratin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=6"
+        }
+      }
+    },
+    {
+      "name": "Elbow Length",
+      "mrp": "6,599",
+      "price": "5,999",
+      "category_id": 6,
+      "category": {
+        "id": 6,
+        "name": "keratin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=6"
+        }
+      }
+    },
+    {
+      "name": "Waist Lenth",
+      "mrp": "8,999",
+      "price": "8,499",
+      "category_id": 6,
+      "category": {
+        "id": 6,
+        "name": "keratin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=6"
+        }
+      }
+    },
+    {
+      "name": "Full Arms  + UA",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Half Arms",
+      "mrp": "225",
+      "price": "149",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Full Legs",
+      "mrp": "349",
+      "price": "299",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Half Legs",
+      "mrp": "249",
+      "price": "199",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Full back",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Full Front",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Stomach",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Bikini Line",
+      "mrp": "249",
+      "price": "199",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Bikini",
+      "mrp": "899",
+      "price": "799",
+      "category_id": 7,
+      "category": {
+        "id": 7,
+        "name": "honey waxing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=7"
+        }
+      }
+    },
+    {
+      "name": "Repare & Rejuvenate",
+      "mrp": "799",
+      "price": "499",
+      "category_id": 8,
+      "category": {
+        "id": 8,
+        "name": "hair spa and treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=8"
+        }
+      }
+    },
+    {
+      "name": "Moisturizing",
+      "mrp": "799",
+      "price": "499",
+      "category_id": 8,
+      "category": {
+        "id": 8,
+        "name": "hair spa and treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=8"
+        }
+      }
+    },
+    {
+      "name": "Frizzy Control",
+      "mrp": "799",
+      "price": "499",
+      "category_id": 8,
+      "category": {
+        "id": 8,
+        "name": "hair spa and treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=8"
+        }
+      }
+    },
+    {
+      "name": "Classic Hair Spa",
+      "mrp": "799",
+      "price": "499",
+      "category_id": 8,
+      "category": {
+        "id": 8,
+        "name": "hair spa and treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=8"
+        }
+      }
+    },
+    {
+      "name": "Clean up -Purifying - (Specifix )",
+      "mrp": "599",
+      "price": "499",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Clean up Whitening ( Specifix)",
+      "mrp": "599",
+      "price": "499",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Fruit Clean - ( Esterala )",
+      "mrp": "599",
+      "price": "499",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Gold Clean up ( Shanaz Hussain )",
+      "mrp": "999",
+      "price": "799",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Gold Facial ( Shanaz Hussain )",
+      "mrp": "2,299",
+      "price": "1,399",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Skin Lightenig Facial  ( O3+)",
+      "mrp": "2,499",
+      "price": "1599",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Agelock Facial - (O3+)",
+      "mrp": "2,499",
+      "price": "1,599",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "De-tan  Facial -( Specifix )",
+      "mrp": "1,499",
+      "price": "1,099",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Pearl Facial",
+      "mrp": "1,699",
+      "price": "1,199",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Fruit Facial ( Estrella)",
+      "mrp": "1,199",
+      "price": "999",
+      "category_id": 9,
+      "category": {
+        "id": 9,
+        "name": "face / skin",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=9"
+        }
+      }
+    },
+    {
+      "name": "Face and Neck",
+      "mrp": "399",
+      "price": "299",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Full arms",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Half Arms",
+      "mrp": "199",
+      "price": "169",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Full Legs",
+      "mrp": "599",
+      "price": "449",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Half Legs",
+      "mrp": "499",
+      "price": "349",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Full Back",
+      "mrp": "399",
+      "price": "349",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Half Back",
+      "mrp": "299",
+      "price": "249",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Full Front",
+      "mrp": "399",
+      "price": "349",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Half Front",
+      "mrp": "299",
+      "price": "249",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Full Body",
+      "mrp": "2,499",
+      "price": "1,699",
+      "category_id": 10,
+      "category": {
+        "id": 10,
+        "name": "detan",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=10"
+        }
+      }
+    },
+    {
+      "name": "Block Color (Per Streak )",
+      "mrp": "349",
+      "price": "249",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Global shoulder length  - Loreal",
+      "mrp": "1,999",
+      "price": "1,699",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Global shoulder Elbow Length",
+      "mrp": "2,299",
+      "price": "1,999",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Global shoulder Waist Length",
+      "mrp": "2,999",
+      "price": "2,599",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Global color and highlight - Shoulder Length",
+      "mrp": "3,499",
+      "price": "2,999",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Global color and highlight  - Elbow Length",
+      "mrp": "4,999",
+      "price": "3,999",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Global color and highlight - Waist Length",
+      "mrp": "5,499",
+      "price": "4,999",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Classic High Light - Shoulder Length",
+      "mrp": "3,499",
+      "price": "2,599",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Classic High Light - Elbows Length",
+      "mrp": "4,499",
+      "price": "3,599",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Classic High Light - Waist Length",
+      "mrp": "4,999",
+      "price": "3,899",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Balayage color (Shoulder Length)",
+      "mrp": "3,999",
+      "price": "3,499",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Balayage color (Elbow Length)",
+      "mrp": "4,599",
+      "price": "3,999",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Balayage color (Wait Length)",
+      "mrp": "5,499",
+      "price": "4,799",
+      "category_id": 11,
+      "category": {
+        "id": 11,
+        "name": "creative color & highlights",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=11"
+        }
+      }
+    },
+    {
+      "name": "Eye Brows",
+      "mrp": "40",
+      "price": "25",
+      "category_id": 12,
+      "category": {
+        "id": 12,
+        "name": "threading",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=12"
+        }
+      }
+    },
+    {
+      "name": "UpperLip",
+      "mrp": "30",
+      "price": "19",
+      "category_id": 12,
+      "category": {
+        "id": 12,
+        "name": "threading",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=12"
+        }
+      }
+    },
+    {
+      "name": "Chin",
+      "mrp": "30",
+      "price": "19",
+      "category_id": 12,
+      "category": {
+        "id": 12,
+        "name": "threading",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=12"
+        }
+      }
+    },
+    {
+      "name": "Forehead",
+      "mrp": "35",
+      "price": "29",
+      "category_id": 12,
+      "category": {
+        "id": 12,
+        "name": "threading",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=12"
+        }
+      }
+    },
+    {
+      "name": "Side Lock",
+      "mrp": "35",
+      "price": "19",
+      "category_id": 12,
+      "category": {
+        "id": 12,
+        "name": "threading",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=12"
+        }
+      }
+    },
+    {
+      "name": "Face",
+      "mrp": "199",
+      "price": "119",
+      "category_id": 12,
+      "category": {
+        "id": 12,
+        "name": "threading",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=12"
+        }
+      }
+    },
+    {
+      "name": "Anti Dandruff",
+      "mrp": "799",
+      "price": "599",
+      "category_id": 13,
+      "category": {
+        "id": 13,
+        "name": "scalp treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=13"
+        }
+      }
+    },
+    {
+      "name": "Smart Bond  ( Per Dose)",
+      "mrp": "699",
+      "price": "499",
+      "category_id": 14,
+      "category": {
+        "id": 14,
+        "name": "quick fix hair treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=14"
+        }
+      }
+    },
+    {
+      "name": "Power Mix  (Per Dose)",
+      "mrp": "699",
+      "price": "499",
+      "category_id": 14,
+      "category": {
+        "id": 14,
+        "name": "quick fix hair treatment",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=14"
+        }
+      }
+    },
+    {
+      "name": "Coconut Oil",
+      "mrp": "399",
+      "price": "249",
+      "category_id": 15,
+      "category": {
+        "id": 15,
+        "name": "de stress - relax",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=15"
+        }
+      }
+    },
+    {
+      "name": "Olive Oil",
+      "mrp": "399",
+      "price": "249",
+      "category_id": 15,
+      "category": {
+        "id": 15,
+        "name": "de stress - relax",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=15"
+        }
+      }
+    },
+    {
+      "name": "Aroma flavour",
+      "mrp": "449",
+      "price": "299",
+      "category_id": 15,
+      "category": {
+        "id": 15,
+        "name": "de stress - relax",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=15"
+        }
+      }
+    },
+    {
+      "name": "Back Massage",
+      "mrp": "499",
+      "price": "399",
+      "category_id": 15,
+      "category": {
+        "id": 15,
+        "name": "de stress - relax",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=15"
+        }
+      }
+    },
+    {
+      "name": "Foot reflexology",
+      "mrp": "699",
+      "price": "499",
+      "category_id": 15,
+      "category": {
+        "id": 15,
+        "name": "de stress - relax",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=15"
+        }
+      }
+    },
+    {
+      "name": "Blow Dry Any Style",
+      "mrp": "499",
+      "price": "299",
+      "category_id": 16,
+      "category": {
+        "id": 16,
+        "name": "hair styling",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=16"
+        }
+      }
+    },
+    {
+      "name": "Ironing / Curles /",
+      "mrp": "499",
+      "price": "299",
+      "category_id": 16,
+      "category": {
+        "id": 16,
+        "name": "hair styling",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=16"
+        }
+      }
+    },
+    {
+      "name": "Color application",
+      "mrp": "299",
+      "price": "199",
+      "category_id": 17,
+      "category": {
+        "id": 17,
+        "name": "color",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=17"
+        }
+      }
+    },
+    {
+      "name": "Roots touch-up",
+      "mrp": "1,299",
+      "price": "999",
+      "category_id": 17,
+      "category": {
+        "id": 17,
+        "name": "color",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=17"
+        }
+      }
+    },
+    {
+      "name": "Roots Touch-up 2 inch and More",
+      "mrp": "1,599",
+      "price": "1,299",
+      "category_id": 17,
+      "category": {
+        "id": 17,
+        "name": "color",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=17"
+        }
+      }
+    },
+    {
+      "name": "Cut & File",
+      "mrp": "249",
+      "price": "149",
+      "category_id": 18,
+      "category": {
+        "id": 18,
+        "name": "pedicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=18"
+        }
+      }
+    },
+    {
+      "name": "Aroma",
+      "mrp": "649",
+      "price": "349",
+      "category_id": 18,
+      "category": {
+        "id": 18,
+        "name": "pedicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=18"
+        }
+      }
+    },
+    {
+      "name": "De-tan - Plus Spa",
+      "mrp": "899",
+      "price": "599",
+      "category_id": 18,
+      "category": {
+        "id": 18,
+        "name": "pedicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=18"
+        }
+      }
+    },
+    {
+      "name": "Bubblegum - Spa",
+      "mrp": "999",
+      "price": "699",
+      "category_id": 18,
+      "category": {
+        "id": 18,
+        "name": "pedicure",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=18"
+        }
+      }
+    },
+    {
+      "name": "Neck",
+      "mrp": "299",
+      "price": "249",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Arms",
+      "mrp": "499",
+      "price": "449",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Legs",
+      "mrp": "699",
+      "price": "549",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Half Legs",
+      "mrp": "499",
+      "price": "449",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Back",
+      "mrp": "599",
+      "price": "549",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Front",
+      "mrp": "599",
+      "price": "549",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Full Body",
+      "mrp": "2,999",
+      "price": "2,499",
+      "category_id": 19,
+      "category": {
+        "id": 19,
+        "name": "body polishing",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=19"
+        }
+      }
+    },
+    {
+      "name": "Body - Massage (60) Minutes",
+      "mrp": "",
+      "price": "₹1,299",
+      "category_id": 20,
+      "category": {
+        "id": 20,
+        "name": "body massage",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=20"
+        }
+      }
+    },
+    {
+      "name": "Body Massage Full body and Head Massage",
+      "mrp": "",
+      "price": "1,699",
+      "category_id": 20,
+      "category": {
+        "id": 20,
+        "name": "body massage",
+        "items": {
+          "links": "http://localhost:3000/items?category_id=20"
+        }
+      }
+    }
+  ]
+}
