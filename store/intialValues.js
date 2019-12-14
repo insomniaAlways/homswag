@@ -1,5 +1,11 @@
 export const items = {
   isLoading: false,
-  payload: [],
+  values: [],
+  error: null
+};
+
+export const categories = {
+  isLoading: false,
+  values: [],
   error: null
 };

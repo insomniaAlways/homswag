@@ -1,9 +1,12 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import itemReducers from './reducers/itemReducers';
+import categoryReducers from './reducers/categoryReducers';
+
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
-  items: itemReducers
+  items: itemReducers,
+  categories: categoryReducers
 })
 
 let composeEnhancers = compose;

@@ -6,7 +6,7 @@ const itemReducers = (state = items, action) => {
     case FETCH_ITEMS : {
       return {
         ...state,
-        items:items
+        values: actions.payload
       }
     }
     case FETCH_ITEMS_REQUEST : {
@@ -19,7 +19,7 @@ const itemReducers = (state = items, action) => {
       return {
         ...state,
         isLoading: false,
-        items: action.payload
+        values: action.payload
       }
     }
     case FETCH_ITEMS_ERROR : {
