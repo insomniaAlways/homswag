@@ -1,7 +1,7 @@
 import { FETCH_CATEGORY_REQUEST, FETCH_CATEGORY_SUCCESS, FETCH_CATEGORY_ERROR } from '../actionTypes';
 import { findAll } from '../asyncActions/index';
 
-export const fetchCategories = (dispatch) => {
+export const fetchCategories = () => {
   return function(dispatch) {
     dispatch(onStart())
     return findAll('category')

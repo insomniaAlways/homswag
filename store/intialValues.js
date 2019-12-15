@@ -9,3 +9,15 @@ export const categories = {
   values: [],
   error: null
 };
+
+export const cartItems = {
+  isLoading: false,
+  values: [],
+  error: null
+}
+
+export const cart = {
+  isLoading: false,
+  values: [],
+  error: null
+}

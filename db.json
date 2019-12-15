@@ -1637,5 +1637,54 @@
         }
       }
     }
+  ],
+  "cart": {
+    "id": 1,
+    "user_id": 1,
+    "cart_total_price": 299,
+    "cart_items": [
+      {
+        "id": 1,
+        "cart_id": 1,
+        "item_id": 1,
+        "quantity": 1,
+        "total_price": 299,
+        "item": {
+          "name": "Face and Neck",
+          "mrp": "399",
+          "price": "299",
+          "category_id": 1,
+          "category": {
+            "id": 1,
+            "name": "bleaching",
+            "items": {
+              "links": "http://localhost:3000/items?category_id=1"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "cart-items": [
+    {
+      "id": 1,
+      "cart_id": 1,
+      "item_id": 1,
+      "quantity": 1,
+      "total_price": 299,
+      "item": {
+        "name": "Face and Neck",
+        "mrp": "399",
+        "price": "299",
+        "category_id": 1,
+        "category": {
+          "id": 1,
+          "name": "bleaching",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=1"
+          }
+        }
+      }
+    }
   ]
 }
