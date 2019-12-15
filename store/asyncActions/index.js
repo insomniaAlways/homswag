@@ -1,10 +1,11 @@
 import axios from 'axios';
 const host = "http://a6304f72.ngrok.io/";
 
+//GET Calls
 export function findAll(type, query) {
   let url = `${host}${type}`;
   if(query) {
-    url = `${url}/?${query}`
+    url = `${url}?${query}`
   }
   return getRecord(url)
 }
@@ -24,7 +25,7 @@ export function findRecord(type, id) {
   }
   return getRecord(url)
 }
-
+//Making GEt call
 function getRecord(url) {
   return axios.get(url)
   .then((response) => response)
@@ -33,3 +34,18 @@ function getRecord(url) {
     return e
   })
 }
+
+//POST Calls
+export function createRecord(type, payload) {
+  let url = `${host}${type}`
+  return axios.post(url, payload)
+  .then((response) => response)
+  .catch((error) => {
+    console.log(error);
+    return error
+  });
+}
+
+
+
+//PUT Calls

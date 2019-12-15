@@ -26,7 +26,7 @@ export const onSuccess = (payload) => {
 
 export const onError = (error) => {
   return {
-    type: FETCH_CATEGORY_ERROR,
+    type: FETCH_CART_ERROR,
     payload: error
   }
 }

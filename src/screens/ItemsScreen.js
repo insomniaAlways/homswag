@@ -5,16 +5,15 @@ import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
 
 function Items(props) {
-  const { navigation } = props;
+  const { navigation, cart } = props;
   const category = navigation.getParam('category')
-  console.log(props)
   useEffect(() => {
     if(category.id) {
       props.getfetchItemsFor(category.id)
     }
   }, ['category'])
   return (
-    <ItemsList data={props.items.values}/>
+    <ItemsList data={props.items.values} cart={cart.values[0]}/>
   );
 }
 
