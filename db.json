@@ -1788,6 +1788,48 @@
         }
       },
       "id": 1
+    },
+    {
+      "cart_id": 1,
+      "item_id": "2",
+      "quantity": 1,
+      "total_price": 249,
+      "item": {
+        "id": "2",
+        "name": "Full arms",
+        "mrp": "349",
+        "price": "249",
+        "category_id": 1,
+        "category": {
+          "id": 1,
+          "name": "bleaching",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=1"
+          }
+        }
+      },
+      "id": 2
+    },
+    {
+      "cart_id": 1,
+      "item_id": "7",
+      "quantity": 1,
+      "total_price": 249,
+      "item": {
+        "id": "7",
+        "name": "Half Back",
+        "mrp": "299",
+        "price": "249",
+        "category_id": 1,
+        "category": {
+          "id": 1,
+          "name": "bleaching",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=1"
+          }
+        }
+      },
+      "id": 3
     }
   ]
 }

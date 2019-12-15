@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
 import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
@@ -13,7 +12,7 @@ function Items(props) {
       props.getfetchItemsFor(category.id)
     }
   }, [category])
-  
+
   return (
     <ItemsList data={props.items.values} cart={cart.values[0]} cartItems={cartItems}/>
   );

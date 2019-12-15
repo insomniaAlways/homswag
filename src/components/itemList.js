@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Button, Icon, List, ListItem, Text } from '@ui-kitten/components';
 import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
+import _ from 'lodash';
 
 const ItemsList = (props) => {
   const { cart, data, cartItems } = props
@@ -14,10 +15,14 @@ const ItemsList = (props) => {
   const accessoryModifyButton = (style) => (
     <ModifyButton />
   );
+  const isItemAdded = (item) => {
+    return _.find(cartItems, ['item_id', item.id])
+  }
 
   const renderItem = ({ item, index }) => {
     let rightAction = accessoryAddButton
-    if(cartItems && cartItems.length) {
+
+    if(cartItems && cartItems.length && isItemAdded(item)) {
       rightAction = accessoryModifyButton
     }
     return (
