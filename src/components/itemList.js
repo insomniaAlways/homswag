@@ -1,25 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  Button,
-  Icon,
-  List,
-  ListItem,
-  Text
-} from '@ui-kitten/components';
-import { ModifyButton, AddButton } from './itemModifyButton';
+import { Button, Icon, List, ListItem, Text } from '@ui-kitten/components';
+import ModifyButton from './itemModifyButton';
+import AddToCartButton from './addToCartButton';
 
 const ItemsList = (props) => {
-
-  const { cart } = props
-  const { cart_items: cartItems } = cart
-
-  const addItem = () => {
-    
-  }
-
-  const accessoryAddButton = (style) => (
-    <AddButton />
+  const { cart, data, cartItems } = props
+  
+  const accessoryAddButton = (style, index) => (
+    <AddToCartButton type={'cart-items'} item={data[index]} cart={cart}/>
   );
 
   const accessoryModifyButton = (style) => (
@@ -28,7 +17,7 @@ const ItemsList = (props) => {
 
   const renderItem = ({ item, index }) => {
     let rightAction = accessoryAddButton
-    if(cart.cart_items && cart.cart_items.length) {
+    if(cartItems && cartItems.length) {
       rightAction = accessoryModifyButton
     }
     return (
@@ -43,7 +32,7 @@ const ItemsList = (props) => {
 
   return (
     <List
-      data={props.data}
+      data={data}
       renderItem={renderItem}
     />
   );

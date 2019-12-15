@@ -46,6 +46,14 @@ export function createRecord(type, payload) {
   });
 }
 
-
-
 //PUT Calls
+
+export function updateRecord(type, id, payload) {
+  let url = `${host}${type}/${id}`
+  return axios.put(url, payload)
+  .then((response) => response)
+  .catch((error) => {
+    console.log(error);
+    return error
+  });
+}

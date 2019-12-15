@@ -1,6 +1,6 @@
 import { FETCH_CARTITEM_ERROR, FETCH_CARTITEM_REQUEST, FETCH_CARTITEM_SUCCESS } from '../actionTypes';
 
-import { query, createRecord } from '../asyncActions/index';
+import { query, createRecord, updateRecord } from '../asyncActions/index';
 
 export const fetchCartItems = () => {
   return function(dispatch) {
@@ -11,11 +11,10 @@ export const fetchCartItems = () => {
   }
 }
 
-export const addItemToCart = (item, quantity, totalPrice) => {
+export const addItemToCart = (item, quantity, totalPrice, cartItemId) => {
   return function(dispatch) {
     dispatch(onStart())
     let cartItem = {
-      "id": 1,
       "cart_id": 1,
       "item_id": item.id,
       "quantity": quantity,
@@ -23,6 +22,20 @@ export const addItemToCart = (item, quantity, totalPrice) => {
       "item": item
     }
     return createRecord('cart-items', cartItem)
+    .then((response) => fetchCartItems())
+    .catch(error => dispatch(onError(error)))
+  }
+}
+
+export const updateItem = (selectedCartItem, quantity, totalPrice) => {
+  return function(dispatch) {
+    dispatch(onStart())
+    let cartItem = {
+      ...selectedCartItem,
+      "quantity": quantity,
+      "total_price": totalPrice,
+    }
+    return updateRecord('cart-items', selectedCartItem.id, cartItem)
     .then((response) => fetchCartItems())
     .catch(error => dispatch(onError(error)))
   }

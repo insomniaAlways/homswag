@@ -14,7 +14,6 @@ function Dashboard(props) {
     props.getCart()
     props.getAllCartItems()
   }, [])
-  console.log(props.cartItems)
   return (
       <CategoryList data={props.categories.values} navigation={props.navigation}/>
   );

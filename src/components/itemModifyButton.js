@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-export function AddButton() {
-  const [ count, setCount ] = useState(0)
-
-  return (
-    <TouchableOpacity onPress={() => setCount(count + 1)}>
-      <View style={{backgroundColor: '#47d9a8', width: 70, padding: 5, borderRadius: 5}}>
-        <Text style={{textAlign: 'center', color: '#fff'}}>Add</Text>
-      </View>
-    </TouchableOpacity>
-  )
-}
-export function ModifyButton() {
+function ModifyButton() {
   const [ count, setCount ] = useState(0)
 
   return (
@@ -33,6 +22,8 @@ export function ModifyButton() {
     </View>
   );
 }
+
+export default ModifyButton;
 
 const styles = StyleSheet.create({
   image: {
