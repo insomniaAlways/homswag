@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
+import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
+import { mapping, light as lightTheme } from '@eva-design/eva';
 import AppContainer from './navigations/index';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -13,7 +15,9 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <ApplicationProvider mapping={mapping} theme={lightTheme}>
+          <AppContainer />
+        </ApplicationProvider>
       </Provider>
     );
   }

@@ -3,12 +3,6 @@ import { items } from '../intialValues';
 
 const itemReducers = (state = items, action) => {
   switch(action.type) {
-    case FETCH_ITEMS : {
-      return {
-        ...state,
-        values: actions.payload
-      }
-    }
     case FETCH_ITEMS_REQUEST : {
       return {
         ...state,

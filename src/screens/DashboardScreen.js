@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
+import CategoryList from '../components/categoryList';
 
 function Dashboard(props) {
-  // let [ categories ] = useState(props.categories.values)
-  console.log(props.categories.values)
-  // props.getAllCategories()
+  useEffect(() => {
+    props.getAllCategories()
+  }, [])
+  
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Dashboard</Text>
-      <Button title="Go to Items" onPress={() => props.navigation.navigate('Items')}></Button>
-      <Button title="Get All Category" onPress={() => props.getAllCategories()}></Button>
-    </View>
+      <CategoryList data={props.categories.values} navigation={props.navigation}/>
   );
 }
 
