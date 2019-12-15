@@ -4,11 +4,10 @@ import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
 
-
 function Items(props) {
   const { navigation } = props;
   const category = navigation.getParam('category')
-  
+  console.log(props)
   useEffect(() => {
     if(category.id) {
       props.getfetchItemsFor(category.id)
@@ -21,7 +20,8 @@ function Items(props) {
 
 mapStateToProps = state => {
   return {
-    items: state.items
+    items: state.items,
+    cart: state.cart
   }
 }
 

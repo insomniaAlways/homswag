@@ -7,13 +7,23 @@ import {
   ListItem,
   Text
 } from '@ui-kitten/components';
+import { ModifyButton, AddButton } from './itemModifyButton';
 
 const ItemsList = (props) => {
-  console.log('itemlist',props)
+  const accessoryAddButton = (style) => (
+    <AddButton />
+  );
+
+  const accessoryModifyButton = (style) => (
+    <ModifyButton />
+  );
+
   const renderItem = ({ item, index }) => (
     <ListItem
       title={item.name}
+      description={item.price}
       titleStyle={{textTransform: "capitalize", fontSize: 16}}
+      accessory={accessoryAddButton}
     />
   );
 

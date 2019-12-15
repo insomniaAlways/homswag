@@ -1,22 +1,22 @@
-import { FETCH_CATEGORY_REQUEST, FETCH_CATEGORY_SUCCESS, FETCH_CATEGORY_ERROR } from '../actionTypes';
+import { FETCH_CART_REQUEST, FETCH_CART_SUCCESS, FETCH_CART_ERROR } from '../actionTypes';
 import { categories } from '../intialValues';
 
-const categoryReducers = (state = categories, action) => {
+const cartReducers = (state = categories, action) => {
   switch(action.type) {
-    case FETCH_CATEGORY_REQUEST : {
+    case FETCH_CART_REQUEST : {
       return {
         ...state,
         isLoading: true
       }
     }
-    case FETCH_CATEGORY_SUCCESS : {
+    case FETCH_CART_SUCCESS : {
       return {
         ...state,
         isLoading: false,
         values: action.payload
       }
     }
-    case FETCH_CATEGORY_ERROR : {
+    case FETCH_CART_ERROR : {
       return {
         ...state,
         isLoading: false,
@@ -27,4 +27,4 @@ const categoryReducers = (state = categories, action) => {
   }
 }
 
-export default categoryReducers;
+export default cartReducers;

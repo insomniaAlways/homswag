@@ -1,3 +1,9 @@
+export const auth = {
+  isLoading: false,
+  values: {},
+  error: null
+}
+
 export const items = {
   isLoading: false,
   values: [],
