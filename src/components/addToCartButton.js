@@ -6,11 +6,11 @@ import _ from 'lodash';
 
 function AddToCartButton(props) {
   const [ count, setCount ] = useState(0)
-  const { type, item, cart } = props
+  const { type, item, cart, cartItems } = props
   
   const addItem = () => {
-    let length = props.cartItems.length
-    let addedItem = _.find(props.cartItems, ['item_id', item.id])
+    let length = cartItems.length
+    let addedItem = _.find(cartItems, ['item_id', item.id])
     if(!_.isNil(addedItem)) {
       let quantity = (+addedItem.quantity + 1)
       let totalPrice = (+item.price * (+addedItem.quantity + 1))
@@ -29,13 +29,6 @@ function AddToCartButton(props) {
   )
 }
 
-mapStateToProp = state => {
-  return {
-    cart: state.cart.values[0],
-    cartItems: state.cartItems.values
-  }
-}
-
 mapDispatchToProps = dispatch => {
   return {
     addItemToCart: (item, quantity, totalPrice, cartItemId) => dispatch(addItemToCart(item, quantity, totalPrice, cartItemId)),
@@ -43,4 +36,4 @@ mapDispatchToProps = dispatch => {
     getCartItem: () => dispatch(fetchCartItems())
   }
 }
-export default connect(mapStateToProp, mapDispatchToProps)(AddToCartButton)
+export default connect(null, mapDispatchToProps)(AddToCartButton)

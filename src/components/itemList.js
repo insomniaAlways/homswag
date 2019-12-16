@@ -9,11 +9,11 @@ const ItemsList = (props) => {
   const { cart, data, cartItems } = props
   
   const accessoryAddButton = (style, index) => (
-    <AddToCartButton type={'cart-items'} item={data[index]} cart={cart}/>
+    <AddToCartButton type={'cart-items'} item={data[index]} cart={cart} cartItems={cartItems}/>
   );
 
-  const accessoryModifyButton = (style) => (
-    <ModifyButton />
+  const accessoryModifyButton = (style, index) => (
+    <ModifyButton type={'cart-items'} item={data[index]} cart={cart} cartItems={cartItems}/>
   );
   const isItemAdded = (item) => {
     return _.find(cartItems, ['item_id', item.id])

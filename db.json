@@ -1770,66 +1770,129 @@
   "cart-items": [
     {
       "cart_id": 1,
-      "item_id": "1",
-      "quantity": 1,
-      "total_price": 299,
+      "item_id": "18",
       "item": {
-        "id": "1",
-        "name": "Face and Neck",
-        "mrp": "399",
-        "price": "299",
-        "category_id": 1,
+        "id": "18",
+        "name": "Straightening ( Below shoulder Length )",
+        "mrp": "5,499",
+        "price": "4,499",
+        "category_id": 3,
         "category": {
-          "id": 1,
-          "name": "bleaching",
+          "id": 3,
+          "name": "texture change",
           "items": {
-            "links": "http://localhost:3000/items?category_id=1"
+            "links": "http://localhost:3000/items?category_id=3"
           }
         }
       },
-      "id": 1
+      "id": 2,
+      "quantity": 3,
+      "total_price": null
     },
     {
       "cart_id": 1,
-      "item_id": "2",
-      "quantity": 1,
-      "total_price": 249,
+      "item_id": "19",
       "item": {
-        "id": "2",
-        "name": "Full arms",
-        "mrp": "349",
-        "price": "249",
-        "category_id": 1,
+        "id": "19",
+        "name": "Straightening ( Long Length )",
+        "mrp": "7,999",
+        "price": "6,999",
+        "category_id": 3,
         "category": {
-          "id": 1,
-          "name": "bleaching",
+          "id": 3,
+          "name": "texture change",
           "items": {
-            "links": "http://localhost:3000/items?category_id=1"
+            "links": "http://localhost:3000/items?category_id=3"
           }
         }
       },
-      "id": 2
+      "id": 3,
+      "quantity": 2,
+      "total_price": null
     },
     {
       "cart_id": 1,
-      "item_id": "7",
+      "item_id": "19",
       "quantity": 1,
-      "total_price": 249,
+      "total_price": null,
       "item": {
-        "id": "7",
-        "name": "Half Back",
-        "mrp": "299",
-        "price": "249",
-        "category_id": 1,
+        "id": "19",
+        "name": "Straightening ( Long Length )",
+        "mrp": "7,999",
+        "price": "6,999",
+        "category_id": 3,
         "category": {
-          "id": 1,
-          "name": "bleaching",
+          "id": 3,
+          "name": "texture change",
           "items": {
-            "links": "http://localhost:3000/items?category_id=1"
+            "links": "http://localhost:3000/items?category_id=3"
           }
         }
       },
-      "id": 3
+      "id": 4
+    },
+    {
+      "cart_id": 1,
+      "item_id": "103",
+      "item": {
+        "id": "103",
+        "name": "Cut & File",
+        "mrp": "249",
+        "price": "149",
+        "category_id": 18,
+        "category": {
+          "id": 18,
+          "name": "pedicure",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=18"
+          }
+        }
+      },
+      "id": 5,
+      "quantity": 3,
+      "total_price": 447
+    },
+    {
+      "cart_id": 1,
+      "item_id": "103",
+      "quantity": 1,
+      "total_price": 149,
+      "item": {
+        "id": "103",
+        "name": "Cut & File",
+        "mrp": "249",
+        "price": "149",
+        "category_id": 18,
+        "category": {
+          "id": 18,
+          "name": "pedicure",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=18"
+          }
+        }
+      },
+      "id": 6
+    },
+    {
+      "cart_id": 1,
+      "item_id": "104",
+      "quantity": 1,
+      "total_price": 349,
+      "item": {
+        "id": "104",
+        "name": "Aroma",
+        "mrp": "649",
+        "price": "349",
+        "category_id": 18,
+        "category": {
+          "id": 18,
+          "name": "pedicure",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=18"
+          }
+        }
+      },
+      "id": 7
     }
   ]
 }

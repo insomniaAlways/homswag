@@ -47,7 +47,6 @@ export function createRecord(type, payload) {
 }
 
 //PUT Calls
-
 export function updateRecord(type, id, payload) {
   let url = `${host}${type}/${id}`
   return axios.put(url, payload)
@@ -56,4 +55,13 @@ export function updateRecord(type, id, payload) {
     console.log(error);
     return error
   });
+}
+
+//DELETE Calls
+export function deleteRecord(type, id, payload) {
+  debugger
+  let url = `${host}${type}/${id}`
+  return axios.delete(url)
+  .then(response => response)
+  .catch(error => error)
 }

@@ -1,20 +1,46 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { fetchCartItems, addItemToCart, updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
-function ModifyButton() {
-  const [ count, setCount ] = useState(0)
+function ModifyButton(props) {
+  const { item, cart, cartItems } = props
+  let cartItem = _.find(cartItems, ['item_id', item.id])
+
+  const addItem = () => {
+    if(!_.isNil(cartItem)) {
+      let quantity = (+cartItem.quantity + 1)
+      let totalPrice = (+item.price * (+cartItem.quantity + 1))
+      props.updateCartItem(cartItem, quantity, totalPrice)
+    } else {
+      props.addItemToCart(item, 1, (+item.price * 1), length+1)
+    }
+    props.getCartItem()
+  }
+
+  const removeItem = () => {
+    if(cartItem.quantity > 1) {
+      let quantity = (+cartItem.quantity - 1)
+      let totalPrice = (+item.price * quantity)
+      props.updateCartItem(cartItem, quantity, totalPrice)
+    } else {
+      props.deleteCartItem(cartItem)
+    }
+    props.getCartItem()
+  }
 
   return (
     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderColor: '#eee', borderWidth: 1}}>
-      <TouchableOpacity onPress={() => { count != 0 ? setCount(count - 1) : false }}>
+      <TouchableOpacity onPress={removeItem}>
         <View style={{borderRightWidth: 1, borderRightColor: '#eee', paddingRight: 10, paddingLeft: 10}}> 
           <Text>-</Text>
         </View>
       </TouchableOpacity>
       <View style={{paddingTop: 3, paddingRight: 10, paddingBottom: 5, paddingLeft: 10}}>
-        <Text>{count}</Text>
+        <Text>{cartItem.quantity}</Text>
       </View>
-      <TouchableOpacity onPress={() => setCount(count + 1)}>
+      <TouchableOpacity onPress={addItem}>
         <View style={{borderLeftWidth: 1, borderLeftColor: '#eee', paddingRight: 10, paddingLeft: 10}}> 
           <Text style={{color: '#47d9a8'}}>+</Text>
         </View>
@@ -23,19 +49,12 @@ function ModifyButton() {
   );
 }
 
-export default ModifyButton;
-
-const styles = StyleSheet.create({
-  image: {
-    // flex:1,
-    // justifyContent: 'space-between'
-  },
-  container: {
-    flex: 1,
-    marginTop:5
-  },
-  borderView: {
-    borderWidth: 1,
-    borderColor: 'black'
+mapDispatchToProps = dispatch => {
+  return {
+    addItemToCart: (item, quantity, totalPrice, cartItemId) => dispatch(addItemToCart(item, quantity, totalPrice, cartItemId)),
+    updateCartItem: (cartItem, quantity, totalPrice) => dispatch(updateItem(cartItem, quantity, totalPrice)),
+    getCartItem: () => dispatch(fetchCartItems()),
+    deleteCartItem: (cartItem) => dispatch(deleteItem(cartItem))
   }
-});
+}
+export default connect(null, mapDispatchToProps)(ModifyButton)
