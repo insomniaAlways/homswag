@@ -7,7 +7,7 @@ import { fetchCartItems, addItemToCart, updateItem, deleteItem } from '../../sto
 function ModifyButton(props) {
   const { item, cart, cartItems } = props
   let cartItem = _.find(cartItems, ['item_id', item.id])
-
+  
   const addItem = () => {
     if(!_.isNil(cartItem)) {
       let quantity = (+cartItem.quantity + 1)

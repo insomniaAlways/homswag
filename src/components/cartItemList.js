@@ -7,24 +7,17 @@ import _ from 'lodash';
 
 const ItemsList = (props) => {
   const { cart, cartItems } = props
-  console.log(cart, cartItems)
-  const accessoryAddButton = (style, index) => (
-    <AddToCartButton type={'cart-items'} item={cartItems[index]} cart={cart} cartItems={cartItems}/>
-  );
 
   const accessoryModifyButton = (style, index) => (
-    <ModifyButton type={'cart-items'} item={cartItems[index]} cart={cart} cartItems={cartItems}/>
+    <ModifyButton type={'cart-items'} item={cartItems[index].item} cart={cart} cartItems={cartItems}/>
   );
   const isItemAdded = (item) => {
     return _.find(cartItems, ['item_id', item.id])
   }
 
   const renderItem = ({ item, index }) => {
-    let rightAction = accessoryAddButton
+    let rightAction = accessoryModifyButton
 
-    if(cartItems && cartItems.length && isItemAdded(item)) {
-      rightAction = accessoryModifyButton
-    }
     return (
       <ListItem
         title={item.item.name}
