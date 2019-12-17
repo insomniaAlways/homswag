@@ -271,8 +271,8 @@
     {
       "id": "10",
       "name": "Full Body",
-      "mrp": "2,499",
-      "price": "1,699",
+      "mrp": "2499",
+      "price": "1699",
       "category_id": 1,
       "category": {
         "id": 1,
@@ -327,8 +327,8 @@
     {
       "id": "14",
       "name": "Smoothening ( Shoulder Length )",
-      "mrp": "3,999",
-      "price": "2,999",
+      "mrp": "3999",
+      "price": "2999",
       "category_id": 3,
       "category": {
         "id": 3,
@@ -341,8 +341,8 @@
     {
       "id": "15",
       "name": "Smoothening ( Below Shoulder Length )",
-      "mrp": "5,499",
-      "price": "4,499",
+      "mrp": "5499",
+      "price": "4499",
       "category_id": 3,
       "category": {
         "id": 3,
@@ -355,8 +355,8 @@
     {
       "id": "16",
       "name": "Smoothening (Long Length )",
-      "mrp": "7,999",
-      "price": "6,999",
+      "mrp": "7999",
+      "price": "6999",
       "category_id": 3,
       "category": {
         "id": 3,
@@ -369,8 +369,8 @@
     {
       "id": "17",
       "name": "Straightening ( Shoulder Length )",
-      "mrp": "3,999",
-      "price": "2,999",
+      "mrp": "3999",
+      "price": "2999",
       "category_id": 3,
       "category": {
         "id": 3,
@@ -383,8 +383,8 @@
     {
       "id": "18",
       "name": "Straightening ( Below shoulder Length )",
-      "mrp": "5,499",
-      "price": "4,499",
+      "mrp": "5499",
+      "price": "4499",
       "category_id": 3,
       "category": {
         "id": 3,
@@ -397,8 +397,8 @@
     {
       "id": "19",
       "name": "Straightening ( Long Length )",
-      "mrp": "7,999",
-      "price": "6,999",
+      "mrp": "7999",
+      "price": "6999",
       "category_id": 3,
       "category": {
         "id": 3,
@@ -537,7 +537,7 @@
     {
       "id": "29",
       "name": "Bikini",
-      "mrp": "1,099",
+      "mrp": "1099",
       "price": "899",
       "category_id": 4,
       "category": {
@@ -621,8 +621,8 @@
     {
       "id": "35",
       "name": "Shoulder Length",
-      "mrp": "5,499",
-      "price": "4,999",
+      "mrp": "5499",
+      "price": "4999",
       "category_id": 6,
       "category": {
         "id": 6,
@@ -635,8 +635,8 @@
     {
       "id": "36",
       "name": "Elbow Length",
-      "mrp": "6,599",
-      "price": "5,999",
+      "mrp": "6599",
+      "price": "5999",
       "category_id": 6,
       "category": {
         "id": 6,
@@ -649,8 +649,8 @@
     {
       "id": "37",
       "name": "Waist Lenth",
-      "mrp": "8,999",
-      "price": "8,499",
+      "mrp": "8999",
+      "price": "8499",
       "category_id": 6,
       "category": {
         "id": 6,
@@ -901,8 +901,8 @@
     {
       "id": "55",
       "name": "Gold Facial ( Shanaz Hussain )",
-      "mrp": "2,299",
-      "price": "1,399",
+      "mrp": "2299",
+      "price": "1399",
       "category_id": 9,
       "category": {
         "id": 9,
@@ -915,7 +915,7 @@
     {
       "id": "56",
       "name": "Skin Lightenig Facial  ( O3+)",
-      "mrp": "2,499",
+      "mrp": "2499",
       "price": "1599",
       "category_id": 9,
       "category": {
@@ -929,8 +929,8 @@
     {
       "id": "57",
       "name": "Agelock Facial - (O3+)",
-      "mrp": "2,499",
-      "price": "1,599",
+      "mrp": "2499",
+      "price": "1599",
       "category_id": 9,
       "category": {
         "id": 9,
@@ -943,8 +943,8 @@
     {
       "id": "58",
       "name": "De-tan  Facial -( Specifix )",
-      "mrp": "1,499",
-      "price": "1,099",
+      "mrp": "1499",
+      "price": "1099",
       "category_id": 9,
       "category": {
         "id": 9,
@@ -957,8 +957,8 @@
     {
       "id": "59",
       "name": "Pearl Facial",
-      "mrp": "1,699",
-      "price": "1,199",
+      "mrp": "1699",
+      "price": "1199",
       "category_id": 9,
       "category": {
         "id": 9,
@@ -971,7 +971,7 @@
     {
       "id": "60",
       "name": "Fruit Facial ( Estrella)",
-      "mrp": "1,199",
+      "mrp": "1199",
       "price": "999",
       "category_id": 9,
       "category": {
@@ -1111,8 +1111,8 @@
     {
       "id": "70",
       "name": "Full Body",
-      "mrp": "2,499",
-      "price": "1,699",
+      "mrp": "2499",
+      "price": "1699",
       "category_id": 10,
       "category": {
         "id": 10,
@@ -1139,8 +1139,8 @@
     {
       "id": "72",
       "name": "Global shoulder length  - Loreal",
-      "mrp": "1,999",
-      "price": "1,699",
+      "mrp": "1999",
+      "price": "1699",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1153,8 +1153,8 @@
     {
       "id": "73",
       "name": "Global shoulder Elbow Length",
-      "mrp": "2,299",
-      "price": "1,999",
+      "mrp": "2299",
+      "price": "1999",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1167,8 +1167,8 @@
     {
       "id": "74",
       "name": "Global shoulder Waist Length",
-      "mrp": "2,999",
-      "price": "2,599",
+      "mrp": "2999",
+      "price": "2599",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1181,8 +1181,8 @@
     {
       "id": "75",
       "name": "Global color and highlight - Shoulder Length",
-      "mrp": "3,499",
-      "price": "2,999",
+      "mrp": "3499",
+      "price": "2999",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1195,8 +1195,8 @@
     {
       "id": "76",
       "name": "Global color and highlight  - Elbow Length",
-      "mrp": "4,999",
-      "price": "3,999",
+      "mrp": "4999",
+      "price": "3999",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1209,8 +1209,8 @@
     {
       "id": "77",
       "name": "Global color and highlight - Waist Length",
-      "mrp": "5,499",
-      "price": "4,999",
+      "mrp": "5499",
+      "price": "4999",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1223,8 +1223,8 @@
     {
       "id": "78",
       "name": "Classic High Light - Shoulder Length",
-      "mrp": "3,499",
-      "price": "2,599",
+      "mrp": "3499",
+      "price": "2599",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1237,8 +1237,8 @@
     {
       "id": "79",
       "name": "Classic High Light - Elbows Length",
-      "mrp": "4,499",
-      "price": "3,599",
+      "mrp": "4499",
+      "price": "3599",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1251,8 +1251,8 @@
     {
       "id": "80",
       "name": "Classic High Light - Waist Length",
-      "mrp": "4,999",
-      "price": "3,899",
+      "mrp": "4999",
+      "price": "3899",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1265,8 +1265,8 @@
     {
       "id": "81",
       "name": "Balayage color (Shoulder Length)",
-      "mrp": "3,999",
-      "price": "3,499",
+      "mrp": "3999",
+      "price": "3499",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1279,8 +1279,8 @@
     {
       "id": "82",
       "name": "Balayage color (Elbow Length)",
-      "mrp": "4,599",
-      "price": "3,999",
+      "mrp": "4599",
+      "price": "3999",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1293,8 +1293,8 @@
     {
       "id": "83",
       "name": "Balayage color (Wait Length)",
-      "mrp": "5,499",
-      "price": "4,799",
+      "mrp": "5499",
+      "price": "4799",
       "category_id": 11,
       "category": {
         "id": 11,
@@ -1545,7 +1545,7 @@
     {
       "id": "101",
       "name": "Roots touch-up",
-      "mrp": "1,299",
+      "mrp": "1299",
       "price": "999",
       "category_id": 17,
       "category": {
@@ -1559,8 +1559,8 @@
     {
       "id": "102",
       "name": "Roots Touch-up 2 inch and More",
-      "mrp": "1,599",
-      "price": "1,299",
+      "mrp": "1599",
+      "price": "1299",
       "category_id": 17,
       "category": {
         "id": 17,
@@ -1713,8 +1713,8 @@
     {
       "id": "113",
       "name": "Full Body",
-      "mrp": "2,999",
-      "price": "2,499",
+      "mrp": "2999",
+      "price": "2499",
       "category_id": 19,
       "category": {
         "id": 19,
@@ -1728,7 +1728,7 @@
       "id": "114",
       "name": "Body - Massage (60) Minutes",
       "mrp": "",
-      "price": "₹1,299",
+      "price": "₹1299",
       "category_id": 20,
       "category": {
         "id": 20,
@@ -1742,7 +1742,7 @@
       "id": "115",
       "name": "Body Massage Full body and Head Massage",
       "mrp": "",
-      "price": "1,699",
+      "price": "1699",
       "category_id": 20,
       "category": {
         "id": 20,
@@ -1771,8 +1771,8 @@
           "item": {
             "id": "18",
             "name": "Straightening ( Below shoulder Length )",
-            "mrp": "5,499",
-            "price": "4,499",
+            "mrp": "5499",
+            "price": "4499",
             "category_id": 3,
             "category": {
               "id": 3,
@@ -1792,8 +1792,8 @@
           "item": {
             "id": "19",
             "name": "Straightening ( Long Length )",
-            "mrp": "7,999",
-            "price": "6,999",
+            "mrp": "7999",
+            "price": "6999",
             "category_id": 3,
             "category": {
               "id": 3,
@@ -1815,8 +1815,8 @@
           "item": {
             "id": "19",
             "name": "Straightening ( Long Length )",
-            "mrp": "7,999",
-            "price": "6,999",
+            "mrp": "7999",
+            "price": "6999",
             "category_id": 3,
             "category": {
               "id": 3,
@@ -1985,8 +1985,8 @@
       "item": {
         "id": "18",
         "name": "Straightening ( Below shoulder Length )",
-        "mrp": "5,499",
-        "price": "4,499",
+        "mrp": "5499",
+        "price": "4499",
         "category_id": 3,
         "category": {
           "id": 3,
@@ -1997,14 +1997,12 @@
         }
       },
       "id": 2,
-      "quantity": 2,
-      "total_price": null
+      "quantity": 3,
+      "total_price": 13497
     },
     {
       "cart_id": 1,
       "item_id": "12",
-      "quantity": 2,
-      "total_price": 400,
       "item": {
         "id": "12",
         "name": "One length / Deep u Cut",
@@ -2019,28 +2017,9 @@
           }
         }
       },
-      "id": 9
-    },
-    {
-      "cart_id": 1,
-      "item_id": "1",
-      "quantity": 1,
-      "total_price": 299,
-      "item": {
-        "id": "1",
-        "name": "Face and Neck",
-        "mrp": "399",
-        "price": "299",
-        "category_id": 1,
-        "category": {
-          "id": 1,
-          "name": "bleaching",
-          "items": {
-            "links": "http://localhost:3000/items?category_id=1"
-          }
-        }
-      },
-      "id": 11
+      "id": 9,
+      "quantity": 4,
+      "total_price": 800
     }
   ]
 }
