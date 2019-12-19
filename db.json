@@ -1997,29 +1997,50 @@
         }
       },
       "id": 2,
-      "quantity": 3,
-      "total_price": 13497
+      "quantity": 2,
+      "total_price": 8998
     },
     {
       "cart_id": 1,
-      "item_id": "12",
+      "item_id": "50",
+      "quantity": 1,
+      "total_price": 499,
       "item": {
-        "id": "12",
-        "name": "One length / Deep u Cut",
-        "mrp": "349",
-        "price": "200",
-        "category_id": 2,
+        "id": "50",
+        "name": "Classic Hair Spa",
+        "mrp": "799",
+        "price": "499",
+        "category_id": 8,
         "category": {
-          "id": 2,
-          "name": "women hair cut",
+          "id": 8,
+          "name": "hair spa and treatment",
           "items": {
-            "links": "http://localhost:3000/items?category_id=2"
+            "links": "http://localhost:3000/items?category_id=8"
           }
         }
       },
-      "id": 9,
-      "quantity": 4,
-      "total_price": 800
+      "id": 10
+    },
+    {
+      "cart_id": 1,
+      "item_id": "49",
+      "item": {
+        "id": "49",
+        "name": "Frizzy Control",
+        "mrp": "799",
+        "price": "499",
+        "category_id": 8,
+        "category": {
+          "id": 8,
+          "name": "hair spa and treatment",
+          "items": {
+            "links": "http://localhost:3000/items?category_id=8"
+          }
+        }
+      },
+      "id": 11,
+      "quantity": 2,
+      "total_price": 998
     }
   ]
 }

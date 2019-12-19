@@ -6,7 +6,11 @@ import AddToCartButton from './addToCartButton';
 import _ from 'lodash';
 
 const ItemsList = (props) => {
-  const { cart, cartItems } = props
+  const { cart } = props
+  let cartItems = cart[0].cart_items
+  useEffect(() => {
+    cartItems = cart[0].cart_items
+  }, [cart[0].cartItems])
 
   const accessoryModifyButton = (style, index) => (
     <ModifyButton type={'cart-items'} item={cartItems[index].item} cart={cart} cartItems={cartItems}/>
@@ -15,37 +19,45 @@ const ItemsList = (props) => {
     return _.find(cartItems, ['item_id', item.id])
   }
 
+  const priceComponent = (item) => {
+    let mrp = +item.item.mrp * item.quantity
+    let actualPrice = item.item.price * item.quantity
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 14}}>{actualPrice}</Text>
+      </View>
+    )
+  }
+
   const renderItem = ({ item, index }) => {
     let rightAction = accessoryModifyButton({}, index)
+    let price = priceComponent(item)
     if(item) {
       return (
-        <View style={{flex: 1, flexDirection: 'row', paddingLeft: 10, paddingRight: 10, paddingTop: 20, paddingBottom: 20, borderBottomColor: 'grey', borderBottomWidth: 0.5}}>
-          <View style={{flex: 2}}></View>
-          <View style={{flex: 7}}>
-            <View>
-              <Text>{item.item.name}</Text>
-            </View>
-            <View>
-              <Text>{item.item.price} x {item.quantity} = {item.item.price * item.quantity}</Text>
+        <View style={{flex: 1, flexDirection: 'row', paddingLeft: 10, paddingBottom: 10}}>
+          <View style={{flex: 4,justifyContent: 'center'}}>
+            <View style={{width: '80%', flexDirection: 'row'}}>
+              <View style={{justifyContent: 'center'}}>
+                <Icon name='checkmark-circle-2-outline' width={12} height={12} fill="#0D5618"/>
+              </View>
+              <View style={{paddingLeft: 10}}>
+                <Text ellipsizeMode={'tail'} numberOfLines={2}>{item.item.name}</Text>
+              </View>
             </View>
           </View>
-          <View style={{flex: 3}}>
-            {rightAction}
+          <View style={{flex: 2, justifyContent: 'center'}}>
+            <View style={{width: 90}}>
+              {rightAction}
+            </View>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            {price}
           </View>
         </View>
       )
     } else {
       return (<View></View>)
     }
-
-    // return (
-    //   <ListItem
-    //     title={item.item.name}
-    //     description={item.item.price}
-    //     titleStyle={{textTransform: "capitalize", fontSize: 16}}
-    //     accessory={rightAction}
-    //   />
-    // );
   }
 
   return (

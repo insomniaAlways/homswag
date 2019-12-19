@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import CartItemList from '../components/cartItemList';
@@ -17,7 +17,18 @@ function CartScreen(props) {
   }, [])
 
   return (
-    <CartItemList cart={cart.values} cartItems={cartItems.values}/>
+    <View style={{flex: 1}}>
+      <View style={{flex: 11, paddingTop: 10}}>
+        <CartItemList cart={cart.values} cartItems={cartItems.values}/>
+      </View>
+      <View style={styles.container}>
+       <TouchableOpacity
+         style={styles.button}
+       >
+         <Text style={{color:'#fff'}}>Chect out</Text>
+       </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
@@ -36,4 +47,23 @@ mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#47d9a8',
+    padding: 15,
+    color:'#fff'
+  },
+  countContainer: {
+    alignItems: 'center',
+    padding: 10
+  }
+})
+
 

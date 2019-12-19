@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { Icon } from '@ui-kitten/components';
 import { fetchCartItems, addItemToCart, updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 function ModifyButton(props) {
@@ -31,22 +32,26 @@ function ModifyButton(props) {
   }
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderColor: '#eee', borderWidth: 1}}>
-      <TouchableOpacity onPress={removeItem}>
-        <View style={{borderRightWidth: 1, borderRightColor: '#eee', paddingRight: 10, paddingLeft: 10}}> 
-          <Text>-</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={{paddingTop: 3, paddingRight: 10, paddingBottom: 5, paddingLeft: 10}}>
+    <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
+      <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+        <TouchableOpacity onPress={removeItem}>
+          <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+            <Icon name='minus-outline' width={12} height={12} fill="#0D5618"/>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
         <Text>{cartItem.quantity}</Text>
       </View>
-      <TouchableOpacity onPress={addItem}>
-        <View style={{borderLeftWidth: 1, borderLeftColor: '#eee', paddingRight: 10, paddingLeft: 10}}> 
-          <Text style={{color: '#47d9a8'}}>+</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+        <TouchableOpacity onPress={addItem}>
+          <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+            <Icon name='plus-outline' width={12} height={12} fill="#0D5618"/>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
-  );
+  )
 }
 
 mapDispatchToProps = dispatch => {
