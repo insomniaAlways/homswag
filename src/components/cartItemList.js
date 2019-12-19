@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { Button, Icon, List, ListItem, Text, Card } from '@ui-kitten/components';
 import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
@@ -29,12 +29,12 @@ const ItemsList = (props) => {
     )
   }
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = (item, index) => {
     let rightAction = accessoryModifyButton({}, index)
     let price = priceComponent(item)
     if(item) {
       return (
-        <View style={{flex: 1, flexDirection: 'row', paddingLeft: 10, paddingBottom: 10}}>
+        <View key={index} style={{flex: 1, flexDirection: 'row', paddingLeft: 10, paddingBottom: 10}}>
           <View style={{flex: 4,justifyContent: 'center'}}>
             <View style={{width: '80%', flexDirection: 'row'}}>
               <View style={{justifyContent: 'center'}}>
@@ -59,13 +59,7 @@ const ItemsList = (props) => {
       return (<View></View>)
     }
   }
-
-  return (
-    <List
-      data={cartItems}
-      renderItem={renderItem}
-    />
-  );
+  return cartItems.map((ct, index) => renderItem(ct, index))
 };
 
 export default ItemsList;
