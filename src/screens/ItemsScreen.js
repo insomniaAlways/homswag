@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
 
 function Items(props) {
-  const { navigation, cart, cartItems } = props;
+  const { navigation, items, cartItems, cart } = props;
   const category = navigation.getParam('category')
 
   useEffect(() => {
@@ -14,15 +14,15 @@ function Items(props) {
   }, [category])
 
   return (
-    <ItemsList data={props.items.values} cart={cart.values[0]} cartItems={cartItems}/>
+    <ItemsList data={items} cartItems={cartItems} cart={cart}/>
   );
 }
 
 mapStateToProps = state => {
   return {
-    items: state.items,
-    cart: state.cart,
-    cartItems: state.cartItems.values
+    items: state.items.values,
+    cartItems: state.cartItems.values,
+    cart: state.cart.values
   }
 }
 

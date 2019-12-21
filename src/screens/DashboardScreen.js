@@ -26,9 +26,7 @@ function Dashboard(props) {
 
 mapStateToProps = state => {
   return {
-    categories: state.categories,
-    cart: state.cart,
-    cartItems: state.cartItems
+    categories: state.categories
   }
 }
 

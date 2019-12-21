@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components';
 import { connect } from 'react-redux';
@@ -7,15 +7,15 @@ import { Badge } from 'react-native-elements';
 
 function CartButton(props) {
   const { navigate } = props.navigation
-  const { cart } = props
-  let cartValue = []
-  if(cart.values) {
-    cartValue = cart.values[0]
-  }
-  let totalcCartItem = 0
-  if(cartValue && cartValue.cart_items && cartValue.cart_items.length) {
-    totalcCartItem = cartValue.cart_items.length
-  }
+  const { cartItems } = props
+  let totalcCartItem = cartItems.length
+  
+  useEffect(() => {
+    if(cartItems && cartItems.length) {
+      totalcCartItem = cartItems.length
+    }
+  }, [cartItems.length])
+  
   return (
     <TouchableOpacity onPress={() => navigate('Cart')}>
       <Icon name='shopping-cart-outline' width={32} height={32} fill='#FFF' />
@@ -31,6 +31,7 @@ function CartButton(props) {
 mapStateToProps = state => {
   return {
     cart: state.cart,
+    cartItems: state.cartItems.values
   }
 }
 

@@ -11,8 +11,6 @@ import PriceBreakDown from '../components/priceBreackDown';
 
 function CartScreen(props) {
   const { navigation, cart, user, cartItems } = props;
-  console.log(cartItems)
-  
 
   useEffect(() => {
     if(user.id) {
