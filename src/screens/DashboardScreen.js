@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
 import CategoryList from '../components/categoryList';
@@ -15,7 +15,12 @@ function Dashboard(props) {
     props.getAllCartItems()
   }, [])
   return (
+    <View>
+      <TouchableOpacity onPress={() => props.navigation.navigate('BookAppointment')}>
+        <Text>Go to appointment screen</Text>
+      </TouchableOpacity>
       <CategoryList data={props.categories.values} navigation={props.navigation}/>
+    </View>
   );
 }
 

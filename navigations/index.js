@@ -8,6 +8,7 @@ import DashboardScreen from '../src/screens/DashboardScreen';
 import ItemsScreen from '../src/screens/ItemsScreen';
 import CartScreen from '../src/screens/CartScreen';
 import CartButton from '../src/components/cartButton';
+import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -19,6 +20,9 @@ const AppNavigator = createStackNavigator({
     Cart: {
       screen: CartScreen,
     },
+    BookAppointment: { 
+      screen: ScheduleAppointmentScreen
+    }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({

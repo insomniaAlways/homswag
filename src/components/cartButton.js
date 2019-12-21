@@ -8,9 +8,12 @@ import { Badge } from 'react-native-elements';
 function CartButton(props) {
   const { navigate } = props.navigation
   const { cart } = props
-  const cartValue = cart.values[0]
+  let cartValue = []
+  if(cart.values) {
+    cartValue = cart.values[0]
+  }
   let totalcCartItem = 0
-  if(cartValue && cartValue.cart_items.length) {
+  if(cartValue && cartValue.cart_items && cartValue.cart_items.length) {
     totalcCartItem = cartValue.cart_items.length
   }
   return (
