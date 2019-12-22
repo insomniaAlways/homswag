@@ -8,19 +8,20 @@ import _ from 'lodash';
 function ItemRow(props) {
   const { item, cartItems, cart } = props;
   
+  const isItemAdded = () => {
+    return _.find(cartItems, ['item_id', item.id])
+  }
+
   const accessoryAddButton = (style, index) => (
     <AddToCartButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems}/>
   );
 
   const accessoryModifyButton = (style, index) => (
-    <ModifyButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems}/>
+    <ModifyButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems} cartItem={isItemAdded(item)}/>
   );
-  const isItemAdded = (item) => {
-    return _.find(cartItems, ['item_id', item.id])
-  }
 
   let RightAction = accessoryAddButton
-  if(cartItems && cartItems.length && isItemAdded(item)) {
+  if(cartItems && cartItems.length && isItemAdded()) {
     RightAction = accessoryModifyButton
   }
 
@@ -30,7 +31,8 @@ function ItemRow(props) {
       </View>
       <View style={{flex: 4, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
         <Text>{item.name}</Text>
-        <Text style={{fontSize: 12}}>{item.name}</Text>
+        <Text style={{fontSize: 12}}>Rs. {item.price}</Text>
+        <Text style={{fontSize: 12, textTransform: "capitalize"}}>{item.description}</Text>
       </View>
       <View style={{flex: 1, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
         <RightAction />

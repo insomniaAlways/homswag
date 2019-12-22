@@ -5,7 +5,7 @@ export const fetchItems = (category_id) => {
   let query = `category_id=${category_id}`
   return function(dispatch) {
     dispatch(onStart())
-    return findAll('items', query)
+    return findAll('item', query)
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(e))
   }

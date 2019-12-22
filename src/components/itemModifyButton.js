@@ -6,8 +6,8 @@ import { Icon } from '@ui-kitten/components';
 import { fetchCartItems, addItemToCart, updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 function ModifyButton(props) {
-  const { item, cart, cartItems } = props
-  let cartItem = _.find(cartItems, ['item_id', item.id])
+  const { item, cart, cartItems, cartItem } = props
+  let totalQuantity = cartItem ? cartItem.quantity : 0
   
   const addItem = () => {
     if(!_.isNil(cartItem)) {
@@ -21,7 +21,7 @@ function ModifyButton(props) {
   }
 
   const removeItem = () => {
-    if(cartItem.quantity > 1) {
+    if(cartItem && cartItem.quantity > 1) {
       let quantity = (+cartItem.quantity - 1)
       let totalPrice = (+item.price * quantity)
       props.updateCartItem(cartItem, quantity, totalPrice)
@@ -41,7 +41,7 @@ function ModifyButton(props) {
         </TouchableOpacity>
       </View>
       <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-        <Text>{cartItem.quantity}</Text>
+        <Text>{totalQuantity}</Text>
       </View>
       <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
         <TouchableOpacity onPress={addItem}>

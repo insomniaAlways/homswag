@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = "https://21c9c81e.ngrok.io/";
+const host = "http://6e582f50.ngrok.io/";
 
 //GET Calls
 export function findAll(type, query) {

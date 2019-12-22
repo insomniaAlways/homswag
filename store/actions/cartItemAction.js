@@ -1,11 +1,11 @@
-import { FETCH_CARTITEM_ERROR, FETCH_CARTITEM_REQUEST, FETCH_CARTITEM_SUCCESS } from '../actionTypes';
+import { FETCH_CARTITEM_ERROR, FETCH_CARTITEM_REQUEST, FETCH_CARTITEM_SUCCESS, MERGE_CARTITEMS } from '../actionTypes';
 
 import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions/index';
 
 export const fetchCartItems = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return query('cart-items', 'user_id=1&cart_id=1')
+    return query('cart-item', 'user_id=1&cart_id=1')
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(onError(e)))
   }
@@ -21,7 +21,7 @@ export const addItemToCart = (item, quantity, totalPrice, cartItemId) => {
       "total_price": totalPrice,
       "item": item
     }
-    return createRecord('cart-items', cartItem)
+    return createRecord('cart-item', cartItem)
     .then((response) => fetchCartItems())
     .catch(error => dispatch(onError(error)))
   }
@@ -35,16 +35,18 @@ export const updateItem = (selectedCartItem, quantity, totalPrice) => {
       "quantity": quantity,
       "total_price": totalPrice,
     }
-    return updateRecord('cart-items', selectedCartItem.id, cartItem)
-    .then((response) => fetchCartItems())
+    return updateRecord('cart-item', selectedCartItem.id, cartItem)
+    .then((response) => dispatch(mergeItems(response.data)))
     .catch(error => dispatch(onError(error)))
+    // .then((response) => fetchCartItems())
+    // .catch(error => dispatch(onError(error)))
   }
 }
 
 export const deleteItem = (selectedCartItem) => {
   return function(dispatch) {
     dispatch(onStart())
-    return deleteRecord('cart-items', selectedCartItem.id)
+    return deleteRecord('cart-item', selectedCartItem.id)
     .then((response) => fetchCartItems())
     .catch(error => dispatch(onError(error)))
   }
@@ -67,5 +69,12 @@ export const onError = (error) => {
   return {
     type: FETCH_CARTITEM_ERROR,
     payload: error
+  }
+}
+
+export const mergeItems = (payload) => {
+  return {
+    type: MERGE_CARTITEMS,
+    payload: payload
   }
 }

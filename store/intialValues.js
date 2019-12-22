@@ -27,3 +27,10 @@ export const cart = {
   values: [],
   error: null
 }
+
+export const initialState = {
+  items: items,
+  categories: categories,
+  cart: cart,
+  cartItems: cartItems,
+}
