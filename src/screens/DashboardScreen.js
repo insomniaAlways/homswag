@@ -16,9 +16,6 @@ function Dashboard(props) {
   }, [])
   return (
     <View>
-      <TouchableOpacity onPress={() => props.navigation.navigate('BookAppointment')}>
-        <Text>Go to appointment screen</Text>
-      </TouchableOpacity>
       <CategoryList data={props.categories.values} navigation={props.navigation}/>
     </View>
   );
