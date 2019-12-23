@@ -1,28 +1,15 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import {
-  Button,
-  Icon,
-  List,
-  ListItem,
-  Text
-} from '@ui-kitten/components';
+import React, { useEffect } from 'react';
+import { ScrollView } from 'react-native';
+import _ from 'lodash';
+import ItemRow from '../components/ItemRow';
 
 const ItemsList = (props) => {
-  console.log('itemlist',props)
-  const renderItem = ({ item, index }) => (
-    <ListItem
-      title={item.name}
-      titleStyle={{textTransform: "capitalize", fontSize: 16}}
-    />
-  );
-
+  const { data, cartItems, cart } = props
   return (
-    <List
-      data={props.data}
-      renderItem={renderItem}
-    />
-  );
+    <ScrollView>
+      {data.map((item, index) => (<ItemRow index={index} key={index} item={item} cartItems={cartItems} cart={cart}/>))}
+    </ScrollView>
+  )
 };
 
 export default ItemsList;

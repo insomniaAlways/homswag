@@ -1,27 +1,28 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
 import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
 
-
 function Items(props) {
-  const { navigation } = props;
+  const { navigation, items, cartItems, cart } = props;
   const category = navigation.getParam('category')
-  
+
   useEffect(() => {
     if(category.id) {
       props.getfetchItemsFor(category.id)
     }
-  }, ['category'])
+  }, [category])
+
   return (
-    <ItemsList data={props.items.values}/>
+    <ItemsList data={items} cartItems={cartItems} cart={cart}/>
   );
 }
 
 mapStateToProps = state => {
   return {
-    items: state.items
+    items: state.items.values,
+    cartItems: state.cartItems.values,
+    cart: state.cart.values
   }
 }
 

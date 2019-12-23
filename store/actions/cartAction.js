@@ -1,10 +1,11 @@
-import { FETCH_CATEGORY_REQUEST, FETCH_CATEGORY_SUCCESS, FETCH_CATEGORY_ERROR } from '../actionTypes';
-import { findAll } from '../asyncActions/index';
+import { FETCH_CART_ERROR, FETCH_CART_REQUEST, FETCH_CART_SUCCESS } from '../actionTypes';
 
-export const fetchCategories = () => {
+import { query } from '../asyncActions/index';
+
+export const fetchCart = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return findAll('category')
+    return query('cart', 'user_id=1')
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(onError(e)))
   }
@@ -12,20 +13,20 @@ export const fetchCategories = () => {
 
 export const onStart = () => {
   return {
-    type: FETCH_CATEGORY_REQUEST
+    type: FETCH_CART_REQUEST
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_CATEGORY_SUCCESS,
+    type: FETCH_CART_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_CATEGORY_ERROR,
+    type: FETCH_CART_ERROR,
     payload: error
   }
 }
