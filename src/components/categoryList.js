@@ -12,7 +12,7 @@ import {
 const CategoryList = (props) => {
   let flatListProps ={numColumns: 3, horizontal: false, style: styles.list}
 
-  const renderItem = ({ item, index }) => (
+  const RenderItem = ({ item, index }) => (
     <TouchableOpacity onPress={() => props.navigation.navigate('Items', { category: item })}
       style={styles.itemContainer}
     >
@@ -26,13 +26,21 @@ const CategoryList = (props) => {
 
   return (
     <View>
-      <List
-        data={props.data}
-        renderItem={renderItem}
-        {...flatListProps}
-      />
+      <Text style={{padding: 10, paddingBottom: 0}}>What you like do?</Text>
+      <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+        {props.data.map((item, index) => <RenderItem key={index} item={item} index={index}/>)}
+      </View>
     </View>
-  );
+  )
+  // return (
+  //   <View>
+  //     <List
+  //       data={props.data}
+  //       renderItem={RenderItem}
+  //       {...flatListProps}
+  //     />
+  //   </View>
+  // );
 };
 
 export default CategoryList;
@@ -43,7 +51,7 @@ const styles = StyleSheet.create({
     height: 90,
     paddingTop: 10,
     paddingBottom: 10,
-    marginTop: 10,
+    // marginTop: 10,
     alignItems: "center",
     justifyContent: 'center',
     // backgroundColor: "#eee"

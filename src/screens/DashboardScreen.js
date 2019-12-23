@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
 import CategoryList from '../components/categoryList';
 import { getUser } from '../../store/actions/authenticationAction';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
+import OfferView from '../components/offerView';
 
 function Dashboard(props) {
   useEffect(() => {
@@ -15,9 +16,14 @@ function Dashboard(props) {
     props.getAllCartItems()
   }, [])
   return (
-    <View>
-      <CategoryList data={props.categories.values} navigation={props.navigation}/>
-    </View>
+    <SafeAreaView style={{flex: 1}} indicatorStyle={"white"}>
+      <ScrollView>
+        <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
+          <OfferView />
+        </View>
+        <CategoryList data={props.categories.values} navigation={props.navigation}/>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
