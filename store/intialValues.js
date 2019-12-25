@@ -24,7 +24,7 @@ export const cartItems = {
 
 export const cart = {
   isLoading: false,
-  values: [],
+  values: {},
   error: null
 }
 
