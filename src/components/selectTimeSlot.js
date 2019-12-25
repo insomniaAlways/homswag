@@ -14,7 +14,7 @@ function SelectTimeSlot() {
           <Text>12pm - 3pm</Text>
         </TouchableOpacity>
       </View>
-      <View style={{...styles.buttonContainer, marginRight: 0}}>
+      <View style={[styles.buttonContainer, {marginRight: 0}]}>
         <TouchableOpacity style={styles.button}>
           <Text>3pm - 6pm</Text>
         </TouchableOpacity>

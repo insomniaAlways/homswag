@@ -9,6 +9,8 @@ import ItemsScreen from '../src/screens/ItemsScreen';
 import CartScreen from '../src/screens/CartScreen';
 import CartButton from '../src/components/cartButton';
 import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
+import PaymentScreen from '../src/screens/PaymentScreen';
+import DefaultStyles from '../src/style/customStyles';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -22,14 +24,15 @@ const AppNavigator = createStackNavigator({
     },
     BookAppointment: { 
       screen: ScheduleAppointmentScreen
+    },
+    Payment: {
+      screen: PaymentScreen
     }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       title: navigation.state.routeName,
-      headerStyle: {
-        backgroundColor: '#47d9a8',
-      },
+      headerStyle: DefaultStyles.brandBackgroundColor,
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',

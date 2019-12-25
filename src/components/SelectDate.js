@@ -14,7 +14,7 @@ function SelectDate() {
           <Text>Tomorrow</Text>
         </TouchableOpacity>
       </View>
-      <View style={{...styles.buttonContainer, marginRight: 0}}>
+      <View style={[styles.buttonContainer, { marginRight: 0}]}>
         <TouchableOpacity style={styles.button}>
           <Text>Date</Text>
         </TouchableOpacity>

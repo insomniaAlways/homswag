@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCartItems, addItemToCart, updateItem } from '../../store/actions/cartItemAction';
 import _ from 'lodash';
+import DefaultStyles from '../style/customStyles';
 
 function AddToCartButton(props) {
   const [ count, setCount ] = useState(0)
@@ -22,7 +23,7 @@ function AddToCartButton(props) {
   }
   return (
     <TouchableOpacity onPress={addItem}>
-      <View style={{backgroundColor: '#47d9a8', width: 70, padding: 5, borderRadius: 5}}>
+      <View style={[{ width: 70, padding: 5, borderRadius: 5 }, DefaultStyles.brandBackgroundColor]}>
         <Text style={{textAlign: 'center', color: '#fff'}}>Add</Text>
       </View>
     </TouchableOpacity>

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import SelectDate from '../components/SelectDate';
 import SelectTimeSlot from '../components/selectTimeSlot';
 import BookingDetails from '../components/bookingDetails';
+import DefaultStyles from '../style/customStyles';
 
 function ScheduleAppointmentScreen() {
   return (
@@ -20,7 +21,7 @@ function ScheduleAppointmentScreen() {
           <BookingDetails />
         </View>
       </View>
-      <View style={{flex: 1, backgroundColor: '#47d9a8'}}>
+      <View style={[{flex: 1}, DefaultStyles.brandBackgroundColor]}>
         <TouchableOpacity style={{alignItems: 'center', paddingTop: 15, paddingBottom: 10, width: '100%'}}>
           <Text style={{color: '#fff', fontSize: 16}}>Next</Text>
         </TouchableOpacity>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import DefaultStyles from '../style/customStyles';
 
 function PriceBreakDown() {
   return (
@@ -33,8 +34,8 @@ function PriceBreakDown() {
           <Text>700</Text>
         </View>
       </View>
-      <View style={{padding: 10, alignItems: 'center', backgroundColor: '#47d9a8', marginLeft: 30, marginRight: 30, marginTop: 10, borderRadius: 50}}>
-        <Text style={{color: "#fff", fontWeight: "bold"}}>You saved total Rs. 300</Text>
+      <View style={[{padding: 10, alignItems: 'center', marginLeft: 30, marginRight: 30, marginTop: 10, borderRadius: 50 }, DefaultStyles.brandBackgroundColor]}>
+        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. 300</Text>
       </View>
     </View>
   )

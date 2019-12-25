@@ -6,22 +6,15 @@ import AddToCartButton from './addToCartButton';
 import _ from 'lodash';
 
 const ItemsList = (props) => {
-  const { cart } = props
-  let cartItems = cart[0].cart_items
-  useEffect(() => {
-    cartItems = cart[0].cart_items
-  }, [cart[0].cartItems])
+  const { cart, cartItems } = props
 
-  const accessoryModifyButton = (style, index) => (
-    <ModifyButton type={'cart-items'} item={cartItems[index].item} cart={cart} cartItems={cartItems}/>
+  const accessoryModifyButton = (style, cartItem) => (
+    <ModifyButton type={'cart-items'} cartItem={cartItem} cart={cart} cartItems={cartItems} item={cartItem.item}/>
   );
-  const isItemAdded = (item) => {
-    return _.find(cartItems, ['item_id', item.id])
-  }
 
-  const priceComponent = (item) => {
-    let mrp = +item.item.mrp * item.quantity
-    let actualPrice = item.item.price * item.quantity
+  const priceComponent = (cartItem) => {
+    let mrp = +cartItem.item.mrp * cartItem.quantity
+    let actualPrice = cartItem.item.price * cartItem.quantity
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{fontSize: 14}}>{actualPrice}</Text>
@@ -29,10 +22,10 @@ const ItemsList = (props) => {
     )
   }
 
-  const renderItem = (item, index) => {
-    let rightAction = accessoryModifyButton({}, index)
-    let price = priceComponent(item)
-    if(item) {
+  const renderItem = (cartItem, index) => {
+    let rightAction = accessoryModifyButton({}, cartItem, index)
+    let price = priceComponent(cartItem)
+    if(cartItem) {
       return (
         <View key={index} style={{flex: 1, flexDirection: 'row', paddingLeft: 10, paddingBottom: 10}}>
           <View style={{flex: 4,justifyContent: 'center'}}>
@@ -41,7 +34,7 @@ const ItemsList = (props) => {
                 <Icon name='checkmark-circle-2-outline' width={12} height={12} fill="#0D5618"/>
               </View>
               <View style={{paddingLeft: 10}}>
-                <Text ellipsizeMode={'tail'} numberOfLines={2}>{item.item.name}</Text>
+                <Text ellipsizeMode={'tail'} numberOfLines={2}>{cartItem.item.name}</Text>
               </View>
             </View>
           </View>
