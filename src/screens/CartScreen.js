@@ -10,6 +10,7 @@ import ItemSmallCard from '../components/itemSmallCard';
 import PriceBreakDown from '../components/priceBreackDown';
 import SelectAddress from '../components/selectaddress';
 import DefaultStyles from '../style/customStyles';
+import AppointmentDetails from '../components/appointmentDetails';
 
 function CartScreen(props) {
   const { navigation, cart, user, cartItems } = props;
@@ -27,14 +28,7 @@ function CartScreen(props) {
           <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
           <CartItemList cart={cart.values} cartItems={cartItems.values}/>
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
-          <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 16, fontWeight: "bold"}}>Appointment Date</Text>
-            <Text style={{fontSize: 16}}>21/11/19</Text>
-          </View>
-          <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 16, fontWeight: "bold"}}>Time stot</Text>
-            <Text style={{fontSize: 16}}>9am-12pm</Text>
-          </View>
+          <AppointmentDetails />
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
           <View style={{paddingLeft: 10, paddingTop: 10}}>
             <Text style={{paddingBottom: 10}}>People also search for:</Text>

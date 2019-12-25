@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import DefaultStyles from '../style/customStyles';
 import { connect } from 'react-redux';
 import { fetchCart } from '../../store/actions/cartAction';
+import { FontAwesome } from '@expo/vector-icons';
 
 function PriceBreakDown(props) {
   const { cart, cartItems } = props;
@@ -21,21 +22,21 @@ function PriceBreakDown(props) {
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
         <Text>Item total</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
-          <Text>: </Text>
+          <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
           <Text>{item_total_price}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
         <Text>Total discount</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
-          <Text>: </Text>
+          <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
           <Text>{discount_amount}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
         <Text>Taxes</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
-          <Text>: </Text>
+          <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
           <Text>{taxes}</Text>
         </View>
       </View>
@@ -43,7 +44,7 @@ function PriceBreakDown(props) {
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5, paddingTop: 5}}>
         <Text>Total</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
-          <Text>: </Text>
+          <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
           <Text>{total_price}</Text>
         </View>
       </View>

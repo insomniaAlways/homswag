@@ -4,6 +4,7 @@ import { Button, Icon, List, ListItem, Text, Card } from '@ui-kitten/components'
 import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
 import _ from 'lodash';
+import { FontAwesome } from '@expo/vector-icons';
 
 const ItemsList = (props) => {
   const { cart, cartItems } = props
@@ -17,7 +18,7 @@ const ItemsList = (props) => {
     let actualPrice = cartItem.item.price * cartItem.quantity
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 14}}>{actualPrice}</Text>
+        <Text style={{fontSize: 14}}><FontAwesome name="rupee" size={12} color="black" /> {actualPrice}</Text>
       </View>
     )
   }
