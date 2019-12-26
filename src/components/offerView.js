@@ -4,7 +4,7 @@ import OfferCard from './offerCard';
 
 function OfferView() {
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       <OfferCard id={211} style={{marginLeft: 10}}/>
       <OfferCard id={451}/>
       <OfferCard id={452}/>

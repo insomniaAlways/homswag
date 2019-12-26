@@ -6,7 +6,7 @@ import ItemRow from '../components/ItemRow';
 const ItemsList = (props) => {
   const { data, cartItems, cart } = props
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {data.map((item, index) => (<ItemRow index={index} key={index} item={item} cartItems={cartItems} cart={cart}/>))}
     </ScrollView>
   )

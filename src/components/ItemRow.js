@@ -4,6 +4,7 @@ import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { FontAwesome } from '@expo/vector-icons';
 
 function ItemRow(props) {
   const { item, cartItems, cart } = props;
@@ -31,7 +32,7 @@ function ItemRow(props) {
       </View>
       <View style={{flex: 4, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
         <Text>{item.name}</Text>
-        <Text style={{fontSize: 12}}>Rs. {item.price}</Text>
+        <Text style={{fontSize: 12}}><FontAwesome name="rupee" size={12} color="black" /> {item.price}</Text>
         <Text style={{fontSize: 12, textTransform: "capitalize"}}>{item.description}</Text>
       </View>
       <View style={{flex: 1, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>

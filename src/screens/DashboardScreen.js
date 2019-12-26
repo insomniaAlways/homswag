@@ -16,8 +16,8 @@ function Dashboard(props) {
     props.getAllCartItems()
   }, [])
   return (
-    <SafeAreaView style={{flex: 1}} indicatorStyle={"white"}>
-      <ScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView />
         </View>

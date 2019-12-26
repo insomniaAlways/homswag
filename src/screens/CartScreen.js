@@ -24,7 +24,7 @@ function CartScreen(props) {
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 14}}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
           <CartItemList cart={cart.values} cartItems={cartItems.values}/>
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
@@ -32,7 +32,7 @@ function CartScreen(props) {
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
           <View style={{paddingLeft: 10, paddingTop: 10}}>
             <Text style={{paddingBottom: 10}}>People also search for:</Text>
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <ItemSmallCard id={211}/>
               <ItemSmallCard id={212}/>
               <ItemSmallCard id={213}/>
