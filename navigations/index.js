@@ -11,6 +11,7 @@ import CartButton from '../src/components/cartButton';
 import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
 import PaymentScreen from '../src/screens/PaymentScreen';
 import DefaultStyles from '../src/style/customStyles';
+import { EvilIcons, FontAwesome, Feather } from '@expo/vector-icons';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -40,8 +41,16 @@ const AppNavigator = createStackNavigator({
       },
       headerRight: () => {
         return (
-          <View style={{paddingRight: 20}}>
+          <View style={{paddingRight: 20, flexDirection: 'row'}}>
+            <EvilIcons name="search" size={40} color="#fff" style={{marginRight: 10}}/>
             <CartButton navigation={navigation}/>
+          </View>
+        )
+      },
+      headerLeft: () => {
+        return (
+          <View style={{paddingLeft: 10}}>
+            <Feather name="menu" size={30} color="#fff" style={{marginRight: 10}}/>
           </View>
         )
       }
