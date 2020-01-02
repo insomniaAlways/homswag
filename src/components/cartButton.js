@@ -9,7 +9,7 @@ function CartButton(props) {
   const { navigate } = props.navigation
   const { cartItems } = props
   let totalcCartItem = cartItems.length
-  
+
   useEffect(() => {
     if(cartItems && cartItems.length) {
       totalcCartItem = cartItems.length

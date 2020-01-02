@@ -1,5 +1,6 @@
 import axios from 'axios';
-const host = "http://6e582f50.ngrok.io/";
+// const host = "http://6e582f50.ngrok.io/";
+const host = "http://homswag.herokuapp.com/api/v1/";
 
 //GET Calls
 export function findAll(type, query) {
@@ -22,6 +23,8 @@ export function findRecord(type, id) {
   let url = `${host}${type}`;
   if(id) {
     url = `${url}/${id}`
+  } else {
+    url = `${url}`
   }
   return getRecord(url)
 }

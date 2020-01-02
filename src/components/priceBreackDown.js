@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 function PriceBreakDown(props) {
   const { cart, cartItems } = props;
-  const { item_total_price, discount_amount, taxes, total_price, total_saved } = cart.values;
+  const { item_total_price, discount_amount, taxes, cart_total, total_saved } = cart;
 
   useEffect(() => {
     props.getCartData()
@@ -45,7 +45,7 @@ function PriceBreakDown(props) {
         <Text>Total</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{total_price}</Text>
+          <Text>{cart_total}</Text>
         </View>
       </View>
       <View style={[{padding: 10, alignItems: 'center', marginLeft: 30, marginRight: 30, marginTop: 10, borderRadius: 50 }, DefaultStyles.brandBackgroundColor]}>
@@ -57,7 +57,7 @@ function PriceBreakDown(props) {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart,
+    cart: state.cart.values,
     cartItems: state.cartItems
   }
 }

@@ -11,7 +11,7 @@ import OfferView from '../components/offerView';
 function Dashboard(props) {
   useEffect(() => {
     props.getAllCategories()
-    props.getUser()
+    // props.getUser()
     props.getCart()
     props.getAllCartItems()
   }, [])
