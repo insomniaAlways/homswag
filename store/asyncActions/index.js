@@ -1,5 +1,5 @@
 import axios from 'axios';
-// const host = "http://6e582f50.ngrok.io/";
+// const host = "http://192.168.0.105:1337/api/v1/";
 const host = "http://homswag.herokuapp.com/api/v1/";
 
 //GET Calls
@@ -14,7 +14,7 @@ export function findAll(type, query) {
 export function query(type, query) {
   let url = `${host}${type}`;
   if(query) {
-    url = `${url}/?${query}`
+    url = `${url}?${query}`
   }
   return getRecord(url)
 }

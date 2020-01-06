@@ -47,13 +47,13 @@ const AppNavigator = createStackNavigator({
           </View>
         )
       },
-      headerLeft: () => {
-        return (
-          <View style={{paddingLeft: 10}}>
-            <Feather name="menu" size={30} color="#fff" style={{marginRight: 10}}/>
-          </View>
-        )
-      }
+      // headerLeft: () => {
+      //   return (
+      //     <View style={{paddingLeft: 10}}>
+      //       <Feather name="menu" size={30} color="#fff" style={{marginRight: 10}}/>
+      //     </View>
+      //   )
+      // }
     })
   }
 );

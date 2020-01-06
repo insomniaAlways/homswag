@@ -13,7 +13,7 @@ const cartReducers = (state = categories, action) => {
       return {
         ...state,
         isLoading: false,
-        values: action.payload[0]
+        values: action.payload
       }
     }
     case FETCH_CART_ERROR : {
