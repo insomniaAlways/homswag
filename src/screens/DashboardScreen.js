@@ -18,6 +18,8 @@ function Dashboard(props) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* <Button title="go to payment" onPress={() => props.navigation.navigate('Payment')}/>
+        <Button title="go to appointment" onPress={() => props.navigation.navigate('BookAppointment')}/> */}
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView />
         </View>
