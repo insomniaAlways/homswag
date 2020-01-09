@@ -1,11 +1,11 @@
 import { FETCH_CART_ERROR, FETCH_CART_REQUEST, FETCH_CART_SUCCESS } from '../actionTypes';
 
-import { query } from '../asyncActions/index';
+import { query, findRecord } from '../asyncActions/index';
 
 export const fetchCart = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return query('cart', 'user_id=1')
+    return findRecord('cart')
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(onError(e)))
   }

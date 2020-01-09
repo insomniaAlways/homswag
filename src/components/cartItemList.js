@@ -14,7 +14,10 @@ const ItemsList = (props) => {
   );
 
   const priceComponent = (cartItem) => {
-    let mrp = +cartItem.item.mrp * cartItem.quantity
+    let mrp = 0
+    if(cart && cartItem.item && cartItem.item.mrp) {
+      mrp = +cartItem.item.mrp * cartItem.quantity
+    }
     let actualPrice = cartItem.item.price * cartItem.quantity
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>

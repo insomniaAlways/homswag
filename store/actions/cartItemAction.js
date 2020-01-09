@@ -5,7 +5,7 @@ import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions
 export const fetchCartItems = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return query('cart-item', 'user_id=1&cart_id=1')
+    return query('cart-item', 'cart_id=1')
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(onError(e)))
   }
@@ -19,7 +19,6 @@ export const addItemToCart = (item, quantity, totalPrice, cartItemId) => {
       "item_id": item.id,
       "quantity": quantity,
       "total_price": totalPrice,
-      "item": item
     }
     return createRecord('cart-item', cartItem)
     .then((response) => fetchCartItems())

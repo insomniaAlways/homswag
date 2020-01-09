@@ -2,8 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 19970,
+  "packagerPid": 6849,
   "expoServerNgrokUrl": "https://2r-wrx.anonymous.homswag.exp.direct",
   "packagerNgrokUrl": "https://packager.2r-wrx.anonymous.homswag.exp.direct",
-  "ngrokPid": 19989
+  "ngrokPid": 6914,
+  "webpackServerPort": null
 }

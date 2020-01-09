@@ -11,13 +11,15 @@ import OfferView from '../components/offerView';
 function Dashboard(props) {
   useEffect(() => {
     props.getAllCategories()
-    props.getUser()
+    // props.getUser()
     props.getCart()
     props.getAllCartItems()
   }, [])
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* <Button title="go to payment" onPress={() => props.navigation.navigate('Payment')}/>
+        <Button title="go to appointment" onPress={() => props.navigation.navigate('BookAppointment')}/> */}
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView />
         </View>

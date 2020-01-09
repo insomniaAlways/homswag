@@ -1,8 +1,8 @@
 import { FETCH_CARTITEM_REQUEST, FETCH_CARTITEM_SUCCESS, FETCH_CARTITEM_ERROR, MERGE_CARTITEMS } from '../actionTypes';
-import { categories } from '../intialValues';
+import { cartItems } from '../intialValues';
 import _ from 'lodash';
 
-const cartItemReducers = (state = categories, action) => {
+const cartItemReducers = (state = cartItems, action) => {
   switch(action.type) {
     case FETCH_CARTITEM_REQUEST : {
       return {
