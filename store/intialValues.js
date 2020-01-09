@@ -24,7 +24,13 @@ export const cartItems = {
 
 export const cart = {
   isLoading: false,
-  values: {},
+  values: {
+    item_total_price: 0,
+    discount_amount: 0,
+    taxes: 0,
+    cart_total: 0,
+    total_saved: 0
+  },
   error: null
 }
 

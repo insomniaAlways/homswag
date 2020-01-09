@@ -1,10 +1,50 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import ProfilePic from '../../assets/images/profilePic.jpeg';
 
 function ProfileScreen() {
   return (
-    <View><Text>Hello</Text></View>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.profilePicContainer}>
+          <View style={styles.profilePic}>
+            <Image style={styles.profilePic} source={ProfilePic}/>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.name}>Pretty</Text>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 30
+  },
+  profilePicContainer: {
+    height: 250,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  profilePic: {
+    height: 140,
+    width: 140,
+    borderRadius: 70
+  },
+  nameContainer: {
+    marginTop: 20,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  name: {
+    fontWeight: 'bold',
+    width: '100%',
+    textAlign:'center'
+  }
+})
 
 export default ProfileScreen;
