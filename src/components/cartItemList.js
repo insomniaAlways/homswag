@@ -56,7 +56,11 @@ const ItemsList = (props) => {
       return (<View></View>)
     }
   }
-  return cartItems.map((ct, index) => renderItem(ct, index))
+  if(cartItems && Array.isArray(cartItems) && cartItems.length) {
+    return cartItems.map((ct, index) => renderItem(ct, index))
+  } else {
+    return (<View><Text>Something went worng</Text></View>)
+  }
 };
 
 export default ItemsList;

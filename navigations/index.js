@@ -17,6 +17,7 @@ import ProfileScreen from '../src/screens/ProfileScreen';
 import AddressScreen from '../src/screens/AddressScreen';
 import OrderHistoryScreen from '../src/screens/OrderHistoryScreen';
 import ContactScreen from '../src/screens/ContactScreen';
+import SideDrawer from '../src/components/sideDrawer';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -79,7 +80,7 @@ const DrawerNavigation = createDrawerNavigator({
   Contact: {
     screen: ContactScreen
   }
-});
+}, { contentComponent: SideDrawer });
 
 
 

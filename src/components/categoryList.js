@@ -28,19 +28,10 @@ const CategoryList = (props) => {
     <View>
       <Text style={{padding: 10, paddingBottom: 0}}>What would you like to do?</Text>
       <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-        {props.data.map((item, index) => <RenderItem key={index} item={item} index={index}/>)}
+        {(props.data && Array.isArray(props.data) && props.data.length) ? props.data.map((item, index) => <RenderItem key={index} item={item} index={index}/>) : (<View><Text>Something went worng</Text></View>)}
       </View>
     </View>
   )
-  // return (
-  //   <View>
-  //     <List
-  //       data={props.data}
-  //       renderItem={RenderItem}
-  //       {...flatListProps}
-  //     />
-  //   </View>
-  // );
 };
 
 export default CategoryList;
