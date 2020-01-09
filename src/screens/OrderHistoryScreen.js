@@ -1,10 +1,36 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { fetchOrder } from '../../store/actions/orderActions'
 
-function OrderHistoryScreen() {
+function ProfileScreen(props) {
+  const { orders } = props;
+  console.log(orders)
   return (
-    <View><Text>Hello</Text></View>
+    <ScrollView>
+      <View style={styles.container}>
+        
+      </View>
+    </ScrollView>
   )
 }
 
-export default OrderHistoryScreen;
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 30
+  }
+})
+
+mapStateToProps = state => {
+  return {
+    orders: state.orders.values
+  }
+}
+
+mapDispatchToProps = dispatch => {
+  return {
+    getOrders: () => dispatch(fetchOrder())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

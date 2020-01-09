@@ -34,6 +34,55 @@ export const cart = {
   error: null
 }
 
+export const order = {
+  isLoading: false,
+  values: [
+    {
+      "items": [
+        {
+          "created_at": "2020-01-05T14:40:03.000Z",
+          "updated_at": "2020-01-05T15:27:58.000Z",
+          "created_by": 1,
+          "updated_by": 1,
+          "is_deleted": false,
+          "quantity": 5,
+          "total_price": 1495,
+          "item": {
+            "created_at": "2020-01-05T14:39:38.000Z",
+            "updated_at": "2020-01-05T14:39:38.000Z",
+            "id": 17,
+            "created_by": 1,
+            "updated_by": 1,
+            "is_deleted": false,
+            "name": "Face and Neck",
+            "price": 299,
+            "description": "",
+            "organization_id": 1,
+            "image_source": null,
+            "category_id": 20
+          },
+          "cart_id": 1
+        }
+      ],
+      "created_at": "2019-12-27T15:48:13.000Z",
+      "updated_at": "2020-01-05T15:27:58.000Z",
+      "created_by": 1,
+      "updated_by": 1,
+      "is_deleted": false,
+      "cart_total": 1495,
+      "total_items": null,
+      "item_total_price": 1495,
+      "discount_amount": null,
+      "applied_coupon": null,
+      "total_saved": null,
+      "taxes": null,
+      "user_id": 1,
+      "order_no": 300
+    }
+  ],
+  error: null
+}
+
 export const initialState = {
   items: items,
   categories: categories,
