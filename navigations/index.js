@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 // screens
 import DashboardScreen from '../src/screens/DashboardScreen';
@@ -12,6 +13,10 @@ import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
 import PaymentScreen from '../src/screens/PaymentScreen';
 import DefaultStyles from '../src/style/customStyles';
 import { EvilIcons, FontAwesome, Feather } from '@expo/vector-icons';
+import ProfileScreen from '../src/screens/ProfileScreen';
+import AddressScreen from '../src/screens/AddressScreen';
+import OrderHistoryScreen from '../src/screens/OrderHistoryScreen';
+import ContactScreen from '../src/screens/ContactScreen';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -58,4 +63,25 @@ const AppNavigator = createStackNavigator({
   }
 );
 
-export default createAppContainer(AppNavigator);
+const DrawerNavigation = createDrawerNavigator({
+  Dashboard: {
+    screen: AppNavigator,
+  },
+  Profile: {
+    screen: ProfileScreen,
+  },
+  Address: {
+    screen: AddressScreen,
+  },
+  Orders: { 
+    screen: OrderHistoryScreen
+  },
+  Contact: {
+    screen: ContactScreen
+  }
+});
+
+
+
+
+export default createAppContainer(DrawerNavigation);
