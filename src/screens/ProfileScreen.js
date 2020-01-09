@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
+import PlaceHolderTextInput from '../components/placeHolderTextInput';
 
 function ProfileScreen() {
   return (
@@ -14,6 +15,14 @@ function ProfileScreen() {
             <Text style={styles.name}>Pretty</Text>
           </View>
         </View>
+        <View style={styles.detialsContainer}>
+          <Text style={{textAlign: 'left', width: '80%'}}>Email</Text>
+          <PlaceHolderTextInput placeholder="Email" styles={styles.placeholderInput}/>
+          <Text style={{textAlign: 'left', width: '80%', marginTop: 10}}>Phone</Text>
+          <PlaceHolderTextInput placeholder="Phone" styles={styles.placeholderInput}/>
+          <Text style={{textAlign: 'left', width: '80%', marginTop: 10}}>Address</Text>
+          <PlaceHolderTextInput placeholder="Address" styles={styles.placeholderInput}/>
+        </View>
       </View>
     </ScrollView>
   )
@@ -25,7 +34,7 @@ const styles = StyleSheet.create({
   },
   profilePicContainer: {
     height: 250,
-    borderWidth: 1,
+    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -44,6 +53,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: '100%',
     textAlign:'center'
+  },
+  detialsContainer: {
+    flexDirection: 'column',
+    height: 250,
+    // borderWidth: 1,
+    width: '100%',
+    paddingTop: 20,
+    // justifyContent: 'center',
+    alignItems: 'center'
+  },
+  placeholderInput: {
+    width: '80%'
   }
 })
 

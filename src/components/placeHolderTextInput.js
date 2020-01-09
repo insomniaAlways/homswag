@@ -6,16 +6,16 @@ function PlaceHolderTextInput(props) {
   const [ value, setValue ] = useState('');
   const [ inputStyle, setStyle ] = useState(styles.placeholder);
   return (
-    <View style={{padding: 10}}>
+    // <View style={{padding: 10}}>
       <TextInput
-      style={inputStyle}
-      onChangeText={text => setValue(text)}
-      placeholder={props.placeholder}
-      onFocus={() => setStyle(styles.input)}
-      onBlur={() => setStyle(styles.placeholder)}
-      value={value}
-    />
-    </View>
+        style={[inputStyle, props.styles]}
+        onChangeText={text => setValue(text)}
+        placeholder={props.placeholder}
+        onFocus={() => setStyle(styles.input)}
+        onBlur={() => setStyle(styles.placeholder)}
+        value={value}
+      />
+    // </View>
   )
 }
 
