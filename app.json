@@ -12,6 +12,20 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.insomniaalways.homswag",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBRx1ZoOWY-9kjUSVNbP72L0tir2Qyc38I"
+      }
+    },
+    "android": {
+      "package": "com.insomniaalways.homswag",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDiVzfCwIpDsBh32DxZjClEZTUGNfzbkW0"
+        }
+      }
+    }
   }
 }
