@@ -14,10 +14,11 @@ import PaymentScreen from '../src/screens/PaymentScreen';
 import DefaultStyles from '../src/style/customStyles';
 import { EvilIcons, FontAwesome, Feather } from '@expo/vector-icons';
 import ProfileScreen from '../src/screens/ProfileScreen';
-import AddressScreen from '../src/screens/AddressScreen';
+import AddAddressScreen from '../src/screens/AddAddressScreen';
 import OrderHistoryScreen from '../src/screens/OrderHistoryScreen';
 import ContactScreen from '../src/screens/ContactScreen';
 import SideDrawer from '../src/components/sideDrawer';
+import AddressScreen from '../src/screens/AddressScreen';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -34,6 +35,9 @@ const AppNavigator = createStackNavigator({
     },
     Payment: {
       screen: PaymentScreen
+    },
+    AddAddress: {
+      screen: AddAddressScreen
     }
   },
   {
