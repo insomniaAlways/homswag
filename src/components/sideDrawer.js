@@ -11,7 +11,7 @@ const SideDrawer = props => (
         style={styles.container}
         forceInset={{ top: 'always', horizontal: 'never' }}
       >
-        <DrawerItems {...props} />
+        <DrawerItems {...props} labelStyle={{width: '100%'}}/>
       </SafeAreaView>
     </SafeAreaProvider>
   </ScrollView>
@@ -20,6 +20,7 @@ const SideDrawer = props => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%'
   },
 });
 

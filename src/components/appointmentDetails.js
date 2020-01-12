@@ -19,7 +19,7 @@ function AppointmentDetails() {
   }
 
   return (
-    <View>
+    <View style={{marginTop: 30}}>
       <View style={{paddingTop: 10, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{fontSize: 16, fontWeight: "bold", width: '70%'}}>
           Appointment Date

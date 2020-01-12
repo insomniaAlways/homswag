@@ -1,23 +1,23 @@
-import { FETCH_ORDER_REQUEST, FETCH_ORDER_SUCCESS, FETCH_ORDER_ERROR } from '../actionTypes';
-import { orders } from '../intialValues';
+import { FETCH_ADDRESSS_REQUEST, FETCH_ADDRESSS_SUCCESS, FETCH_ADDRESSS_ERROR } from '../actionTypes';
+import { addresses } from '../intialValues';
 import _ from 'lodash';
 
-const ordersReducers = (state = orders, action) => {
+const addressReducers = (state = addresses, action) => {
   switch(action.type) {
-    case FETCH_ORDER_REQUEST : {
+    case FETCH_ADDRESSS_REQUEST : {
       return {
         ...state,
         isLoading: true
       }
     }
-    case FETCH_ORDER_SUCCESS : {
+    case FETCH_ADDRESSS_SUCCESS : {
       return {
         ...state,
         isLoading: false,
         values: action.payload
       }
     }
-    case FETCH_ORDER_ERROR : {
+    case FETCH_ADDRESSS_ERROR : {
       return {
         ...state,
         isLoading: false,
@@ -28,4 +28,4 @@ const ordersReducers = (state = orders, action) => {
   }
 }
 
-export default ordersReducers;
+export default addressReducers;

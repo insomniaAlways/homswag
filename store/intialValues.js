@@ -34,7 +34,7 @@ export const cart = {
   error: null
 }
 
-export const order = {
+export const orders = {
   isLoading: false,
   values: [
     {
@@ -251,9 +251,17 @@ export const order = {
   error: null
 }
 
+export const addresses = {
+  isLoading: false,
+  values: [],
+  error: null
+}
+
 export const initialState = {
   items: items,
   categories: categories,
   cart: cart,
   cartItems: cartItems,
+  orders: orders,
+  addresses: addresses
 }

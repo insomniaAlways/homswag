@@ -49,7 +49,7 @@ function CartScreen(props) {
         </ScrollView>
       </View>
       <View style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
-        <SelectAddress />
+        <SelectAddress navigation={navigation}/>
       </View>
       <View style={styles.container}>
        <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]}>

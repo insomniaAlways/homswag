@@ -10,7 +10,7 @@ function ItemRow(props) {
   const { item, cartItems, cart } = props;
   
   const isItemAdded = () => {
-    return _.find(cartItems, ['item_id', item.id])
+    return _.find(cartItems, ['item.id', item.id])
   }
 
   const accessoryAddButton = (style, index) => (

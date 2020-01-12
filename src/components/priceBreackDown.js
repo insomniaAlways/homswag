@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 function PriceBreakDown(props) {
   const { cart, cartItems } = props;
-  const { item_total_price, discount_amount, taxes, cart_total, total_saved } = cart;
+  // const { discount_amount, taxes, cart_total, total_saved } = cart;
 
   useEffect(() => {
     props.getCartData()
@@ -23,21 +23,21 @@ function PriceBreakDown(props) {
         <Text>Item total</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{item_total_price}</Text>
+          <Text>{cart.item_total_price}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
         <Text>Total discount</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{discount_amount}</Text>
+          <Text>{cart.discount_amount}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
         <Text>Taxes</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{taxes}</Text>
+          <Text>{cart.taxes}</Text>
         </View>
       </View>
       <View style={{borderColor: '#eee', borderWidth: .5}}></View>
@@ -45,11 +45,11 @@ function PriceBreakDown(props) {
         <Text>Total</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{cart_total}</Text>
+          <Text>{cart.cart_total}</Text>
         </View>
       </View>
       <View style={[{padding: 10, alignItems: 'center', marginLeft: 30, marginRight: 30, marginTop: 10, borderRadius: 50 }, DefaultStyles.brandBackgroundColor]}>
-        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {total_saved}</Text>
+        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {cart.total_saved}</Text>
       </View>
     </View>
   )
