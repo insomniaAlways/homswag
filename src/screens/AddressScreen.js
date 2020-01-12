@@ -1,6 +1,8 @@
 import React, { useState, useEffect }from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import FloatingInput from '../components/input-helpers.js/floatingInput';
+import DefaultStyles from '../style/customStyles';
 
 const initialRegion = {
   latitude: 12.97194,
@@ -15,6 +17,7 @@ function AddressScreen() {
   const [ coordinates, setCoodinates ] = useState()
   const [ isCurrentLoactionLoaded, setCoodinatesLoaded ] = useState(false)
   const [ locationValue, setLocationValue ] = useState({})
+
   const onSuccess = (geolocation) => {
     const { latitude, longitude, altitude, accuracy} = geolocation.coords
     console.log(geolocation)
@@ -37,22 +40,27 @@ function AddressScreen() {
   }, [])
 
   return (
-    <View style={{flex: 1}}>
-    <View style={{flex: 1}}><Text>Something</Text></View>
-    
-      <MapView style={{flex: 6}}
-        initialRegion={initialRegion}
-        region={isCurrentLoactionLoaded && coordinates}
-      >
-        {isCurrentLoactionLoaded && coordinates && coordinates.latitude && <Marker coordinate={coordinates}/>}
-      </MapView>
-      <View style={{flex: 3}}>
-        <Text>Something</Text>
-        <Text>Something</Text>
-        <Text>Something</Text>
-        <Text>Something</Text>
+    <KeyboardAvoidingView style={{flex: 1,marginTop: 30}} behavior="padding" enabled>
+      <View style={{flex: 1}}>
+        <View style={[{height: 60, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, paddingRight: 10}, DefaultStyles.brandBackgroundColor]}>
+          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, width: '100%'}}>Add Address</Text>
+        </View>
+        <MapView style={{flex: 5}}
+          initialRegion={initialRegion}
+          region={isCurrentLoactionLoaded && coordinates}
+        >
+          {isCurrentLoactionLoaded && coordinates && coordinates.latitude && <Marker coordinate={coordinates}/>}
+        </MapView>
+        <View style={{flex: 3, paddingLeft: 30, paddingRight: 30, paddingTop: 5}}>
+          <FloatingInput label="Your location" style={{paddingTop: 10}}/>
+          <FloatingInput label="House No/Room no" style={{paddingTop: 10}}/>
+          <FloatingInput label="Landmark" style={{paddingTop: 10}}/>
+          <View style={{padding: 20}}>
+            <Button title="Save" onPress={() => alert('save')} />
+          </View>
+        </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
