@@ -35,9 +35,9 @@ export const updateItem = (selectedCartItem, quantity, totalPrice) => {
       "total_price": totalPrice,
     }
     return updateRecord('cart-item', selectedCartItem.id, cartItem)
-    .then((response) => dispatch(mergeItems(response.data)))
+    // .then((response) => dispatch(mergeItems(response.data)))
+    .then((response) => fetchCartItems())
     .catch(error => dispatch(onError(error)))
-    // .then((response) => fetchCartItems())
     // .catch(error => dispatch(onError(error)))
   }
 }

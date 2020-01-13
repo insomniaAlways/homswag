@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
@@ -8,21 +8,27 @@ import { FontAwesome } from '@expo/vector-icons';
 
 function ItemRow(props) {
   const { item, cartItems, cart } = props;
-  
-  const isItemAdded = () => {
-    return _.find(cartItems, ['item.id', item.id])
-  }
+  const [ isItemAdded, setIsItemAdded ] = useState(false)
 
-  const accessoryAddButton = (style, index) => (
-    <AddToCartButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems}/>
+  useEffect(() => {
+    console.log(cartItems.isLoading, cartItems)
+    if(_.find(cartItems.values, ['item.id', item.id])) {
+      setIsItemAdded(true)
+    } else {
+      setIsItemAdded(false)
+    }
+  }, [cartItems.isLoading, cartItems.values.length])
+
+  const accessoryAddButton = () => (
+    <AddToCartButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems.values}/>
   );
 
-  const accessoryModifyButton = (style, index) => (
-    <ModifyButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems} cartItem={isItemAdded(item)}/>
+  const accessoryModifyButton = () => (
+    <ModifyButton type={'cart-items'} item={item} cart={cart} cartItems={cartItems.values} cartItem={_.find(cartItems.values, ['item.id', item.id])}/>
   );
 
   let RightAction = accessoryAddButton
-  if(cartItems && cartItems.length && isItemAdded()) {
+  if(cartItems.values && cartItems.values.length && isItemAdded) {
     RightAction = accessoryModifyButton
   }
 
@@ -44,7 +50,7 @@ function ItemRow(props) {
 
 const mapStateToProps = state => {
   return  {
-    cartItems: state.cartItems.values
+    cartItems: state.cartItems
   }
 }
 

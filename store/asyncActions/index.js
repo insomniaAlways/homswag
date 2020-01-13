@@ -62,7 +62,6 @@ export function updateRecord(type, id, payload) {
 
 //DELETE Calls
 export function deleteRecord(type, id, payload) {
-  debugger
   let url = `${host}${type}/${id}`
   return axios.delete(url)
   .then(response => response)

@@ -17,7 +17,6 @@ function ModifyButton(props) {
     } else {
       props.addItemToCart(item, 1, (+item.price * 1), length+1)
     }
-    props.getCartItem()
   }
 
   const removeItem = () => {
@@ -28,7 +27,6 @@ function ModifyButton(props) {
     } else {
       props.deleteCartItem(cartItem)
     }
-    props.getCartItem()
   }
 
   return (

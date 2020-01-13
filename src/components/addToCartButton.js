@@ -11,7 +11,7 @@ function AddToCartButton(props) {
   
   const addItem = () => {
     let length = cartItems.length
-    let addedItem = _.find(cartItems, ['item_id', item.id])
+    let addedItem = _.find(cartItems, ['item.id', item.id])
     if(!_.isNil(addedItem)) {
       let quantity = (+addedItem.quantity + 1)
       let totalPrice = (+item.price * (+addedItem.quantity + 1))
@@ -19,7 +19,6 @@ function AddToCartButton(props) {
     } else {
       props.addItemToCart(item, 1, (+item.price * 1), length+1)
     }
-    props.getCartItem()
   }
   return (
     <TouchableOpacity onPress={addItem}>
