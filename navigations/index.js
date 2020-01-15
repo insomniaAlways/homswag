@@ -65,9 +65,6 @@ const DrawerNavigation = createDrawerNavigator({
   Orders: { 
     screen: OrderHistoryScreen
   },
-  BookAppointment: { 
-    screen: ScheduleAppointmentScreen
-  },
   Contact: {
     screen: ContactScreen
   }
