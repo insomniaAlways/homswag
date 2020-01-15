@@ -5,10 +5,10 @@ import SelectTimeSlot from '../components/selectTimeSlot';
 import BookingDetails from '../components/bookingDetails';
 import DefaultStyles from '../style/customStyles';
 
-function ScheduleAppointmentScreen() {
+function ScheduleAppointmentScreen(props) {
   return (
     <View style={{flex:1}}>
-      <View style={{flex: 10, padding: 10}}>
+      <View style={{flex: 1, padding: 10}}>
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
@@ -21,8 +21,8 @@ function ScheduleAppointmentScreen() {
           <BookingDetails />
         </View>
       </View>
-      <View style={[{flex: 1}, DefaultStyles.brandBackgroundColor]}>
-        <TouchableOpacity style={{alignItems: 'center', paddingTop: 15, paddingBottom: 10, width: '100%'}}>
+      <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Cart')} style={{alignItems: 'center', paddingTop: 15, paddingBottom: 10, width: '100%'}}>
           <Text style={{color: '#fff', fontSize: 16}}>Next</Text>
         </TouchableOpacity>
       </View>

@@ -14,7 +14,7 @@ function Items(props) {
   }, [category])
 
   return (
-    <ItemsList data={items} cartItems={cartItems} cart={cart}/>
+    <ItemsList data={items} cartItems={cartItems} cart={cart} navigation={navigation}/>
   );
 }
 
