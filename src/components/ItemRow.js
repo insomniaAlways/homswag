@@ -28,14 +28,14 @@ function ItemRow(props) {
 
   return (
     <View style={{flexDirection: 'row', borderBottomColor: '#eee', borderBottomWidth: 1, padding: 10}}>
-      <View style={{flex: 1, backgroundColor: "green", height: 60}}>
+      <View style={{flex: 2, backgroundColor: "#5DDE92", height: 100}}>
       </View>
-      <View style={{flex: 4, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
+      <View style={{flex: 4, justifyContent: 'flex-start', paddingLeft: 10, paddingRight: 10}}>
         <Text>{item.name}</Text>
         <Text style={{fontSize: 12}}><FontAwesome name="rupee" size={12} color="black" /> {item.price}</Text>
         <Text style={{fontSize: 12, textTransform: "capitalize"}}>{item.description}</Text>
       </View>
-      <View style={{flex: 1, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
+      <View style={{flex: 1.5, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
         <RightAction />
       </View>
     </View>

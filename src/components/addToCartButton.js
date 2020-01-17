@@ -23,8 +23,8 @@ function AddToCartButton(props) {
   }
   return (
     <TouchableOpacity onPress={addItem}>
-      <View style={[{ width: 70, padding: 5, borderRadius: 5 }, DefaultStyles.brandBackgroundColor]}>
-        <Text style={{textAlign: 'center', color: '#fff'}}>Add</Text>
+      <View style={{ width: 70, padding: 5, borderRadius: 5, backgroundColor: '#d4d4d4' }}>
+        <Text style={{textAlign: 'center', color: 'black'}}>Add</Text>
       </View>
     </TouchableOpacity>
   )
