@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AccordionView from '../components/accordian';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
+import DefaultStyles from '../style/customStyles';
 
-function PaymentScreen() {
+function PaymentScreen(props) {
   const [ paymentDetails, updatePaymentDetails] = useState({
     type: 0,
     amount: "",
@@ -38,7 +39,7 @@ function PaymentScreen() {
     )},
   ]
   const [selectedPaymentType, setSelectedPaymentType] = useState(paymentTypes[0].type)
-  console.log(selectedPaymentType)
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.paymentInfoContainer}>
@@ -55,8 +56,29 @@ function PaymentScreen() {
             setActiveSection={setSelectedPaymentType}/>
         </View>
       </View>
-      <View style={styles.paymentInfoContainer}>
-
+      <View style={styles.paymentDetailsContainer}>
+        <View style={styles.paymentDetailsBlock}>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{width: '70%'}}>Total Bill Amount</Text>
+            <Text>: </Text>
+            <Text>400 </Text>
+          </View>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{width: '70%'}}>Paying Amount</Text>
+            <Text>: </Text>
+            <Text>400 </Text>
+          </View>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{width: '70%'}}>Balance</Text>
+            <Text>: </Text>
+            <Text>400 </Text>
+          </View>
+        </View>
+      </View>
+      <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+       <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => props.navigation.navigate('Payment')}>
+         <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
+       </TouchableOpacity>
       </View>
     </View>
   )
@@ -88,8 +110,20 @@ const styles = StyleSheet.create({
     flex: 1
   },
   paymentDetailsContainer: {
+    flex: 1,
+    padding: 20
+  },
+  paymentDetailsBlock: {
     borderWidth: 1,
-    flex: 1
+    flex: 1,
+    borderColor: '#eee',
+    borderRadius: 5,
+    padding: 20
+  },
+  button: {
+    alignItems: 'center',
+    padding: 15,
+    color:'#fff'
   },
 })
 

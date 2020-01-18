@@ -48,12 +48,12 @@ function CartScreen(props) {
           </View>
         </ScrollView>
       </View>
-      <View style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
+      {/* <View style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
         <SelectAddress navigation={navigation}/>
-      </View>
-      <View style={styles.container}>
-       <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]}>
-         <Text style={{color:'#fff'}}>Chect out</Text>
+      </View> */}
+      <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+       <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
+        <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
        </TouchableOpacity>
       </View>
     </View>

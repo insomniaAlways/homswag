@@ -9,6 +9,7 @@ import ItemsScreen from '../src/screens/ItemsScreen';
 import CartScreen from '../src/screens/CartScreen';
 import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
 import PaymentScreen from '../src/screens/PaymentScreen';
+import PaymentSelectionScreen from '../src/screens/PaymentSelectionScreen';
 import DefaultStyles from '../src/style/customStyles';
 import ProfileScreen from '../src/screens/ProfileScreen';
 import AddAddressScreen from '../src/screens/AddAddressScreen';
@@ -30,6 +31,9 @@ const AppNavigator = createStackNavigator({
     },
     BookAppointment: { 
       screen: ScheduleAppointmentScreen
+    },
+    SelectPaymentType: {
+      screen: PaymentSelectionScreen
     },
     Payment: {
       screen: PaymentScreen
