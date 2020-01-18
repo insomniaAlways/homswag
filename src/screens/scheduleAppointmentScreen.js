@@ -1,24 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SelectDate from '../components/SelectDate';
 import SelectTimeSlot from '../components/selectTimeSlot';
 import BookingDetails from '../components/bookingDetails';
 import DefaultStyles from '../style/customStyles';
+import moment from 'moment';
+
 
 function ScheduleAppointmentScreen(props) {
+  const initialAppointmentDetails= {
+    date: moment().toDate(),
+    timeSlot: "9AM - 12PM",
+    name: 'Pretty Sharma',
+    phone: '9706055724',
+    address: 'ITI Layout Main Road',
+    instructions: '',
+    preferedBeautician: ''
+  }
+  const [ appointmentDetails, setAppointmentDetails ] = useState(initialAppointmentDetails)
+
+  console.log('appointmentDetails', appointmentDetails)
   return (
     <View style={{flex:1}}>
       <View style={{flex: 1, padding: 10}}>
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
-            <SelectDate />
-            <SelectTimeSlot />
+            <SelectDate appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
+            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
           </View>
         </View>
         <View style={{marginTop: 10}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Fill Details:</Text>
-          <BookingDetails />
+          <BookingDetails appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
         </View>
       </View>
       <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>

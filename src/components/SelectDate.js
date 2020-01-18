@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'react-moment';
+import moment from 'moment';
 
-const intialDate = new Date();
 const mode = 'date';
 
-function SelectDate() {
-  const [ date, setDate ] = useState(intialDate);
+function SelectDate(props) {
+  const { appointmentDetails, setAppointmentDetails } = props
+  const [ selectedDate, setSelectedDate ] = useState()
+
+  useEffect(() => {
+    if(appointmentDetails && appointmentDetails.date) {
+      if(moment(appointmentDetails.date).isSame(moment(), 'day')) {
+        setSelectedDate('today')
+      } else if (moment(appointmentDetails.date).isSame(moment().add(1, 'd'), 'day')) {
+        setSelectedDate('tomorrow')
+      } else {
+        setSelectedDate('date')
+      }
+    }
+  }, [appointmentDetails.date])
+
+  const [ date, setDate ] = useState(appointmentDetails.date);
   const [ isDateSelected, setDateSelected ] = useState(false);
   const [ isDatePickerVisible, setDatePickeVisibility ] = useState(false);
   const [ selectedStyle, setStyle ] = useState()
@@ -15,24 +30,24 @@ function SelectDate() {
   const onSelectDate = (event, selectDate = date) => {
     setDatePickeVisibility(false)
     setDate(selectDate);
+    setAppointmentDetails({...appointmentDetails, date: moment(selectDate).toDate()})
     setDateSelected(true)
   }
-
   return (
     <View style={{flexDirection: 'row', justifyContent: 'center', margin: 10}}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Text>Today</Text>
+      <View style={selectedDate == 'today' ? styles.selectedButtonContainer : styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, date: moment()})}>
+          <Text style={selectedDate == 'today' ? {color: 'white'}: {color: 'black'}}>Today</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Text>Tomorrow</Text>
+      <View style={selectedDate == 'tomorrow' ? styles.selectedButtonContainer : styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, date: moment().add(1, 'd')})}>
+          <Text style={selectedDate == 'tomorrow' ? {color: 'white'}: {color: 'black'}}>Tomorrow</Text>
         </TouchableOpacity>
       </View>
-      <View style={[styles.buttonContainer, { marginRight: 0}]}>
+      <View style={selectedDate == 'date' ? styles.selectedDateSelectButton : styles.dateSelectButton}>
         <TouchableOpacity style={styles.button} onPress={() => setDatePickeVisibility(true)}>
-          <Text>
+          <Text style={selectedDate == 'date' ? {color: 'white'}: {color: 'black'}}>
           { !isDateSelected ? 'Date' :
             <Moment element={Text}
               date={date}
@@ -63,10 +78,42 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
     marginRight: 10,
   },
+  selectedButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "green",
+    marginRight: 10,
+    color: 'white'
+  },
   button: {
     alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 10,
     width: '100%'
-  }
+  },
+  selectedButton: {
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    width: '100%',
+    color: 'white'
+  },
+  dateSelectButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#eee",
+    marginRight: 10,
+    marginRight: 0
+  },
+  selectedDateSelectButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "green",
+    marginRight: 10,
+    color: 'white',
+    marginRight: 0
+  },
 })
