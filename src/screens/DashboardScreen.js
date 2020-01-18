@@ -26,6 +26,11 @@ function Dashboard(props) {
         <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
           <PromoView />
         </View>
+        <View style={{marginBottom: 50, marginTop: 10, padding: 20, borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#ABDAF6", marginLeft: 20, marginRight: 20}}>
+          <Text style={{textAlign: "center", fontStyle: 'italic', color: '#e84393', fontSize: 18}}>
+            An experience you’ll never forget at the cutting edge of contemporary hair & beauty
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
