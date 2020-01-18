@@ -5,7 +5,7 @@ import { DrawerItems } from 'react-navigation-drawer';
 import { StyleSheet, ScrollView, View, Image, Text, ImageBackground } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
 
 const SideDrawer = props => (
@@ -24,8 +24,11 @@ const SideDrawer = props => (
           </View>
         </ImageBackground>
         <DrawerItems {...props} labelStyle={{width: '100%'}}/>
-        <TouchableOpacity style={styles.logout}>
-          <Text style={styles.logoutText}>Logout</Text>
+        <TouchableOpacity>
+          <View style={styles.logout}>
+            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
+            <Text style={styles.logoutText}>Logout</Text>
+          </View>
         </TouchableOpacity>{}
         <View style={styles.backButtonContainer}>
           <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
@@ -72,12 +75,10 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   logout: {
-    // justifyContent: 'flex-end',
-    // paddingLeft: 16,
-    // fontWeight: 'bold',
-    // color: '#000000',
-    // margin: 16,
-    // width: '100%'
+    backgroundColor: "transparent",
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 0,
   },
   logoutText: {
     fontWeight: 'bold',

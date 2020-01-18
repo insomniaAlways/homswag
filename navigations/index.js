@@ -20,6 +20,9 @@ import SideDrawer from '../src/components/sideDrawer';
 import AddressScreen from '../src/screens/AddressScreen';
 import HeaderRightView from '../src/components/headerRight';
 
+import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
+
+
 const AppNavigator = createStackNavigator({
     Dashboard: {
       screen: DashboardScreen
@@ -69,20 +72,41 @@ const AppNavigator = createStackNavigator({
 const DrawerNavigation = createDrawerNavigator({
   Dashboard: {
     screen: AppNavigator,
+    navigationOptions: ({tintColor}) => {
+      return {
+        drawerIcon: <MaterialCommunityIcons name="monitor-dashboard" size={18} color={tintColor}/>
+      }
+    }
   },
   Profile: {
     screen: ProfileScreen,
+    navigationOptions: ({tintColor}) => {
+      return {
+        drawerIcon: <AntDesign name="profile" size={18} color={tintColor}/>
+      }
+    }
   },
   Address: {
     screen: AddressScreen,
+    navigationOptions: ({tintColor}) => {
+      return {
+        drawerIcon: <FontAwesome name="address-book-o" size={18} color={tintColor}/>
+      }
+    }
   },
   Orders: { 
-    screen: OrderHistoryScreen
+    screen: OrderHistoryScreen,
+    navigationOptions: ({tintColor}) => {
+      return {
+        drawerIcon: <FontAwesome name="reorder" size={18} color={tintColor}/>
+      }
+    }
   },
   About: {
     screen: AboutScreen,
-    navigationOptions: () => ({
+    navigationOptions: ({tintColor}) => ({
       title: `About Us`,
+      drawerIcon: <FontAwesome name="home" size={18} color={tintColor}/>
     }),
   }
 }, { contentComponent: SideDrawer });

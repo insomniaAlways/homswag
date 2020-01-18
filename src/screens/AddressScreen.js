@@ -4,6 +4,8 @@ import { View, Text, SafeAreaView, StyleSheet, Image, FlatList, Button } from 'r
 import { fetchOrder } from '../../store/actions/orderActions'
 import OrderList from '../components/orderList';
 import DefaultStyles from '../style/customStyles';
+import Constants from 'expo-constants';
+
 
 function AddressScreen(props) {
   const { addresses } = props;
@@ -17,7 +19,11 @@ function AddressScreen(props) {
         />
       )
     } else {
-      return <Text>No order found</Text>
+      return (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text>No order found</Text>
+        </View>
+      )
     }
   }
   return (
@@ -35,7 +41,7 @@ function AddressScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: Constants.statusBarHeight,
     flex: 1
   }
 })
