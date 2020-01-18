@@ -4,6 +4,7 @@ import { View, Text, SafeAreaView, StyleSheet, Image } from 'react-native';
 import { fetchOrder } from '../../store/actions/orderActions'
 import OrderList from '../components/orderList';
 import DefaultStyles from '../style/customStyles';
+import Constants from 'expo-constants';
 
 function OrderHistoryScreen(props) {
   const { orders } = props;
@@ -22,7 +23,7 @@ function OrderHistoryScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: Constants.statusBarHeight,
     flex: 1
   }
 })

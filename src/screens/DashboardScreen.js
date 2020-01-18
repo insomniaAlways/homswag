@@ -7,6 +7,7 @@ import { getUser } from '../../store/actions/authenticationAction';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
 import OfferView from '../components/offerView';
+import PromoView from '../components/promoView';
 
 function Dashboard(props) {
   useEffect(() => {
@@ -22,8 +23,8 @@ function Dashboard(props) {
           <OfferView />
         </View>
         <CategoryList data={props.categories.values} navigation={props.navigation}/>
-        <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
-          <OfferView />
+        <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
+          <PromoView />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -53,7 +53,7 @@ function ContactScreen(props) {
       <View style={styles.backButtonContainer}>
         <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
           <View style={styles.backButton}>
-            <FontAwesome name="angle-left" size={20} color="white" />
+            <FontAwesome name="angle-right" size={20} color="white" />
           </View>
         </TouchableOpacity>
       </View>
