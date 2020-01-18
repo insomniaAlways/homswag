@@ -38,7 +38,6 @@ function PaymentScreen() {
     )},
   ]
   const [selectedPaymentType, setSelectedPaymentType] = useState(paymentTypes[0].type)
-  console.log(selectedPaymentType)
   return (
     <View style={{flex: 1}}>
       <View style={styles.paymentInfoContainer}>

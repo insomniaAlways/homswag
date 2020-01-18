@@ -21,7 +21,7 @@ import HeaderRightView from '../src/components/headerRight';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
-      screen: DashboardScreen,
+      screen: DashboardScreen
     },
     Items: {
       screen: ItemsScreen,
@@ -30,16 +30,25 @@ const AppNavigator = createStackNavigator({
       screen: CartScreen,
     },
     BookAppointment: { 
-      screen: ScheduleAppointmentScreen
+      screen: ScheduleAppointmentScreen,
+      navigationOptions: () => ({
+        title: `Book Appointment`,
+      }),
     },
     SelectPaymentType: {
-      screen: PaymentSelectionScreen
+      screen: PaymentSelectionScreen,
+      navigationOptions: () => ({
+        title: `Payment Type`,
+      }),
     },
     Payment: {
       screen: PaymentScreen
     },
     AddAddress: {
-      screen: AddAddressScreen
+      screen: AddAddressScreen,
+      navigationOptions: () => ({
+        title: `Add Address`,
+      }),
     }
   },
   {

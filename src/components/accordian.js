@@ -30,7 +30,6 @@ export default function AccordionView (props) {
     // if(!state.activeSections.length) {
     //   return false
     // }
-    console.log('renderHeader', section, isActive , state.activeSections)
     return (
       <Animatable.View
         duration={400}
