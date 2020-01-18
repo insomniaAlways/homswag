@@ -6,7 +6,6 @@ import BookingDetails from '../components/bookingDetails';
 import DefaultStyles from '../style/customStyles';
 import moment from 'moment';
 
-
 function ScheduleAppointmentScreen(props) {
   const initialAppointmentDetails= {
     date: moment().toDate(),
@@ -18,10 +17,8 @@ function ScheduleAppointmentScreen(props) {
     preferedBeautician: ''
   }
   const [ appointmentDetails, setAppointmentDetails ] = useState(initialAppointmentDetails)
-
-  console.log('appointmentDetails', appointmentDetails)
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <View style={{flex: 1, padding: 10}}>
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
