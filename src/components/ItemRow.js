@@ -31,9 +31,12 @@ function ItemRow(props) {
       <View style={{flex: 2, backgroundColor: "#5DDE92", height: 100}}>
       </View>
       <View style={{flex: 4, justifyContent: 'flex-start', paddingLeft: 10, paddingRight: 10}}>
-        <Text>{item.name}</Text>
-        <Text style={{fontSize: 12}}><FontAwesome name="rupee" size={12} color="black" /> {item.price}</Text>
-        <Text style={{fontSize: 12, textTransform: "capitalize"}}>{item.description}</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 16, color: "#1C2833"}}>{item.name}</Text>
+        {/* <View style={{flexDirection: 'row'}}> */}
+          <Text style={{fontSize: 14, textDecorationLine: 'line-through', marginRight: 20}}><FontAwesome name="rupee" size={12} color="black" /> {item.mrp_price}</Text>
+          <Text style={{fontSize: 14, fontWeight: 'bold'}}><FontAwesome name="rupee" size={12} color="black" /> {item.price}</Text>
+        {/* </View> */}
+          <Text style={{fontSize: 12, textTransform: "capitalize"}}>{item.description}</Text>
       </View>
       <View style={{flex: 1.5, justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
         <RightAction />

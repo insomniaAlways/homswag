@@ -52,9 +52,9 @@ function CartScreen(props) {
         <SelectAddress navigation={navigation}/>
       </View> */}
       <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-       <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
-        <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
-       </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
+          <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

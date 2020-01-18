@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, SafeAreaView, StyleSheet, Image, FlatList, Button } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
 import { fetchOrder } from '../../store/actions/orderActions'
-import OrderList from '../components/orderList';
 import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
-
+import AddAddressModal from '../components/addAddressModal';
+import CustomHeader from '../components/customHeader';
 
 function AddressScreen(props) {
   const { addresses } = props;
+  const [ modalVisible, setModalVisible ] = useState(false)
 
   const AddressList = function() {
     if(addresses && Array.isArray(addresses) && addresses.length) {
@@ -27,15 +28,26 @@ function AddressScreen(props) {
     }
   }
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <View style={[{height: 60, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, paddingRight: 10}, DefaultStyles.brandBackgroundColor]}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, width: '100%'}}>Address</Text>
-        </View>
+    <View style={{flex: 1}}>
+      <CustomHeader {...props}/>
+      <SafeAreaView style={{flex: 1}}>
         <AddressList />
-        <Button title="Add Adress" onPress={() => props.navigation.navigate('AddAddress')} />
-      </View>
-    </SafeAreaView>
+        <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => setModalVisible(true)}>
+            <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(false);
+          }}>
+            <AddAddressModal setModalVisible={setModalVisible} modalVisible={modalVisible}/>
+        </Modal>
+      </SafeAreaView>
+    </View>
   )
 }
 
@@ -43,7 +55,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
     flex: 1
-  }
+  },
+  button: {
+    alignItems: 'center',
+    padding: 15,
+    color:'#fff'
+  },
 })
 
 mapStateToProps = state => {

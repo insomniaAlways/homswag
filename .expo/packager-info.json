@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 39864,
-  "expoServerNgrokUrl": "https://fg-gi7.anonymous.homswag.exp.direct",
-  "packagerNgrokUrl": "https://packager.fg-gi7.anonymous.homswag.exp.direct",
-  "ngrokPid": 39880,
+  "packagerPid": 52023,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
