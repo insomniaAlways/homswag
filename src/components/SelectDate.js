@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "#eee",
-    marginRight: 10,
     marginRight: 0
   },
   selectedDateSelectButton: {
@@ -112,7 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "green",
-    marginRight: 10,
     color: 'white',
     marginRight: 0
   },
