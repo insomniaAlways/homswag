@@ -24,7 +24,7 @@ function ContactScreen(props) {
       </View>
       <View style={{flex: 3, justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 40, paddingRight: 40}}>
         <Text style={{fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>About HomSwag</Text>
-        <Text style={{textAlign: 'center', marginTop: 10}}>
+        <Text style={{textAlign: 'center', marginTop: 10, fontStyle: 'italic'}}>
           HomSwag we have lunch professional salon services at home with very enthusiastic and Professionally educated teams
           from known academy VIDAL SASSOON And well experienced from industry, lunched with all salon services.
         </Text>
