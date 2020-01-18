@@ -15,6 +15,7 @@ import ProfileScreen from '../src/screens/ProfileScreen';
 import AddAddressScreen from '../src/screens/AddAddressScreen';
 import OrderHistoryScreen from '../src/screens/OrderHistoryScreen';
 import ContactScreen from '../src/screens/ContactScreen';
+import AboutScreen from '../src/screens/AboutScreen';
 import SideDrawer from '../src/components/sideDrawer';
 import AddressScreen from '../src/screens/AddressScreen';
 import HeaderRightView from '../src/components/headerRight';
@@ -78,8 +79,11 @@ const DrawerNavigation = createDrawerNavigator({
   Orders: { 
     screen: OrderHistoryScreen
   },
-  Contact: {
-    screen: ContactScreen
+  About: {
+    screen: AboutScreen,
+    navigationOptions: () => ({
+      title: `About Us`,
+    }),
   }
 }, { contentComponent: SideDrawer });
 
