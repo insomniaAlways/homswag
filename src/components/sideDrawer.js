@@ -7,53 +7,49 @@ import ProfilePic from '../../assets/images/profilePic.jpeg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
+import Constants from 'expo-constants';
+
 
 const SideDrawer = props => (
-  <ScrollView>
-    <SafeAreaProvider>
-      <SafeAreaView
-        style={styles.container}
-        forceInset={{ top: 'always', horizontal: 'never' }}
-      >
-        <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
-          <View style={styles.profilePic}>
-            <Image style={styles.profilePic} source={ProfilePic}/>
-          </View>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>Hello, Pretty</Text>
-          </View>
-        </ImageBackground>
-        <DrawerItems {...props} labelStyle={{width: '100%'}}/>
-        <TouchableOpacity>
-          <View style={styles.logout}>
-            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
-            <Text style={styles.logoutText}>Logout</Text>
-          </View>
-        </TouchableOpacity>{}
-        <View style={styles.backButtonContainer}>
-          <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-            <View style={styles.backButton}>
-              <FontAwesome name="angle-left" size={20} color="white" />
-            </View>
-          </TouchableOpacity>
+  <View style={styles.container}>
+    <View style={{flex: 1}}>
+      <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
+        <View style={styles.profilePic}>
+          <Image style={styles.profilePic} source={ProfilePic}/>
         </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  </ScrollView>
+        <View style={styles.nameContainer}>
+          <Text style={styles.name}>Hello, Pretty</Text>
+        </View>
+      </ImageBackground>
+      <DrawerItems {...props} labelStyle={{width: '100%'}}/>
+      <TouchableOpacity>
+        <View style={styles.logout}>
+          <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
+          <Text style={styles.logoutText}>Logout</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.backButtonContainer}>
+      <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
+        <View style={styles.backButton}>
+          <FontAwesome name="angle-left" size={20} color="white" />
+        </View>
+      </TouchableOpacity>
+    </View>
+  </View>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    // borderWidth: 1
   },
   profilePicContainer: {
-    height: 200,
+    height: 230,
     // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    paddingLeft: 30
+    paddingLeft: 30,
+    paddingTop: Constants.statusBarHeight
   },
   profilePic: {
     height: 100,
@@ -91,10 +87,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // borderWidth: 1,
     alignItems: "center",
-    marginTop: 50,
+    marginBottom: 30,
     width: '100%'
-    // position: 'absolute',
-    // bottom: 0
   },
 
   backButton: {
