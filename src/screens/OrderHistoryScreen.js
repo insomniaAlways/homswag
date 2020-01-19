@@ -5,19 +5,18 @@ import { fetchOrder } from '../../store/actions/orderActions'
 import OrderList from '../components/orderList';
 import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
+import CustomHeader from '../components/customHeader';
 
 function OrderHistoryScreen(props) {
   const { orders } = props;
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <View style={[{height: 60, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, paddingRight: 10}, DefaultStyles.brandBackgroundColor]}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, width: '100%'}}>Order History</Text>
-        </View>
+    <View style={{flex: 1}}>
+      <CustomHeader {...props}/>
+      <SafeAreaView style={{flex: 1}}>
         <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Orders: </Text></View>
         <OrderList orders={orders}/>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   )
 }
 

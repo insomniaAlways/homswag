@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
+import { FontAwesome } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 
-function ProfileScreen() {
+function ProfileScreen(props) {
   return (
-    <ScrollView>
+    <View style={{flex: 1}}>
       <View style={styles.container}>
         <View style={styles.profilePicContainer}>
           <View style={styles.profilePic}>
@@ -24,13 +26,23 @@ function ProfileScreen() {
           <PlaceHolderTextInput placeholder="Address" styles={styles.placeholderInput}/>
         </View>
       </View>
-    </ScrollView>
+      <View style={styles.backButtonContainer}>
+        <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
+          <View style={styles.backButton}>
+            <FontAwesome name="angle-right" size={20} color="white" />
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30
+    paddingTop: Constants.statusBarHeight,
+    flex: 1,
+    height: '100%',
+    // borderWidth: 1
   },
   profilePicContainer: {
     height: 250,
@@ -55,6 +67,7 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
   detialsContainer: {
+    // flex: 1,
     flexDirection: 'column',
     height: 250,
     // borderWidth: 1,
@@ -65,6 +78,26 @@ const styles = StyleSheet.create({
   },
   placeholderInput: {
     width: '80%'
+  },
+  backButtonContainer: {
+    // flex: 1,
+    justifyContent: 'center',
+    alignContent: 'flex-end',
+    // borderWidth: 1,
+    alignItems: "center",
+    marginBottom: 30,
+    width: '100%',
+    // position: 'absolute',
+    // bottom: 0
+  },
+
+  backButton: {
+    paddingTop: 7,
+    paddingBottom: 7,
+    width: 150,
+    alignItems: 'center',
+    borderRadius: 50,
+    backgroundColor: '#6495ed'
   }
 })
 
