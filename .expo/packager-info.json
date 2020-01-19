@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 1191,
+  "packagerPort": 19003,
+  "packagerPid": 9270,
   "expoServerNgrokUrl": "https://fg-gi7.anonymous.homswag.exp.direct",
   "packagerNgrokUrl": "https://packager.fg-gi7.anonymous.homswag.exp.direct",
-  "ngrokPid": 1233,
+  "ngrokPid": 9286,
   "webpackServerPort": null
 }

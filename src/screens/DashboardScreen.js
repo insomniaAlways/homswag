@@ -8,6 +8,7 @@ import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
 import OfferView from '../components/offerView';
 import PromoView from '../components/promoView';
+import TabViews from '../components/tabs';
 
 function Dashboard(props) {
   useEffect(() => {
@@ -22,7 +23,11 @@ function Dashboard(props) {
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView />
         </View>
-        <CategoryList data={props.categories.values} navigation={props.navigation}/>
+        <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
+        <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
+          <TabViews {...props}/>
+        </View>
+        {/* <CategoryList data={props.categories.values} navigation={props.navigation}/> */}
         <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
           <PromoView />
         </View>
