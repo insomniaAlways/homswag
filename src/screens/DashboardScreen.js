@@ -6,6 +6,7 @@ import CategoryList from '../components/categoryList';
 import { getUser } from '../../store/actions/authenticationAction';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
+import { fetchAllItems } from '../../store/actions/itemActions';
 import OfferView from '../components/offerView';
 import PromoView from '../components/promoView';
 import TabViews from '../components/tabs';
@@ -18,6 +19,7 @@ function Dashboard(props) {
     // props.getUser()
     props.getCart()
     props.getAllCartItems()
+    props.getAllItems()
   }, [])
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -32,7 +34,7 @@ function Dashboard(props) {
             <Spinner status='info'/>
           </View> : 
           <Animatable.View
-            duration={700}
+            duration={800}
             animation={'fadeIn'}
             style={{height: '100%'}}
             >
@@ -64,7 +66,8 @@ mapDispatchToProps = dispatch => {
     getAllCategories: () => dispatch(fetchCategories()),
     getUser: () => dispatch(getUser()),
     getCart: ()=> dispatch(fetchCart()),
-    getAllCartItems: () => dispatch(fetchCartItems())
+    getAllCartItems: () => dispatch(fetchCartItems()),
+    getAllItems: () => dispatch(fetchAllItems())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

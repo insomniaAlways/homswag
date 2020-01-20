@@ -1,4 +1,4 @@
-import { FETCH_ITEMS_REQUEST, FETCH_ITEMS_SUCCESS, FETCH_ITEMS_ERROR } from '../actionTypes';
+import { ITEM_REQUEST_INITIATED, FETCH_ITEMS_SUCCESS, FETCH_ITEMS_ERROR } from '../actionTypes';
 import { findAll } from '../asyncActions/index';
 
 export const fetchItems = (category_id) => {
@@ -11,9 +11,18 @@ export const fetchItems = (category_id) => {
   }
 }
 
+export const fetchAllItems = () => {
+  return function(dispatch) {
+    dispatch(onStart())
+    return findAll('item')
+    .then((response) => dispatch(onSuccess(response.data)))
+    .catch((e) => dispatch(e))
+  }
+}
+
 export const onStart = () => {
   return {
-    type: FETCH_ITEMS_REQUEST
+    type: ITEM_REQUEST_INITIATED
   }
 }
 
