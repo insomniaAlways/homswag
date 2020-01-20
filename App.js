@@ -12,7 +12,26 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 });
 
+import { NativeModules } from 'react-native'
+
+// if (__DEV__) {
+// NativeModules.DevSettings.setIsDebuggingRemotely(true)
+// }
+
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+    GLOBAL.originalXMLHttpRequest :
+    GLOBAL.XMLHttpRequest;
+
+  // fetch logger
+global._fetch = fetch;
+global.fetch = function (uri, options, ...args) {
+  return global._fetch(uri, options, ...args).then((response) => {
+    return response;
+  });
+};
+
 export default class App extends Component {
+  
   render() {
     return (
       <Provider store={store}>

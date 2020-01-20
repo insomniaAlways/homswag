@@ -3,7 +3,9 @@ import itemReducers from './reducers/itemReducers';
 import categoryReducers from './reducers/categoryReducers';
 import authReducers from './reducers/authenticationReducer';
 import cartReducers from './reducers/cartReducers';
-import cartItems from './reducers/cartItemReducers';
+import cartItemReducers from './reducers/cartItemReducers';
+import orderReducers from './reducers/orderReducers';
+import addressReducers from './reducers/addressReducers';
 import { initialState } from './intialValues';
 
 import thunk from 'redux-thunk';
@@ -13,7 +15,9 @@ const rootReducer = combineReducers({
   categories: categoryReducers,
   user: authReducers,
   cart: cartReducers,
-  cartItems: cartItems
+  cartItems: cartItemReducers,
+  orders: orderReducers,
+  addresses: addressReducers
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

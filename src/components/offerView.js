@@ -3,14 +3,15 @@ import { View, Text, ScrollView } from 'react-native';
 import OfferCard from './offerCard';
 
 function OfferView() {
+  let number = 1033
   return (
-    <ScrollView horizontal={true}>
-      <OfferCard id={211} style={{marginLeft: 10}}/>
-      <OfferCard id={451}/>
-      <OfferCard id={452}/>
-      <OfferCard id={453}/>
-      <OfferCard id={454}/>
-      <OfferCard id={455}/>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <OfferCard id={number} style={{marginLeft: 10}}/>
+      <OfferCard id={number + 2}/>
+      <OfferCard id={number + 3}/>
+      <OfferCard id={number + 7}/>
+      <OfferCard id={number + 5}/>
+      <OfferCard id={number + 6}/>
     </ScrollView>
   )
 }

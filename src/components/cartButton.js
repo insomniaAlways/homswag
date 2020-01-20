@@ -8,10 +8,13 @@ import { Badge } from 'react-native-elements';
 function CartButton(props) {
   const { navigate } = props.navigation
   const { cartItems } = props
-  let totalcCartItem = cartItems.length
-  
+  let totalcCartItem = 0
+  if(cartItems && Array.isArray(cartItems)) {
+    totalcCartItem = cartItems.length
+  }
+
   useEffect(() => {
-    if(cartItems && cartItems.length) {
+    if(cartItems && Array.isArray(cartItems) && cartItems.length) {
       totalcCartItem = cartItems.length
     }
   }, [cartItems.length])
@@ -31,7 +34,7 @@ function CartButton(props) {
 mapStateToProps = state => {
   return {
     cart: state.cart,
-    cartItems: state.cartItems.values
+    cartItems: state.cartItems.values && Array.isArray(state.cartItems.values) ? state.cartItems.values : []
   }
 }
 

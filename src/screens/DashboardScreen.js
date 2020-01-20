@@ -7,21 +7,35 @@ import { getUser } from '../../store/actions/authenticationAction';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
 import OfferView from '../components/offerView';
+import PromoView from '../components/promoView';
+import TabViews from '../components/tabs';
 
 function Dashboard(props) {
   useEffect(() => {
     props.getAllCategories()
-    props.getUser()
+    // props.getUser()
     props.getCart()
     props.getAllCartItems()
   }, [])
   return (
-    <SafeAreaView style={{flex: 1}} indicatorStyle={"white"}>
-      <ScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView />
         </View>
-        <CategoryList data={props.categories.values} navigation={props.navigation}/>
+        <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
+        <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
+          <TabViews {...props}/>
+        </View>
+        {/* <CategoryList data={props.categories.values} navigation={props.navigation}/> */}
+        <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
+          <PromoView />
+        </View>
+        <View style={{marginBottom: 50, marginTop: 10, padding: 20, borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#ABDAF6", marginLeft: 20, marginRight: 20}}>
+          <Text style={{textAlign: "center", fontStyle: 'italic', color: '#e84393', fontSize: 18}}>
+            An experience you’ll never forget at the cutting edge of contemporary hair & beauty
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

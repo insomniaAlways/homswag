@@ -3,19 +3,25 @@ import { View, TextInput, StyleSheet } from 'react-native';
 import { Input } from '@ui-kitten/components';
 
 function PlaceHolderTextInput(props) {
-  const [ value, setValue ] = useState('');
+  const { setValue, previousState, itemKey } = props;
+  const { value } = props;
+
+  const updateText = function(text) {
+    if(previousState) {
+      setValue({...previousState, [itemKey]: text})
+    }
+  }
+
   const [ inputStyle, setStyle ] = useState(styles.placeholder);
   return (
-    <View style={{padding: 10}}>
       <TextInput
-      style={inputStyle}
-      onChangeText={text => setValue(text)}
-      placeholder={props.placeholder}
-      onFocus={() => setStyle(styles.input)}
-      onBlur={() => setStyle(styles.placeholder)}
-      value={value}
-    />
-    </View>
+        style={[inputStyle, props.styles]}
+        onChangeText={text => updateText(text)}
+        placeholder={props.placeholder}
+        onFocus={() => setStyle(styles.input)}
+        onBlur={() => setStyle(styles.placeholder)}
+        value={value}
+      />
   )
 }
 

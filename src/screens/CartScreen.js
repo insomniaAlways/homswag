@@ -8,6 +8,9 @@ import { fetchCart } from '../../store/actions/cartAction';
 import DatePickerComponent from '../components/datePickerComponent';
 import ItemSmallCard from '../components/itemSmallCard';
 import PriceBreakDown from '../components/priceBreackDown';
+import SelectAddress from '../components/selectaddress';
+import DefaultStyles from '../style/customStyles';
+import AppointmentDetails from '../components/appointmentDetails';
 
 function CartScreen(props) {
   const { navigation, cart, user, cartItems } = props;
@@ -20,30 +23,23 @@ function CartScreen(props) {
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flex: 11}}>
-        <ScrollView>
+      <View style={{flex: 14}}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
           <CartItemList cart={cart.values} cartItems={cartItems.values}/>
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
-          <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 16, fontWeight: "bold"}}>Appointment Date</Text>
-            <Text style={{fontSize: 16}}>21/11/19</Text>
-          </View>
-          <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 16, fontWeight: "bold"}}>Time stot</Text>
-            <Text style={{fontSize: 16}}>9am-12pm</Text>
-          </View>
+          <AppointmentDetails />
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
           <View style={{paddingLeft: 10, paddingTop: 10}}>
             <Text style={{paddingBottom: 10}}>People also search for:</Text>
-            <ScrollView horizontal={true}>
-              <ItemSmallCard />
-              <ItemSmallCard />
-              <ItemSmallCard />
-              <ItemSmallCard />
-              <ItemSmallCard />
-              <ItemSmallCard />
-              <ItemSmallCard />
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <ItemSmallCard id={211}/>
+              <ItemSmallCard id={212}/>
+              <ItemSmallCard id={213}/>
+              <ItemSmallCard id={214}/>
+              <ItemSmallCard id={215}/>
+              <ItemSmallCard id={216}/>
+              <ItemSmallCard id={217}/>
             </ScrollView>
           </View>
           <View style={{padding: 10}}>
@@ -52,12 +48,13 @@ function CartScreen(props) {
           </View>
         </ScrollView>
       </View>
-      <View style={styles.container}>
-       <TouchableOpacity
-         style={styles.button}
-       >
-         <Text style={{color:'#fff'}}>Chect out</Text>
-       </TouchableOpacity>
+      {/* <View style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
+        <SelectAddress navigation={navigation}/>
+      </View> */}
+      <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+        <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
+          <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -87,7 +84,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#47d9a8',
     padding: 15,
     color:'#fff'
   },
