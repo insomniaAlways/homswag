@@ -6,9 +6,12 @@ import CategoryList from '../components/categoryList';
 import { getUser } from '../../store/actions/authenticationAction';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
+import { fetchAllItems } from '../../store/actions/itemActions';
 import OfferView from '../components/offerView';
 import PromoView from '../components/promoView';
 import TabViews from '../components/tabs';
+import * as Animatable from 'react-native-animatable';
+import { Spinner } from '@ui-kitten/components';
 
 function Dashboard(props) {
   useEffect(() => {
@@ -16,6 +19,7 @@ function Dashboard(props) {
     // props.getUser()
     props.getCart()
     props.getAllCartItems()
+    props.getAllItems()
   }, [])
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -25,9 +29,19 @@ function Dashboard(props) {
         </View>
         <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
         <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
-          <TabViews {...props}/>
+        {props.categories.isLoading ? 
+          <View style={{height: 600, justifyContent: 'center', alignItems: 'center'}}>
+            <Spinner status='info'/>
+          </View> : 
+          <Animatable.View
+            duration={800}
+            animation={'fadeIn'}
+            style={{height: '100%'}}
+            >
+            <TabViews {...props}/>
+          </Animatable.View>
+        }
         </View>
-        {/* <CategoryList data={props.categories.values} navigation={props.navigation}/> */}
         <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
           <PromoView />
         </View>
@@ -52,7 +66,8 @@ mapDispatchToProps = dispatch => {
     getAllCategories: () => dispatch(fetchCategories()),
     getUser: () => dispatch(getUser()),
     getCart: ()=> dispatch(fetchCart()),
-    getAllCartItems: () => dispatch(fetchCartItems())
+    getAllCartItems: () => dispatch(fetchCartItems()),
+    getAllItems: () => dispatch(fetchAllItems())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
