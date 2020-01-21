@@ -3,6 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AccordionView from '../components/accordian';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
 import DefaultStyles from '../style/customStyles';
+import {
+  Layout,
+  Radio,
+  RadioGroup,
+} from '@ui-kitten/components';
 
 function PaymentScreen(props) {
   const [ paymentDetails, updatePaymentDetails] = useState({
@@ -10,6 +15,11 @@ function PaymentScreen(props) {
     amount: "",
     totalAmount: 0
   })
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const onCheckedChange = (index) => {
+    setSelectedIndex(index);
+  };
   const paymentTypes = [
     {title: "Pay Full", type: 1, content: (
       <View>
@@ -49,11 +59,20 @@ function PaymentScreen(props) {
       </View>
       <View style={styles.paymentSelectionContainer}>
         <View style={styles.paymentSelectionBlock}>
-          <AccordionView 
+          <RadioGroup
+            selectedIndex={selectedIndex}
+            onChange={onCheckedChange}>
+            {paymentTypes.map(type => (
+              <Radio style={styles.radio} text={type.title}>
+                {type.content}
+              </Radio>
+            ))}
+          </RadioGroup>
+          {/* <AccordionView 
             content={paymentTypes}
             containerStyles={{paddingLeft: 10,paddingRight: 10, justifyContent: 'flex-start', paddingTop: 0}}
             activeSection={selectedPaymentType}
-            setActiveSection={setSelectedPaymentType}/>
+            setActiveSection={setSelectedPaymentType}/> */}
         </View>
       </View>
       <View style={styles.paymentDetailsContainer}>
@@ -124,6 +143,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     color:'#fff'
+  },
+  text: {
+    marginVertical: 8,
+  },
+  radio: {
+    marginVertical: 8,
   },
 })
 

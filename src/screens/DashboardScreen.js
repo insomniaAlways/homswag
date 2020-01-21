@@ -29,18 +29,17 @@ function Dashboard(props) {
         </View>
         <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
         <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
-        {props.categories.isLoading ? 
-          <View style={{height: 600, justifyContent: 'center', alignItems: 'center'}}>
-            <Spinner status='info'/>
-          </View> : 
-          <Animatable.View
-            duration={800}
-            animation={'fadeIn'}
-            style={{height: '100%'}}
-            >
-            <TabViews {...props}/>
-          </Animatable.View>
-        }
+          {props.categories.isLoading ? 
+            <View style={{height: 600, justifyContent: 'center', alignItems: 'center'}}>
+              <Spinner status='info'/>
+            </View> : 
+            <Animatable.View
+              duration={800}
+              animation={'fadeIn'}
+              >
+              <TabViews {...props}/>
+            </Animatable.View>
+          }
         </View>
         <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
           <PromoView />
