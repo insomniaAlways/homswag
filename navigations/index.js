@@ -21,6 +21,7 @@ import AddressScreen from '../src/screens/AddressScreen';
 import HeaderRightView from '../src/components/headerRight';
 
 import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
+import ReferralScreen from '../src/screens/ReferralScreen';
 
 
 const AppNavigator = createStackNavigator({
@@ -99,6 +100,14 @@ const DrawerNavigation = createDrawerNavigator({
     navigationOptions: ({tintColor}) => {
       return {
         drawerIcon: <FontAwesome name="reorder" size={18} color={tintColor}/>
+      }
+    }
+  },
+  Referral: { 
+    screen: ReferralScreen,
+    navigationOptions: ({tintColor}) => {
+      return {
+        drawerIcon: <FontAwesome name="slideshare" size={18} color={tintColor}/>
       }
     }
   },

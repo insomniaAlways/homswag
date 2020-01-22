@@ -6,15 +6,32 @@ import { Linking } from 'expo';
 
 function ContactScreen(props) {
 
+  const chechAccessibity = (url) => {
+    Linking.canOpenURL(url)
+    .then((supported) => {
+      if (!supported) {
+        console.log("Can't handle url: " + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    })
+    .catch((err) => console.error('An error occurred', err));
+  }
+
   const openDialScreen = () => {
     let number = '';
-    number = 'tel:${+916366505567}'; 
-    Linking.openURL(number);
+    if (Platform.OS === 'android') {
+      number = 'tel:${+1234567890}';
+    }
+    else {
+      number = 'telprompt:${+1234567890}';
+    }
+    chechAccessibity(number);
   };
   const openMailScreen = () => {
     let mailAddress = '';
     mailAddress = 'mailto: care@homswag.com'
-    Linking.openURL(mailAddress);
+    chechAccessibity(mailAddress);
   };
 
   return (
