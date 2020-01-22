@@ -1,132 +1,137 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import AccordionView from '../components/accordian';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
-import DefaultStyles from '../style/customStyles';
+import DefaultStyles, { brandColor } from '../style/customStyles';
+import _ from 'lodash';
 import {
-  Layout,
   Radio,
   RadioGroup,
 } from '@ui-kitten/components';
+import * as Animatable from 'react-native-animatable';
 
 function PaymentScreen(props) {
-  const [ paymentDetails, updatePaymentDetails] = useState({
-    type: 0,
-    amount: "",
-    totalAmount: 0
-  })
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const totalAmount = '1200'
+  const [ payingAmount, setPayingAmount ] = useState(totalAmount)
+  const [ customAmount, setCustomAmount ] = useState()
 
-  const onCheckedChange = (index) => {
-    setSelectedIndex(index);
-  };
+  const onCustonInput = (amount) => {
+    setCustomAmount(amount)
+    if(!_.isNil(amount)  && parseInt(amount) > totalAmount ) {
+      setPayingAmount(totalAmount)
+    } else if(!_.isNil(amount) && parseInt(amount) >= 0 ) {
+      setPayingAmount(amount)
+    } else if(!amount) {
+      setPayingAmount(0)
+    }
+  }
+
   const paymentTypes = [
-    {title: "Pay Full", type: 1, content: (
-      <View>
-        <Text>Pay Full Amount:</Text>
-        <Text>Rs. 5000</Text>
-      </View>
-    )},
-    {title: "Pay Minimun", type: 2, content: (
-      <View>
-        <Text>Pay Minimun Amount</Text>
-        <Text>Rs. 500</Text>
-      </View>
-    )},
-    {title: "Pay Custom", type: 3, content: (
-      <View style={{flexDirection: 'row'}}>
+    { title: "Pay Full", type: 1 },
+    { title: "Pay After Service", type: 2 },
+    { title: "Pay Custom", type: 3, content: (
+      <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15, paddingRight: 15}}>
         <View style={{width: '40%', height: 40, justifyContent: "center"}}>
           <Text>Custom Amount: </Text>
         </View>
         <PlaceHolderTextInput
           placeholder="enter custom ammount"
-          styles={{margin: 0, width:'60%', backgroundColor: '#eee', borderRadius: 50, paddingLeft: 10, paddingRight: 10, textAlign: 'center'}}
-          value={paymentDetails.amount}
-          setValue={updatePaymentDetails}
-          previousState={paymentDetails}
+          styles={{margin: 0, width:'60%', backgroundColor: '#eee', borderRadius: 50, paddingLeft: 12, paddingRight: 12, textAlign: 'center'}}
+          value={customAmount}
+          keyboardType="numeric"
+          setValue={onCustonInput}
           itemKey="amount" />
       </View>
     )},
   ]
-  const [selectedPaymentType, setSelectedPaymentType] = useState(paymentTypes[0].type)
+
+  const [ selectedIndex, setSelectedIndex ] = useState(0);
+  const [ selectedPaymentType, setSelectedPaymentType] = useState(paymentTypes[selectedIndex])
+
+  const onCheckedChange = (index) => {
+    setSelectedIndex(index);
+    setSelectedPaymentType(paymentTypes[index])
+    if(index == 0) {
+      setPayingAmount(totalAmount)
+    } else if(index == 1) {
+      setPayingAmount(0)
+    }
+    setCustomAmount()
+  };
+
 
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.paymentInfoContainer}>
-        <View style={styles.paymentInfoBlock}>
-          <Text>Minimun amount Rs. 500 needs to be paid.</Text>
+    <KeyboardAvoidingView style={{flex: 1}} behavior="height" enabled>
+      <View style={{flex: 1}}>
+        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+          <View style={styles.paymentSelectionContainer}>
+            <View style={styles.paymentSelectionBlock}>
+              <View style={{borderBottomColor: '#eee', borderBottomWidth: 1, marginBottom: 10, paddingBottom: 10}}>
+                <Text style={{width: '100%', textAlign: 'center', fontWeight: 'bold'}}>Total Payable amount: Rs. {totalAmount}</Text>
+              </View>
+              <Text style={{marginBottom: 5}}>Choose the amount to pay: </Text>
+              <RadioGroup
+                selectedIndex={selectedIndex}
+                onChange={onCheckedChange}>
+                {paymentTypes.map((type, index) => (
+                    <Radio key={index} style={styles.radio} text={type.title}/>
+                ))}
+              </RadioGroup>
+              { selectedPaymentType.type == 3 && 
+                <Animatable.View
+                  duration={800}
+                  animation={'bounceIn'}
+                  easing={'ease-out'}
+                  useNativeDriver={true}
+                  >
+                  {selectedPaymentType.content}
+                </Animatable.View>
+              }
+            </View>
+          </View>
+          <View style={styles.paymentDetailsContainer}>
+            <View style={styles.paymentDetailsBlock}>
+              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between',}}>
+                <Text style={{width: '80%'}}>Total Bill Amount</Text>
+                <Text style={{width: '10%'}}>: </Text>
+                <Text style={{width: '10%', textAlign: 'right'}}>{totalAmount}</Text>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={{width: '80%'}}>Paying Amount</Text>
+                <Text style={{width: '10%'}}>: </Text>
+                <Text style={{width: '10%', textAlign: 'right'}}>{payingAmount}</Text>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={{width: '80%'}}>Balance</Text>
+                <Text style={{width: '10%'}}>: </Text>
+                <Text style={{width: '10%', textAlign: 'right'}}>{parseInt(totalAmount) - parseInt(payingAmount)}</Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+        <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => props.navigation.navigate('Payment')}>
+            <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.paymentSelectionContainer}>
-        <View style={styles.paymentSelectionBlock}>
-          <RadioGroup
-            selectedIndex={selectedIndex}
-            onChange={onCheckedChange}>
-            {paymentTypes.map(type => (
-              <Radio style={styles.radio} text={type.title}>
-                {type.content}
-              </Radio>
-            ))}
-          </RadioGroup>
-          {/* <AccordionView 
-            content={paymentTypes}
-            containerStyles={{paddingLeft: 10,paddingRight: 10, justifyContent: 'flex-start', paddingTop: 0}}
-            activeSection={selectedPaymentType}
-            setActiveSection={setSelectedPaymentType}/> */}
-        </View>
-      </View>
-      <View style={styles.paymentDetailsContainer}>
-        <View style={styles.paymentDetailsBlock}>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{width: '70%'}}>Total Bill Amount</Text>
-            <Text>: </Text>
-            <Text>400 </Text>
-          </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{width: '70%'}}>Paying Amount</Text>
-            <Text>: </Text>
-            <Text>400 </Text>
-          </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{width: '70%'}}>Balance</Text>
-            <Text>: </Text>
-            <Text>400 </Text>
-          </View>
-        </View>
-      </View>
-      <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-       <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => props.navigation.navigate('Payment')}>
-         <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
-       </TouchableOpacity>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
-  paymentInfoContainer: {
-    // borderWidth: 1,
-    flex: 1,
-    padding: 30
-  },
-  paymentInfoBlock: {
-    borderWidth: 1,
-    borderColor: 'red',
-    flex: 1,
-    justifyContent: "center",
-    alignItems: 'center'
-  },
   paymentSelectionContainer: {
-    // borderWidth: 1,
     paddingLeft: 20,
-    flex: 2,
+    paddingTop: 20,
+    flex: 3,
     paddingRight: 20,
   },
   paymentSelectionBlock: {
     borderRadius: 5,
     borderWidth: 2,
     borderColor: "#d4d4d4",
-    flex: 1
+    justifyContent: 'center',
+    padding: 20,
+    paddingTop: 10
   },
   paymentDetailsContainer: {
     flex: 1,
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   radio: {
-    marginVertical: 8,
+    marginVertical: 8
   },
 })
 

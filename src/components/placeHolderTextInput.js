@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
-import { Input } from '@ui-kitten/components';
+import { TextInput, StyleSheet } from 'react-native';
 
 function PlaceHolderTextInput(props) {
-  const { setValue, previousState, itemKey } = props;
-  const { value } = props;
-
+  const { setValue, itemKey, value } = props;
   const updateText = function(text) {
-    if(previousState) {
-      setValue({...previousState, [itemKey]: text})
+    if(props.previousState) {
+      setValue({...props.previousState, [itemKey]: text})
+    } else {
+      setValue(text)
     }
   }
 
@@ -16,6 +15,7 @@ function PlaceHolderTextInput(props) {
   return (
       <TextInput
         style={[inputStyle, props.styles]}
+        keyboardType={props.keyboardType ? props.keyboardType : 'default'}
         onChangeText={text => updateText(text)}
         placeholder={props.placeholder}
         onFocus={() => setStyle(styles.input)}
