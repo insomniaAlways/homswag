@@ -257,11 +257,18 @@ export const addresses = {
   error: null
 }
 
+export const packages = {
+  isLoading: false,
+  values: [],
+  error: null
+}
+
 export const initialState = {
   items: items,
   categories: categories,
   cart: cart,
   cartItems: cartItems,
   orders: orders,
-  addresses: addresses
+  addresses: addresses,
+  packages: packages
 }

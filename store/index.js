@@ -6,6 +6,7 @@ import cartReducers from './reducers/cartReducers';
 import cartItemReducers from './reducers/cartItemReducers';
 import orderReducers from './reducers/orderReducers';
 import addressReducers from './reducers/addressReducers';
+import packageReducers from './reducers/packageReducers';
 import { initialState } from './intialValues';
 
 import thunk from 'redux-thunk';
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   cart: cartReducers,
   cartItems: cartItemReducers,
   orders: orderReducers,
-  addresses: addressReducers
+  addresses: addressReducers,
+  packages: packageReducers
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
