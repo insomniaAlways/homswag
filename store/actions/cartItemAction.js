@@ -1,4 +1,4 @@
-import { FETCH_CARTITEM_ERROR, FETCH_CARTITEM_REQUEST, FETCH_CARTITEM_SUCCESS, MERGE_CARTITEMS } from '../actionTypes';
+import { CARTITEM_REQUEST_FAILED, CARTITEM_REQUEST_INITIATED, CARTITEM_REQUEST_SUCCESS, MERGE_CARTITEMS } from '../actionTypes';
 
 import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions/index';
 
@@ -50,20 +50,20 @@ export const deleteItem = (cart_item_id) => {
 
 export const onStart = () => {
   return {
-    type: FETCH_CARTITEM_REQUEST
+    type: CARTITEM_REQUEST_INITIATED
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_CARTITEM_SUCCESS,
+    type: CARTITEM_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_CARTITEM_ERROR,
+    type: CARTITEM_REQUEST_FAILED,
     payload: error
   }
 }

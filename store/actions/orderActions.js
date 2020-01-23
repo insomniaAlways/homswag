@@ -1,4 +1,4 @@
-import { FETCH_ORDER_ERROR, FETCH_ORDER_REQUEST, FETCH_ORDER_SUCCESS } from '../actionTypes';
+import { ORDER_REQUEST_FAILED, ORDER_REQUEST_INITIATED, ORDER_REQUEST_SUCCESS } from '../actionTypes';
 
 import { query, findRecord } from '../asyncActions/index';
 
@@ -13,20 +13,20 @@ export const fetchOrder = () => {
 
 export const onStart = () => {
   return {
-    type: FETCH_ORDER_REQUEST
+    type: ORDER_REQUEST_INITIATED
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_ORDER_SUCCESS,
+    type: ORDER_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_ORDER_ERROR,
+    type: ORDER_REQUEST_FAILED,
     payload: error
   }
 }

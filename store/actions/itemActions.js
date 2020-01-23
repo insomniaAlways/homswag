@@ -1,4 +1,4 @@
-import { ITEM_REQUEST_INITIATED, FETCH_ITEMS_SUCCESS, FETCH_ITEMS_ERROR } from '../actionTypes';
+import { ITEM_REQUEST_INITIATED, ITEM_REQUEST_SUCCESS, ITEM_REQUEST_FAILED } from '../actionTypes';
 import { findAll } from '../asyncActions/index';
 
 export const fetchItems = (category_id) => {
@@ -28,14 +28,14 @@ export const onStart = () => {
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_ITEMS_SUCCESS,
+    type: ITEM_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_ITEMS_ERROR,
+    type: ITEM_REQUEST_FAILED,
     payload: error
   }
 }

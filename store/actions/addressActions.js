@@ -1,4 +1,4 @@
-import { FETCH_ADDRESS_ERROR, FETCH_ADDRESS_REQUEST, FETCH_ADDRESS_SUCCESS, MERGE_CARTITEMS } from '../actionTypes';
+import { ADDRESS_REQUEST_FAILED, ADDRESS_REQUEST_INITIATED, ADDRESS_REQUEST_SUCCESS, MERGE_CARTITEMS } from '../actionTypes';
 
 import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions/index';
 
@@ -47,20 +47,20 @@ export const deleteItem = (selectedCartItem) => {
 
 export const onStart = () => {
   return {
-    type: FETCH_ADDRESS_REQUEST
+    type: ADDRESS_REQUEST_INITIATED
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_ADDRESS_SUCCESS,
+    type: ADDRESS_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_ADDRESS_ERROR,
+    type: ADDRESS_REQUEST_FAILED,
     payload: error
   }
 }

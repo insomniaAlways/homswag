@@ -1,4 +1,4 @@
-import { FETCH_ITEMS, ITEM_REQUEST_INITIATED, FETCH_ITEMS_SUCCESS, FETCH_ITEMS_ERROR } from '../actionTypes';
+import { FETCH_ITEMS, ITEM_REQUEST_INITIATED, ITEM_REQUEST_SUCCESS, ITEM_REQUEST_FAILED } from '../actionTypes';
 import { items } from '../intialValues';
 
 const itemReducers = (state = items, action) => {
@@ -9,14 +9,14 @@ const itemReducers = (state = items, action) => {
         isLoading: true
       }
     }
-    case FETCH_ITEMS_SUCCESS : {
+    case ITEM_REQUEST_SUCCESS : {
       return {
         ...state,
         isLoading: false,
         values: action.payload
       }
     }
-    case FETCH_ITEMS_ERROR : {
+    case ITEM_REQUEST_FAILED : {
       return {
         ...state,
         isLoading: false,
