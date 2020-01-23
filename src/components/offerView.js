@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import OfferCard from './offerCard';
+import { connect } from 'react-redux';
 
-function OfferView() {
-  let number = 1033
+function OfferView(props) {
+  const { packages } = props
+
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-      <OfferCard id={number} style={{marginLeft: 10}}/>
-      <OfferCard id={number + 2}/>
-      <OfferCard id={number + 3}/>
-      <OfferCard id={number + 7}/>
-      <OfferCard id={number + 5}/>
-      <OfferCard id={number + 6}/>
+      {packages.isLoading ? 
+        <View><Text>Loading..</Text></View> :
+        packages.values.map((packageService, index) => <OfferCard key={packageService.id} packageService={packageService} styles={index == 0 && { marginLeft: 10 }}/>)
+      }
     </ScrollView>
   )
 }

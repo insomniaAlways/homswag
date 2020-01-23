@@ -5,6 +5,7 @@ import { query, findRecord } from '../asyncActions/index';
 const packages = [
   {
     "name": "Beauty & Relax",
+    "id": 1,
     "price": "1799",
     "image_url": 'https://i.picsum.photos/id/1033/400/200.jpg',
     "items": [
@@ -37,7 +38,8 @@ const packages = [
   {
     "name": "P1-Tip To Toe (Women)",
     "price": "1199",
-    "image_url": 'https://i.picsum.photos/id/1034/400/200.jpg',
+    "id": 2,
+    "image_url": 'https://i.picsum.photos/id/1037/400/200.jpg',
     "items": [
       {
         "name": "Rica Full Arms – Waxing"
@@ -65,6 +67,7 @@ const packages = [
   {
     "name": "P2 - Tip To Toe",
     "price": "1099",
+    "id": 3,
     "image_url": 'https://i.picsum.photos/id/1035/400/200.jpg',
     "items": [
       {
@@ -90,6 +93,7 @@ const packages = [
   {
     "name": "Express pack",
     "price": "499",
+    "id": 4,
     "image_url": 'https://i.picsum.photos/id/1036/400/200.jpg',
     "items": [
       {
@@ -108,10 +112,9 @@ const packages = [
   }
 ]
 
-export const fetchPackage = () => {
+export const fetchPackages = () => {
   return function(dispatch) {
-    dispatch(onStart())
-    return onSuccess(packages)
+    return dispatch(onSuccess(packages))
   }
 }
 

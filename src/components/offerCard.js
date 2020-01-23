@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 
-function OfferCard({ id, style }) {
+const OfferCard = (props) => {
+  const { packageService } = props
+  const styles = props.styles
+  
   return (
-    <View style={[{height: '100%', width: 370, marginRight: 10}, style]}>
+    <View style={[{height: '100%', width: 370, marginRight: 10}, styles]}>
       <Image 
         style={{height: "100%", width: "100%", borderRadius: 10}}
-        source={{uri: `https://i.picsum.photos/id/${id}/400/200.jpg`}}
+        source={{uri: packageService.image_url}}
       />
     </View>
   )

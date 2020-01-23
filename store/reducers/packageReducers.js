@@ -2,7 +2,7 @@ import { PACKAGE_REQUEST_INITIATED, PACKAGE_REQUEST_SUCCESS, PACKAGE_REQUEST_FAI
 import { packages } from '../intialValues';
 import _ from 'lodash';
 
-const ordersReducers = (state = packages, action) => {
+const packageReducers = (state = packages, action) => {
   switch(action.type) {
     case PACKAGE_REQUEST_INITIATED : {
       return {
@@ -28,4 +28,4 @@ const ordersReducers = (state = packages, action) => {
   }
 }
 
-export default ordersReducers;
+export default packageReducers;

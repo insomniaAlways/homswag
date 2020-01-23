@@ -7,6 +7,7 @@ import { getUser } from '../../store/actions/authenticationAction';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
 import { fetchAllItems } from '../../store/actions/itemActions';
+import { fetchPackages } from '../../store/actions/packageActions';
 import OfferView from '../components/offerView';
 import PromoView from '../components/promoView';
 import TabViews from '../components/tabs';
@@ -20,12 +21,13 @@ function Dashboard(props) {
     props.getCart()
     props.getAllCartItems()
     props.getAllItems()
+    props.getPackages()
   }, [])
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
-          <OfferView />
+          <OfferView packages={props.packages}/>
         </View>
         <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
         <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
@@ -56,7 +58,8 @@ function Dashboard(props) {
 
 mapStateToProps = state => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    packages: state.packages
   }
 }
 
@@ -66,7 +69,8 @@ mapDispatchToProps = dispatch => {
     getUser: () => dispatch(getUser()),
     getCart: ()=> dispatch(fetchCart()),
     getAllCartItems: () => dispatch(fetchCartItems()),
-    getAllItems: () => dispatch(fetchAllItems())
+    getAllItems: () => dispatch(fetchAllItems()),
+    getPackages: () => dispatch(fetchPackages())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
