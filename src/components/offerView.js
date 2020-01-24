@@ -4,13 +4,13 @@ import OfferCard from './offerCard';
 import { connect } from 'react-redux';
 
 function OfferView(props) {
-  const { packages } = props
+  const { packages, navigation } = props
 
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       {packages.isLoading ? 
         <View><Text>Loading..</Text></View> :
-        packages.values.map((packageService, index) => <OfferCard key={packageService.id} packageService={packageService} styles={index == 0 && { marginLeft: 10 }}/>)
+        packages.values.map((packageService, index) => <OfferCard navigation={navigation} key={packageService.id} packageService={packageService} styles={index == 0 && { marginLeft: 10 }}/>)
       }
     </ScrollView>
   )

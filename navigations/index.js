@@ -22,7 +22,7 @@ import HeaderRightView from '../src/components/headerRight';
 
 import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
 import ReferralScreen from '../src/screens/ReferralScreen';
-
+import PackageScreen from '../src/screens/PackageScreen';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -30,6 +30,9 @@ const AppNavigator = createStackNavigator({
     },
     Items: {
       screen: ItemsScreen,
+    },
+    Packages: {
+      screen: PackageScreen,
     },
     Cart: {
       screen: CartScreen,

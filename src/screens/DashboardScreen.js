@@ -27,7 +27,7 @@ function Dashboard(props) {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
-          <OfferView packages={props.packages}/>
+          <OfferView packages={props.packages} navigation={props.navigation}/>
         </View>
         <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
         <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>

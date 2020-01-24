@@ -1,17 +1,19 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 const OfferCard = (props) => {
-  const { packageService } = props
+  const { packageService, navigation } = props
   const styles = props.styles
   
   return (
-    <View style={[{height: '100%', width: 370, marginRight: 10}, styles]}>
-      <Image 
-        style={{height: "100%", width: "100%", borderRadius: 10}}
-        source={{uri: packageService.image_url}}
-      />
-    </View>
+    <TouchableOpacity onPress={() => navigation.navigate('Packages', { packageService: packageService })}>
+      <View style={[{height: '100%', width: 370, marginRight: 10}, styles]}>
+        <Image 
+          style={{height: "100%", width: "100%", borderRadius: 10}}
+          source={{uri: packageService.image_url}}
+        />
+      </View>
+    </TouchableOpacity>
   )
 }
 
