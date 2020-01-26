@@ -26,7 +26,10 @@ import PackageScreen from '../src/screens/PackageScreen';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
-      screen: DashboardScreen
+      screen: DashboardScreen,
+      navigationOptions: () => ({
+        headerShown: false
+      }),
     },
     Items: {
       screen: ItemsScreen,
@@ -62,6 +65,7 @@ const AppNavigator = createStackNavigator({
   {
     defaultNavigationOptions: ({ navigation }) => ({
       title: navigation.state.routeName,
+      // headerTransparent: true,
       headerStyle: DefaultStyles.brandBackgroundColor,
       headerTintColor: '#fff',
       headerTitleStyle: {
