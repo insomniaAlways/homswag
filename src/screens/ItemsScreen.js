@@ -11,12 +11,21 @@ function Items(props) {
   const { navigation, items, cartItem, cart } = props;
   const category = navigation.getParam('category')
   const [ selectedItems, setSelectedItems ] = useState([])
+  const [ showButton, setShowButton ] = useState(false)
 
   useEffect(() => {
     if(category.id) {
       setSelectedItems(_.filter(items, ['category_id', category.id]))
     }
   }, [category])
+
+  useEffect(() => {
+    if(cartItem.values.length) {
+      setShowButton(true)
+    } else {
+      setShowButton(false)
+    }
+  }, [cartItem.isLoading, cartItem.values.length])
 
   return (
     <View style={{flex: 1}}>
@@ -30,7 +39,7 @@ function Items(props) {
           duration={400}
           style={{height: '100%'}}
         >
-          <ItemsList data={selectedItems} cartItems={cartItem.values} cart={cart} navigation={navigation}/>
+          <ItemsList data={selectedItems} showButton={showButton} setShowButton={setShowButton} cartItems={cartItem.values} cart={cart} navigation={navigation}/>
         </Animatable.View>
       }
     </View>

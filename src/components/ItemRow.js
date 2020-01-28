@@ -9,7 +9,7 @@ import { fetchCartItems, creatCartItem } from '../../store/actions/cartItemActio
 import BeautyImage from '../../assets/images/beautyImage.jpg'
 
 function ItemRow(props) {
-  const { item, cartItem, cart, creatNewCartItem, getCartItem } = props;
+  const { item, cartItem, cart, creatNewCartItem, getCartItem, setShowButton } = props;
   const [ isAdded, setAdded ] = useState(false)
   const cartItems = cartItem.values
   const [ quantity, setQuantity ] = useState(0)
@@ -26,6 +26,7 @@ function ItemRow(props) {
     setAdded(true)
     setQuantity(1)
     create()
+    setShowButton(true)
   }
 
   useEffect(() => {
