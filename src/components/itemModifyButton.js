@@ -6,40 +6,41 @@ import { Icon } from '@ui-kitten/components';
 import { fetchCartItems, updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 function ModifyButton(props) {
-  const { item, cartItem, removeCartItem } = props
-  const [ count, setCount ] = useState(cartItem.quantity)
-  
-  const updateAddedItem = _.debounce(async (quantity) => {
-    if(!_.isNil(cartItem)) {
-      let totalPrice = (+item.price * parseInt(quantity))
-      let updatedCartItem = await props.updateCartItem(cartItem.id, quantity, totalPrice)
-      props.getCartItem()
-    }
-  }, 600)
+  const { item, cartItem, removeCartItem, quantity, setQuantity } = props
 
-  const removeItem = _.debounce(async (quantity) => {
-    console.log('here 1st')
-    if(cartItem && cartItem.quantity > 1) {
-      let totalPrice = (+item.price * quantity)
-      let updatedCartItem = await props.updateCartItem(cartItem.id, quantity, totalPrice)
-      props.getCartItem()
-    } else {
-      let deletedCartItem = await props.deleteCartItem(cartItem.id)
+  const updateAddedItem = _.debounce(async (count) => {
+    if(!_.isNil(cartItem)) {
+      let totalPrice = (+item.price * parseInt(count))
+      let updatedCartItem = await props.updateCartItem(cartItem.id, count, totalPrice)
       props.getCartItem()
     }
-  }, 600)
+  }, 1000)
+
+  const removeItem = _.debounce((count) => {
+    if(quantity > 0) {
+      let totalPrice = (+item.price * count)
+      props.updateCartItem(cartItem.id, count, totalPrice)
+    }
+  }, 1000)
+
+  const deleteItem = async () => {
+    let deletedCartItem = await props.deleteCartItem(cartItem.id)
+    props.getCartItem()
+  }
 
   const incCount = () => {
-    setCount(count + 1)
-    updateAddedItem(count + 1)
+    setQuantity(quantity + 1)
+    updateAddedItem(quantity + 1)
   }
 
   const decCount = () => {
-    if((count - 1) <= 0) {
+    if((quantity - 1) <= 0) {
       removeCartItem(false)
+      deleteItem()
+    } else {
+      removeItem(quantity - 1)
     }
-    setCount(count - 1)
-    removeItem(count - 1)
+    setQuantity(quantity - 1)
   }
 
   return (
@@ -52,7 +53,7 @@ function ModifyButton(props) {
         </TouchableOpacity>
       </View>
       <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-        <Text>{count}</Text>
+        <Text>{quantity}</Text>
       </View>
       <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
         <TouchableOpacity onPress={incCount}>

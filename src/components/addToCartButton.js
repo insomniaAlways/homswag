@@ -4,7 +4,7 @@ import _ from 'lodash';
 // import DefaultStyles from '../style/customStyles';
 
 function AddToCartButton(props) {
-  const { isAdded, setAdded } = props
+  const { setAdded } = props
   
   return (
     <TouchableOpacity onPress={() => setAdded(true)}>
