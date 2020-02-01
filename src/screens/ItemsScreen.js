@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
 import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
-import { Spinner } from '@ui-kitten/components';
+import { Spinner, Layout, Text } from '@ui-kitten/components';
 import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
+import DynamicTabs from '../components/dynamicTabs';
 
 function Items(props) {
   const { navigation, items, cartItem, cart } = props;
@@ -28,12 +28,12 @@ function Items(props) {
   }, [cartItem.isLoading, cartItem.values.length])
 
   return (
-    <View style={{flex: 1}}>
-      {
+    <Layout style={{flex: 1}}>
+      { category.hasSubCategory ? <DynamicTabs category={category} selectedItems={selectedItems} {...props}/> :
         selectedItems.isLoading ? 
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Spinner status='info'/>
-        </View> :
+        </Layout> :
         <Animatable.View
           animation={'fadeInLeft'}
           duration={400}
@@ -42,7 +42,7 @@ function Items(props) {
           <ItemsList data={selectedItems} showButton={showButton} setShowButton={setShowButton} cartItems={cartItem.values} cart={cart} navigation={navigation}/>
         </Animatable.View>
       }
-    </View>
+    </Layout>
   );
 }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView } from 'react-navigation';
 import { DrawerItems } from 'react-navigation-drawer';
 import { StyleSheet, ScrollView, View, Image, Text, ImageBackground } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
@@ -24,7 +25,7 @@ const SideDrawer = props => {
   }
 
   return (
-  <View style={styles.container}>
+  <SafeAreaView style={styles.container}>
     <View style={{flex: 1}}>
       <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
         <View style={styles.profilePic}>
@@ -57,7 +58,7 @@ const SideDrawer = props => {
         </View>
       </TouchableOpacity>
     </View>
-  </View>
+  </SafeAreaView>
 )};
 
 const styles = StyleSheet.create({

@@ -1,10 +1,19 @@
 import axios from 'axios';
 // const host = "http://192.168.0.105:1337/api/v1/";
-const host = "http://homswag.herokuapp.com/api/v1/";
+const host = "https://homswag.herokuapp.com/api/v1";
+
+const axiosInstance = axios.create({
+  baseURL: host,
+  headers: {
+    "Content-Type": 'application/json',
+    'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgwMzI5MDY0LCJleHAiOjE1ODA3NjEwNjR9.pm51bZjJlcRgmk4GpOj-j9FcJt9_9TEY_6UB0N9j5p8"
+  }
+});
 
 //GET Calls
 export function findAll(type, query) {
-  let url = `${host}${type}`;
+  // let url = `${host}${type}`;
+  let url = `/${type}`;
   if(query) {
     url = `${url}?${query}`
   }
@@ -12,7 +21,8 @@ export function findAll(type, query) {
 }
 
 export function query(type, query) {
-  let url = `${host}${type}`;
+  // let url = `${host}${type}`;
+  let url = `/${type}`;
   if(query) {
     url = `${url}?${query}`
   }
@@ -20,7 +30,8 @@ export function query(type, query) {
 }
 
 export function findRecord(type, id) {
-  let url = `${host}${type}`;
+  // let url = `${host}${type}`;
+  let url = `/${type}`;
   if(id) {
     url = `${url}/${id}`
   } else {
@@ -28,9 +39,9 @@ export function findRecord(type, id) {
   }
   return getRecord(url)
 }
-//Making GEt call
+//Making GET call
 function getRecord(url) {
-  return axios.get(url)
+  return axiosInstance.get(url)
   .then((response) => response)
   .catch((e) => {
     console.log(e)

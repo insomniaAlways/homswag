@@ -1,13 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-
-import {
-  Button,
-  Icon,
-  List,
-  ListItem,
-  Text
-} from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 
 const CategoryList = (props) => {
   let flatListProps ={numColumns: 3, horizontal: false, style: styles.list}
