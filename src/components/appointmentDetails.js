@@ -8,7 +8,7 @@ const intialDate = new Date();
 const mode = 'date';
 const timeSlots = ["9AM - 12PM", "12PM - 3PM", "3PM - 6PM"];
 
-function AppointmentDetails() {
+function AppointmentDetails(props) {
   const [ date, setDate ] = useState(intialDate);
   const [ isDatePickerVisible, setDatePickeVisibility ] = useState(false);
   const [ selectedTimeSlot, setTimeSlot ] = useState(timeSlots[1])
@@ -19,7 +19,7 @@ function AppointmentDetails() {
   }
 
   return (
-    <View style={{marginTop: 30}}>
+    <View style={props.style}>
       <View style={{paddingTop: 10, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{fontSize: 16, fontWeight: "bold", width: '70%'}}>
           Appointment Date

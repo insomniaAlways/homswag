@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Dimensions, ImageBackground, ListRenderItemInfo, View, StyleSheet } from 'react-native';
-import { Button, Card, List, StyleService, Text, useStyleSheet } from '@ui-kitten/components';
+import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
+import { Card, List, Text } from '@ui-kitten/components';
 import BeautyImage from '../../assets/images/beautyImage.jpg'
-import ModifyButton from './itemModifyButton';
-import AddToCartButton from './addToCartButton';
 import ItemRow from './ItemRow';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -73,9 +71,6 @@ const ItemsList = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   productList: {
     paddingHorizontal: 8,
     paddingVertical: 16,
@@ -93,10 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  iconButton: {
-    paddingHorizontal: 0,
-  },
+  }
 });
 
 export default ItemsList;

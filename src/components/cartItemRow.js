@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Button, Icon, List, ListItem, Text, Card } from '@ui-kitten/components';
+import { View } from 'react-native';
+import { Icon, Text } from '@ui-kitten/components';
 import ModifyButton from './itemModifyButton';
-import _ from 'lodash';
 import { FontAwesome } from '@expo/vector-icons';
 
 const CartItemRow = (props) => {
@@ -24,7 +23,7 @@ const CartItemRow = (props) => {
             <Icon name='checkmark-circle-2-outline' width={12} height={12} fill="#0D5618"/>
           </View>
           <View style={{paddingLeft: 10}}>
-            <Text ellipsizeMode={'tail'} numberOfLines={2}>{cartItem.item.name}</Text>
+            <Text ellipsizeMode={'tail'} numberOfLines={2} category='s1' style={{fontSize: 18}}>{cartItem.item.name}</Text>
           </View>
         </View>
       </View>

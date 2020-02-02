@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Button, Icon, List, ListItem, Text, Card } from '@ui-kitten/components';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { fetchCart } from '../../store/actions/cartAction';
