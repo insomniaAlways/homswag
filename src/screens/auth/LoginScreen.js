@@ -54,13 +54,15 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={setOtp}
           />
         </View>
-        <Button
-          style={styles.signInButton}
-          status='control'
-          size='giant'
-          onPress={onSignInButtonPress}>
-          SIGN IN
-        </Button>
+        <View style={styles.signInButtonContainer}>
+          <Button
+            style={styles.signInButton}
+            status='control'
+            size='medium'
+            onPress={onSignInButtonPress}>
+            SIGN IN
+          </Button>
+        </View>
       </ImageOverlay>
     </KeyboardAvoidingView>
   );
@@ -79,7 +81,8 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    marginTop: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 16,
   },
   signInLabel: {
@@ -87,7 +90,8 @@ const styles = StyleSheet.create({
   },
   signInButton: {
     marginHorizontal: 16,
-    marginBottom: 10
+    marginBottom: 10,
+    width: '50%'
   },
   signUpButton: {
     marginVertical: 12,
@@ -100,7 +104,10 @@ const styles = StyleSheet.create({
   passwordInput: {
     marginTop: 16,
   },
-  forgotPasswordButton: {
-    paddingHorizontal: 0,
-  },
+  signInButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+
 });
