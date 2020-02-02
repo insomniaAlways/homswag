@@ -16,31 +16,47 @@ function ModifyButton(props) {
     }
   }, 1000)
 
-  const removeItem = _.debounce((count) => {
+  const removeItem = _.debounce(async (count) => {
     if(quantity > 0) {
       let totalPrice = (+item.price * count)
-      props.updateCartItem(cartItem.id, count, totalPrice)
+      let updatedCartItem = await props.updateCartItem(cartItem.id, count, totalPrice)
+      props.getCartItem()
     }
   }, 1000)
 
   const deleteItem = async () => {
+    if(props.setLoading) {
+      props.setLoading(true)
+    }
     let deletedCartItem = await props.deleteCartItem(cartItem.id)
     props.getCartItem()
   }
 
   const incCount = () => {
-    setQuantity(quantity + 1)
+    if(props.setLoading) {
+      props.setLoading(true)
+    }
+    if(setQuantity) {
+      setQuantity(quantity + 1, cartItem)
+    }
     updateAddedItem(quantity + 1)
   }
 
   const decCount = () => {
+    if(props.setLoading) {
+      props.setLoading(true)
+    }
     if((quantity - 1) <= 0) {
-      removeCartItem(false)
+      if(removeCartItem) {
+        removeCartItem(false)
+      }
       deleteItem()
     } else {
       removeItem(quantity - 1)
     }
-    setQuantity(quantity - 1)
+    if(setQuantity) {
+      setQuantity(quantity - 1, cartItem)
+    }
   }
 
   return (

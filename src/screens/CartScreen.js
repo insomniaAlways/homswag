@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { Text, Modal, Spinner } from '@ui-kitten/components';
 import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import CartItemList from '../components/cartItemList';
@@ -13,7 +13,8 @@ import DefaultStyles from '../style/customStyles';
 import AppointmentDetails from '../components/appointmentDetails';
 
 function CartScreen(props) {
-  const { navigation, cart, user, cartItems } = props;
+  const { navigation, cart, user, cartItem } = props;
+  const [ isLoading, setLoading ] = useState(false)
 
   useEffect(() => {
     if(user.id) {
@@ -21,12 +22,20 @@ function CartScreen(props) {
     }
   }, [])
 
+  useEffect(() => {
+    if(cart.isLoading || cartItem.isLoading) {
+      setLoading(true)
+    } else if(!cart.isLoading && !cartItem.isLoading){
+      setLoading(false)
+    }
+  }, [cart.isLoading, cartItem.isLoading])
+
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 14}}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
-          <CartItemList cart={cart.values} cartItems={cartItems.values}/>
+          <CartItemList cart={cart.values} cartItems={cartItem.values} setLoading={setLoading}/>
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
           <AppointmentDetails />
           <View style={{height: 7, backgroundColor: '#eee'}}></View>
@@ -56,6 +65,20 @@ function CartScreen(props) {
           <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isLoading}
+        backdropStyle={styles.modal}
+        onBackdropPress={() => {
+          setLoading(false);
+        }}>
+          <View style={styles.modalContainer}>
+            <View style={styles.controlContainer}>
+              <Spinner status='control'/>
+            </View>
+          </View>
+      </Modal>
     </View>
   );
 }
@@ -63,7 +86,7 @@ function CartScreen(props) {
 mapStateToProps = state => {
   return {
     cart: state.cart,
-    cartItems: state.cartItems,
+    cartItem: state.cartItems,
     user: state.user
   }
 }
@@ -90,7 +113,20 @@ const styles = StyleSheet.create({
   countContainer: {
     alignItems: 'center',
     padding: 10
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modal: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  controlContainer: {
+    borderRadius: 4,
+    padding: 12,
+    backgroundColor: '#3366FF',
+  },
 })
 
 
