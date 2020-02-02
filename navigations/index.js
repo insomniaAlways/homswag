@@ -1,5 +1,5 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
@@ -23,6 +23,7 @@ import HeaderRightView from '../src/components/headerRight';
 import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
 import ReferralScreen from '../src/screens/ReferralScreen';
 import PackageScreen from '../src/screens/PackageScreen';
+import LoginScreen from '../src/screens/auth/LoginScreen';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -123,7 +124,14 @@ const DrawerNavigation = createDrawerNavigator({
   }
 }, { contentComponent: SideDrawer });
 
+const switchNavigation = createSwitchNavigator({
+  Auth: {
+    screen: LoginScreen
+  },
+  App: {
+    screen: DrawerNavigation
+  }
+})
 
 
-
-export default createAppContainer(DrawerNavigation);
+export default createAppContainer(switchNavigation);
