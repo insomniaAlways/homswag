@@ -21,12 +21,12 @@ const DynamicTabs = (props) => {
 
   return (
     <Tabs tabBarUnderlineStyle={styles.tabBarUnderlineStyle} initialPage={selectedTabIndex} renderTabBar={()=> <ScrollableTab tabsContainerStyle={styles.tabsContainerStyle}/>}>
-      { tabs.map((tab) => (
+      { tabs.map((tab, index) => (
         <Tab tabStyle={styles.tabStyle}
           activeTabStyle={styles.activeTabStyle}
           textStyle={styles.textStyle}
           activeTextStyle={styles.activeTextStyle}
-          key={tab.id} heading={tab.name}>
+          key={index} heading={tab.name}>
             <ItemsList data={tab.items} {...props}/>
         </Tab>
         ))

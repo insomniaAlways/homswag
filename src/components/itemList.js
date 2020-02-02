@@ -25,7 +25,14 @@ const ItemsList = (props) => {
         <FontAwesome name="rupee" size={12} color="black" /> {info.item.mrp_price}
         </Text>
       </View>
-      <ItemRow item={info.item} cartItems={cartItems} cart={cart} setShowButton={setShowButton} style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}/>
+      <ItemRow
+        item={info.item}
+        cartItems={cartItems}
+        cart={cart}
+        isAdded={isAdded}
+        setAdded={setAdded}
+        setShowButton={setShowButton}
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}/>
     </View>
   );
 

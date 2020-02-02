@@ -6,6 +6,8 @@ import { Spinner, Layout, Text } from '@ui-kitten/components';
 import * as Animatable from 'react-native-animatable';
 import _ from 'lodash';
 import DynamicTabs from '../components/dynamicTabs';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { brandColor } from '../style/customStyles';
 
 function Items(props) {
   const { navigation, items, cartItem, cart } = props;
@@ -20,27 +22,47 @@ function Items(props) {
   }, [category])
 
   useEffect(() => {
-    if(cartItem.values.length) {
-      setShowButton(true)
-    } else {
-      setShowButton(false)
-    }
-  }, [cartItem.isLoading, cartItem.values.length])
+      if(cartItem.values.length) {
+        setShowButton(true)
+      } else {
+        setShowButton(false)
+      }
+  }, [cartItem.values.length])
 
   return (
     <Layout style={{flex: 1}}>
-      { category.hasSubCategory ? <DynamicTabs category={category} selectedItems={selectedItems} {...props}/> :
-        selectedItems.isLoading ? 
-        <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Spinner status='info'/>
-        </Layout> :
-        <Animatable.View
-          animation={'fadeInLeft'}
-          duration={400}
-          style={{height: '100%'}}
-        >
-          <ItemsList data={selectedItems} showButton={showButton} setShowButton={setShowButton} cartItems={cartItem.values} cart={cart} navigation={navigation}/>
-        </Animatable.View>
+      { category.hasSubCategory ?
+        <DynamicTabs
+          category={category}
+          selectedItems={selectedItems}
+          showButton={showButton}
+          setShowButton={setShowButton}
+          {...props}/> :
+        (
+          selectedItems.isLoading ? 
+          <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Spinner status='info'/>
+          </Layout> :
+          <Animatable.View
+            animation={'fadeInLeft'}
+            duration={400}
+            style={{flex: 1}}
+          >
+            <ItemsList
+              data={selectedItems}
+              showButton={showButton}
+              setShowButton={setShowButton}
+              cartItems={cartItem.values}
+              cart={cart}
+              navigation={navigation}/>
+          </Animatable.View>
+        )
+      }
+      {
+        showButton && 
+        <TouchableOpacity style={styles.bookAppointmentButton} onPress={() => navigation.navigate('BookAppointment')}>
+          <Text style={styles.buttonText}>Schedule Appointment</Text>
+        </TouchableOpacity>
       }
     </Layout>
   );
@@ -61,3 +83,19 @@ mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Items);
+
+const styles = StyleSheet.create({
+  bookAppointmentButton: {
+    height: 53,
+    backgroundColor: brandColor,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+    width: '100%',
+    textAlign: 'center'
+  }
+})

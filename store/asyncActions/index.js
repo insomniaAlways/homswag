@@ -51,8 +51,7 @@ function getRecord(url) {
 
 //POST Calls
 export function createRecord(type, payload) {
-  let url = `${host}${type}`
-  return axios.post(url, payload)
+  return axiosInstance.post(type, payload)
   .then((response) => response)
   .catch((error) => {
     console.log(error);
@@ -62,8 +61,8 @@ export function createRecord(type, payload) {
 
 //PUT Calls
 export function updateRecord(type, id, payload) {
-  let url = `${host}${type}/${id}`
-  return axios.put(url, payload)
+  let url = `${type}/${id}`
+  return axiosInstance.put(url, payload)
   .then((response) => response)
   .catch((error) => {
     console.log(error);
@@ -73,8 +72,8 @@ export function updateRecord(type, id, payload) {
 
 //DELETE Calls
 export function deleteRecord(type, id, payload) {
-  let url = `${host}${type}/${id}`
-  return axios.delete(url)
+  let url = `${type}/${id}`
+  return axiosInstance.delete(url)
   .then(response => response)
   .catch(error => error)
 }
