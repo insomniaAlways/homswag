@@ -7,7 +7,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import DashboardScreen from '../src/screens/DashboardScreen';
 import ItemsScreen from '../src/screens/ItemsScreen';
 import CartScreen from '../src/screens/CartScreen';
-import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
+import ScheduleAppointmentScreen from '../src/screens/ScheduleAppointmentScreen'
 import PaymentScreen from '../src/screens/PaymentScreen';
 import PaymentSelectionScreen from '../src/screens/PaymentSelectionScreen';
 import DefaultStyles from '../src/style/customStyles';
