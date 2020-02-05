@@ -34,12 +34,15 @@ const ItemsList = (props) => {
     </View>
   );
 
-  const renderItemHeader = (info) => (
-    <ImageBackground
-      style={styles.itemHeader}
-      source={BeautyImage}
-    />
-  );
+  const renderItemHeader = (info) => {
+    let image_source = info.item.image_source ? {uri : info.item.image_source} : BeautyImage
+    return (
+      <ImageBackground
+        style={styles.itemHeader}
+        source={image_source}
+      />
+    )
+  }
 
   const renderProductItem = (info) => (
     <Card

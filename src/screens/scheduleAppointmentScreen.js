@@ -34,7 +34,7 @@ function ScheduleAppointmentScreen(props) {
       </View>
       <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
         <TouchableOpacity onPress={() => props.navigation.navigate('Cart')} style={{alignItems: 'center', paddingTop: 15, paddingBottom: 10, width: '100%'}}>
-          <Text style={{color: '#fff', fontSize: 16}}>Next</Text>
+          <Text style={{color: '#fff', fontSize: 16}}>Save & Continue</Text>
         </TouchableOpacity>
       </View>
     </View>

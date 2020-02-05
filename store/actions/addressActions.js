@@ -5,17 +5,17 @@ import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions
 export const fetchAddress = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return query('address', 'user_id=1')
+    return query('me/address', 'user_id=1')
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(onError(e)))
   }
 }
 
-export const addNewAddress = (address) => {
+export const creatNew = (address) => {
   return function(dispatch) {
     dispatch(onStart())
-    return createRecord('address', address)
-    .then((response) => fetchAddress())
+    return createRecord('me/address', address)
+    .then((response) => onSuccess(response))
     .catch(error => dispatch(onError(error)))
   }
 }
@@ -28,7 +28,7 @@ export const updateItem = (selectedCartItem, quantity, totalPrice) => {
       "quantity": quantity,
       "total_price": totalPrice,
     }
-    return updateRecord('cart-item', selectedCartItem.id, cartItem)
+    return updateRecord('me/address', selectedCartItem.id, cartItem)
     .then((response) => dispatch(mergeItems(response.data)))
     .catch(error => dispatch(onError(error)))
     // .then((response) => fetchCartItems())
@@ -39,7 +39,7 @@ export const updateItem = (selectedCartItem, quantity, totalPrice) => {
 export const deleteItem = (selectedCartItem) => {
   return function(dispatch) {
     dispatch(onStart())
-    return deleteRecord('cart-item', selectedCartItem.id)
+    return deleteRecord('me/address', selectedCartItem.id)
     .then((response) => fetchCartItems())
     .catch(error => dispatch(onError(error)))
   }

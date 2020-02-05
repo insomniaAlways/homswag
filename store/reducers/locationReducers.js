@@ -1,23 +1,22 @@
-import { ADDRESS_REQUEST_INITIATED, ADDRESS_REQUEST_SUCCESS, ADDRESS_REQUEST_FAILED } from '../actionTypes';
-import { addresses } from '../intialValues';
+import { LOCATION_REQUEST_INITIATED, LOCATION_REQUEST_SUCCESS, LOCATION_REQUEST_FAILED } from '../actionTypes';
 import _ from 'lodash';
 
-const addressReducers = (state = addresses, action) => {
+const addressReducers = (state = {}, action) => {
   switch(action.type) {
-    case ADDRESS_REQUEST_INITIATED : {
+    case LOCATION_REQUEST_INITIATED : {
       return {
         ...state,
         isLoading: true
       }
     }
-    case ADDRESS_REQUEST_SUCCESS : {
+    case LOCATION_REQUEST_SUCCESS : {
       return {
         ...state,
         isLoading: false,
         values: action.payload
       }
     }
-    case ADDRESS_REQUEST_FAILED : {
+    case LOCATION_REQUEST_FAILED : {
       return {
         ...state,
         isLoading: false,
