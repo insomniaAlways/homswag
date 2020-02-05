@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { View, SafeAreaView, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
-import { fetchOrder } from '../../store/actions/orderActions'
+import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
-import AddAddressModal from '../components/addAddressModal';
 import CustomHeader from '../components/customHeader';
 import { fetchAddress, creatNew} from '../../store/actions/addressActions';
-import { Layout, List, Text } from '@ui-kitten/components';
+import { Layout, List, Text, Modal, Spinner } from '@ui-kitten/components';
 
 function AddressScreen(props) {
-  const { address, getAddress } = props;
+  const { address, getAddress, navigation } = props;
   const addresses = address.values
-  const [ modalVisible, setModalVisible ] = useState(false)
+  const [ isLoading, setLoading ] = useState(false)
 
   useEffect(() => {
     getAddress()
   }, [])
 
+  useEffect(() => {
+    setLoading(address.isLoading)
+  }, [address.isLoading])
+
   const renderItem = ({ item, index }) => (
     <Layout>
-      <Text></Text>
-      <Text></Text>
-      <Text></Text>
+      <Text>{item.address.formatedAddress}</Text>
+      <Text>{item.address.localAddress}</Text>
+      <Text>{item.address.landmark}</Text>
     </Layout>
   );
 
@@ -42,7 +44,7 @@ function AddressScreen(props) {
     } else {
       return (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text>No order found</Text>
+          <Text>No Address found</Text>
         </View>
       )
     }
@@ -50,23 +52,21 @@ function AddressScreen(props) {
   return (
     <View style={{flex: 1}}>
       <CustomHeader {...props}/>
-      <SafeAreaView style={{flex: 1}}>
-        <AddressList />
-        <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => setModalVisible(true)}>
-            <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
-          </TouchableOpacity>
-        </View>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(false);
-          }}>
-            <AddAddressModal setModalVisible={setModalVisible} modalVisible={modalVisible}/>
-        </Modal>
-      </SafeAreaView>
+      {address.isLoading ? (
+        <Layout style={styles.loaderContainer}>
+          <Spinner status='success' style={{height: 20, width: 20}}/>
+          <Text>Loading...</Text>
+        </Layout>
+      ) : ( 
+        <SafeAreaView style={{flex: 1}}>
+          <AddressList />
+          <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+            <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddAddress', {previousRoute: 'Address'})}>
+              <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      )}
     </View>
   )
 }
@@ -97,7 +97,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 })
 
 mapStateToProps = state => {

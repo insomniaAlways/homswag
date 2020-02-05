@@ -51,12 +51,14 @@ const CartPromoItemList = (props) => {
     setItemList(getList)
   }, [cartItem.isLoading])
 
-  const renderItemHeader = (info) => (
+  const renderItemHeader = (info) => {
+    let image_source = info.item.image_source ? {uri : info.item.image_source} : BeautyImage
+    return (
     <ImageBackground
       style={styles.itemHeader}
-      source={BeautyImage}
+      source={image_source}
     />
-  );
+  )};
 
   const renderProductItem = (info) => (
     <Card

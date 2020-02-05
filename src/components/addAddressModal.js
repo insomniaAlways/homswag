@@ -1,11 +1,12 @@
 import React, { useState, useEffect }from 'react';
-import { View, Text, KeyboardAvoidingView, Button } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Button, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import FloatingInput from '../components/input-helpers.js/floatingInput';
 import DefaultStyles from '../style/customStyles';
 import { connect } from 'react-redux';
 import { geoCoding } from '../../store/actions/locationActions';
-import { creatNew } from '../../store/actions/addressActions';
+import { creatNew, fetchAddress } from '../../store/actions/addressActions';
+import { Modal, Spinner, Layout } from '@ui-kitten/components';
 
 const initialRegion = {
   latitude: 12.97194,
@@ -24,16 +25,16 @@ const locationValueObject = {
 
 function AddressScreen(props) {
   const [ coordinates, setCoodinates ] = useState()
-  const { location, getGeoCoding, addNewAddress } = props
+  const { location, getGeoCoding, addNewAddress, getfetchAddress, isLoading, setLoading } = props
   const [ isCurrentLoactionLoaded, setCoodinatesLoaded ] = useState(false)
   const [ locationValue, setLocationValue ] = useState(locationValueObject)
-  const [ isLoading, setLoading ] = useState(false)
   
   useEffect(() => {
     if(!location.isLoading && location.values && location.values.results && location.values.results.length) {
       let address = location.values.results[0]
       let { formatted_address, geometry, place_id } = address
       setLocationValue({...locationValue, formatedAddress: formatted_address, geometry: geometry.location, place_id: place_id})
+      setLoading(false)
     }
   },[location.isLoading])
 
@@ -59,7 +60,10 @@ function AddressScreen(props) {
   }, [])
 
   const save = async () => {
+    setLoading(true)
     let saveAddress = await addNewAddress({address: locationValue})
+    let allAddress = await getfetchAddress()
+    setLoading(false)
     props.setModalVisible(false)
   }
 
@@ -106,7 +110,24 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getGeoCoding: (latitude, longitude) => dispatch(geoCoding(latitude, longitude)),
-  addNewAddress: (locationValue) => dispatch(creatNew(locationValue))
+  addNewAddress: (locationValue) => dispatch(creatNew(locationValue)),
+  getfetchAddress: () => dispatch(fetchAddress())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddressScreen);
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modal: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  controlContainer: {
+    borderRadius: 4,
+    padding: 12,
+    backgroundColor: '#3366FF',
+  }
+})
