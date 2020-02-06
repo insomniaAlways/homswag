@@ -1,28 +1,58 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, View, Text, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import SelectDate from '../components/SelectDate';
 import SelectTimeSlot from '../components/selectTimeSlot';
 import BookingDetails from '../components/bookingDetails';
-import DefaultStyles from '../style/customStyles';
+import DefaultStyles, { brandColor } from '../style/customStyles';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import Modal from "react-native-modal";
+import AddressList from '../components/addressList';
+import { fetchAddress } from '../../store/actions/addressActions';
+import { Layout } from '@ui-kitten/components';
 
 function ScheduleAppointmentScreen(props) {
+  const [ openAddressModal, setModal ] = useState(false)
+  const [ scrollOffset, setScrollOffset ] = useState(0)
+  const [ selectedAddress, setSelectedAddress ] = useState()
+  let scrollViewRef;
+  const { appointment, addresses, getAddress } = props
+  const { defaultValues } = appointment
+
+  useEffect(() => {
+    getAddress()
+  }, [])
+
+  const goToAddAddress = () => {
+    setModal(false)
+    props.navigation.navigate('AddAddress', { previousRoute: 'BookAppointment' })
+  }
+
+  useEffect(() => {
+    if(addresses.isLoading && addresses.values && addresses.values.length && !selectedAddress) {
+      setSelectedAddress(addresses.values[0])
+    }
+  }, [addresses.isLoading])
+
+  const handleOnScroll = event => {
+    setScrollOffset(event.nativeEvent.contentOffset.y)
+  };
+
+  const handleScrollTo = p => {
+    if (scrollViewRef) {
+      scrollViewRef.scrollTo(p);
+    }
+  };
+
   const initialAppointmentDetails= {
     date: moment().toDate(),
     timeSlot: "9AM - 12PM",
     name: 'Pretty Sharma',
     phone: '9706055724',
-    address: 'ITI Layout Main Road',
     instructions: '',
     preferedBeautician: ''
   }
 
-  const slot = 1;
-  const slots = [
-    { type: 1, value: "9AM - 12PM" },
-    { type: 2, value: "12AM - 3PM" },
-    { type: 3, value: "3AM - 6PM" }
-  ];
   const [ appointmentDetails, setAppointmentDetails ] = useState(initialAppointmentDetails)
   return (
     <View style={{flex: 1}}>
@@ -31,12 +61,20 @@ function ScheduleAppointmentScreen(props) {
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
             <SelectDate appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
-            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={slots} slot={slot}/>
+            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={defaultValues.slots} slot={defaultValues.slot}/>
           </View>
         </View>
         <View style={{marginTop: 10}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Fill Details:</Text>
-          <BookingDetails appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
+          <BookingDetails
+            appointmentDetails={appointmentDetails}
+            setAppointmentDetails={setAppointmentDetails}
+            openAddressModal={openAddressModal}
+            selectedAddress={selectedAddress}
+            setModal={setModal}
+            goToAddAddress={goToAddAddress}
+            navigation={props.navigation}
+            />
         </View>
       </View>
       <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
@@ -44,8 +82,89 @@ function ScheduleAppointmentScreen(props) {
           <Text style={{color: '#fff', fontSize: 16}}>Save & Continue</Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        isVisible={openAddressModal}
+        onSwipeComplete={() => setModal(false)}
+        swipeDirection="down"
+        scrollTo={handleScrollTo}
+        scrollOffset={scrollOffset}
+        scrollOffsetMax={400 - 300}
+        style={styles.bottomModal}>
+        <ScrollView
+          ref={ref => (scrollViewRef = ref)}
+          onScroll={handleOnScroll}
+          style={{flex: 1}}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}>
+            <Layout style={{height: 300, backgroundColor: 'transparent'}}></Layout>
+            <Layout style={styles.scrollableModal}>
+              <Layout style={styles.addressListHeader}>
+                <Text style={[styles.addressListHeaderText, {width: '70%'}]}>
+                  Address Lists: 
+                </Text>
+                <TouchableOpacity onPress={() => goToAddAddress()}>
+                  <Text style={[{width: 50}, styles.addressListHeaderText]}>+ Add</Text>
+                </TouchableOpacity>
+              </Layout>
+              <AddressList addresses={addresses}
+                style={{padding: 10, flex: 1}}
+                setSelectedAddress={setSelectedAddress}
+                setModal={setModal}
+                />
+            </Layout>
+          </ScrollView>
+      </Modal>
     </View>
   )
 }
 
-export default ScheduleAppointmentScreen;
+const mapPropsToState = state => ({
+  appointment: state.appointment,
+  addresses: state.addresses
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAddress: () => dispatch(fetchAddress())
+  }
+}
+
+export default connect(mapPropsToState, mapDispatchToProps)(ScheduleAppointmentScreen);
+
+const styles = StyleSheet.create({
+  content: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+    flex: 1
+  },
+
+  addressListHeader: {
+    padding: 15,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: '#eee',
+    backgroundColor: brandColor,
+    borderTopEndRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  addressListHeaderText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  scrollableModal: {
+    flex: 1,
+    borderTopEndRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+});

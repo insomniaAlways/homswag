@@ -61,7 +61,7 @@ function AddressScreen(props) {
         <SafeAreaView style={{flex: 1}}>
           <AddressList />
           <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-            <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddAddress', {previousRoute: 'Address'})}>
+            <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddAddress', { previousRoute: 'Address' })}>
               <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
             </TouchableOpacity>
           </View>

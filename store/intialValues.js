@@ -268,7 +268,7 @@ export const packages = {
 export const appointment = {
   isLoading: false,
   values: [],
-  default: {
+  defaultValues: {
     from: moment().toDate(),
     to: moment().add(3, 'hours').toDate(),
     slot: 1,

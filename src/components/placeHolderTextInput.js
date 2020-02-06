@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
+import { Text, Layout } from '@ui-kitten/components';
 
 function PlaceHolderTextInput(props) {
-  const { setValue, itemKey, value } = props;
+  const { setValue, itemKey, value, disabled } = props;
   const updateText = function(text) {
     if(props.previousState) {
       setValue({...props.previousState, [itemKey]: text})
@@ -13,15 +14,21 @@ function PlaceHolderTextInput(props) {
 
   const [ inputStyle, setStyle ] = useState(styles.placeholder);
   return (
-      <TextInput
-        style={[inputStyle, props.styles]}
-        keyboardType={props.keyboardType ? props.keyboardType : 'default'}
-        onChangeText={text => updateText(text)}
-        placeholder={props.placeholder}
-        onFocus={() => setStyle(styles.input)}
-        onBlur={() => setStyle(styles.placeholder)}
-        value={value}
-      />
+    <Layout>
+      {disabled ?
+       (<Text style={[styles.disabledInput, props.styles]}>{value}</Text>) :
+        <TextInput
+          style={[inputStyle, props.styles]}
+          keyboardType={props.keyboardType ? props.keyboardType : 'default'}
+          onChangeText={text => updateText(text)}
+          placeholder={props.placeholder}
+          onFocus={() => setStyle(styles.input)}
+          onBlur={() => setStyle(styles.placeholder)}
+          value={value}
+          disabled={disabled}
+        />
+      }
+    </Layout>
   )
 }
 
@@ -37,5 +44,10 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#eee',
     borderBottomWidth: 1
+  },
+  disabledInput: {
+    borderColor: '#eee',
+    borderBottomWidth: 1,
+    height: 30
   }
 })

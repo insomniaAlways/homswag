@@ -7,6 +7,7 @@ import cartItemReducers from './reducers/cartItemReducers';
 import orderReducers from './reducers/orderReducers';
 import addressReducers from './reducers/addressReducers';
 import packageReducers from './reducers/packageReducers';
+import appointmentReducers from './reducers/appointmentReducers';
 import { initialState } from './intialValues';
 import locationReducers from './reducers/locationReducers';
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   orders: orderReducers,
   addresses: addressReducers,
   packages: packageReducers,
-  location: locationReducers
+  location: locationReducers,
+  appointment: appointmentReducers
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
