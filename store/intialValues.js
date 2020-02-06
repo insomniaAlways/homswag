@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const auth = {
   isLoading: false,
   values: {},
@@ -263,6 +265,22 @@ export const packages = {
   error: null
 }
 
+export const appointment = {
+  isLoading: false,
+  values: [],
+  default: {
+    from: moment().toDate(),
+    to: moment().add(3, 'hours').toDate(),
+    slot: 1,
+    slots: [
+      { type: 1, value: "9AM - 12PM" },
+      { type: 2, value: "12AM - 3PM" },
+      { type: 3, value: "3AM - 6PM" }
+    ]
+  },
+  error: null
+}
+
 export const initialState = {
   items: items,
   categories: categories,
@@ -270,5 +288,6 @@ export const initialState = {
   cartItems: cartItems,
   orders: orders,
   addresses: addresses,
-  packages: packages
+  packages: packages,
+  appointment: appointment
 }

@@ -8,6 +8,7 @@ import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
 import Constants from 'expo-constants';
 import { Linking } from 'expo';
+import ReactNavigation from 'react-navigation';
 
 const SideDrawer = props => {
 
@@ -36,6 +37,12 @@ const SideDrawer = props => {
         </View>
       </ImageBackground>
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* <TouchableOpacity onPress={() => props.navigation.dispatch(ReactNavigation.StackActions.popToTop())}>
+          <View style={styles.logout}>
+            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
+            <Text style={styles.logoutText}>Dashboard</Text>
+          </View>
+        </TouchableOpacity> */}
         <DrawerItems {...props} labelStyle={{width: '100%'}}/>
         <TouchableOpacity onPress={() => openWhatsApp()}>
           <View style={styles.logout}>

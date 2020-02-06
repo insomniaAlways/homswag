@@ -14,7 +14,10 @@ import CartPromoItemList from '../components/cartPromoItemList';
 
 function CartScreen(props) {
   const { navigation, cart, user, cartItem } = props;
+  const bookingDetails = navigation.getParam('bookingDetails', {})
   const [ isLoading, setLoading ] = useState(false)
+
+  console.log(navigation)
 
   useEffect(() => {
     if(user.id) {
@@ -38,7 +41,7 @@ function CartScreen(props) {
           <Layout style={{padding: 10}}>
             <CartItemList cart={cart.values} cartItems={cartItem.values} setLoading={setLoading}/>
           </Layout>
-          <AppointmentDetails />
+          <AppointmentDetails bookingDetails={bookingDetails}/>
           <Layout style={{paddingTop: 10}}>
             <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
             <CartPromoItemList setLoading={setLoading}/>
