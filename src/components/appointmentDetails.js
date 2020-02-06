@@ -9,10 +9,12 @@ const mode = 'date';
 const timeSlots = ["9AM - 12PM", "12PM - 3PM", "3PM - 6PM"];
 
 function AppointmentDetails(props) {
-  const [ date, setDate ] = useState(intialDate);
+  const { bookingDetails } = props
+  const d = bookingDetails && bookingDetails.date ? bookingDetails.date : intialDate
+  const [ date, setDate ] = useState(d);
   const [ isDatePickerVisible, setDatePickeVisibility ] = useState(false);
   const [ selectedTimeSlot, setTimeSlot ] = useState(timeSlots[1])
-
+  console.log(bookingDetails)
   const onSelectDate = (event, selectDate = date) => {
     setDatePickeVisibility(false)
     setDate(selectDate);

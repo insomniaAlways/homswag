@@ -16,6 +16,13 @@ function ScheduleAppointmentScreen(props) {
     instructions: '',
     preferedBeautician: ''
   }
+
+  const slot = 1;
+  const slots = [
+    { type: 1, value: "9AM - 12PM" },
+    { type: 2, value: "12AM - 3PM" },
+    { type: 3, value: "3AM - 6PM" }
+  ];
   const [ appointmentDetails, setAppointmentDetails ] = useState(initialAppointmentDetails)
   return (
     <View style={{flex: 1}}>
@@ -24,7 +31,7 @@ function ScheduleAppointmentScreen(props) {
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
             <SelectDate appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
-            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
+            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={slots} slot={slot}/>
           </View>
         </View>
         <View style={{marginTop: 10}}>
