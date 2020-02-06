@@ -32,7 +32,7 @@ function ItemRow(props) {
       setAdded(true)
       setQuantity(isItemAdded().quantity)
     }
-  }, [])
+  }, [cartItem.isLoading])
 
   return (
     <View style={props.style}>

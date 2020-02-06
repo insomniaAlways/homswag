@@ -22,10 +22,10 @@ function Items(props) {
   }, [category])
 
   useEffect(() => {
-      if(cartItem.values.length) {
-        setShowButton(true)
-      } else {
-        setShowButton(false)
+    if(cartItem.values.length) {
+      setShowButton(true)
+    } else {
+      setShowButton(false)
       }
   }, [cartItem.values.length])
 

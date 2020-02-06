@@ -17,8 +17,6 @@ function CartScreen(props) {
   const bookingDetails = navigation.getParam('bookingDetails', {})
   const [ isLoading, setLoading ] = useState(false)
 
-  console.log(navigation)
-
   useEffect(() => {
     if(user.id) {
       props.getCart(user.id)
@@ -35,31 +33,40 @@ function CartScreen(props) {
 
   return (
     <Layout style={{flex: 1}}>
-      <Layout style={{flex: 14}}>
-        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: 'transparent'}}>
-          <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
-          <Layout style={{padding: 10}}>
-            <CartItemList cart={cart.values} cartItems={cartItem.values} setLoading={setLoading}/>
-          </Layout>
-          <AppointmentDetails bookingDetails={bookingDetails}/>
-          <Layout style={{paddingTop: 10}}>
-            <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
+     {cartItem && cartItem.values && cartItem.values.length ? (
+      <Layout style={{flex: 1}}>
+        <Layout style={{flex: 14, backgroundColor: "#F7F9FC"}}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: 'transparent'}}>
+            <Layout style={{marginVertical: 10, paddingVertical: 10, borderRadius: 20, marginHorizontal: 10, paddingHorizontal: 10}}>
+              <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
+              <CartItemList cart={cart.values} cartItems={cartItem.values} setLoading={setLoading}/>
+            </Layout>
+            <Layout style={{marginVertical: 10, paddingVertical: 20, borderRadius: 20, marginHorizontal: 10}}>
+              <AppointmentDetails bookingDetails={bookingDetails} navigation={navigation}/>
+            </Layout>
+            <Layout style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingVertical: 10, paddingHorizontal: 10}}>
+              <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
+            </Layout>
             <CartPromoItemList setLoading={setLoading}/>
-          </Layout>
-          <Layout style={{padding: 10}}>
-            <Text style={{paddingTop: 10, paddingBottom: 10, fontWeight: "bold"}}>Price Breakdown: </Text>
-            <PriceBreakDown />
-          </Layout>
-        </ScrollView>
-      </Layout>
-      {/* <Layout style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
-        <SelectAddress navigation={navigation}/>
-      </Layout> */}
-      <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-        <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
-          <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
-        </TouchableOpacity>
-      </Layout>
+            <Layout style={{marginHorizontal: 10, marginBottom: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 10, paddingHorizontal: 10}}>
+              <Text style={{paddingTop: 10, paddingBottom: 10, fontWeight: "bold"}}>Price Breakdown: </Text>
+              <PriceBreakDown />
+            </Layout>
+          </ScrollView>
+        </Layout>
+        {/* <Layout style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
+          <SelectAddress navigation={navigation}/>
+        </Layout> */}
+        <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
+            <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
+          </TouchableOpacity>
+        </Layout>
+      </Layout> ) : (
+        <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text>No item added</Text>
+        </Layout>
+     )}
       <Modal
         animationType="slide"
         transparent={true}
