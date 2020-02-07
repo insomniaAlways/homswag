@@ -1,29 +1,27 @@
-import { FETCH_AUTHORISATION_REQUEST, FETCH_AUTHORISATION_SUCCESS, FETCH_AUTHORISATION_ERROR } from '../actionTypes';
-import { auth } from '../intialValues';
+import { RESTORE_TOKEN, SIGN_IN, SIGN_OUT } from '../actionTypes';
+import { userToken } from '../intialValues';
 
-const authReducers = (state = auth, action) => {
-  switch(action.type) {
-    case FETCH_AUTHORISATION_REQUEST : {
+const authReducers = (state = userToken, action) => {
+  switch (action.type) {
+    case RESTORE_TOKEN:
       return {
         ...state,
-        isLoading: true
-      }
-    }
-    case FETCH_AUTHORISATION_SUCCESS : {
-      return {
-        ...state,
+        userToken: action.token,
         isLoading: false,
-        values: action.payload
-      }
-    }
-    case FETCH_AUTHORISATION_ERROR : {
+      };
+    case SIGN_IN:
       return {
         ...state,
-        isLoading: false,
-        error: action.payload
-      }
-    }
-    default : return state;
+        isSignout: false,
+        userToken: action.token,
+      };
+    case SIGN_OUT:
+      return {
+        ...state,
+        isSignout: true,
+        userToken: undefined,
+      };
+    default: return state
   }
 }
 

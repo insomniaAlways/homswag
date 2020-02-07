@@ -281,6 +281,12 @@ export const appointment = {
   error: null
 }
 
+export const userToken = {
+  isLoading: true,
+  isSignout: false,
+  userToken: null,
+}
+
 export const initialState = {
   items: items,
   categories: categories,
