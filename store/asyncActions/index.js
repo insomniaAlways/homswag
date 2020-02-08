@@ -5,16 +5,29 @@ const organization = "organization_id=2"
 import Constants from 'expo-constants';
 
 const axiosInstance = axios.create({
-  baseURL: host,
-  headers: {
-    "Content-Type": 'application/json',
-    'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgwNzg3ODEwLCJleHAiOjE1ODE2NTE4MTB9.sdxot_fqco8A-Ze_-JXrjM6HVKe9XOIK5zL3PHFzjDs"
-  }
+  baseURL: host
 });
+
+const createErrorObject = (error, message="Something went wrong") => {
+  return {
+    error: error,
+    message: message
+  }
+}
+
+export const initializeAxiosHeader = (token) => {
+  try {
+    if(token) {
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+  } 
+  catch (e) {
+    return createErrorObject(e, "Header not added")
+  }
+}
 
 //GET Calls
 export function findAll(type, query) {
-  // let url = `${host}${type}`;
   let url = `/${type}`;
   if(query) {
     url = `${url}?${query}&${organization}`
@@ -25,7 +38,6 @@ export function findAll(type, query) {
 }
 
 export function query(type, query) {
-  // let url = `${host}${type}`;
   let url = `/${type}`;
   if(query) {
     url = `${url}?${query}&${organization}`
@@ -36,7 +48,6 @@ export function query(type, query) {
 }
 
 export function findRecord(type, id) {
-  // let url = `${host}${type}`;
   let url = `/${type}`;
   if(id) {
     url = `${url}/${id}`
@@ -45,6 +56,7 @@ export function findRecord(type, id) {
   }
   return getRecord(url)
 }
+
 //Making GET call
 function getRecord(url) {
   return axiosInstance.get(url)

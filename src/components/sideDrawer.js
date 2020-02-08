@@ -8,10 +8,12 @@ import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
 import Constants from 'expo-constants';
 import { Linking } from 'expo';
-import ReactNavigation from 'react-navigation';
+import { AsyncStorage } from 'react-native';
+import { onSigout } from '../../store/actions/authenticationAction';
+import { connect } from 'react-redux';
 
 const SideDrawer = props => {
-
+  const { navigation, signOut } = props
   const openWhatsApp = () => {
     let url = `whatsapp://send?text=hello&phone=916366505567`
     Linking.canOpenURL(url)
@@ -23,6 +25,12 @@ const SideDrawer = props => {
       }
     })
     .catch((err) => console.error('An error occurred', err));
+  }
+
+  const logOut = () => {
+    AsyncStorage.removeItem('token')
+    .then(() => navigation.navigate('Auth'))
+    .then(() => signOut())
   }
 
   return (
@@ -50,7 +58,7 @@ const SideDrawer = props => {
             <Text style={styles.logoutText}>Need Help?</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => logOut()}>
           <View style={styles.logout}>
             <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
             <Text style={styles.logoutText}>Logout</Text>
@@ -130,4 +138,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SideDrawer;
+const mapStatetoProps = state => ({
+  auth: state.auth
+})
+const mapDispatchToProps = dispatch => ({
+  signOut: dispatch(onSigout())
+})
+export default connect(mapStatetoProps, mapDispatchToProps)(SideDrawer);

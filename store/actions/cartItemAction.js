@@ -5,7 +5,7 @@ import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions
 export const fetchCartItems = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return query('cart-item', 'cart_id=1')
+    return query('cart-item')
     .then((response) => dispatch(onSuccess(response.data)))
     .catch((e) => dispatch(onError(e)))
   }

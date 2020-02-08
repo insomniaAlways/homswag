@@ -282,9 +282,14 @@ export const appointment = {
 }
 
 export const userToken = {
-  isLoading: true,
+  isLoading: false,
   isSignout: false,
   userToken: null,
+}
+
+export const session = {
+  isSessionExpired: true,
+  isSessionAuthenticated: false,
 }
 
 export const initialState = {
@@ -295,5 +300,6 @@ export const initialState = {
   orders: orders,
   addresses: addresses,
   packages: packages,
-  appointment: appointment
+  appointment: appointment,
+  session: session
 }

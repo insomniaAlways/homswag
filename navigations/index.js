@@ -125,12 +125,12 @@ const DrawerNavigation = createDrawerNavigator({
 }, { contentComponent: SideDrawer });
 
 const switchNavigation = createSwitchNavigator({
+  Auth: {
+    screen: LoginScreen
+  },
   App: {
     screen: DrawerNavigation
   }
-  // Auth: {
-  //   screen: LoginScreen
-  // },
 })
 
 
