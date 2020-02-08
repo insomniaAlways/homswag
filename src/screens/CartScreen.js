@@ -18,9 +18,7 @@ function CartScreen(props) {
   const [ isLoading, setLoading ] = useState(false)
 
   useEffect(() => {
-    if(user.id) {
-      props.getCart(user.id)
-    }
+    props.getCart()
   }, [])
 
   useEffect(() => {
