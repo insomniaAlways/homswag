@@ -15,11 +15,11 @@ import * as Animatable from 'react-native-animatable';
 import { Spinner } from '@ui-kitten/components';
 
 function Dashboard(props) {
-  useEffect(() => {
+  useEffect(async () => {
     props.getAllCategories()
-    // props.getUser()
-    props.getCart()
-    props.getAllCartItems()
+    props.getUser()
+    await props.getCart()
+    await props.getAllCartItems()
     props.getAllItems()
     props.getPackages()
   }, [])
@@ -66,7 +66,7 @@ mapStateToProps = state => {
 mapDispatchToProps = dispatch => {
   return {
     getAllCategories: () => dispatch(fetchCategories()),
-    getUser: () => dispatch(getUser()),
+    getUser: () => dispatch(fetchUser()),
     getCart: ()=> dispatch(fetchCart()),
     getAllCartItems: () => dispatch(fetchCartItems()),
     getAllItems: () => dispatch(fetchAllItems()),

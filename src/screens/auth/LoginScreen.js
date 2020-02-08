@@ -3,11 +3,12 @@ import { StyleSheet, View, ImageStyle } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
-import { Icon, IconElement } from '@ui-kitten/components';
+import { Icon } from '@ui-kitten/components';
 import ImageBackground from '../../../assets/images/image-background.jpg'
 import { connect } from 'react-redux';
 import { addHeader, register, validateToken } from '../../../store/actions/authenticationAction';
 import { AsyncStorage } from 'react-native';
+import { Spinner } from '@ui-kitten/components';
 
 const PhoneIcon = (style) => (
   <Icon {...style} name='phone'/>
@@ -43,6 +44,7 @@ const LoginScreen = (props) => {
 
   const onSubmit = async () => {
     if(phone && otp) {
+      setLoading(true)
       try {
         await validateOtp(phone, otp)
       }
@@ -59,6 +61,7 @@ const LoginScreen = (props) => {
   }
   const registerPhone = async () => {
     if(phone) {
+      setShowOtpField(true)
       try {
         await registerUser(phone)
         setShowOtpField(true)
@@ -87,14 +90,28 @@ const LoginScreen = (props) => {
   };
 
   useEffect(() => {
+    setShowOtpField(false)
+    resetState()
+  }, [phone])
+
+  useEffect(() => {
     if(!auth.isLoading && auth.userToken) {
       storeSession()
     }
-  }, [auth.isLoading, auth.isSignout, auth.userToken])
+    console.log('effect triggered', auth)
+    if(!auth.isLoading && auth.error) {
+      resetState()
+      alert(auth.error.message)
+    }
+  }, [auth.isLoading, auth.isSignOut, auth.userToken, auth.error])
 
   useEffect(() => {
     bootstrapApp();
   }, [])
+
+  useEffect(() => {
+    setOtp();
+  }, [showOtpField])
 
   return (
     <KeyboardAvoidingView>
@@ -121,6 +138,8 @@ const LoginScreen = (props) => {
               status='control'
               placeholder='Phone Number'
               icon={PhoneIcon}
+              maxLength={10}
+              keyboardType={'number-pad'}
               value={phone}
               onChangeText={setPhone}
             />
@@ -129,30 +148,39 @@ const LoginScreen = (props) => {
                 style={styles.passwordInput}
                 status='control'
                 placeholder='OTP'
+                keyboardType={'number-pad'}
                 value={otp}
                 onChangeText={setOtp}
               />}
           </View>
-          <View style={styles.signInButtonContainer}>
-            { showOtpField ? 
-              <Button
-                style={styles.signInButton}
-                status='control'
-                size='medium'
-                disabled={isLoading}
-                onPress={onSubmit}>
-                Submit
-              </Button> :
-              <Button
-                style={styles.signInButton}
-                status='control'
-                size='medium'
-                disabled={isLoading}
-                onPress={registerPhone}>
-                Continue
-              </Button>
-            }
-          </View> 
+          { isLoading ? 
+            <View style={styles.signInButtonContainer}>
+              <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', paddingVertical: 10}]}>
+                <Spinner status='primary'/>
+              </View>
+            </View> :
+            <View style={styles.signInButtonContainer}>
+              { showOtpField ? 
+                <Button
+                  style={styles.signInButton}
+                  status='control'
+                  size='medium'
+                  disabled={isLoading}
+                  onPress={onSubmit}>
+                  Submit
+                </Button> :
+                <Button
+                  style={styles.signInButton}
+                  status='control'
+                  size='medium'
+                  disabled={isLoading}
+                  onPress={registerPhone}>
+                  Continue
+                </Button>
+              }
+            </View> 
+
+          }
         </View>
         : 
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

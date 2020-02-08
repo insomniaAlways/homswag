@@ -60,45 +60,26 @@ export function findRecord(type, id) {
 //Making GET call
 function getRecord(url) {
   return axiosInstance.get(url)
-  .then((response) => response)
-  .catch((e) => {
-    console.log(e)
-    return e
-  })
 }
 
 //POST Calls
 export function createRecord(type, payload) {
   return axiosInstance.post(type, payload)
-  .then((response) => response)
-  .catch((error) => {
-    console.log(error);
-    return error
-  });
 }
 
 //PUT Calls
 export function updateRecord(type, id, payload) {
   let url = `${type}/${id}`
   return axiosInstance.put(url, payload)
-  .then((response) => response)
-  .catch((error) => {
-    console.log(error);
-    return error
-  });
 }
 
 //DELETE Calls
 export function deleteRecord(type, id, payload) {
   let url = `${type}/${id}`
   return axiosInstance.delete(url)
-  .then(response => response)
-  .catch(error => error)
 }
 
 export function getLocationDetails(latitude, longitude) {
   let key = Constants.manifest.android.config.googleMaps.apiKey
   return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`)
-    .then((response) => response)
-    .catch((error) => console.log(error))
 }

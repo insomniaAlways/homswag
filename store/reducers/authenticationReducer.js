@@ -1,36 +1,67 @@
-import { RESTORE_TOKEN, SIGN_IN, SIGN_OUT, ON_ERROR } from '../actionTypes';
+import { VALIDATION_INITIATED, VALIDATION_SUCCESS, SIGN_OUT, VALIDATION_FAILED, ON_LOGIN_INITIATED, ON_LOGIN_SUCCESS, ON_LOGIN_FAILED } from '../actionTypes';
 import { userToken } from '../intialValues';
 
 const authReducers = (state = userToken, action) => {
   switch (action.type) {
-    case RESTORE_TOKEN:
+    case VALIDATION_INITIATED:
       return {
         ...state,
-        isSignout: false,
-        userToken: null,
         isLoading: true,
+        isSignOut: true,
+        userToken: null,
+        error: null
       };
-    case SIGN_IN:
+    case VALIDATION_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        isSignout: false,
+        isSignOut: false,
         userToken: action.payload.token,
+        error: null
+      };
+    case VALIDATION_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        isSignOut: true,
+        userToken: null,
+        error: action.error
       };
     case SIGN_OUT:
       return {
         ...state,
         isLoading: false,
-        isSignout: true,
-        userToken: undefined,
+        isSignOut: true,
+        userToken: null,
+        error: null
       };
-    case ON_ERROR:
+      case ON_LOGIN_INITIATED: {
       return {
         ...state,
-        isSignout: true,
+        isLoading: true,
         userToken: null,
+        isSignOut: true,
+        error: null
+      }
+    }
+    case ON_LOGIN_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        userToken: null,
+        isSignOut: true,
+        error: null
+      }
+    }
+    case ON_LOGIN_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        userToken: null,
+        isSignOut: true,
         error: action.error
-      };
+      }
+    }
     default: return state
   }
 }

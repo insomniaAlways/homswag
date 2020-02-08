@@ -10,6 +10,7 @@ import packageReducers from './reducers/packageReducers';
 import appointmentReducers from './reducers/appointmentReducers';
 import { initialState } from './intialValues';
 import locationReducers from './reducers/locationReducers';
+import userReducers from './reducers/userReducers';
 
 import thunk from 'redux-thunk';
 
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   addresses: addressReducers,
   packages: packageReducers,
   location: locationReducers,
-  appointment: appointmentReducers
+  appointment: appointmentReducers,
+  currentUser: userReducers
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
