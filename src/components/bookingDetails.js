@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PlaceHolderTextInput from './placeHolderTextInput';
 import { brandColor } from '../style/customStyles';
 
 function BookingDetails(props) {
-  const { appointmentDetails, setAppointmentDetails, setModal, selectedAddress, goToAddAddress} = props
-  const { name, phone, instructions, preferedBeautician} = appointmentDetails
+  const { appointmentDetails, setAppointmentDetails, setModal, selectedAddress, goToAddAddress, isAddressLoading } = props
+  const { appointment_for, phone_number, special_instruction, prefered_beautician} = appointmentDetails
   let address = selectedAddress && selectedAddress.address ? selectedAddress.address.formatedAddress : selectedAddress
+
   return (
     <View style={{padding: 10}}>
-      <PlaceHolderTextInput placeholder="Name" styles={{margin: 10}} value={name} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="name" disabled={true}/>
-      <PlaceHolderTextInput placeholder="Phone Number" styles={{margin: 10}} value={phone} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="phone"/>
-        {selectedAddress ? 
+      <PlaceHolderTextInput placeholder="Name" styles={{margin: 10}} value={appointment_for} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="appointment_for" disabled={true}/>
+      <PlaceHolderTextInput placeholder="Phone Number" styles={{margin: 10}} value={phone_number} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="phone_number" disabled={true}/>
+        { isAddressLoading ? 
+          <View style={styles.addressContainer}>
+            <Text style={styles.addressLoading}>Loading...</Text>
+          </View> :
+        ( selectedAddress ? 
           <View style={styles.addressContainer}>
             <Text style={styles.addressText}>{address}</Text>
             <TouchableOpacity style={styles.addressChangeButton} onPress={() => setModal(true)}>
@@ -23,9 +28,9 @@ function BookingDetails(props) {
               <Text style={styles.addressChangeText}>Add Address</Text>
             </TouchableOpacity>
           </View>
-        }
-      <PlaceHolderTextInput placeholder="Special Instruction" styles={{margin: 10}} value={instructions} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="instructions"/>
-      <PlaceHolderTextInput placeholder="Prefered Beautician" styles={{margin: 10}} value={preferedBeautician} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="preferedBeautician"/>
+        )}
+      <PlaceHolderTextInput placeholder="Special Instruction" styles={{margin: 10}} value={special_instruction} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="special_instruction"/>
+      <PlaceHolderTextInput placeholder="Prefered Beautician" styles={{margin: 10}} value={prefered_beautician} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="prefered_beautician"/>
     </View>
   )
 }
@@ -41,6 +46,10 @@ const styles = StyleSheet.create({
   },
   addressText: {
     width: '80%',
+    paddingBottom: 10
+  },
+  addressLoading: {
+    width: '100%',
     paddingBottom: 10
   },
   addressChangeButton: {

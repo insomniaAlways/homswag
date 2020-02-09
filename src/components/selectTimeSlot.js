@@ -2,26 +2,22 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 function SelectTimeSlot(props) {
-  const { appointmentDetails, setAppointmentDetails } = props
-  const { timeSlot } = appointmentDetails
+  const { appointmentDetails, setAppointmentDetails, slots } = props
 
   return (
     <View style={{flexDirection: 'row', justifyContent: 'center', margin: 10}}>
-      <View style={timeSlot ===  "9AM - 12PM" ?  styles.selectedButtonContainer: styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, timeSlot: "9AM - 12PM"})}>
-          <Text style={timeSlot ===  "9AM - 12PM" ? {color: 'white'} : {color: 'black'}}>9am - 12pm</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={timeSlot ===  "12PM - 3PM" ?  styles.selectedButtonContainer: styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, timeSlot: "12PM - 3PM"})}>
-          <Text style={timeSlot ===  "12PM - 3PM" ? {color: 'white'} : {color: 'black'}}>12pm - 3pm</Text>
-        </TouchableOpacity>
-      </View>
-      <View  style={timeSlot ===  "3PM - 6PM" ?  styles.isSelectedLastButtonContainer: styles.isLastButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, timeSlot: "3PM - 6PM"})}>
-          <Text style={timeSlot ===  "3PM - 6PM" ? {color: 'white'} : {color: 'black'}}>3pm - 6pm</Text>
-        </TouchableOpacity>
-      </View>
+      { slots.map(timeSlot => (
+        <View
+          key={timeSlot.type}
+          style={appointmentDetails.slot.type == timeSlot.type ?
+           (timeSlot.type == 3 ? styles.isSelectedLastButtonContainer : styles.selectedButtonContainer) :
+           (timeSlot.type == 3 ? styles.isLastButtonContainer : styles.buttonContainer)}
+          >
+          <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, slot: timeSlot})}>
+            <Text style={appointmentDetails.slot.type == timeSlot.type ? {color: 'white'} : {color: 'black'}}>{timeSlot.value}</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
     </View>
   )
 }

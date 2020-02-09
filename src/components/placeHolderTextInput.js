@@ -14,7 +14,7 @@ function PlaceHolderTextInput(props) {
 
   const [ inputStyle, setStyle ] = useState(styles.placeholder);
   return (
-    <Layout>
+    <Layout style={[props.containerStyle]}>
       {disabled ?
        (<Text style={[styles.disabledInput, props.styles]}>{value}</Text>) :
         <TextInput

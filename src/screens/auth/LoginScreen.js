@@ -98,7 +98,6 @@ const LoginScreen = (props) => {
     if(!auth.isLoading && auth.userToken) {
       storeSession()
     }
-    console.log('effect triggered', auth)
     if(!auth.isLoading && auth.error) {
       resetState()
       alert(auth.error.message)

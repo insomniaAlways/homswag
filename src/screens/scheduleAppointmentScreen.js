@@ -10,29 +10,53 @@ import Modal from "react-native-modal";
 import AddressList from '../components/addressList';
 import { fetchAddress } from '../../store/actions/addressActions';
 import { Layout } from '@ui-kitten/components';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
+import { updateAppointmentState } from '../../store/actions/appointmentActions';
 
 function ScheduleAppointmentScreen(props) {
+  const { appointment, addresses, getAddress, currentUser, updateAppointment } = props
   const [ openAddressModal, setModal ] = useState(false)
   const [ scrollOffset, setScrollOffset ] = useState(0)
   const [ selectedAddress, setSelectedAddress ] = useState()
   let scrollViewRef;
-  const { appointment, addresses, getAddress } = props
-  const { defaultValues } = appointment
-
-  useEffect(() => {
-    getAddress()
-  }, [])
+  const { defaultValues, slots } = appointment
 
   const goToAddAddress = () => {
     setModal(false)
     props.navigation.navigate('AddAddress', { previousRoute: 'BookAppointment' })
   }
 
+  const save = () => {
+    updateAppointment(appointmentDetails)
+    props.navigation.navigate('Cart', { bookingDetails: appointmentDetails})
+  }
+
   useEffect(() => {
-    if(addresses.isLoading && addresses.values && addresses.values.length && !selectedAddress) {
+    getAddress()
+  }, [])
+
+  useEffect(() => {
+    if(!addresses.isLoading && addresses.values && addresses.values.length && !selectedAddress) {
       setSelectedAddress(addresses.values[0])
     }
-  }, [addresses.isLoading])
+  }, [addresses.isLoading, addresses.values, addresses.values.length])
+
+  const [ appointmentDetails, setAppointmentDetails ] = useState(defaultValues)
+
+  useEffect(() => {
+    updateAppointment({
+      ...defaultValues,
+      appointment_for: currentUser.values.name,
+      phone_number: currentUser.values.phone,
+      selectedAddress: selectedAddress,
+      special_instruction: appointmentDetails.special_instruction,
+      prefered_beautician: appointmentDetails.prefered_beautician
+    })
+  }, [currentUser, selectedAddress, addresses.isLoading])
+
+  useEffect(() => {
+    setAppointmentDetails({...appointment.defaultValues})
+  }, [appointment.defaultValues])
 
   const handleOnScroll = event => {
     setScrollOffset(event.nativeEvent.contentOffset.y)
@@ -44,24 +68,14 @@ function ScheduleAppointmentScreen(props) {
     }
   };
 
-  const initialAppointmentDetails= {
-    date: moment().toDate(),
-    timeSlot: "9AM - 12PM",
-    name: 'Pretty Sharma',
-    phone: '9706055724',
-    instructions: '',
-    preferedBeautician: ''
-  }
-
-  const [ appointmentDetails, setAppointmentDetails ] = useState(initialAppointmentDetails)
   return (
-    <View style={{flex: 1}}>
+    <KeyboardAvoidingView style={{flex: 1}}>
       <View style={{flex: 1, padding: 10}}>
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
             <SelectDate appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
-            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={defaultValues.slots} slot={defaultValues.slot}/>
+            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={slots}/>
           </View>
         </View>
         <View style={{marginTop: 10}}>
@@ -72,13 +86,14 @@ function ScheduleAppointmentScreen(props) {
             openAddressModal={openAddressModal}
             selectedAddress={selectedAddress}
             setModal={setModal}
+            isAddressLoading={addresses.isLoading}
             goToAddAddress={goToAddAddress}
             navigation={props.navigation}
             />
         </View>
       </View>
       <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-        <TouchableOpacity onPress={() => props.navigation.navigate('Cart', { bookingDetails: defaultValues})} style={{alignItems: 'center', paddingTop: 15, paddingBottom: 10, width: '100%'}}>
+        <TouchableOpacity onPress={() => save()} style={{alignItems: 'center', paddingTop: 15, paddingBottom: 10, width: '100%'}}>
           <Text style={{color: '#fff', fontSize: 16}}>Save & Continue</Text>
         </TouchableOpacity>
       </View>
@@ -114,18 +129,20 @@ function ScheduleAppointmentScreen(props) {
             </Layout>
           </ScrollView>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
 const mapPropsToState = state => ({
   appointment: state.appointment,
-  addresses: state.addresses
+  addresses: state.addresses,
+  currentUser: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAddress: () => dispatch(fetchAddress())
+    getAddress: () => dispatch(fetchAddress()),
+    updateAppointment: (appointment) => dispatch(updateAppointmentState(appointment))
   }
 }
 

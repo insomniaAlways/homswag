@@ -3,7 +3,7 @@ import { View, Text, Button, TouchableOpacity, ScrollView, SafeAreaView } from '
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
 import CategoryList from '../components/categoryList';
-import { getUser } from '../../store/actions/authenticationAction';
+import { fetchUser } from '../../store/actions/userActions';
 import { fetchCart } from '../../store/actions/cartAction';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
 import { fetchAllItems } from '../../store/actions/itemActions';

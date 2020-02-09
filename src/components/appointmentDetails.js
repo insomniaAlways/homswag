@@ -22,7 +22,7 @@ function AppointmentDetails(props) {
           format="MMMM DD, YYYY"
           style={{fontSize: 16, width: '100%', textAlign: 'center'}}
         />
-        <Text>{appointment.defaultValues.slots[appointment.defaultValues.slot].value}</Text>
+        <Text>{appointment.defaultValues.slot.value}</Text>
       </Layout>
     </TouchableOpacity>
   )

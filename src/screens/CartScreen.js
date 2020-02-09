@@ -13,8 +13,7 @@ import AppointmentDetails from '../components/appointmentDetails';
 import CartPromoItemList from '../components/cartPromoItemList';
 
 function CartScreen(props) {
-  const { navigation, cart, user, cartItem } = props;
-  const bookingDetails = navigation.getParam('bookingDetails', {})
+  const { navigation, cart, user, cartItem, appointment } = props;
   const [ isLoading, setLoading ] = useState(false)
 
   useEffect(() => {
@@ -40,7 +39,7 @@ function CartScreen(props) {
               <CartItemList cart={cart.values} cartItems={cartItem.values} setLoading={setLoading}/>
             </Layout>
             <Layout style={{marginVertical: 10, paddingVertical: 20, borderRadius: 20, marginHorizontal: 10}}>
-              <AppointmentDetails bookingDetails={bookingDetails} navigation={navigation}/>
+              <AppointmentDetails bookingDetails={appointment.defaultValues} navigation={navigation}/>
             </Layout>
             <Layout style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingVertical: 10, paddingHorizontal: 10}}>
               <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
@@ -87,7 +86,8 @@ mapStateToProps = state => {
   return {
     cart: state.cart,
     cartItem: state.cartItems,
-    user: state.user
+    user: state.user,
+    appointment: state.appointment
   }
 }
 

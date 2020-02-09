@@ -7,7 +7,8 @@ const addressReducers = (state = addresses, action) => {
     case ADDRESS_REQUEST_INITIATED : {
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        values: []
       }
     }
     case ADDRESS_REQUEST_SUCCESS : {
