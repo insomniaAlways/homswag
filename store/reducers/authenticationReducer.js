@@ -3,7 +3,7 @@ import { userToken } from '../intialValues';
 
 const authReducers = (state = userToken, action) => {
   switch (action.type) {
-    case VALIDATION_INITIATED:
+    case VALIDATION_INITIATED: {
       return {
         ...state,
         isLoading: true,
@@ -11,7 +11,8 @@ const authReducers = (state = userToken, action) => {
         userToken: null,
         error: null
       };
-    case VALIDATION_SUCCESS:
+    }
+    case VALIDATION_SUCCESS: {
       return {
         ...state,
         isLoading: false,
@@ -19,7 +20,8 @@ const authReducers = (state = userToken, action) => {
         userToken: action.payload.token,
         error: null
       };
-    case VALIDATION_FAILED:
+    }
+    case VALIDATION_FAILED: {
       return {
         ...state,
         isLoading: false,
@@ -27,15 +29,16 @@ const authReducers = (state = userToken, action) => {
         userToken: null,
         error: action.error
       };
-    case SIGN_OUT:
+    }
+    case SIGN_OUT: {
       return {
-        ...state,
         isLoading: false,
         isSignOut: true,
         userToken: null,
         error: null
       };
-      case ON_LOGIN_INITIATED: {
+    }
+    case ON_LOGIN_INITIATED: {
       return {
         ...state,
         isLoading: true,

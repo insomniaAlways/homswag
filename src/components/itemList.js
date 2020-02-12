@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
 import { Card, List, Text } from '@ui-kitten/components';
 import BeautyImage from '../../assets/images/beautyImage.jpg'
@@ -6,7 +6,7 @@ import ItemRow from './ItemRow';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ItemsList = (props) => {
-  const { data, cartItems, cart, navigation, showButton, setShowButton } = props
+  const { data, cartItems, cart, navigation, showButton, setShowButton, getCartItems} = props
   const [ isAdded, setAdded ] = useState(false)
 
   const onItemCartPress = (index) => {
@@ -27,6 +27,7 @@ const ItemsList = (props) => {
         item={info.item}
         cartItems={cartItems}
         cart={cart}
+        getCartItems={getCartItems}
         isAdded={isAdded}
         setAdded={setAdded}
         setShowButton={setShowButton}

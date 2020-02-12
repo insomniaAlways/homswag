@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
@@ -11,6 +11,7 @@ function ItemRow(props) {
   const [ isAdded, setAdded ] = useState(false)
   const cartItems = cartItem.values
   const [ quantity, setQuantity ] = useState(0)
+  const [shouldReCompute, setShouldReCompute ] = useState(false)
   const isItemAdded = () => {
     return _.find(cartItems, ['item.id', item.id])
   }
@@ -19,6 +20,12 @@ function ItemRow(props) {
     let newCartItem = await creatNewCartItem(item.id, (+item.price * 1))
     getCartItem()
   }
+
+  useLayoutEffect(() => {
+    // getCartItem()
+    isItemAdded()
+    setShouldReCompute(true)
+  })
 
   const addCartItem = () => {
     setAdded(true)
@@ -32,7 +39,10 @@ function ItemRow(props) {
       setAdded(true)
       setQuantity(isItemAdded().quantity)
     }
-  }, [cartItem.isLoading])
+    return () => {
+      setShouldReCompute(false)
+    }
+  }, [cartItem.values.length, shouldReCompute])
 
   return (
     <View style={props.style}>
@@ -46,13 +56,13 @@ function ItemRow(props) {
           quantity={quantity}
           setQuantity={setQuantity}
           removeCartItem={setAdded}/> : 
-          <AddToCartButton
-            type={'cart-items'}
-            item={item}
-            cart={cart}
-            cartItems={cartItems}
-            isAdded={isAdded}
-            setAdded={addCartItem}/> 
+        <AddToCartButton
+          type={'cart-items'}
+          item={item}
+          cart={cart}
+          cartItems={cartItems}
+          isAdded={isAdded}
+          setAdded={addCartItem}/> 
         }
     </View>
   )

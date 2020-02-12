@@ -15,14 +15,17 @@ import * as Animatable from 'react-native-animatable';
 import { Spinner } from '@ui-kitten/components';
 
 function Dashboard(props) {
-  useEffect(async () => {
+  useEffect(() => {
+    async function fetchData() {
+      await props.getCart()
+      await props.getAllCartItems()
+    }
     props.getAllCategories()
     props.getUser()
-    await props.getCart()
-    await props.getAllCartItems()
     props.getAllItems()
     props.getPackages()
-  }, [])
+    fetchData()
+  }, [props.navigation.isFocused])
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -59,7 +62,8 @@ function Dashboard(props) {
 mapStateToProps = state => {
   return {
     categories: state.categories,
-    packages: state.packages
+    packages: state.packages,
+    cart: state.cart
   }
 }
 

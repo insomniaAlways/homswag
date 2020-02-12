@@ -20,6 +20,14 @@ function CartScreen(props) {
     props.getCart()
   }, [])
 
+  const goToConfirmPage = () => {
+    if(appointment.defaultValues && appointment.defaultValues.selectedAddress && appointment.defaultValues.selectedAddress.id) {
+      return navigation.navigate('ConfirmAppointment')
+    } else {
+      return alert('Please select an address')
+    }
+  }
+
   useEffect(() => {
     if(cart.isLoading || cartItem.isLoading) {
       setLoading(true)
@@ -55,7 +63,7 @@ function CartScreen(props) {
           <SelectAddress navigation={navigation}/>
         </Layout> */}
         <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('SelectPaymentType')}>
+          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => goToConfirmPage()}>
             <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
           </TouchableOpacity>
         </Layout>

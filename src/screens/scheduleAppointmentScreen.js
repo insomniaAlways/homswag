@@ -70,7 +70,7 @@ function ScheduleAppointmentScreen(props) {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 10}}>
+      <View style={{flex: 1, padding: 10, marginBottom: 50}}>
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
 
   scrollableModal: {
     flex: 1,
+    minHeight: 500,
     borderTopEndRadius: 20,
     borderTopLeftRadius: 20,
   },

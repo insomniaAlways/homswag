@@ -11,7 +11,7 @@ import { fetchAddress } from '../../store/actions/addressActions';
 
 function ProfileScreen(props) {
   const { currentUser, getAddress, getUser, addresses } = props
-  const address = addresses && addresses[0].address && addresses[0].address.formatedAddress
+  const address = addresses && addresses.length && addresses[0].address && addresses[0].address.formatedAddress
 
   const updateProfile = (data) => {
     console.log(data)

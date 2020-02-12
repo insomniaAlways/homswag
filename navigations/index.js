@@ -24,6 +24,8 @@ import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-ico
 import ReferralScreen from '../src/screens/ReferralScreen';
 import PackageScreen from '../src/screens/PackageScreen';
 import LoginScreen from '../src/screens/auth/LoginScreen';
+import ReviewOrderScreen from '../src/screens/ReviewOrderScreen';
+import AppointmentPlaced from '../src/screens/AppointmentPlaced';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -53,11 +55,28 @@ const AppNavigator = createStackNavigator({
     Payment: {
       screen: PaymentScreen
     },
+    
     AddAddress: {
       screen: AddAddressScreen,
       navigationOptions: () => ({
         title: `Add Address`,
       }),
+    },
+
+    ConfirmAppointment: {
+      screen: ReviewOrderScreen,
+      headerMode: 'none',
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+
+    OrderComplete: {
+      screen: AppointmentPlaced,
+      headerMode: 'none',
+      navigationOptions: {
+        headerShown: false
+      }
     }
   },
   {
@@ -79,7 +98,8 @@ const DrawerNavigation = createDrawerNavigator({
     screen: AppNavigator,
     navigationOptions: ({tintColor}) => {
       return {
-        drawerIcon: <MaterialCommunityIcons name="monitor-dashboard" size={18} color={tintColor}/>
+        drawerIcon: <MaterialCommunityIcons name="monitor-dashboard" size={18} color={tintColor}/>,
+        unmountInactiveRoutes: true
       }
     }
   },
@@ -122,7 +142,7 @@ const DrawerNavigation = createDrawerNavigator({
       drawerIcon: <FontAwesome name="home" size={18} color={tintColor}/>
     }),
   }
-}, { contentComponent: SideDrawer });
+}, { contentComponent: SideDrawer, unmountInactiveRoutes: true });
 
 const switchNavigation = createSwitchNavigator({
   Auth: {

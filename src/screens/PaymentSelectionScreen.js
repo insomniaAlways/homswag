@@ -8,11 +8,29 @@ import {
   RadioGroup,
 } from '@ui-kitten/components';
 import * as Animatable from 'react-native-animatable';
+import { connect } from 'react-redux';
+import { fetchCart } from '../../store/actions/cartAction';
+import { createOrder, fetchAllOrder } from '../../store/actions/orderActions';
+import LoadingModal from '../components/loadingModal';
 
 function PaymentScreen(props) {
-  const totalAmount = '1200'
+  const { getCart, placeOrder, cart, order, getOrders } = props
+  const totalAmount = cart.values.cart_total
   const [ payingAmount, setPayingAmount ] = useState(totalAmount)
   const [ customAmount, setCustomAmount ] = useState()
+  const [ isLoading, setLoading ] = useState(false)
+
+  useEffect(() => {
+    if(cart.isLoading || order.isLoading) {
+      setLoading(true)
+    } else {
+      setLoading(false)
+    }
+  }, [cart.isLoading, order.isLoading])
+      
+  useEffect(() => {
+    getCart()
+  }, [])
 
   const onCustonInput = (amount) => {
     setCustomAmount(amount)
@@ -114,9 +132,23 @@ function PaymentScreen(props) {
           </TouchableOpacity>
         </View>
       </View>
+      <LoadingModal isLoading={isLoading}/>
     </KeyboardAvoidingView>
   )
 }
+
+const mapStateToProps = state => ({
+  cart: state.cart,
+  order: state.orders
+})
+
+const mapDispatchToProps = dispatch => ({
+  getCart: () => dispatch(fetchCart()),
+  placeOrder: (orderDetails) => dispatch(createOrder(orderDetails)),
+  getOrders: () => dispatch(fetchAllOrder())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentScreen);
 
 const styles = StyleSheet.create({
   paymentSelectionContainer: {
@@ -156,5 +188,3 @@ const styles = StyleSheet.create({
     marginVertical: 8
   },
 })
-
-export default PaymentScreen;

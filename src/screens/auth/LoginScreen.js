@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { StyleSheet, View, ImageStyle } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/imageOverlay';
@@ -38,8 +38,6 @@ const LoginScreen = (props) => {
 
   const redirectToApp = () =>  {
     navigation.navigate('App')
-    setSession(true)
-    setAuthenticating(false)
   }
 
   const onSubmit = async () => {
@@ -53,12 +51,14 @@ const LoginScreen = (props) => {
       }
     }
   };
-  const resetState = () => {
+
+  const resetState = (e) => {
     setSession(false)
     setAuthenticating(false)
     setShowOtpField(false)
     setLoading(false)
   }
+
   const registerPhone = async () => {
     if(phone) {
       setShowOtpField(true)
@@ -71,7 +71,6 @@ const LoginScreen = (props) => {
       }
     }
   }
-
 
   const bootstrapApp = async () => {
     let userToken;
@@ -86,12 +85,22 @@ const LoginScreen = (props) => {
         setAuthenticating(false)
       }
     } catch (e) {
+      //TOdo
+      resetState()
     }
   };
 
   useEffect(() => {
     setShowOtpField(false)
-    resetState()
+    if(phone) {
+      resetState("setShowOtpField")
+    }
+    return () => {
+      if(!auth.isLoading && auth.userToken) {
+        setSession(true)
+        setAuthenticating(false)
+      }
+    }
   }, [phone])
 
   useEffect(() => {
@@ -99,17 +108,35 @@ const LoginScreen = (props) => {
       storeSession()
     }
     if(!auth.isLoading && auth.error) {
-      resetState()
+      resetState('alert')
       alert(auth.error.message)
+    }
+    return () => {
+      if(!auth.isLoading && auth.userToken) {
+        setSession(true)
+        setAuthenticating(false)
+      }
     }
   }, [auth.isLoading, auth.isSignOut, auth.userToken, auth.error])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     bootstrapApp();
+    return () => {
+      if(!auth.isLoading && auth.userToken) {
+        setSession(true)
+        setAuthenticating(false)
+      }
+    }
   }, [])
 
   useEffect(() => {
     setOtp();
+    return () => {
+      if(!auth.isLoading && auth.userToken) {
+        setSession(true)
+        setAuthenticating(false)
+      }
+    }
   }, [showOtpField])
 
   return (

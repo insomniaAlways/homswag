@@ -28,9 +28,9 @@ const SideDrawer = props => {
   }
 
   const logOut = () => {
-    AsyncStorage.removeItem('token')
-    .then(() => navigation.navigate('Auth'))
+    return AsyncStorage.removeItem('token')
     .then(() => signOut())
+    .then(() => navigation.navigate('Auth'))
   }
 
   return (
@@ -45,12 +45,6 @@ const SideDrawer = props => {
         </View>
       </ImageBackground>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <TouchableOpacity onPress={() => props.navigation.dispatch(ReactNavigation.StackActions.popToTop())}>
-          <View style={styles.logout}>
-            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
-            <Text style={styles.logoutText}>Dashboard</Text>
-          </View>
-        </TouchableOpacity> */}
         <DrawerItems {...props} labelStyle={{width: '100%'}}/>
         <TouchableOpacity onPress={() => openWhatsApp()}>
           <View style={styles.logout}>
@@ -142,6 +136,6 @@ const mapStatetoProps = state => ({
   auth: state.auth
 })
 const mapDispatchToProps = dispatch => ({
-  signOut: dispatch(onSigout())
+  signOut: () => dispatch(onSigout())
 })
 export default connect(mapStatetoProps, mapDispatchToProps)(SideDrawer);

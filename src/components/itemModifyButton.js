@@ -37,7 +37,7 @@ function ModifyButton(props) {
       props.setLoading(true)
     }
     if(setQuantity) {
-      setQuantity(quantity + 1, cartItem)
+      setQuantity(quantity + 1)
     }
     updateAddedItem(quantity + 1)
   }
