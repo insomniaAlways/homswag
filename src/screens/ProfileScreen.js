@@ -1,39 +1,80 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import {ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
+import { Text, Layout } from '@ui-kitten/components';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
 import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import { connect } from 'react-redux';
+import { fetchUser, updateUser } from '../../store/actions/userActions';
+import { fetchAddress } from '../../store/actions/addressActions';
 
 function ProfileScreen(props) {
+  const { currentUser, getAddress, getUser, addresses } = props
+  const address = addresses && addresses.length && addresses[0].address && addresses[0].address.formatedAddress
+
+  const updateProfile = (data) => {
+    console.log(data)
+  }
+
+  useEffect(() => {
+    getUser()
+    getAddress()
+  }, [])
+
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.container}>
-        <View style={styles.profilePicContainer}>
-          <View style={styles.profilePic}>
+    <Layout style={{flex: 1}}>
+      <Layout style={styles.container}>
+        <Layout style={styles.profilePicContainer}>
+          <Layout style={styles.profilePic}>
             <Image style={styles.profilePic} source={ProfilePic}/>
-          </View>
-          <View style={styles.nameContainer}>
+          </Layout>
+          <Layout style={styles.nameContainer}>
             <Text style={styles.name}>Pretty</Text>
-          </View>
-        </View>
-        <View style={styles.detialsContainer}>
-          <Text style={{textAlign: 'left', width: '80%'}}>Email</Text>
-          <PlaceHolderTextInput placeholder="Email" styles={styles.placeholderInput}/>
-          <Text style={{textAlign: 'left', width: '80%', marginTop: 10}}>Phone</Text>
-          <PlaceHolderTextInput placeholder="Phone" styles={styles.placeholderInput}/>
-          <Text style={{textAlign: 'left', width: '80%', marginTop: 10}}>Address</Text>
-          <PlaceHolderTextInput placeholder="Address" styles={styles.placeholderInput}/>
-        </View>
-      </View>
-      <View style={styles.backButtonContainer}>
+          </Layout>
+        </Layout>
+        <Layout style={styles.detialsContainer}>
+          <Layout style={styles.item}>
+            <Text style={styles.label}>Email</Text>
+            <PlaceHolderTextInput
+              placeholder="Email"
+              containerStyle={styles.placeholderInput}
+              styles={styles.field}
+              value={currentUser.values.email}
+              setValue={updateProfile}
+              previousState={currentUser.values}
+              itemKey="email"
+              disabled={false}/>
+          </Layout>
+          <Layout style={styles.item}>
+            <Text style={styles.label}>Phone</Text>
+            <PlaceHolderTextInput
+              placeholder="phone"
+              containerStyle={styles.placeholderInput}
+              styles={styles.field}
+              value={currentUser.values.phone}
+              setValue={updateProfile}
+              previousState={currentUser.values}
+              itemKey="phone"
+              disabled={false}/>
+          </Layout>
+          <Layout style={styles.item}>
+            <Text style={styles.label}>Address</Text>
+            {address ? 
+              <Text style={[styles.placeholderInput, styles.field]}>{address}</Text> :
+              <Text style={[styles.placeholderInput, styles.field]}>No address found</Text>
+            }
+          </Layout>
+        </Layout>
+      </Layout>
+      <Layout style={styles.backButtonContainer}>
         <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-          <View style={styles.backButton}>
+          <Layout style={styles.backButton}>
             <FontAwesome name="angle-right" size={20} color="white" />
-          </View>
+          </Layout>
         </TouchableOpacity>
-      </View>
-    </View>
+      </Layout>
+    </Layout>
   )
 }
 
@@ -67,28 +108,31 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
   detialsContainer: {
-    // flex: 1,
-    flexDirection: 'column',
     height: 250,
-    // borderWidth: 1,
     width: '100%',
+    borderColor: 'blue',
     paddingTop: 20,
-    // justifyContent: 'center',
+    paddingHorizontal: 10,
+    alignItems: 'center'
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center'
   },
   placeholderInput: {
-    width: '80%'
+    width: '70%',
+  },
+
+  field: {
+    paddingHorizontal: 10
   },
   backButtonContainer: {
-    // flex: 1,
     justifyContent: 'center',
     alignContent: 'flex-end',
-    // borderWidth: 1,
     alignItems: "center",
     marginBottom: 30,
     width: '100%',
-    // position: 'absolute',
-    // bottom: 0
   },
 
   backButton: {
@@ -98,7 +142,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 50,
     backgroundColor: '#6495ed'
+  },
+
+  label: {
+    width: '20%',
+    textAlign: 'left',
+    justifyContent: 'center'
   }
+
 })
 
-export default ProfileScreen;
+const mapStateToProps = state => ({
+  currentUser: state.currentUser,
+  addresses: state.addresses.values
+})
+
+const mapDispatchToProps = dispatch => ({
+  getUser: () => dispatch(fetchUser()),
+  updateUserDetails: (user) => dispatch(updateUser(user)),
+  getAddress: () => dispatch(fetchAddress())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

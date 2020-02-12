@@ -1,4 +1,4 @@
-import { FETCH_CART_ERROR, FETCH_CART_REQUEST, FETCH_CART_SUCCESS } from '../actionTypes';
+import { CART_REQUEST_FAILED, CART_REQUEST_INITIATED, CART_REQUEST_SUCCESS } from '../actionTypes';
 
 import { query, findRecord } from '../asyncActions/index';
 
@@ -13,20 +13,20 @@ export const fetchCart = () => {
 
 export const onStart = () => {
   return {
-    type: FETCH_CART_REQUEST
+    type: CART_REQUEST_INITIATED
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_CART_SUCCESS,
+    type: CART_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_CART_ERROR,
+    type: CART_REQUEST_FAILED,
     payload: error
   }
 }

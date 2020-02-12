@@ -16,14 +16,14 @@
     "ios": {
       "bundleIdentifier": "com.insomniaalways.homswag",
       "config": {
-        "googleMapsApiKey": "AIzaSyBRx1ZoOWY-9kjUSVNbP72L0tir2Qyc38I"
+        "googleMapsApiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"
       }
     },
     "android": {
       "package": "com.insomniaalways.homswag",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyDiVzfCwIpDsBh32DxZjClEZTUGNfzbkW0"
+          "apiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"
         }
       }
     }

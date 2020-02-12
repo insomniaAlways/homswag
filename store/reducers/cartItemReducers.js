@@ -1,23 +1,23 @@
-import { FETCH_CARTITEM_REQUEST, FETCH_CARTITEM_SUCCESS, FETCH_CARTITEM_ERROR, MERGE_CARTITEMS } from '../actionTypes';
+import { CARTITEM_REQUEST_INITIATED, CARTITEM_REQUEST_SUCCESS, CARTITEM_REQUEST_FAILED, MERGE_CARTITEMS } from '../actionTypes';
 import { cartItems } from '../intialValues';
 import _ from 'lodash';
 
 const cartItemReducers = (state = cartItems, action) => {
   switch(action.type) {
-    case FETCH_CARTITEM_REQUEST : {
+    case CARTITEM_REQUEST_INITIATED : {
       return {
         ...state,
         isLoading: true
       }
     }
-    case FETCH_CARTITEM_SUCCESS : {
+    case CARTITEM_REQUEST_SUCCESS : {
       return {
         ...state,
         isLoading: false,
         values: action.payload
       }
     }
-    case FETCH_CARTITEM_ERROR : {
+    case CARTITEM_REQUEST_FAILED : {
       return {
         ...state,
         isLoading: false,

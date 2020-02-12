@@ -1,27 +1,77 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import ItemsList from '../components/itemList';
+import { Spinner, Layout, Text } from '@ui-kitten/components';
+import * as Animatable from 'react-native-animatable';
+import _ from 'lodash';
+import DynamicTabs from '../components/dynamicTabs';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { brandColor } from '../style/customStyles';
 
 function Items(props) {
-  const { navigation, items, cartItems, cart } = props;
+  const { navigation, items, cartItem, cart } = props;
   const category = navigation.getParam('category')
+  const [ selectedItems, setSelectedItems ] = useState([])
+  const [ showButton, setShowButton ] = useState(false)
 
   useEffect(() => {
     if(category.id) {
-      props.getfetchItemsFor(category.id)
+      setSelectedItems(_.filter(items, ['category_id', category.id]))
     }
   }, [category])
 
+  useEffect(() => {
+    if(cartItem.values.length) {
+      setShowButton(true)
+    } else {
+      setShowButton(false)
+      }
+  }, [cartItem.values.length])
+
   return (
-    <ItemsList data={items} cartItems={cartItems} cart={cart} navigation={navigation}/>
+    <Layout style={{flex: 1}}>
+      { category.hasSubCategory ?
+        <DynamicTabs
+          category={category}
+          selectedItems={selectedItems}
+          showButton={showButton}
+          setShowButton={setShowButton}
+          {...props}/> :
+        (
+          selectedItems.isLoading ? 
+          <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Spinner status='info'/>
+          </Layout> :
+          <Animatable.View
+            animation={'fadeInLeft'}
+            duration={400}
+            style={{flex: 1}}
+          >
+            <ItemsList
+              data={selectedItems}
+              showButton={showButton}
+              setShowButton={setShowButton}
+              cartItems={cartItem.values}
+              cart={cart}
+              navigation={navigation}/>
+          </Animatable.View>
+        )
+      }
+      {
+        showButton && 
+        <TouchableOpacity style={styles.bookAppointmentButton} onPress={() => navigation.navigate('BookAppointment')}>
+          <Text style={styles.buttonText}>Schedule Appointment</Text>
+        </TouchableOpacity>
+      }
+    </Layout>
   );
 }
 
 mapStateToProps = state => {
   return {
     items: state.items.values,
-    cartItems: state.cartItems.values,
+    cartItem: state.cartItems,
     cart: state.cart.values
   }
 }
@@ -33,3 +83,19 @@ mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Items);
+
+const styles = StyleSheet.create({
+  bookAppointmentButton: {
+    height: 53,
+    backgroundColor: brandColor,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+    width: '100%',
+    textAlign: 'center'
+  }
+})

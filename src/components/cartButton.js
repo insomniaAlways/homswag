@@ -8,14 +8,14 @@ import { Badge } from 'react-native-elements';
 function CartButton(props) {
   const { navigate } = props.navigation
   const { cartItems } = props
-  let totalcCartItem = 0
+  let totalCartItem = 0
   if(cartItems && Array.isArray(cartItems)) {
-    totalcCartItem = cartItems.length
+    totalCartItem = cartItems.length
   }
 
   useEffect(() => {
     if(cartItems && Array.isArray(cartItems) && cartItems.length) {
-      totalcCartItem = cartItems.length
+      totalCartItem = cartItems.length
     }
   }, [cartItems.length])
   
@@ -24,7 +24,7 @@ function CartButton(props) {
       <Icon name='shopping-cart-outline' width={32} height={32} fill='#FFF' />
       <Badge
           status="success"
-          value={totalcCartItem}
+          value={totalCartItem}
           containerStyle={{ position: 'absolute', top: -4, right: -4 }}
         />
     </TouchableOpacity>

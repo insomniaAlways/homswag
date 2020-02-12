@@ -30,18 +30,18 @@ function SelectDate(props) {
   const onSelectDate = (event, selectDate = date) => {
     setDatePickeVisibility(false)
     setDate(selectDate);
-    setAppointmentDetails({...appointmentDetails, date: moment(selectDate).toDate()})
+    setAppointmentDetails({...appointmentDetails, from: moment(selectDate).toDate(), date: moment(selectDate).toDate()})
     setDateSelected(true)
   }
   return (
     <View style={{flexDirection: 'row', justifyContent: 'center', margin: 10}}>
       <View style={selectedDate == 'today' ? styles.selectedButtonContainer : styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, date: moment()})}>
+        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, from: moment(), date: moment()})}>
           <Text style={selectedDate == 'today' ? {color: 'white'}: {color: 'black'}}>Today</Text>
         </TouchableOpacity>
       </View>
       <View style={selectedDate == 'tomorrow' ? styles.selectedButtonContainer : styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, date: moment().add(1, 'd')})}>
+        <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, from: moment().add(1, 'd'), date: moment().add(1, 'd')})}>
           <Text style={selectedDate == 'tomorrow' ? {color: 'white'}: {color: 'black'}}>Tomorrow</Text>
         </TouchableOpacity>
       </View>

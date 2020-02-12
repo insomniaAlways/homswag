@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const auth = {
   isLoading: false,
   values: {},
@@ -24,229 +26,32 @@ export const cartItems = {
 
 export const cart = {
   isLoading: false,
+  paymentTypes: [
+    { type: 1, title: "Pay Full" },
+    { type: 2, title: "Pay custom" },
+    { type: 3, title: "Pay After Service" }
+  ],
   values: {
     item_total_price: 0,
     discount_amount: 0,
     taxes: 0,
     cart_total: 0,
-    total_saved: 0
+    total_saved: 0,
+    payment_types : 3
   },
   error: null
 }
 
 export const orders = {
   isLoading: false,
-  values: [
-    {
-      "order_items": [
-        {
-          "created_at": "2020-01-05T14:40:03.000Z",
-          "updated_at": "2020-01-05T15:27:58.000Z",
-          "created_by": 1,
-          "updated_by": 1,
-          "is_deleted": false,
-          "quantity": 5,
-          "total_price": 1495,
-          "item": {
-            "created_at": "2020-01-05T14:39:38.000Z",
-            "updated_at": "2020-01-05T14:39:38.000Z",
-            "id": 17,
-            "created_by": 1,
-            "updated_by": 1,
-            "is_deleted": false,
-            "name": "Face and Neck",
-            "price": 299,
-            "description": "",
-            "organization_id": 1,
-            "image_source": null,
-            "category_id": 20
-          },
-          "cart_id": 1
-        }
-      ],
-      "created_at": "2019-12-27T15:48:13.000Z",
-      "updated_at": "2020-01-05T15:27:58.000Z",
-      "created_by": 1,
-      "updated_by": 1,
-      "is_deleted": false,
-      "cart_total": 1495,
-      "total_items": null,
-      "item_total_price": 1495,
-      "discount_amount": null,
-      "applied_coupon": null,
-      "total_saved": null,
-      "taxes": null,
-      "user_id": 1,
-      "order_no": 300
-    },
-    {
-      "order_items": [
-        {
-          "created_at": "2020-01-05T14:40:03.000Z",
-          "updated_at": "2020-01-05T15:27:58.000Z",
-          "created_by": 1,
-          "updated_by": 1,
-          "is_deleted": false,
-          "quantity": 5,
-          "total_price": 1495,
-          "item": {
-            "created_at": "2020-01-05T14:39:38.000Z",
-            "updated_at": "2020-01-05T14:39:38.000Z",
-            "id": 17,
-            "created_by": 1,
-            "updated_by": 1,
-            "is_deleted": false,
-            "name": "Face and Neck",
-            "price": 299,
-            "description": "",
-            "organization_id": 1,
-            "image_source": null,
-            "category_id": 20
-          },
-          "cart_id": 1
-        }
-      ],
-      "created_at": "2019-12-27T15:48:13.000Z",
-      "updated_at": "2020-01-05T15:27:58.000Z",
-      "created_by": 1,
-      "updated_by": 1,
-      "is_deleted": false,
-      "cart_total": 1495,
-      "total_items": null,
-      "item_total_price": 1495,
-      "discount_amount": null,
-      "applied_coupon": null,
-      "total_saved": null,
-      "taxes": null,
-      "user_id": 1,
-      "order_no": 301
-    },
-    {
-      "order_items": [
-        {
-          "created_at": "2020-01-05T14:40:03.000Z",
-          "updated_at": "2020-01-05T15:27:58.000Z",
-          "created_by": 1,
-          "updated_by": 1,
-          "is_deleted": false,
-          "quantity": 5,
-          "total_price": 1495,
-          "item": {
-            "created_at": "2020-01-05T14:39:38.000Z",
-            "updated_at": "2020-01-05T14:39:38.000Z",
-            "id": 17,
-            "created_by": 1,
-            "updated_by": 1,
-            "is_deleted": false,
-            "name": "Face and Neck",
-            "price": 299,
-            "description": "",
-            "organization_id": 1,
-            "image_source": null,
-            "category_id": 20
-          },
-          "cart_id": 1
-        }
-      ],
-      "created_at": "2019-12-27T15:48:13.000Z",
-      "updated_at": "2020-01-05T15:27:58.000Z",
-      "created_by": 1,
-      "updated_by": 1,
-      "is_deleted": false,
-      "cart_total": 1495,
-      "total_items": null,
-      "item_total_price": 1495,
-      "discount_amount": null,
-      "applied_coupon": null,
-      "total_saved": null,
-      "taxes": null,
-      "user_id": 1,
-      "order_no": 302
-    },
-    {
-      "order_items": [
-        {
-          "created_at": "2020-01-05T14:40:03.000Z",
-          "updated_at": "2020-01-05T15:27:58.000Z",
-          "created_by": 1,
-          "updated_by": 1,
-          "is_deleted": false,
-          "quantity": 5,
-          "total_price": 1495,
-          "item": {
-            "created_at": "2020-01-05T14:39:38.000Z",
-            "updated_at": "2020-01-05T14:39:38.000Z",
-            "id": 17,
-            "created_by": 1,
-            "updated_by": 1,
-            "is_deleted": false,
-            "name": "Face and Neck",
-            "price": 299,
-            "description": "",
-            "organization_id": 1,
-            "image_source": null,
-            "category_id": 20
-          },
-          "cart_id": 1
-        }
-      ],
-      "created_at": "2019-12-27T15:48:13.000Z",
-      "updated_at": "2020-01-05T15:27:58.000Z",
-      "created_by": 1,
-      "updated_by": 1,
-      "is_deleted": false,
-      "cart_total": 1495,
-      "total_items": null,
-      "item_total_price": 1495,
-      "discount_amount": null,
-      "applied_coupon": null,
-      "total_saved": null,
-      "taxes": null,
-      "user_id": 1,
-      "order_no": 303
-    },
-    {
-      "order_items": [
-        {
-          "created_at": "2020-01-05T14:40:03.000Z",
-          "updated_at": "2020-01-05T15:27:58.000Z",
-          "created_by": 1,
-          "updated_by": 1,
-          "is_deleted": false,
-          "quantity": 5,
-          "total_price": 1495,
-          "item": {
-            "created_at": "2020-01-05T14:39:38.000Z",
-            "updated_at": "2020-01-05T14:39:38.000Z",
-            "id": 17,
-            "created_by": 1,
-            "updated_by": 1,
-            "is_deleted": false,
-            "name": "Face and Neck",
-            "price": 299,
-            "description": "",
-            "organization_id": 1,
-            "image_source": null,
-            "category_id": 20
-          },
-          "cart_id": 1
-        }
-      ],
-      "created_at": "2019-12-27T15:48:13.000Z",
-      "updated_at": "2020-01-05T15:27:58.000Z",
-      "created_by": 1,
-      "updated_by": 1,
-      "is_deleted": false,
-      "cart_total": 1495,
-      "total_items": null,
-      "item_total_price": 1495,
-      "discount_amount": null,
-      "applied_coupon": null,
-      "total_saved": null,
-      "taxes": null,
-      "user_id": 1,
-      "order_no": 305
-    }
+  values: [],
+  currentValue: {},
+  statusCode: [
+    { id: 1, name: 'order placed' },
+    { id: 2, name: 'order confirmed' },
+    { id: 3, name: 'in progress' },
+    { id: 2, name: 'order canceled' },
+    { id: 2, name: 'order complete' },
   ],
   error: null
 }
@@ -257,11 +62,61 @@ export const addresses = {
   error: null
 }
 
+export const packages = {
+  isLoading: false,
+  values: [],
+  error: null
+}
+
+export const appointment = {
+  isLoading: false,
+  values: [],
+  slot: 1,
+  slots: [
+    { type: 1, value: "9AM - 12PM" },
+    { type: 2, value: "12AM - 3PM" },
+    { type: 3, value: "3AM - 6PM" }
+  ],
+  defaultValues: {
+    from: moment().toDate(),
+    date: moment().toDate(),
+    slot: { type: 1, value: "9AM - 12PM" },
+    appointment_for: null,
+    phone_number: null,
+    selectedAddress: null,
+    special_instruction: '',
+    prefered_beautician: ''
+  },
+  error: null
+}
+
+export const userToken = {
+  isLoading: false,
+  isSignOut: false,
+  userToken: null,
+  error: null
+}
+
+export const session = {
+  isSessionExpired: true,
+  isSessionAuthenticated: false,
+}
+
+export const currentUser = {
+  isLoading: false,
+  values: {},
+  error: null
+}
+
 export const initialState = {
   items: items,
   categories: categories,
   cart: cart,
   cartItems: cartItems,
   orders: orders,
-  addresses: addresses
+  addresses: addresses,
+  packages: packages,
+  appointment: appointment,
+  session: session,
+  currentUser: currentUser
 }

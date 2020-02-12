@@ -1,73 +1,50 @@
-import { FETCH_ADDRESS_ERROR, FETCH_ADDRESS_REQUEST, FETCH_ADDRESS_SUCCESS, MERGE_CARTITEMS } from '../actionTypes';
+import { ADDRESS_REQUEST_FAILED, ADDRESS_REQUEST_INITIATED, ADDRESS_REQUEST_SUCCESS } from '../actionTypes';
 
-import { query, createRecord, updateRecord, deleteRecord } from '../asyncActions/index';
+import { query, createRecord, deleteRecord } from '../asyncActions/index';
 
 export const fetchAddress = () => {
   return function(dispatch) {
     dispatch(onStart())
-    return query('address', 'user_id=1')
+    return query('me/address')
     .then((response) => dispatch(onSuccess(response.data)))
-    .catch((e) => dispatch(onError(e)))
+    .catch((e) => dispatch(onError(e.response.data)))
   }
 }
 
-export const addNewAddress = (address) => {
+export const creatNew = (address) => {
   return function(dispatch) {
     dispatch(onStart())
-    return createRecord('address', address)
-    .then((response) => fetchAddress())
-    .catch(error => dispatch(onError(error)))
+    return createRecord('me/address', address)
+    .then((response) => dispatch(onSuccess(response)))
+    .catch(error => dispatch(onError(error.response.data)))
   }
 }
 
-export const updateItem = (selectedCartItem, quantity, totalPrice) => {
+export const deleteAddresss = (address_id) => {
   return function(dispatch) {
     dispatch(onStart())
-    let cartItem = {
-      ...selectedCartItem,
-      "quantity": quantity,
-      "total_price": totalPrice,
-    }
-    return updateRecord('cart-item', selectedCartItem.id, cartItem)
-    .then((response) => dispatch(mergeItems(response.data)))
-    .catch(error => dispatch(onError(error)))
-    // .then((response) => fetchCartItems())
-    // .catch(error => dispatch(onError(error)))
-  }
-}
-
-export const deleteItem = (selectedCartItem) => {
-  return function(dispatch) {
-    dispatch(onStart())
-    return deleteRecord('cart-item', selectedCartItem.id)
-    .then((response) => fetchCartItems())
-    .catch(error => dispatch(onError(error)))
+    return deleteRecord('me/address', address_id)
+    .then(() => fetchCartItems())
+    .catch(error => dispatch(onError(error.response.dataor)))
   }
 }
 
 export const onStart = () => {
   return {
-    type: FETCH_ADDRESS_REQUEST
+    type: ADDRESS_REQUEST_INITIATED
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_ADDRESS_SUCCESS,
+    type: ADDRESS_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_ADDRESS_ERROR,
+    type: ADDRESS_REQUEST_FAILED,
     payload: error
-  }
-}
-
-export const mergeItems = (payload) => {
-  return {
-    type: MERGE_CARTITEMS,
-    payload: payload
   }
 }

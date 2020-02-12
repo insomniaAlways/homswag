@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 // const brandColor = '#47d9a8';
-const brandColor ='#1c53ec';
+// const brandColor ='#1c53ec';
+export const brandColor = 'rgb(52, 117, 211)';
 
 const DefaultStyles = StyleSheet.create({
   brandTextColor: {

@@ -1,21 +1,98 @@
-import React, { useEffect } from 'react';
-import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
-import _ from 'lodash';
-import ItemRow from '../components/ItemRow';
-import DefaultStyles from '../style/customStyles';
+import React, { useState, useLayoutEffect } from 'react';
+import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
+import { Card, List, Text } from '@ui-kitten/components';
+import BeautyImage from '../../assets/images/beautyImage.jpg'
+import ItemRow from './ItemRow';
+import { FontAwesome } from '@expo/vector-icons';
 
 const ItemsList = (props) => {
-  const { data, cartItems, cart, navigation } = props
-  return (
-    <View style={{flex: 1}}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        {data.map((item, index) => (<ItemRow index={index} key={index} item={item} cartItems={cartItems} cart={cart}/>))}
-      </ScrollView>
-      <TouchableOpacity onPress={() => navigation.navigate('BookAppointment')} style={[{height: 55, justifyContent: 'center', alignItems: 'center'}, DefaultStyles.brandBackgroundColor]}>
-        <Text style={{fontSize: 20, color: "#fff", fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Proceed Next</Text>
-      </TouchableOpacity>
+  const { data, cartItems, cart, navigation, showButton, setShowButton, getCartItems} = props
+  const [ isAdded, setAdded ] = useState(false)
+
+  const onItemCartPress = (index) => {
+    navigation.navigate('Cart');
+  };
+
+  const renderItemFooter = (info) => (
+    <View>
+      <View style={styles.itemFooter}>
+        <Text category='s1'>
+        <FontAwesome name="rupee" size={12} color="black" /> {info.item.price}
+        </Text>
+        <Text category='s1' style={{textDecorationLine: 'line-through'}}>
+        <FontAwesome name="rupee" size={12} color="black" /> {info.item.mrp_price}
+        </Text>
+      </View>
+      <ItemRow
+        item={info.item}
+        cartItems={cartItems}
+        cart={cart}
+        getCartItems={getCartItems}
+        isAdded={isAdded}
+        setAdded={setAdded}
+        setShowButton={setShowButton}
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}/>
     </View>
-  )
+  );
+
+  const renderItemHeader = (info) => {
+    let image_source = info.item.image_source ? {uri : info.item.image_source} : BeautyImage
+    return (
+      <ImageBackground
+        style={styles.itemHeader}
+        source={image_source}
+      />
+    )
+  }
+
+  const renderProductItem = (info) => (
+    <Card
+      style={styles.productItem}
+      header={() => renderItemHeader(info)}
+      footer={() => renderItemFooter(info)}>
+      <Text category='s1'>
+        {info.item.name}
+      </Text>
+      <Text
+        appearance='hint'
+        category='c1'>
+        {info.item.description}
+      </Text>
+    </Card>
+  );
+
+  return (
+    <List
+      contentContainerStyle={styles.productList}
+      showsVerticalScrollIndicator={false}
+      data={data}
+      numColumns={2}
+      refreshing={false}
+      onRefresh={() => alert('hello')}
+      renderItem={renderProductItem}
+    />
+  );
 };
+
+const styles = StyleSheet.create({
+  productList: {
+    paddingHorizontal: 8,
+    paddingVertical: 16,
+  },
+  productItem: {
+    flex: 1,
+    margin: 8,
+    maxWidth: Dimensions.get('window').width / 2 - 24,
+    borderRadius: 10,
+  },
+  itemHeader: {
+    height: 140,
+  },
+  itemFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
+});
 
 export default ItemsList;

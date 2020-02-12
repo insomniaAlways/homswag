@@ -1,4 +1,4 @@
-import { FETCH_CATEGORY_REQUEST, FETCH_CATEGORY_SUCCESS, FETCH_CATEGORY_ERROR } from '../actionTypes';
+import { CATEGORY_REQUEST_INITIATED, CATEGORY_REQUEST_SUCCESS, CATEGORY_REQUEST_FAILED } from '../actionTypes';
 import { findAll } from '../asyncActions/index';
 
 export const fetchCategories = () => {
@@ -12,20 +12,20 @@ export const fetchCategories = () => {
 
 export const onStart = () => {
   return {
-    type: FETCH_CATEGORY_REQUEST
+    type: CATEGORY_REQUEST_INITIATED
   }
 }
 
 export const onSuccess = (payload) => {
   return {
-    type: FETCH_CATEGORY_SUCCESS,
+    type: CATEGORY_REQUEST_SUCCESS,
     payload: payload
   }
 }
 
 export const onError = (error) => {
   return {
-    type: FETCH_CATEGORY_ERROR,
+    type: CATEGORY_REQUEST_FAILED,
     payload: error
   }
 }

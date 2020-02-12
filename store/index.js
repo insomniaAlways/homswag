@@ -6,18 +6,26 @@ import cartReducers from './reducers/cartReducers';
 import cartItemReducers from './reducers/cartItemReducers';
 import orderReducers from './reducers/orderReducers';
 import addressReducers from './reducers/addressReducers';
+import packageReducers from './reducers/packageReducers';
+import appointmentReducers from './reducers/appointmentReducers';
 import { initialState } from './intialValues';
+import locationReducers from './reducers/locationReducers';
+import userReducers from './reducers/userReducers';
 
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   items: itemReducers,
   categories: categoryReducers,
-  user: authReducers,
+  auth: authReducers,
   cart: cartReducers,
   cartItems: cartItemReducers,
   orders: orderReducers,
-  addresses: addressReducers
+  addresses: addressReducers,
+  packages: packageReducers,
+  location: locationReducers,
+  appointment: appointmentReducers,
+  currentUser: userReducers
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

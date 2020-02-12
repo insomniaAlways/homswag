@@ -1,5 +1,5 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
@@ -7,7 +7,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import DashboardScreen from '../src/screens/DashboardScreen';
 import ItemsScreen from '../src/screens/ItemsScreen';
 import CartScreen from '../src/screens/CartScreen';
-import ScheduleAppointmentScreen from '../src/screens/scheduleAppointmentScreen'
+import ScheduleAppointmentScreen from '../src/screens/ScheduleAppointmentScreen'
 import PaymentScreen from '../src/screens/PaymentScreen';
 import PaymentSelectionScreen from '../src/screens/PaymentSelectionScreen';
 import DefaultStyles from '../src/style/customStyles';
@@ -21,7 +21,11 @@ import AddressScreen from '../src/screens/AddressScreen';
 import HeaderRightView from '../src/components/headerRight';
 
 import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
-
+import ReferralScreen from '../src/screens/ReferralScreen';
+import PackageScreen from '../src/screens/PackageScreen';
+import LoginScreen from '../src/screens/auth/LoginScreen';
+import ReviewOrderScreen from '../src/screens/ReviewOrderScreen';
+import AppointmentPlaced from '../src/screens/AppointmentPlaced';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -29,6 +33,9 @@ const AppNavigator = createStackNavigator({
     },
     Items: {
       screen: ItemsScreen,
+    },
+    Packages: {
+      screen: PackageScreen,
     },
     Cart: {
       screen: CartScreen,
@@ -48,11 +55,28 @@ const AppNavigator = createStackNavigator({
     Payment: {
       screen: PaymentScreen
     },
+    
     AddAddress: {
       screen: AddAddressScreen,
       navigationOptions: () => ({
         title: `Add Address`,
       }),
+    },
+
+    ConfirmAppointment: {
+      screen: ReviewOrderScreen,
+      headerMode: 'none',
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+
+    OrderComplete: {
+      screen: AppointmentPlaced,
+      headerMode: 'none',
+      navigationOptions: {
+        headerShown: false
+      }
     }
   },
   {
@@ -74,7 +98,8 @@ const DrawerNavigation = createDrawerNavigator({
     screen: AppNavigator,
     navigationOptions: ({tintColor}) => {
       return {
-        drawerIcon: <MaterialCommunityIcons name="monitor-dashboard" size={18} color={tintColor}/>
+        drawerIcon: <MaterialCommunityIcons name="monitor-dashboard" size={18} color={tintColor}/>,
+        unmountInactiveRoutes: true
       }
     }
   },
@@ -102,6 +127,14 @@ const DrawerNavigation = createDrawerNavigator({
       }
     }
   },
+  Referral: { 
+    screen: ReferralScreen,
+    navigationOptions: ({tintColor}) => {
+      return {
+        drawerIcon: <FontAwesome name="slideshare" size={18} color={tintColor}/>
+      }
+    }
+  },
   About: {
     screen: AboutScreen,
     navigationOptions: ({tintColor}) => ({
@@ -109,9 +142,16 @@ const DrawerNavigation = createDrawerNavigator({
       drawerIcon: <FontAwesome name="home" size={18} color={tintColor}/>
     }),
   }
-}, { contentComponent: SideDrawer });
+}, { contentComponent: SideDrawer, unmountInactiveRoutes: true });
+
+const switchNavigation = createSwitchNavigator({
+  Auth: {
+    screen: LoginScreen
+  },
+  App: {
+    screen: DrawerNavigation
+  }
+})
 
 
-
-
-export default createAppContainer(DrawerNavigation);
+export default createAppContainer(switchNavigation);

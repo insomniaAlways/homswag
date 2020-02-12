@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, SafeAreaView, StyleSheet, Image } from 'react-native';
-import { fetchOrder } from '../../store/actions/orderActions'
+import { fetchAllOrder } from '../../store/actions/orderActions'
 import OrderList from '../components/orderList';
 import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
@@ -35,7 +35,7 @@ mapStateToProps = state => {
 
 mapDispatchToProps = dispatch => {
   return {
-    getOrders: () => dispatch(fetchOrder())
+    getOrders: () => dispatch(fetchAllOrder())
   }
 }
 

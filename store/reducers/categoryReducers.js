@@ -1,22 +1,22 @@
-import { FETCH_CATEGORY_REQUEST, FETCH_CATEGORY_SUCCESS, FETCH_CATEGORY_ERROR } from '../actionTypes';
+import { CATEGORY_REQUEST_INITIATED, CATEGORY_REQUEST_SUCCESS, CATEGORY_REQUEST_FAILED } from '../actionTypes';
 import { categories } from '../intialValues';
 
 const categoryReducers = (state = categories, action) => {
   switch(action.type) {
-    case FETCH_CATEGORY_REQUEST : {
+    case CATEGORY_REQUEST_INITIATED : {
       return {
         ...state,
         isLoading: true
       }
     }
-    case FETCH_CATEGORY_SUCCESS : {
+    case CATEGORY_REQUEST_SUCCESS : {
       return {
         ...state,
         isLoading: false,
         values: action.payload
       }
     }
-    case FETCH_CATEGORY_ERROR : {
+    case CATEGORY_REQUEST_FAILED : {
       return {
         ...state,
         isLoading: false,

@@ -1,29 +1,71 @@
-import { FETCH_AUTHORISATION_REQUEST, FETCH_AUTHORISATION_SUCCESS, FETCH_AUTHORISATION_ERROR } from '../actionTypes';
-import { auth } from '../intialValues';
+import { VALIDATION_INITIATED, VALIDATION_SUCCESS, SIGN_OUT, VALIDATION_FAILED, ON_LOGIN_INITIATED, ON_LOGIN_SUCCESS, ON_LOGIN_FAILED } from '../actionTypes';
+import { userToken } from '../intialValues';
 
-const authReducers = (state = auth, action) => {
-  switch(action.type) {
-    case FETCH_AUTHORISATION_REQUEST : {
+const authReducers = (state = userToken, action) => {
+  switch (action.type) {
+    case VALIDATION_INITIATED: {
       return {
         ...state,
-        isLoading: true
-      }
+        isLoading: true,
+        isSignOut: true,
+        userToken: null,
+        error: null
+      };
     }
-    case FETCH_AUTHORISATION_SUCCESS : {
-      return {
-        ...state,
-        isLoading: false,
-        values: action.payload
-      }
-    }
-    case FETCH_AUTHORISATION_ERROR : {
+    case VALIDATION_SUCCESS: {
       return {
         ...state,
         isLoading: false,
-        error: action.payload
+        isSignOut: false,
+        userToken: action.payload.token,
+        error: null
+      };
+    }
+    case VALIDATION_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        isSignOut: true,
+        userToken: null,
+        error: action.error
+      };
+    }
+    case SIGN_OUT: {
+      return {
+        isLoading: false,
+        isSignOut: true,
+        userToken: null,
+        error: null
+      };
+    }
+    case ON_LOGIN_INITIATED: {
+      return {
+        ...state,
+        isLoading: true,
+        userToken: null,
+        isSignOut: true,
+        error: null
       }
     }
-    default : return state;
+    case ON_LOGIN_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        userToken: null,
+        isSignOut: true,
+        error: null
+      }
+    }
+    case ON_LOGIN_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        userToken: null,
+        isSignOut: true,
+        error: action.error
+      }
+    }
+    default: return state
   }
 }
 

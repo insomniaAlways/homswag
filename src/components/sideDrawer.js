@@ -1,6 +1,5 @@
-import SafeAreaView from 'react-native-safe-area-view';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import React from 'react';
+import { SafeAreaView } from 'react-navigation';
 import { DrawerItems } from 'react-navigation-drawer';
 import { StyleSheet, ScrollView, View, Image, Text, ImageBackground } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
@@ -8,10 +7,34 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
 import Constants from 'expo-constants';
+import { Linking } from 'expo';
+import { AsyncStorage } from 'react-native';
+import { onSigout } from '../../store/actions/authenticationAction';
+import { connect } from 'react-redux';
 
+const SideDrawer = props => {
+  const { navigation, signOut } = props
+  const openWhatsApp = () => {
+    let url = `whatsapp://send?text=hello&phone=916366505567`
+    Linking.canOpenURL(url)
+    .then((supported) => {
+      if (!supported) {
+        console.log("Can't handle url: " + url);
+      } else {
+        return Linking.openURL(`whatsapp://send?text=hello&phone=916366505567`);
+      }
+    })
+    .catch((err) => console.error('An error occurred', err));
+  }
 
-const SideDrawer = props => (
-  <View style={styles.container}>
+  const logOut = () => {
+    return AsyncStorage.removeItem('token')
+    .then(() => signOut())
+    .then(() => navigation.navigate('Auth'))
+  }
+
+  return (
+  <SafeAreaView style={styles.container}>
     <View style={{flex: 1}}>
       <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
         <View style={styles.profilePic}>
@@ -21,13 +44,21 @@ const SideDrawer = props => (
           <Text style={styles.name}>Hello, Pretty</Text>
         </View>
       </ImageBackground>
-      <DrawerItems {...props} labelStyle={{width: '100%'}}/>
-      <TouchableOpacity>
-        <View style={styles.logout}>
-          <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
-          <Text style={styles.logoutText}>Logout</Text>
-        </View>
-      </TouchableOpacity>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <DrawerItems {...props} labelStyle={{width: '100%'}}/>
+        <TouchableOpacity onPress={() => openWhatsApp()}>
+          <View style={styles.logout}>
+            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
+            <Text style={styles.logoutText}>Need Help?</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => logOut()}>
+          <View style={styles.logout}>
+            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
+            <Text style={styles.logoutText}>Logout</Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
     <View style={styles.backButtonContainer}>
       <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
@@ -36,8 +67,8 @@ const SideDrawer = props => (
         </View>
       </TouchableOpacity>
     </View>
-  </View>
-);
+  </SafeAreaView>
+)};
 
 const styles = StyleSheet.create({
   container: {
@@ -101,4 +132,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SideDrawer;
+const mapStatetoProps = state => ({
+  auth: state.auth
+})
+const mapDispatchToProps = dispatch => ({
+  signOut: () => dispatch(onSigout())
+})
+export default connect(mapStatetoProps, mapDispatchToProps)(SideDrawer);
