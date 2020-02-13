@@ -1,12 +1,17 @@
 import React, { useState, useEffect }from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import MapView from 'react-native-maps';
 import FloatingInput from '../components/input-helpers.js/floatingInput';
 import { connect } from 'react-redux';
 import { geoCoding } from '../../store/actions/locationActions';
 import { creatNew, fetchAddress } from '../../store/actions/addressActions';
-import { Modal, Spinner, Layout } from '@ui-kitten/components';
+import { Modal, Spinner, Layout, Text } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView'
+import _ from 'lodash';
+import { FontAwesome } from '@expo/vector-icons';
+import { Label } from 'native-base';
+import * as Permissions from 'expo-permissions';
+import { brandColor } from '../style/customStyles';
 
 const initialRegion = {
   latitude: 12.97194,
@@ -40,51 +45,80 @@ function AddressScreen(props) {
     }
   },[location.isLoading])
 
-  const onSuccess = async (geolocation) => {
-    const { latitude, longitude} = geolocation.coords
+  const onError = () => {
+    alert("We need location service permission to fetch your current location")
+  }
+
+  const onRegionChange = (latitude, longitude) => {
+    setLoading(true)
     setCoodinates({
       latitude: latitude,
       longitude: longitude,
       latitudeDelta: 0.0122,
       longitudeDelta: 0.0101,
     })
-    let getLocation = await getGeoCoding(latitude, longitude)
-    setCoodinatesLoaded(true)
+    async function saveData() {
+      await getGeoCoding(latitude, longitude)
+      setCoodinatesLoaded(true)
+      setLoading(false)
+    }
+    saveData()
   }
-  const onError = (a,b,c,d) => {
-    console.log(a,b,c,d)
-  }
+
+  const debounceCall = _.debounce(onRegionChange, 500);
 
   useEffect(() => {
     if(!isCurrentLoactionLoaded) {
-      navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true, maximumAge: 0});
+      async function getPemission() {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status === 'granted') {
+          return navigator.geolocation.getCurrentPosition(
+            ({coords}) => debounceCall(coords.latitude, coords.longitude),
+            onError, {enableHighAccuracy: true, maximumAge: 0});
+        } else {
+          return alert("We need location service permission to fetch your current location.")
+        }
+      }
+      getPemission()
     }
   }, [])
 
   const save = async () => {
     setLoading(true)
-    let saveAddress = await addNewAddress({address: locationValue})
-    let allAddress = await getfetchAddress()
+    await addNewAddress({address: locationValue})
+    await getfetchAddress()
     setLoading(false)
     navigation.navigate(previousScreen)
   }
 
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView extraHeight={100} showsVerticalScrollIndicator={false}>
       <View style={{flex: 1}}>
-        <MapView style={{flex: 9}}
-          initialRegion={initialRegion}
-          region={isCurrentLoactionLoaded ? coordinates : initialRegion}
-        >
-          {isCurrentLoactionLoaded && coordinates && coordinates.latitude && <Marker coordinate={coordinates}/>}
-        </MapView>
-        <View style={{flex: 3, paddingLeft: 30, paddingRight: 30, paddingTop: 5}}>
-          <FloatingInput label="Your location" style={{paddingTop: 10}}
-            setValue={setLocationValue}
-            value={locationValue.formatedAddress}
-            previousState={locationValue}
-            itemKey={'formatedAddress'}
-            disabled={true}/>
+        <View style={isCurrentLoactionLoaded && coordinates && coordinates.latitude ? styles.padding_b : styles.padding_a}>
+          <MapView style={{height: 300}}
+            initialRegion={initialRegion}
+            onRegionChangeComplete={({latitude, longitude}) => debounceCall(latitude, longitude)}
+            showsUserLocation={true}
+            loadingEnabled={true}
+            showsMyLocationButton={true}
+            showsCompass={true}
+            followsUserLocation={true}/>
+          { isCurrentLoactionLoaded && coordinates && coordinates.latitude && 
+            <View style={{position: 'absolute', top: 115, left: '48%', justifyContent: 'center', alignItems: 'center'}}>
+              <FontAwesome name="map-marker" size={40} color="red" />
+            </View>
+          }
+        </View>
+        <View style={{flex: 3, paddingLeft: 30, paddingRight: 30, paddingTop: 5, justifyContent: 'center'}}>
+          {locationValue && locationValue.formatedAddress ? 
+            <View style={{paddingTop: 10}}>
+              <Text style={{color: 'rgba(0,0,0,0.5)'}}>Current Location</Text>
+              <Text style={{marginTop: 5}}>{locationValue.formatedAddress}</Text>
+            </View> :
+            <View style={{borderBottomWidth: 1, borderColor: '#eee', marginTop: 30}}>
+              <Label style={{fontSize: 18, color: 'rgba(0,0,0,0.64)'}}>Current Location</Label>
+            </View>
+          }
           <FloatingInput label="House No/Room no" style={{paddingTop: 10}}
             setValue={setLocationValue}
             value={locationValue.localAddress}
@@ -97,8 +131,10 @@ function AddressScreen(props) {
             previousState={locationValue}
             itemKey={'landmark'}
             disabled={false}/>
-          <View style={{padding: 20}}>
-            <Button title="Save" onPress={() => save()} />
+          <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity style={{width: 150, backgroundColor: brandColor, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, borderRadius: 20}} onPress={() => save()}>
+              <Text style={{color: '#fff', width: '100%', textAlign: 'center'}}>Save</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -145,5 +181,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 12,
     backgroundColor: '#3366FF',
+  },
+
+  padding_a: {
+    padding: 1
+  },
+  padding_b: {
+    padding: 2
   }
 })
