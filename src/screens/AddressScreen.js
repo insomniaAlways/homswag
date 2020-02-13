@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import DefaultStyles from '../style/customStyles';
@@ -13,7 +13,7 @@ function AddressScreen(props) {
   const addresses = address.values
   const [ isLoading, setLoading ] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getAddress()
   }, [])
 

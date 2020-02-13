@@ -18,7 +18,11 @@ function BookingDetails(props) {
           </View> :
         ( selectedAddress ? 
           <View style={styles.addressContainer}>
-            <Text style={styles.addressText}>{address}</Text>
+            <View style={{width: '80%', paddingBottom: 10}}>
+              <Text style={styles.addressText}>{address}</Text>
+              {selectedAddress.address.localAddress ? <Text style={styles.addressText}>{selectedAddress.address.localAddress}</Text> : null }
+              {selectedAddress.address.landmark ? <Text style={styles.addressText}>{selectedAddress.address.landmark}</Text> : null}
+            </View>
             <TouchableOpacity style={styles.addressChangeButton} onPress={() => setModal(true)}>
               <Text style={styles.addressChangeText}>Change</Text>
             </TouchableOpacity>
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
   },
   addressText: {
     width: '80%',
-    paddingBottom: 10
+    fontFamily: 'roboto-regular',
   },
   addressLoading: {
     width: '100%',

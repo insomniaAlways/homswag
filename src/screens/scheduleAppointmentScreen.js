@@ -12,6 +12,7 @@ import { fetchAddress } from '../../store/actions/addressActions';
 import { Layout } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
 import { updateAppointmentState } from '../../store/actions/appointmentActions';
+import _ from 'lodash';
 
 function ScheduleAppointmentScreen(props) {
   const { appointment, addresses, getAddress, currentUser, updateAppointment } = props
@@ -37,7 +38,12 @@ function ScheduleAppointmentScreen(props) {
 
   useEffect(() => {
     if(!addresses.isLoading && addresses.values && addresses.values.length && !selectedAddress) {
-      setSelectedAddress(addresses.values[0])
+      let defaultAddress = _.find(addresses.values, ['is_default', true])
+      if(defaultAddress) {
+        setSelectedAddress(defaultAddress)
+      } else {
+        setSelectedAddress(addresses.values[0])
+      }
     }
   }, [addresses.isLoading, addresses.values, addresses.values.length])
 
