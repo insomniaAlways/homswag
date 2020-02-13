@@ -4,11 +4,12 @@ import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
 import CustomHeader from '../components/customHeader';
-import { fetchAddress, creatNew} from '../../store/actions/addressActions';
-import { Layout, List, Text, Modal, Spinner } from '@ui-kitten/components';
+import { fetchAddress, deleteAddresss, updateAddress } from '../../store/actions/addressActions';
+import { Layout, List, Text, Spinner } from '@ui-kitten/components';
+import { FontAwesome } from '@expo/vector-icons';
 
 function AddressScreen(props) {
-  const { address, getAddress, navigation } = props;
+  const { address, getAddress, navigation, deleteSelected, setDefault } = props;
   const addresses = address.values
   const [ isLoading, setLoading ] = useState(false)
 
@@ -16,15 +17,40 @@ function AddressScreen(props) {
     getAddress()
   }, [])
 
+  const deleteRecord = (value) => {
+    deleteSelected(value.id)
+  }
+
+  const setDefaultAddress = (value) => {
+    setDefault(value.id, true)
+  }
+
   useEffect(() => {
     setLoading(address.isLoading)
   }, [address.isLoading])
 
   const renderItem = ({ item, index }) => (
-    <Layout>
-      <Text>{item.address.formatedAddress}</Text>
-      <Text>{item.address.localAddress}</Text>
-      <Text>{item.address.landmark}</Text>
+    <Layout style={{paddingHorizontal: 20, marginBottom: 10, paddingTop: 10, borderRadius: 10}}>
+      <Layout style={{flexDirection: 'row'}}>
+        <Layout style={{marginRight: 10}}>
+          <FontAwesome name="map-marker" size={20} color="black" />
+        </Layout>
+        <Layout>
+          <Text style={{fontFamily: 'roboto-regular'}}>{item.address.formatedAddress}</Text>
+          {item.address.localAddress ? <Text style={{fontFamily: 'roboto-regular'}}>{item.address.localAddress}</Text> : null }
+          {item.address.landmark ? <Text style={{fontFamily: 'roboto-regular'}}>{item.address.landmark}</Text> : null}
+        </Layout>
+      </Layout>
+      <Layout style={{flexDirection: 'row', justifyContent: 'flex-start', paddingHorizontal: 20, paddingVertical: 10}}>
+        {item.is_default ? 
+          <View style={{marginRight: 30}}><Text style={styles.isDefaultTrue}>Set default</Text></View>:
+          <TouchableOpacity onPress={() => setDefaultAddress(item)} style={{marginRight: 30}}><Text style={styles.isDefaultFalse}>Set default</Text></TouchableOpacity>
+        }
+        {item.is_default ? 
+          <View><Text style={styles.deleteButtonTrue}>Delete</Text></View>:
+          <TouchableOpacity onPress={() => deleteRecord(item)}><Text style={styles.deleteButtonFalse}>Delete</Text></TouchableOpacity>
+        }
+      </Layout>
     </Layout>
   );
 
@@ -83,7 +109,7 @@ const styles = StyleSheet.create({
   },
   addressList: {
     paddingHorizontal: 8,
-    paddingVertical: 16,
+    paddingBottom: 16,
   },
   productItem: {
     flex: 1,
@@ -103,6 +129,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  isDefaultTrue: {
+    color: 'grey',
+    fontFamily:'roboto-medium',
+    fontSize: 12
+  },
+  isDefaultFalse: {
+    color: 'green',
+    fontSize: 12,
+    fontFamily: 'roboto-medium'
+  },
+  deleteButtonTrue: {
+    color: 'grey',
+    fontFamily: 'roboto-medium',
+    fontSize: 12
+  },
+  deleteButtonFalse: {
+    color: 'red',
+    fontFamily: 'roboto-medium',
+    fontSize: 12
+  }
 })
 
 mapStateToProps = state => {
@@ -113,7 +159,9 @@ mapStateToProps = state => {
 
 mapDispatchToProps = dispatch => {
   return {
-    getAddress: () => dispatch(fetchAddress())
+    getAddress: () => dispatch(fetchAddress()),
+    deleteSelected: (address_id) => dispatch(deleteAddresss(address_id)),
+    setDefault: (address_id, is_default) => dispatch(updateAddress(address_id, is_default))
   }
 }
 

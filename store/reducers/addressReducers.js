@@ -8,21 +8,22 @@ const addressReducers = (state = addresses, action) => {
       return {
         ...state,
         isLoading: true,
-        values: []
+        error: null
       }
     }
     case ADDRESS_REQUEST_SUCCESS : {
       return {
         ...state,
         isLoading: false,
-        values: action.payload
+        values: action.payload,
+        error: null
       }
     }
     case ADDRESS_REQUEST_FAILED : {
       return {
         ...state,
         isLoading: false,
-        error: action.payload
+        error: action.error
       }
     }
     default : return state;
