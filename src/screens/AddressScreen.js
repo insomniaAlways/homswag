@@ -35,7 +35,7 @@ function AddressScreen(props) {
         <Layout style={{marginRight: 10}}>
           <FontAwesome name="map-marker" size={20} color="black" />
         </Layout>
-        <Layout>
+        <Layout style={{flex: 1}}>
           <Text style={{fontFamily: 'roboto-regular'}}>{item.address.formatedAddress}</Text>
           {item.address.localAddress ? <Text style={{fontFamily: 'roboto-regular'}}>{item.address.localAddress}</Text> : null }
           {item.address.landmark ? <Text style={{fontFamily: 'roboto-regular'}}>{item.address.landmark}</Text> : null}
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     color:'#fff'
   },
   addressList: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingBottom: 16,
   },
   productItem: {
