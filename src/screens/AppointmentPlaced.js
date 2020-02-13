@@ -3,9 +3,9 @@ import { TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchOrder } from '../../store/actions/orderActions';
 import { Layout, Text } from '@ui-kitten/components';
-import { StyleSheet, BackHandler } from 'react-native';
+import { StyleSheet, BackHandler, Image } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
-
+import Tick from '../../assets/images/tick.png'
 
 const resetAction = StackActions.reset({
   index: 0,
@@ -36,6 +36,12 @@ const AppointmentPlacedScreen = (props) => {
   return (
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#F7F9FC"}}>
       <Layout style={styles.content}>
+      <Layout style={{justifyContent: 'center'}}>
+        <Image
+          style={{width: 200, height: 250}}
+          source={Tick}
+        />
+      </Layout>
         <Text style={styles.fontFamily}>All Right!</Text>
         <Text style={styles.fontFamily}>Sit back and relax.</Text>
         <Text style={styles.fontFamily}>The appointment has successfully placed.</Text>
@@ -68,11 +74,12 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     borderRadius: 15,
-    justifyContent: 'center',
+    paddingTop: 30,
+    // justifyContent: 'center',
     alignItems: 'center'
   },
   fontFamily: {
-    fontFamily: 'roboto-bold-italic'
+    fontFamily: 'roboto-medium-italic'
   },
   button: {
     position: 'absolute',
