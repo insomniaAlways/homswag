@@ -1,6 +1,6 @@
-import { ORDER_REQUEST_FAILED, ORDER_REQUEST_INITIATED, ORDER_REQUEST_SUCCESS, ORDER_CREATE_REQUEST_SUCCESS } from '../actionTypes';
+import { ORDER_REQUEST_FAILED, ORDER_REQUEST_INITIATED, ORDER_REQUEST_SUCCESS, ORDER_CREATE_REQUEST_SUCCESS, ORDER_UPDATE } from '../actionTypes';
 
-import { query, findRecord, createRecord } from '../asyncActions/index';
+import { query, findRecord, createRecord, updateRecord } from '../asyncActions/index';
 
 export const fetchAllOrder = () => {
   return function(dispatch) {
@@ -28,6 +28,15 @@ export const createOrder = (orderDetails) => {
   }
 }
 
+export const updateOrder = (order_id, order_status) => {
+  return function(dispatch) {
+    dispatch(onStart())
+    return updateRecord('order', order_id, { status: order_status })
+    .then((res) => dispatch(onUpdate(res.data)))
+    .catch((e) => dispatch(onError(e.response.data))) 
+  }
+}
+
 export const orderCreated = (payload) => {
   return {
     type: ORDER_CREATE_REQUEST_SUCCESS,
@@ -52,5 +61,12 @@ export const onError = (error) => {
   return {
     type: ORDER_REQUEST_FAILED,
     error: error
+  }
+}
+
+const onUpdate = (payload) => {
+  return {
+    type: ORDER_UPDATE,
+    payload: payload
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, SafeAreaView, StyleSheet, Image } from 'react-native';
 import { fetchAllOrder } from '../../store/actions/orderActions'
@@ -8,13 +8,22 @@ import Constants from 'expo-constants';
 import CustomHeader from '../components/customHeader';
 
 function OrderHistoryScreen(props) {
-  const { orders } = props;
+  const { orders, getOrders, navigation } = props;
+
+  useLayoutEffect(() => {
+    getOrders()
+  }, [])
+
   return (
     <View style={{flex: 1}}>
-      <CustomHeader {...props}/>
       <SafeAreaView style={{flex: 1}}>
         <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Orders: </Text></View>
-        <OrderList orders={orders}/>
+        {orders.isLoading ? 
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>Loading..</Text>
+          </View> :
+          <OrderList orders={orders.values} navigation={navigation}/>
+        }
       </SafeAreaView>
     </View>
   )
@@ -29,7 +38,7 @@ const styles = StyleSheet.create({
 
 mapStateToProps = state => {
   return {
-    orders: state.orders.values
+    orders: state.orders
   }
 }
 

@@ -43,7 +43,7 @@ function ReviewOrderScreen (props) {
       "from": from,
       "to": to,
       "address_id": appointmentDetails.selectedAddress.id,
-      "total_paid": cart_total,
+      "total_paid": 0, //need to change when online payment
       "status": 1,
       "special_instruction": appointmentDetails.special_instruction,
       "preferred_beautician": appointmentDetails.prefered_beautician

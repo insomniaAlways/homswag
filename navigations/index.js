@@ -26,6 +26,7 @@ import PackageScreen from '../src/screens/PackageScreen';
 import LoginScreen from '../src/screens/auth/LoginScreen';
 import ReviewOrderScreen from '../src/screens/ReviewOrderScreen';
 import AppointmentPlaced from '../src/screens/AppointmentPlaced';
+import OrderDetails from '../src/screens/OrderDetailsScreen';
 
 const AppNavigator = createStackNavigator({
     Dashboard: {
@@ -93,6 +94,34 @@ const AppNavigator = createStackNavigator({
   }
 );
 
+const OrderStackNavigator = createStackNavigator({
+  OrderList: {
+    screen: OrderHistoryScreen,
+    navigationOptions: () => ({
+      title: `Orders`,
+    }),
+  },
+  OrderDetails: {
+    screen: OrderDetails,
+    navigationOptions: () => ({
+      title: `Order Details`,
+    }),
+  }
+},
+{
+  defaultNavigationOptions: ({ navigation }) => ({
+    title: navigation.state.routeName,
+    headerStyle: DefaultStyles.brandBackgroundColor,
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      flex: 1
+    },
+    headerRight: <HeaderRightView navigation={navigation}/>
+  })
+})
+
+
 const DrawerNavigation = createDrawerNavigator({
   Dashboard: {
     screen: AppNavigator,
@@ -120,7 +149,7 @@ const DrawerNavigation = createDrawerNavigator({
     }
   },
   Orders: { 
-    screen: OrderHistoryScreen,
+    screen: OrderStackNavigator,
     navigationOptions: ({tintColor}) => {
       return {
         drawerIcon: <FontAwesome name="reorder" size={18} color={tintColor}/>

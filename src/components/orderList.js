@@ -1,15 +1,26 @@
 import React from 'react';
-import { View, Text, SafeAreaView, FlatList } from 'react-native';
 import OrderItem from './orderItem';
+import { Layout, List, Text, Spinner } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
 
 const OrderList = function(props) {
-  const { orders } = props
+  const { orders, navigation } = props
+
+  const renderItem = ({item}) => {
+    return (
+      <OrderItem order={item} navigation={navigation}/>
+    )
+  }
+
   if(orders && Array.isArray(orders) && orders.length) {
     return (
-      <FlatList
+      <List
+        contentContainerStyle={styles.orderList}
+        showsVerticalScrollIndicator={false}
         data={orders}
-        renderItem={(order) => <OrderItem order={order} />}
-        keyExtractor={(order) => order.order_no}
+        refreshing={false}
+        onRefresh={() => alert('hello')}
+        renderItem={renderItem}
       />
     )
   } else {
@@ -18,3 +29,9 @@ const OrderList = function(props) {
 }
 
 export default OrderList;
+
+const styles = StyleSheet.create({
+  orderList: {
+
+  }
+})

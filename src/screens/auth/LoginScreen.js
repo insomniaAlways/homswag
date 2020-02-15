@@ -7,6 +7,7 @@ import { Icon } from '@ui-kitten/components';
 import ImageBackground from '../../../assets/images/image-background.jpg'
 import { connect } from 'react-redux';
 import { addHeader, register, validateToken } from '../../../store/actions/authenticationAction';
+import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
 import { Spinner } from '@ui-kitten/components';
 
@@ -79,7 +80,13 @@ const LoginScreen = (props) => {
       if(userToken || auth.userToken) {
         let token = userToken ? userToken : auth.userToken
         addTokenToHeader(token)
-        redirectToApp()
+        try {
+          await props.getUser()
+          redirectToApp()
+        } catch (e) {
+          alert(props.user.error)
+          console.log(props, e)
+        }
       } else {
         setSession(false)
         setAuthenticating(false)
@@ -219,13 +226,15 @@ const LoginScreen = (props) => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
   addTokenToHeader: (token) => dispatch(addHeader(token)),
   registerUser: (phone) => dispatch(register(phone)),
-  validateOtp: (phone, otp) => dispatch(validateToken(phone, otp))
+  validateOtp: (phone, otp) => dispatch(validateToken(phone, otp)),
+  getUser: () => dispatch(fetchUser()),
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen);
