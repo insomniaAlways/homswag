@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { Icon, Layout } from '@ui-kitten/components';
 import Moment from 'react-moment';
@@ -8,9 +8,17 @@ import { updateOrder } from '../../store/actions/orderActions';
 
 const OrderDetails = function(props) {
   const order = props.navigation.getParam('order');
-  const [showModal, setShowModal] = useState(false)
+  const [ showModal, setShowModal ] = useState(false)
   const { orderModel } = props
-  const status = orderModel.statusCode.find((code) => code.id == order.status)
+  const statusCode = orderModel.statusCode
+  const [ currentOrder, setCurrentOrder ] = useState(order)
+  const [ status, setStatus ] = useState(statusCode.find((code) => code.id == currentOrder.status))
+
+  useEffect(() => {
+    let co = orderModel.values.find((o) => o.id == currentOrder.id)
+    let s = statusCode.find((code) => code.id == co.status)
+    setStatus(s)
+  }, [currentOrder, orderModel.isLoading])
 
   const cancelOrder = async () => {
     await props.updateOrderStatus(order.id, 3)
@@ -67,9 +75,11 @@ const OrderDetails = function(props) {
       <Layout style={{padding: 10}}>
         <Layout style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Order No: {order.id}</Text>
-          <Text>Status:
-            <Text style={{color: status.color}}>  {status.name}</Text>
-          </Text>
+          {status && status.color && 
+            <Text>Status:
+              <Text style={{color: status.color}}>  {status.name}</Text>
+            </Text>
+          }
         </Layout>
         <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{marginRight: 10}}>Placed on: </Text>
@@ -107,11 +117,12 @@ const OrderDetails = function(props) {
             />
           </Layout>
         </Layout>
-        <Layout style={{marginTop: 30}}>
-          <TouchableOpacity onPress={() => setShowModal(true)} style={{width: 130}}>
-            <Text style={{color: 'red'}}>Cancel Appointment</Text>
-          </TouchableOpacity>
-        </Layout>
+        {(status.id != 3 && status.id != 4 && status.id != 5) ? 
+          <Layout style={{marginTop: 30}}>
+            <TouchableOpacity onPress={() => setShowModal(true)} style={{width: 130}}>
+              <Text style={{color: 'red'}}>Cancel Appointment</Text>
+            </TouchableOpacity>
+          </Layout> : null }
       </Layout>
       <Modal
         animationType="slide"

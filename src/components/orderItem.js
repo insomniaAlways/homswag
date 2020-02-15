@@ -5,7 +5,8 @@ import Moment from 'react-moment';
 import { FontAwesome } from '@expo/vector-icons';
 
 const OrderItem = function(props) {
-  const order = props.order;
+  const {order, orderModel} = props;
+  const status = orderModel.statusCode.find((code) => code.id == order.status)
 
   const RenderOrderedItem = () => {
     if(order.cartItems && Array.isArray(order.cartItems) && order.cartItems.length) {
@@ -26,7 +27,10 @@ const OrderItem = function(props) {
     <TouchableOpacity onPress={() => props.navigation.navigate('OrderDetails', {order: order})}>
       <Layout style={{paddingLeft: 10, paddingRight: 10, borderWidth: 1, borderColor: "#eee", margin: 10, borderBottomWidth: 3, borderRadius: 20}}>
         <View style={{padding: 10}}>
-          <Text style={{fontWeight: 'bold', fontSize: 14, width: '100%'}}>Order No: {order.id}</Text>
+          <Layout style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Order No: {order.id}</Text>
+            <Text style={{color: status.color}}>  {status.name}</Text>
+          </Layout>
           <Moment element={Text}
               date={order.created_at}
               format="DD/MM/YYYY"

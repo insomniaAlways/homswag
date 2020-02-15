@@ -8,7 +8,7 @@ import Constants from 'expo-constants';
 import CustomHeader from '../components/customHeader';
 
 function OrderHistoryScreen(props) {
-  const { orders, getOrders, navigation } = props;
+  const { orderModel, getOrders, navigation } = props;
 
   useLayoutEffect(() => {
     getOrders()
@@ -18,11 +18,11 @@ function OrderHistoryScreen(props) {
     <View style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Orders: </Text></View>
-        {orders.isLoading ? 
+        {orderModel.isLoading ? 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Text>Loading..</Text>
           </View> :
-          <OrderList orders={orders.values} navigation={navigation}/>
+          <OrderList orders={orderModel.values} navigation={navigation} orderModel={orderModel}/>
         }
       </SafeAreaView>
     </View>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
 mapStateToProps = state => {
   return {
-    orders: state.orders
+    orderModel: state.orders
   }
 }
 

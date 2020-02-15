@@ -4,11 +4,11 @@ import { Layout, List, Text, Spinner } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 const OrderList = function(props) {
-  const { orders, navigation } = props
+  const { orders, navigation, orderModel } = props
 
   const renderItem = ({item}) => {
     return (
-      <OrderItem order={item} navigation={navigation}/>
+      <OrderItem order={item} navigation={navigation} orderModel={orderModel}/>
     )
   }
 
