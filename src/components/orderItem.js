@@ -11,9 +11,10 @@ const OrderItem = function(props) {
   const RenderOrderedItem = () => {
     if(order.cartItems && Array.isArray(order.cartItems) && order.cartItems.length) {
       return order.cartItems.map((orderItem, index) => {
+        let data = orderItem.is_package ? orderItem.package : orderItem.item
         return (
           <View key={index} style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', paddingRight: 10}}>
-            <Text ellipsizeMode={'tail'} numberOfLines={2} style={{width: '40%'}}>{orderItem.item.name}</Text>
+            <Text ellipsizeMode={'tail'} numberOfLines={2} style={{width: '40%'}}>{data.name}</Text>
             <Text style={{width: 30}}>x {orderItem.quantity}</Text>
             <Text style={{width: 60, textAlign: 'right'}}><FontAwesome name="rupee" size={12} color="black" /> {orderItem.total_price}</Text>
           </View>

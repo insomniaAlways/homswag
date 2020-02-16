@@ -6,21 +6,27 @@ import { Layout, Text } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 function ItemView (props) {
-  const { items, getItems, item, cartItem } =  props
+  const { itemModel, getItems, cartItem, packageModel } =  props
   const [ currentItem, setCurrentItem ] = useState()
+  const data = cartItem.is_package ? cartItem.package : cartItem.item
 
   useEffect(() => {
     getItems()
   }, [])
 
   useEffect(() => {
-    if(!item.id) {
-      let value = _.find(items.values, ['id', item_id])
+    if(!data.id) {
+      let value
+      if(cartItem.is_package) {
+        value = _.find(packageModel.values, ['id', data.id])
+      } else {
+        value = _.find(itemModel.values, ['id', data.id])
+      }
       setCurrentItem(value)
     } else {
-      setCurrentItem(item)
+      setCurrentItem(data)
     }
-  }, [item])
+  }, [data])
 
     return (
       <Layout style={styles.itemCard}>
@@ -32,7 +38,8 @@ function ItemView (props) {
 
 
 const mapStateToProps = state => ({
-  items: state.items
+  itemModel: state.items,
+  packageModel: state.packages
 })
 
 const mapDispatchToProps = dispatch => ({

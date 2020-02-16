@@ -32,7 +32,7 @@ function Dashboard(props) {
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView packages={props.packages} navigation={props.navigation}/>
         </View>
-        <Text style={{paddingLeft: 20, paddingBottom: 0}}>What would you like to do?</Text>
+        <Text style={{paddingLeft: 20, paddingBottom: 0, paddingTop: 10}}>What would you like to do?</Text>
         <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
           {props.categories.isLoading ? 
             <View style={{height: 600, justifyContent: 'center', alignItems: 'center'}}>
@@ -42,7 +42,7 @@ function Dashboard(props) {
               duration={800}
               animation={'fadeIn'}
               >
-              <TabViews {...props}/>
+              <CategoryList data={props.categories.values} navigation={props.navigation}/>
             </Animatable.View>
           }
         </View>

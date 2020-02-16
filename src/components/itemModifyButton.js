@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -6,56 +6,51 @@ import { Icon } from '@ui-kitten/components';
 import { fetchCartItems, updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 function ModifyButton(props) {
-  const { item, cartItem, removeCartItem, quantity, setQuantity } = props
+  const { item, cartItem, quantity, updateCartItem, deleteCartItem } = props
 
-  const updateAddedItem = _.debounce(async (count) => {
-    if(!_.isNil(cartItem)) {
-      let totalPrice = (+item.price * parseInt(count))
-      let updatedCartItem = await props.updateCartItem(cartItem.id, count, totalPrice)
-      props.getCartItem()
+  useEffect(() => {
+    async function updateCT() {
+      if(cartItem) {
+        let totalPrice = (+item.price * parseInt(quantity))
+        await updateCartItem(cartItem.id, quantity, totalPrice)
+        if(props.setLoading) {
+          props.setLoading(false)
+        }
+      }
     }
-  }, 1000)
-
-  const removeItem = _.debounce(async (count) => {
-    if(quantity > 0) {
-      let totalPrice = (+item.price * count)
-      let updatedCartItem = await props.updateCartItem(cartItem.id, count, totalPrice)
-      props.getCartItem()
-    }
-  }, 1000)
-
-  const deleteItem = async () => {
-    if(props.setLoading) {
-      props.setLoading(true)
-    }
-    let deletedCartItem = await props.deleteCartItem(cartItem.id)
-    props.getCartItem()
-  }
+    updateCT()
+  }, [quantity])
 
   const incCount = () => {
     if(props.setLoading) {
       props.setLoading(true)
     }
-    if(setQuantity) {
-      setQuantity(quantity + 1)
+    let count = quantity + 1
+    if(props.setQuantity) {
+      props.setQuantity(count)
     }
-    updateAddedItem(quantity + 1)
   }
 
   const decCount = () => {
+    let count = quantity - 1
     if(props.setLoading) {
       props.setLoading(true)
     }
-    if((quantity - 1) <= 0) {
-      if(removeCartItem) {
-        removeCartItem(false)
+    if(count < 1) {
+      if(props.removeCartItem) {
+        props.removeCartItem(false)
       }
-      deleteItem()
+      async function deleteCall() {
+        await deleteCartItem(cartItem.id)
+        if(props.setLoading) {
+          props.setLoading(false)
+        }
+      }
+      deleteCall()
     } else {
-      removeItem(quantity - 1)
-    }
-    if(setQuantity) {
-      setQuantity(quantity - 1, cartItem)
+      if(props.setQuantity) {
+        props.setQuantity(count)
+      }
     }
   }
 
@@ -82,11 +77,15 @@ function ModifyButton(props) {
   )
 }
 
+const mapStateToProps = state => ({
+  cartItemModel: state.cartItems
+})
+
 mapDispatchToProps = dispatch => {
   return {
-    updateCartItem: (cartItem, quantity, totalPrice) => dispatch(updateItem(cartItem, quantity, totalPrice)),
+    updateCartItem: (cart_item_id, quantity, totalPrice) => dispatch(updateItem(cart_item_id, quantity, totalPrice)),
     getCartItem: () => dispatch(fetchCartItems()),
-    deleteCartItem: (cartItem) => dispatch(deleteItem(cartItem))
+    deleteCartItem: (cart_item_id) => dispatch(deleteItem(cart_item_id))
   }
 }
-export default connect(null, mapDispatchToProps)(ModifyButton)
+export default connect(mapStateToProps, mapDispatchToProps)(ModifyButton)

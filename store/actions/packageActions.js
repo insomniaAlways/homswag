@@ -1,120 +1,13 @@
 import { PACKAGE_REQUEST_INITIATED, PACKAGE_REQUEST_SUCCESS, PACKAGE_REQUEST_FAILED } from '../actionTypes';
 
-import { query, findRecord } from '../asyncActions/index';
-
-const packages = [
-  {
-    "name": "Beauty & Relax",
-    "id": 1,
-    "price": "1799",
-    "image_url": 'https://i.picsum.photos/id/1033/400/200.jpg',
-    "items": [
-      {
-        "name": "Rica Full Arms – Waxing"
-      },
-      {
-        "name": "Rica Half Legs – Waxing"
-      },
-      {
-        "name": "Facial"
-      },
-      {
-        "name": "Hair Spa"
-      },
-      {
-        "name": "Eye Brows"
-      },
-      {
-        "name": "Upper Lip"
-      },
-      {
-        "name": "Pedicure Detan"
-      },
-      {
-        "name": "Manicure Detan"
-      }
-    ]
-  },
-  {
-    "name": "P1-Tip To Toe (Women)",
-    "price": "1199",
-    "id": 2,
-    "image_url": 'https://i.picsum.photos/id/1037/400/200.jpg',
-    "items": [
-      {
-        "name": "Rica Full Arms – Waxing"
-      },
-      {
-        "name": "Rica Full Legs – Waxing"
-      },
-      {
-        "name": "Aroma Manicure"
-      },
-      {
-        "name": "Aroma Pedicure"
-      },
-      {
-        "name": "Face Clean up"
-      },
-      {
-        "name": "Eye Brows"
-      },
-      {
-        "name": "Upper Lip"
-      }
-    ]
-  },
-  {
-    "name": "P2 - Tip To Toe",
-    "price": "1099",
-    "id": 3,
-    "image_url": 'https://i.picsum.photos/id/1035/400/200.jpg',
-    "items": [
-      {
-        "name": "Honey – Full Arms & Under Arms – Waxing"
-      },
-      {
-        "name": "Honey – Full Legs – Waxing"
-      },
-      {
-        "name": "Aroma Manicure"
-      },
-      {
-        "name": "Face Clean up"
-      },
-      {
-        "name": "Eye Brows"
-      },
-      {
-        "name": "Upper Lip"
-      }
-    ]
-  },
-  {
-    "name": "Express pack",
-    "price": "499",
-    "id": 4,
-    "image_url": 'https://i.picsum.photos/id/1036/400/200.jpg',
-    "items": [
-      {
-        "name": "Full Arms / UA"
-      },
-      {
-        "name": "Full Legs"
-      },
-      {
-        "name": "Eye Brows"
-      },
-      {
-        "name": "Upper Lip"
-      }
-    ]
-  }
-]
+import { query, findRecord, findAll } from '../asyncActions/index';
 
 export const fetchPackages = () => {
   return function(dispatch) {
-    return dispatch(onSuccess(packages))
+    dispatch(onStart())
+    return findAll('package')
+    .then((res) => dispatch(onSuccess(res.data)))
+    .catch((e) => dispatch(onError(e.response.data)))
   }
 }
 
@@ -134,6 +27,6 @@ export const onSuccess = (payload) => {
 export const onError = (error) => {
   return {
     type: PACKAGE_REQUEST_FAILED,
-    payload: error
+    error: error
   }
 }

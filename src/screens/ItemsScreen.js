@@ -10,7 +10,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import { brandColor } from '../style/customStyles';
 
 function Items(props) {
-  const { navigation, items, cartItem, cart } = props;
+  const { navigation, items, cartItemModel, cart } = props;
   const category = navigation.getParam('category')
   const [ selectedItems, setSelectedItems ] = useState([])
   const [ showButton, setShowButton ] = useState(false)
@@ -22,12 +22,14 @@ function Items(props) {
   }, [category])
 
   useEffect(() => {
-    if(cartItem.values.length) {
+    if(cartItemModel.values.length) {
       setShowButton(true)
     } else {
       setShowButton(false)
       }
-  }, [cartItem.values.length])
+  }, [cartItemModel.values.length])
+
+  // console.log('cartItemModel', cartItemModel)
 
   return (
     <Layout style={{flex: 1}}>
@@ -52,7 +54,7 @@ function Items(props) {
               data={selectedItems}
               showButton={showButton}
               setShowButton={setShowButton}
-              cartItems={cartItem.values}
+              cartItems={cartItemModel.values}
               cart={cart}
               navigation={navigation}/>
           </Animatable.View>
@@ -71,7 +73,7 @@ function Items(props) {
 mapStateToProps = state => {
   return {
     items: state.items.values,
-    cartItem: state.cartItems,
+    cartItemModel: state.cartItems,
     cart: state.cart.values
   }
 }

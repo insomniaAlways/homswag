@@ -14,7 +14,7 @@ function ProfileScreen(props) {
   const address = addresses && addresses.length && addresses[0].address && addresses[0].address.formatedAddress
 
   const updateProfile = (data) => {
-    console.log(data)
+    // console.log(data)
   }
 
   useEffect(() => {

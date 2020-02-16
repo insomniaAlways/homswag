@@ -119,7 +119,7 @@ const OrderDetails = function(props) {
         </Layout>
         {(status.id != 3 && status.id != 4 && status.id != 5) ? 
           <Layout style={{marginTop: 30}}>
-            <TouchableOpacity onPress={() => setShowModal(true)} style={{width: 130}}>
+            <TouchableOpacity onPress={() => setShowModal(true)} style={{width: 150}}>
               <Text style={{color: 'red'}}>Cancel Appointment</Text>
             </TouchableOpacity>
           </Layout> : null }

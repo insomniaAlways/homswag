@@ -21,7 +21,7 @@ const packageReducers = (state = packages, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload
+        error: action.error
       }
     }
     default : return state;

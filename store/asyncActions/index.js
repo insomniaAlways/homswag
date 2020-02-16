@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 // const host = "http://192.168.0.105:1337/api/v1/";
 const host = "https://homswag.herokuapp.com/api/v1";
-const organization = "organization_id=2"
+export const organization = "organization_id=2"
 import Constants from 'expo-constants';
 
 const axiosInstance = axios.create({
@@ -84,3 +84,5 @@ export function getLocationDetails(latitude, longitude) {
   let key = Constants.manifest.android.config.googleMaps.apiKey
   return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`)
 }
+
+export default axiosInstance;

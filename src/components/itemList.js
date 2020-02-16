@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
 import { Card, List, Text } from '@ui-kitten/components';
 import BeautyImage from '../../assets/images/beautyImage.jpg'
@@ -6,12 +6,8 @@ import ItemRow from './ItemRow';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ItemsList = (props) => {
-  const { data, cartItems, cart, navigation, showButton, setShowButton, getCartItems} = props
+  const { data, cartItems, cart, setShowButton, getCartItems} = props
   const [ isAdded, setAdded ] = useState(false)
-
-  const onItemCartPress = (index) => {
-    navigation.navigate('Cart');
-  };
 
   const renderItemFooter = (info) => (
     <View>

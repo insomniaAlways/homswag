@@ -1,4 +1,4 @@
-import { CARTITEM_REQUEST_INITIATED, CARTITEM_REQUEST_SUCCESS, CARTITEM_REQUEST_FAILED, MERGE_CARTITEMS } from '../actionTypes';
+import { CARTITEM_REQUEST_INITIATED, CARTITEM_REQUEST_SUCCESS, CARTITEM_REQUEST_FAILED, MERGE_CARTITEMS, CARTITEM_CREATE_SUCCESS, CARTITEM_DELETE_SUCCESS, CARTITEM_UPDATE_SUCCESS } from '../actionTypes';
 import { cartItems } from '../intialValues';
 import _ from 'lodash';
 
@@ -7,14 +7,16 @@ const cartItemReducers = (state = cartItems, action) => {
     case CARTITEM_REQUEST_INITIATED : {
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: null
       }
     }
     case CARTITEM_REQUEST_SUCCESS : {
       return {
         ...state,
         isLoading: false,
-        values: action.payload
+        values: action.payload,
+        error: null
       }
     }
     case CARTITEM_REQUEST_FAILED : {
@@ -24,13 +26,38 @@ const cartItemReducers = (state = cartItems, action) => {
         error: action.payload
       }
     }
-    case MERGE_CARTITEMS : {
-      if(_.find(state.values, ["id", payload.id])) {
-        _.remove(state.values, ["id", payload.id])
-      }
+    case CARTITEM_CREATE_SUCCESS: {
+      let values = state.values.slice()
+      values.splice(values.length, 0, action.payload)
       return {
         ...state,
-        values: [...state.values, action.payload]
+        isLoading: false,
+        values: values,
+        error: null
+      }
+    }
+    case CARTITEM_DELETE_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        values: state.values.filter((cartItem) => cartItem.id != action.payload),
+        error: null
+      }
+    }
+    case CARTITEM_UPDATE_SUCCESS: {
+      let values = state.values.slice()
+      let updatedValues = values.map((value) => {
+        if(value.id == action.payload.id) {
+          return action.payload
+        } else {
+          return value
+        }
+      })
+      return {
+        ...state,
+        isLoading: false,
+        values: updatedValues,
+        error: null
       }
     }
     default : return state;

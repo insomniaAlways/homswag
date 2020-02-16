@@ -47,7 +47,7 @@ const AppointmentPlacedScreen = (props) => {
         <Text style={styles.fontFamily}>The appointment has successfully placed.</Text>
         <TouchableOpacity style={styles.button} onPress={() => handleBackButtonPressAndroid()}>
           <Layout style={styles.buttomView}>
-            <Text>Continue Suffering</Text>
+            <Text>Continue Surfing</Text>
           </Layout>
         </TouchableOpacity>
       </Layout>

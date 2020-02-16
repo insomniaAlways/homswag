@@ -7,7 +7,7 @@ import { fetchCart } from '../../store/actions/cartAction';
 import { FontAwesome } from '@expo/vector-icons';
 import BeautyImage from '../../assets/images/beautyImage.jpg'
 import AddToCartButton from './addToCartButton';
-import { fetchCartItems, creatCartItem } from '../../store/actions/cartItemAction';
+import { fetchCartItems, createCartItem } from '../../store/actions/cartItemAction';
 
 const CartPromoItemList = (props) => {
   const defaultLength = 5
@@ -98,7 +98,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getCart: () => dispatch(fetchCart),
   getCartItem: () => dispatch(fetchCartItems()),
-  creatNewCartItem: (item, quantity) => dispatch(creatCartItem(item, quantity))
+  creatNewCartItem: (item, quantity) => dispatch(createCartItem(item, quantity))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartPromoItemList);

@@ -85,7 +85,7 @@ const LoginScreen = (props) => {
           redirectToApp()
         } catch (e) {
           alert(props.user.error)
-          console.log(props, e)
+          // console.log(props, e)
         }
       } else {
         setSession(false)

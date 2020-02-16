@@ -4,28 +4,20 @@ import ModifyButton from './itemModifyButton';
 import AddToCartButton from './addToCartButton';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { fetchCartItems, creatCartItem } from '../../store/actions/cartItemAction';
+import { fetchCartItems, createCartItem } from '../../store/actions/cartItemAction';
 
 function ItemRow(props) {
-  const { item, cartItem, cart, creatNewCartItem, getCartItem, setShowButton } = props;
+  const { item, cartItemModel, cart, addItemToCart, getCartItem, setShowButton } = props;
   const [ isAdded, setAdded ] = useState(false)
-  const cartItems = cartItem.values
+  const cartItems = cartItemModel.values
   const [ quantity, setQuantity ] = useState(0)
-  const [shouldReCompute, setShouldReCompute ] = useState(false)
   const isItemAdded = () => {
     return _.find(cartItems, ['item.id', item.id])
   }
 
-  const create = async () => {
-    let newCartItem = await creatNewCartItem(item.id, (+item.price * 1))
-    getCartItem()
+  const create = () => {
+    addItemToCart(item.id, (+item.price * 1))
   }
-
-  useLayoutEffect(() => {
-    // getCartItem()
-    isItemAdded()
-    setShouldReCompute(true)
-  })
 
   const addCartItem = () => {
     setAdded(true)
@@ -34,15 +26,19 @@ function ItemRow(props) {
     setShowButton(true)
   }
 
+  useLayoutEffect(() => {
+    if(isItemAdded()) {
+      setAdded(true)
+    } else {
+      setAdded(false)
+    }
+  }, [cartItemModel.isLoading])
+
   useEffect(() => {
     if(cartItems && cartItems.length && isItemAdded()) {
-      setAdded(true)
       setQuantity(isItemAdded().quantity)
     }
-    return () => {
-      setShouldReCompute(false)
-    }
-  }, [cartItem.values.length, shouldReCompute])
+  }, [])
 
   return (
     <View style={props.style}>
@@ -70,12 +66,12 @@ function ItemRow(props) {
 
 const mapStateToProps = state => {
   return  {
-    cartItem: state.cartItems
+    cartItemModel: state.cartItems
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    creatNewCartItem: (item, quantity, totalPrice, cartItemId) => dispatch(creatCartItem(item, quantity, totalPrice, cartItemId)),
+    addItemToCart: (item, quantity, totalPrice, cartItemId) => dispatch(createCartItem(item, quantity, totalPrice, cartItemId)),
     getCartItem: () => dispatch(fetchCartItems())
   }
 }
