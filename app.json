@@ -1,6 +1,7 @@
 {
   "name": "homswag",
   "displayName": "Homswag",
+  "orientation": "portrait",
   "expo": {
     "name": "homswag",
     "slug": "expo-template-bare",
@@ -14,13 +15,14 @@
       "web"
     ],
     "ios": {
-      "bundleIdentifier": "com.insomniaalways.homswag",
+      "bundleIdentifier": "com.capaz.homswag",
+      "supportsTablet": false,
       "config": {
         "googleMapsApiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"
       }
     },
     "android": {
-      "package": "com.insomniaalways.homswag",
+      "package": "com.capaz.homswag",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"

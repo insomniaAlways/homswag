@@ -8,6 +8,9 @@ import _ from 'lodash';
 import DynamicTabs from '../components/dynamicTabs';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { brandColor } from '../style/customStyles';
+import { fetchCategories } from '../../store/actions/index';
+import { fetchCartItems } from '../../store/actions/cartItemAction';
+import { fetchAllItems } from '../../store/actions/itemActions';
 
 function Items(props) {
   const { navigation, items, cartItemModel, cart } = props;
@@ -56,7 +59,7 @@ function Items(props) {
               setShowButton={setShowButton}
               cartItems={cartItemModel.values}
               cart={cart}
-              navigation={navigation}/>
+              navigation={navigation} {...props}/>
           </Animatable.View>
         )
       }
@@ -80,7 +83,10 @@ mapStateToProps = state => {
 
 mapDispatchToProps = dispatch => {
   return {
-    getfetchItemsFor: (category_id) => dispatch(fetchItems(category_id))
+    getfetchItemsFor: (category_id) => dispatch(fetchItems(category_id)),
+    getAllCategories: () => dispatch(fetchCategories()),
+    getAllCartItems: () => dispatch(fetchCartItems()),
+    getAllItems: () => dispatch(fetchAllItems()),
   }
 }
 

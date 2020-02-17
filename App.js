@@ -9,6 +9,7 @@ import { NativeModules } from 'react-native'
 import { Provider } from 'react-redux';
 import store from './store';
 import * as Font from 'expo-font';
+import NetInfo from '@react-native-community/netinfo';
 
 const theme = { ...lightTheme, ...brandTheme };
 const instructions = Platform.select({
@@ -43,6 +44,15 @@ function App () {
       'roboto-medium-italic': require('./assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
       'roboto-regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
     });
+    
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      // alert('called')
+      console.log('Is connected?', state.isConnected);
+    });
+    
+    // To unsubscribe to these update, just use:
+    // unsubscribe();
   })
   
   return (

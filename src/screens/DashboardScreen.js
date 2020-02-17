@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, Button, TouchableOpacity, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
 import CategoryList from '../components/categoryList';
@@ -15,6 +15,22 @@ import * as Animatable from 'react-native-animatable';
 import { Spinner } from '@ui-kitten/components';
 
 function Dashboard(props) {
+  const [ refreshing, setRefreshing ] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    async function fetchData() {
+      await props.getCart()
+      await props.getAllCartItems()
+      await props.getAllCategories()
+      await props.getUser()
+      await props.getAllItems()
+      await props.getPackages()
+      setRefreshing(false)
+    }
+    fetchData()
+  }, [refreshing]);
+
   useEffect(() => {
     async function fetchData() {
       await props.getCart()
@@ -28,7 +44,9 @@ function Dashboard(props) {
   }, [props.navigation.isFocused])
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true}/>
+        }>
         <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
           <OfferView packages={props.packages} navigation={props.navigation}/>
         </View>

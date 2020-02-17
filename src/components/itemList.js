@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
 import { Card, List, Text } from '@ui-kitten/components';
 import BeautyImage from '../../assets/images/beautyImage.jpg'
@@ -8,6 +8,18 @@ import { FontAwesome } from '@expo/vector-icons';
 const ItemsList = (props) => {
   const { data, cartItems, cart, setShowButton, getCartItems} = props
   const [ isAdded, setAdded ] = useState(false)
+  const [ refreshing, setRefreshing ] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    async function fetchData() {
+      await props.getAllCartItems()
+      await props.getAllCategories()
+      await props.getAllItems()
+      setRefreshing(false)
+    }
+    fetchData()
+  }, [refreshing]);
 
   const renderItemFooter = (info) => (
     <View>
@@ -63,8 +75,8 @@ const ItemsList = (props) => {
       showsVerticalScrollIndicator={false}
       data={data}
       numColumns={2}
-      refreshing={false}
-      onRefresh={() => alert('hello')}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       renderItem={renderProductItem}
     />
   );
