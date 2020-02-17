@@ -3,7 +3,7 @@
   "displayName": "Homswag",
   "orientation": "portrait",
   "expo": {
-    "name": "homswag",
+    "name": "Homswag",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
@@ -28,6 +28,8 @@
           "apiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"
         }
       }
-    }
+    },
+    "description": "WIP project for Homswag.",
+    "githubUrl": "https://github.com/insomniaAlways/homswag.git"
   }
 }

@@ -18,6 +18,7 @@ import ContactScreen from '../src/screens/ContactScreen';
 import AboutScreen from '../src/screens/AboutScreen';
 import SideDrawer from '../src/components/sideDrawer';
 import AddressScreen from '../src/screens/AddressScreen';
+import UpdateProfileScreen from '../src/screens/EditProfileScreen';
 import HeaderRightView from '../src/components/headerRight';
 
 import { MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
@@ -176,6 +177,9 @@ const DrawerNavigation = createDrawerNavigator({
 const switchNavigation = createSwitchNavigator({
   Auth: {
     screen: LoginScreen
+  },
+  ProfileUpdate: {
+    screen: UpdateProfileScreen
   },
   App: {
     screen: DrawerNavigation

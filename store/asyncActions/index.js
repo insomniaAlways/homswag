@@ -70,7 +70,12 @@ export function createRecord(type, payload) {
 
 //PUT Calls
 export function updateRecord(type, id, payload) {
-  let url = `${type}/${id}`
+  let url
+  if(id) {
+    url = `${type}/${id}`
+  } else {
+    url = `${type}`
+  }
   return axiosInstance.put(url, payload)
 }
 

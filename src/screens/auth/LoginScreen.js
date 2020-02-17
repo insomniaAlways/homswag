@@ -30,7 +30,12 @@ const LoginScreen = (props) => {
       await AsyncStorage.setItem('token', auth.userToken);
       token = await AsyncStorage.getItem('token')
       if(token) {
-        redirectToApp(token)
+        let currentUserModel = await props.getUser()
+        if(currentUserModel.payload.name) {
+          redirectToApp(token)
+        } else {
+          navigation.navigate('ProfileUpdate')
+        }
       }
     } catch (e) {
       resetState()

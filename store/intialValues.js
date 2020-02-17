@@ -98,8 +98,11 @@ export const userToken = {
 }
 
 export const session = {
-  isSessionExpired: true,
+  isSessionExpired: false,
   isSessionAuthenticated: false,
+  isSessionUnauthenticated: true,
+  token: null,
+  error: null
 }
 
 export const currentUser = {
