@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import OrderItem from './orderItem';
 import { Layout, List, Text, Spinner } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 const OrderList = function(props) {
   const { orders, navigation, orderModel } = props
+  const [ refreshing, setRefreshing ] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    async function fetchData() {
+      await props.getOrders()
+      if(refreshing) {
+        setRefreshing(false)
+      }
+    }
+    fetchData()
+    return () => setRefreshing(false)
+  }, [refreshing]);
+
 
   const renderItem = ({item}) => {
     return (
@@ -18,8 +32,8 @@ const OrderList = function(props) {
         contentContainerStyle={styles.orderList}
         showsVerticalScrollIndicator={false}
         data={orders}
-        refreshing={false}
-        onRefresh={() => alert('hello')}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         renderItem={renderItem}
       />
     )

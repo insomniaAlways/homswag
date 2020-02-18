@@ -22,7 +22,7 @@ function OrderHistoryScreen(props) {
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Text>Loading..</Text>
           </View> :
-          <OrderList orders={orderModel.values} navigation={navigation} orderModel={orderModel}/>
+          <OrderList orders={orderModel.values} navigation={navigation} orderModel={orderModel} getOrders={getOrders}/>
         }
       </SafeAreaView>
     </View>
