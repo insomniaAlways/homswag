@@ -46,9 +46,9 @@ function App () {
     });
     
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log('Connection type', state.type);
-      // alert('called')
-      console.log('Is connected?', state.isConnected);
+      if(!state.isConnected) {
+        alert('Seems like you are not connected to Internet')
+      }
     });
     
     // To unsubscribe to these update, just use:

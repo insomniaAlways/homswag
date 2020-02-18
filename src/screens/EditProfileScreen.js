@@ -163,7 +163,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(fetchUser()),
-  updateUserDetails: (user) => dispatch(updateUser(user)),
+  updateUserDetails: (data) => dispatch(updateUser(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfileScreen);

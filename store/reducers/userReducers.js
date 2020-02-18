@@ -5,21 +5,24 @@ const userReducers = (state=currentUser, action) => {
     case USER_REQUEST_INITIATED: {
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: null
       }
     }
     case USER_REQUEST_SUCCESS: {
       return {
         ...state,
         isLoading: false,
-        values: action.payload
+        values: action.payload,
+        error: null
       }
     }
     case USER_DETAILS_UPDATED: {
       return {
         ...state,
         isLoading: false,
-        values: action.payload
+        values: action.payload,
+        error: null
       }
     }
     case USER_REQUEST_FAILED: {

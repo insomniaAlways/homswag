@@ -57,12 +57,17 @@ const OrderDetails = function(props) {
   const RenderOrderedItem = () => {
     if(order.cartItems && Array.isArray(order.cartItems) && order.cartItems.length) {
       return order.cartItems.map((orderItem, index) => {
+        let data = orderItem.is_package ? orderItem.package : orderItem.item
         return (
-          <View key={index} style={{flexDirection: 'row',justifyContent: 'space-between', paddingRight: 10, alignItems: 'center'}}>
-            <Icon name='checkmark-circle-2-outline' width={12} height={12} fill="#0D5618"/>
-            <Text ellipsizeMode={'tail'} numberOfLines={2} style={{width: '60%', textAlign: 'left'}}>{orderItem.item.name}</Text>
-            <Text style={{width: 30}}>x {orderItem.quantity}</Text>
-            <Text style={{width: 60, textAlign: 'right'}}><FontAwesome name="rupee" size={12} color="black" /> {orderItem.total_price}</Text>
+          <View key={index}>
+            { data && 
+              <View style={{flexDirection: 'row',justifyContent: 'space-between', paddingRight: 10, alignItems: 'center'}}>
+                <Icon name='checkmark-circle-2-outline' width={12} height={12} fill="#0D5618"/>
+                <Text ellipsizeMode={'tail'} numberOfLines={2} style={{width: '60%', textAlign: 'left'}}>{data.name}</Text>
+                <Text style={{width: 30}}>x {orderItem.quantity}</Text>
+                <Text style={{width: 60, textAlign: 'right'}}><FontAwesome name="rupee" size={12} color="black" /> {orderItem.total_price}</Text>
+              </View>
+            }
           </View>
         )
     })

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import {ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import ProfilePic from '../../assets/images/profilePic.jpeg';
 import { Text, Layout } from '@ui-kitten/components';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
@@ -7,86 +7,191 @@ import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { connect } from 'react-redux';
 import { fetchUser, updateUser } from '../../store/actions/userActions';
-import { fetchAddress } from '../../store/actions/addressActions';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
+import _ from 'lodash';
 
 function ProfileScreen(props) {
-  const { currentUser, getAddress, getUser, addresses } = props
-  const address = addresses && addresses.length && addresses[0].address && addresses[0].address.formatedAddress
+  const { currentUserModel, getUser, updateUserDetails } = props
+  const [ currentUserObject, updateCurrentUser ] = useState({...currentUserModel.values})
+  const [ isEdit, setEdit ] = useState(false)
+  const [ isLoading, setLoading ] = useState(false)
 
-  const updateProfile = (data) => {
-    // console.log(data)
+  const updateProfile = () => {
+    setLoading(true)
+    updateUserDetails(_.omitBy({
+      name: currentUserObject.name,
+      alt_phone: currentUserObject.alt_phone,
+      image_source: currentUserObject.image_source,
+      email: currentUserObject.email
+    }, _.isNil))
   }
 
-  useEffect(() => {
-    getUser()
-    getAddress()
+  useLayoutEffect(() => {
+    async function fetchRecords() {
+      await getUser()
+    }
+    fetchRecords()
   }, [])
 
+  useEffect(() => {
+    if(!currentUserModel.isLoading && currentUserModel.error) {
+      setLoading(false)
+      if(currentUserModel.error.message) {
+        alert(currentUserModel.error.message)
+      } else {
+        alert(currentUserModel.error)
+      }
+    } else if(!currentUserModel.isLoading && _.isNil(currentUserModel.error)){
+      setLoading(false)
+      setEdit(false)
+      updateCurrentUser({...currentUserModel.values})
+    }
+  }, [currentUserModel.isLoading, currentUserModel.error])
+
+  const cancelEdit = () => {
+    updateCurrentUser({...currentUserModel.values})
+    setEdit(false)
+    setLoading(false)
+  }
+
   return (
-    <Layout style={{flex: 1}}>
-      <Layout style={styles.container}>
-        <Layout style={styles.profilePicContainer}>
-          <Layout style={styles.profilePic}>
-            <Image style={styles.profilePic} source={ProfilePic}/>
+    <KeyboardAvoidingView>
+      <Layout style={{flex: 1, backgroundColor: "#F7F9FC", justifyContent: 'center', alignItems: 'center'}}>
+        <Layout style={styles.container}>
+          <Layout style={styles.profilePicContainer}>
+            <Layout style={styles.profilePic}>
+              <Image style={styles.profilePic} source={ProfilePic}/>
+            </Layout>
           </Layout>
-          <Layout style={styles.nameContainer}>
-            <Text style={styles.name}>Pretty</Text>
-          </Layout>
-        </Layout>
-        <Layout style={styles.detialsContainer}>
-          <Layout style={styles.item}>
-            <Text style={styles.label}>Email</Text>
-            <PlaceHolderTextInput
-              placeholder="Email"
-              containerStyle={styles.placeholderInput}
-              styles={styles.field}
-              value={currentUser.values.email}
-              setValue={updateProfile}
-              previousState={currentUser.values}
-              itemKey="email"
-              disabled={false}/>
-          </Layout>
-          <Layout style={styles.item}>
-            <Text style={styles.label}>Phone</Text>
-            <PlaceHolderTextInput
-              placeholder="phone"
-              containerStyle={styles.placeholderInput}
-              styles={styles.field}
-              value={currentUser.values.phone}
-              setValue={updateProfile}
-              previousState={currentUser.values}
-              itemKey="phone"
-              disabled={false}/>
-          </Layout>
-          <Layout style={styles.item}>
-            <Text style={styles.label}>Address</Text>
-            {address ? 
-              <Text style={[styles.placeholderInput, styles.field]}>{address}</Text> :
-              <Text style={[styles.placeholderInput, styles.field]}>No address found</Text>
+          <Layout style={{justifyContent: 'flex-end', alignItems: 'flex-end', width: 'auto', marginHorizontal: 40}}>
+            {isEdit ? 
+              <TouchableOpacity onPress={() => cancelEdit()}>
+                <Text>Cancel</Text>
+              </TouchableOpacity>:
+              <TouchableOpacity onPress={() => setEdit(true)}>
+                <Text>Edit</Text>
+              </TouchableOpacity>
             }
           </Layout>
+          {isEdit ? 
+            <Layout style={styles.detialsContainer}>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Name :</Text>
+                <PlaceHolderTextInput
+                  placeholder="Name"
+                  containerStyle={styles.placeholderInput}
+                  styles={styles.field}
+                  value={currentUserObject.name}
+                  setValue={updateCurrentUser}
+                  previousState={currentUserObject}
+                  itemKey="name"
+                  editable={!isLoading}/>
+              </Layout>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Phone :</Text>
+                <Text style={[styles.placeholderInput, styles.field]}>{currentUserObject.phone}</Text>
+              </Layout>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Alt. Phone :</Text>
+                <PlaceHolderTextInput
+                  placeholder="Alternate Phone"
+                  containerStyle={styles.placeholderInput}
+                  styles={styles.field}
+                  value={currentUserObject.alt_phone}
+                  setValue={updateCurrentUser}
+                  keyboardType={'number-pad'}
+                  maxLength={10}
+                  previousState={currentUserObject}
+                  itemKey="alt_phone"
+                  editable={!isLoading}/>
+              </Layout>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Email :</Text>
+                <PlaceHolderTextInput
+                  placeholder="Email"
+                  containerStyle={styles.placeholderInput}
+                  styles={styles.field}
+                  value={currentUserObject.email}
+                  setValue={updateCurrentUser}
+                  previousState={currentUserObject}
+                  itemKey="email"
+                  editable={!isLoading}/>
+              </Layout>
+            </Layout> :
+            <Layout style={styles.detialsContainer}>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Name :</Text>
+                {currentUserObject.name ? 
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.name}</Text>:
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
+                }
+              </Layout>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Phone :</Text>
+                <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.phone}</Text>
+              </Layout>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Alt. Phone :</Text>
+                {currentUserObject.alt_phone ? 
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.alt_phone}</Text> :
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
+                }
+              </Layout>
+              <Layout style={styles.item}>
+                <Text style={styles.label}>Email :</Text>
+                {currentUserObject.email ? 
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.email}</Text> :
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
+                }
+              </Layout>
+            </Layout>
+          }
+        </Layout>
+        <Layout style={styles.backButtonContainer}>
+          {isLoading ? 
+            <Layout>
+                <Layout style={styles.backButton}>
+                  <Text style={{color: "#fff"}}>Saving..</Text>
+                </Layout>
+              </Layout> :
+            <Layout>
+              {isEdit ? 
+                <TouchableOpacity onPress={updateProfile}>
+                  <Layout style={styles.backButton}>
+                    <Text style={{color: "#fff"}}>Save</Text>
+                  </Layout>
+                </TouchableOpacity> :
+                <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
+                  <Layout style={styles.backButton}>
+                    <FontAwesome name="angle-right" size={20} color="white" />
+                  </Layout>
+                </TouchableOpacity>
+              }
+            </Layout>
+          }
         </Layout>
       </Layout>
-      <Layout style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-          <Layout style={styles.backButton}>
-            <FontAwesome name="angle-right" size={20} color="white" />
-          </Layout>
-        </TouchableOpacity>
-      </Layout>
-    </Layout>
+    </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
-    flex: 1,
-    height: '100%',
-    // borderWidth: 1
+    // borderWidth: 1,
+    justifyContent: 'center',
+    marginHorizontal: 20,
+    borderRadius: 20,
+    paddingBottom: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2, },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderRadius: 20
   },
   profilePicContainer: {
-    height: 250,
+    height: 180,
     // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -96,24 +201,11 @@ const styles = StyleSheet.create({
     width: 140,
     borderRadius: 70
   },
-  nameContainer: {
-    marginTop: 20,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  name: {
-    fontWeight: 'bold',
-    width: '100%',
-    textAlign:'center'
-  },
   detialsContainer: {
-    height: 250,
-    width: '100%',
-    borderColor: 'blue',
-    paddingTop: 20,
+    minHeight: 250,
     paddingHorizontal: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    // marginHorizontal: 20
   },
   item: {
     flex: 1,
@@ -121,18 +213,24 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   placeholderInput: {
-    width: '70%',
+    width: '64%',
+  },
+
+  textFontFamilyMediumItalic: {
+    fontFamily: 'roboto-medium-italic'
+  },
+
+  textFontFamilyLightItalic: {
+    fontFamily: 'roboto-light-italic',
+    fontSize: 13
   },
 
   field: {
     paddingHorizontal: 10
   },
   backButtonContainer: {
-    justifyContent: 'center',
-    alignContent: 'flex-end',
-    alignItems: "center",
-    marginBottom: 30,
-    width: '100%',
+    position: 'absolute',
+    bottom: 30
   },
 
   backButton: {
@@ -145,22 +243,21 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    width: '20%',
+    width: '26%',
     textAlign: 'left',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontFamily: 'roboto-regular'
   }
 
 })
 
 const mapStateToProps = state => ({
-  currentUser: state.currentUser,
-  addresses: state.addresses.values
+  currentUserModel: state.currentUser,
 })
 
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(fetchUser()),
-  updateUserDetails: (user) => dispatch(updateUser(user)),
-  getAddress: () => dispatch(fetchAddress())
+  updateUserDetails: (data) => dispatch(updateUser(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

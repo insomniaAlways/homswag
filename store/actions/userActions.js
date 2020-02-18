@@ -12,6 +12,7 @@ export const fetchUser = () => {
 
 export const updateUser = (data) => {
   return function(dispatch) {
+    dispatch(onStart())
     return updateRecord('me', null, data)
     .then(res => dispatch(onUserDetailsUpdate(res.data)))
     .catch(e => dispatch(onError(e.response.data)))
