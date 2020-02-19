@@ -7,6 +7,7 @@ import Constants from 'expo-constants';
 import { connect } from 'react-redux';
 import { brandColor } from '../style/customStyles';
 import { fetchUser, updateUser } from '../../store/actions/userActions';
+import ImagePickerView from '../components/ImagePicker';
 
 function UpdateProfileScreen(props) {
   const { currentUserModel, getUser, updateUserDetails, navigation } = props
@@ -39,12 +40,13 @@ function UpdateProfileScreen(props) {
             <Layout style={styles.profilePic}>
               <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/>
             </Layout> :
-            <Layout style={styles.profilePicPlaceHolder}>
+            <ImagePickerView styles={styles}/>
+          }
+            {/* <Layout style={styles.profilePicPlaceHolder}>
               <Layout style={{paddingBottom: 10, paddingRight: 10}}>
                 <FontAwesome name="camera" size={24} />
               </Layout>
-            </Layout>
-          }
+            </Layout> */}
         </Layout>
         <Layout style={styles.detialsContainer}>
           <Layout style={styles.item}>
@@ -116,14 +118,16 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   profilePicContainer: {
-    height: 150,
+    height: 160,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // borderWidth: 1
   },
   profilePic: {
     height: 140,
     width: 140,
-    borderRadius: 70
+    borderRadius: 70,
+    // borderWidth: 1
   },
   name: {
     fontWeight: 'bold',

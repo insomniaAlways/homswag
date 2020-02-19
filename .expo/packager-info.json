@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 31592,
+  "packagerPort": 19004,
+  "packagerPid": 42873,
   "expoServerNgrokUrl": "https://ru-bba.trdp30.homswag.exp.direct",
   "packagerNgrokUrl": "https://packager.ru-bba.trdp30.homswag.exp.direct",
-  "ngrokPid": 31603,
+  "ngrokPid": 42890,
   "webpackServerPort": null
 }
