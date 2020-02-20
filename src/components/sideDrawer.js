@@ -2,7 +2,6 @@ import React from 'react';
 import { SafeAreaView } from 'react-navigation';
 import { DrawerItems } from 'react-navigation-drawer';
 import { StyleSheet, ScrollView, View, Image, Text, ImageBackground } from 'react-native';
-import ProfilePic from '../../assets/images/profilePic.jpeg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
@@ -13,7 +12,7 @@ import { onSigout } from '../../store/actions/authenticationAction';
 import { connect } from 'react-redux';
 
 const SideDrawer = props => {
-  const { navigation, signOut } = props
+  const { navigation, signOut, currentUserModel } = props
   const openWhatsApp = () => {
     let url = `whatsapp://send?text=hello&phone=916366505567`
     Linking.canOpenURL(url)
@@ -38,10 +37,10 @@ const SideDrawer = props => {
     <View style={{flex: 1}}>
       <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
         <View style={styles.profilePic}>
-          <Image style={styles.profilePic} source={ProfilePic}/>
+          <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>Hello, Pretty</Text>
+          <Text style={styles.name}>Hello, {currentUserModel.values.name}</Text>
         </View>
       </ImageBackground>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -133,7 +132,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStatetoProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  currentUserModel: state.currentUser
 })
 const mapDispatchToProps = dispatch => ({
   signOut: () => dispatch(onSigout())

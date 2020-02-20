@@ -1,16 +1,68 @@
 import React, { useState } from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, ImageBackground } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { Text, Layout } from '@ui-kitten/components';
 import { FontAwesome } from '@expo/vector-icons';
+import * as firebase from 'firebase';
+import ProfilePicPlaceholder from '../../assets/images/profile_pic_placeholder.png'
 
 const ImagePickerView = (props) => {
-  const [ image, setImage ] = useState()
+  const { image, setImage, user_id, isEdit, isUploading, setUploding } = props
+  const [ status, setStatus ] = useState()
+  const [ progress, setProgress ] = useState()
+
+  const reset = () => {
+    setUploding(false)
+  }
 
   const startModule = () =>{
     getPermissionAsync();
+  }
+
+  const progressStatus = (snapshot) => {
+    let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    setProgress(Math.round(percentage))
+    switch (snapshot.state) {
+      case 'paused':
+        return setStatus(snapshot.state)
+      case 'running':
+        return setStatus(snapshot.state)
+      default: setStatus(snapshot.state)
+    }
+  }
+
+  const catchError = (error) => {
+    switch (error.code) {
+      case 'storage/unauthorized': {
+        return alert(error.code)
+      }
+      case 'storage/canceled': {
+        return alert(error.code)
+      }
+      case 'storage/unknown': {
+        return alert(error.code)
+      }
+    }
+    reset()
+  }
+
+  const uploadImage = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      let ref = firebase.storage().ref().child('profile_pic/' + user_id);
+      const uploadTask = ref.put(blob);
+      uploadTask.on('state_changed',
+      (snapshot) => progressStatus(snapshot),
+      (error) => catchError(error),
+      () => uploadTask.snapshot.ref.getDownloadURL()
+      .then((url) => setImage(url)))
+    } catch (e) {
+      alert(e)
+      reset()
+    }
   }
 
   const getPermissionAsync = async () => {
@@ -31,10 +83,9 @@ const ImagePickerView = (props) => {
       quality: 0.5
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
-      setImage(result.uri)
+      setUploding(true)
+      uploadImage(result.uri)
     }
   };
 
@@ -45,16 +96,26 @@ const ImagePickerView = (props) => {
           <Layout style={props.styles.profilePic}>
             <Image style={props.styles.profilePic} source={{uri: image}}/>
           </Layout>
-        <TouchableOpacity onPress={startModule} style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text>Change</Text>
-        </TouchableOpacity>
+          { isEdit &&
+            <Layout style={{paddingTop: 5}}>
+            { isUploading ?
+              <Layout style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{fontFamily: 'roboto-light-italic', fontSize: 12}}>{progress}%</Text>
+                <Text style={{fontFamily: 'roboto-light-italic', fontSize: 12}}>Uploading...</Text>
+              </Layout> :
+              <TouchableOpacity onPress={startModule} style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text>Change</Text>
+              </TouchableOpacity>
+            }
+            </Layout> 
+          }
         </Layout> :
         <TouchableOpacity onPress={startModule}>
-          <Layout style={props.styles.profilePicPlaceHolder}>
-            <Layout style={{paddingBottom: 10, paddingRight: 10}}>
+          <ImageBackground style={props.styles.profilePicPlaceHolder} source={ProfilePicPlaceholder}>
+            <Layout style={{paddingBottom: 10, paddingRight: 10, backgroundColor: 'transparent'}}>
               <FontAwesome name="camera" size={24} />
             </Layout>
-          </Layout>
+          </ImageBackground>
         </TouchableOpacity>
       }
     </Layout>

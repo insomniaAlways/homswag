@@ -5,7 +5,6 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { fetchCart } from '../../store/actions/cartAction';
 import { FontAwesome } from '@expo/vector-icons';
-import BeautyImage from '../../assets/images/beautyImage.jpg'
 import AddToCartButton from './addToCartButton';
 import { fetchCartItems, createCartItem } from '../../store/actions/cartItemAction';
 
@@ -52,7 +51,7 @@ const CartPromoItemList = (props) => {
   }, [cartItem.isLoading])
 
   const renderItemHeader = (info) => {
-    let image_source = info.item.image_source ? {uri : info.item.image_source} : BeautyImage
+    let image_source = info.item.image_source
     return (
     <ImageBackground
       style={styles.itemHeader}

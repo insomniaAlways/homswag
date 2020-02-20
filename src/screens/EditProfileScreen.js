@@ -13,17 +13,25 @@ function UpdateProfileScreen(props) {
   const { currentUserModel, getUser, updateUserDetails, navigation } = props
   const [ name, setName ] = useState()
   const [ isLoading, setLoading ] = useState(false)
+  const [ image, setImage ] = useState()
+  const [ isUploading, setUploding ] = useState(false)
 
   const updateProfile = async () => {
     setLoading(true)
-    await updateUserDetails({ name: name})
+    await updateUserDetails({ name: name, image_source: image})
     setLoading(false)
     navigation.navigate('App')
+  }
+
+  const imageUploaded = (uri) => {
+    setImage(uri)
+    setUploding(false)
   }
 
   useEffect(() => {
     if(!currentUserModel.isLoading && currentUserModel && currentUserModel.values.name) {
       setName(currentUserModel.values.name)
+      setImage(currentUserModel.values.image_source)
       setLoading(false)
     }
   }, [currentUserModel.isLoading])
@@ -36,17 +44,15 @@ function UpdateProfileScreen(props) {
     <Layout style={{flex: 1, justifyContent: 'center', backgroundColor: "#F7F9FC"}}>
       <Layout style={styles.container}>
         <Layout style={styles.profilePicContainer}>
-          {currentUserModel.values.image_source ?
-            <Layout style={styles.profilePic}>
-              <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/>
-            </Layout> :
-            <ImagePickerView styles={styles}/>
-          }
-            {/* <Layout style={styles.profilePicPlaceHolder}>
-              <Layout style={{paddingBottom: 10, paddingRight: 10}}>
-                <FontAwesome name="camera" size={24} />
-              </Layout>
-            </Layout> */}
+        <ImagePickerView 
+          styles={styles} 
+          image={image} 
+          setImage={imageUploaded} 
+          user_id={currentUserModel.values.id} 
+          isEdit={true}
+          isUploading={isUploading}
+          setUploding={setUploding}
+          />
         </Layout>
         <Layout style={styles.detialsContainer}>
           <Layout style={styles.item}>
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   profilePicContainer: {
-    height: 160,
+    height: 180,
     justifyContent: 'center',
     alignItems: 'center',
     // borderWidth: 1

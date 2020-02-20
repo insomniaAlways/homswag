@@ -16,7 +16,7 @@ const PhoneIcon = (style) => (
 );
 
 const LoginScreen = (props) => {
-  const { navigation, addTokenToHeader, registerUser, validateOtp, auth } = props
+  const { navigation, addTokenToHeader, registerUser, validateOtp, auth, currentUserModel } = props
   const [ isSessionAuthenticated, setSession ] = useState(false)
   const [ isSessionAuthenticating, setAuthenticating ] = useState(true)
   const [ phone, setPhone ] = useState();
@@ -30,12 +30,7 @@ const LoginScreen = (props) => {
       await AsyncStorage.setItem('token', auth.userToken);
       token = await AsyncStorage.getItem('token')
       if(token) {
-        let currentUserModel = await props.getUser()
-        if(currentUserModel.payload.name) {
-          redirectToApp(token)
-        } else {
-          navigation.navigate('ProfileUpdate')
-        }
+        props.getUser()
       }
     } catch (e) {
       resetState()
@@ -49,16 +44,11 @@ const LoginScreen = (props) => {
   const onSubmit = async () => {
     if(phone && otp) {
       setLoading(true)
-      try {
-        await validateOtp(phone, otp)
-      }
-      catch (e) {
-        resetState()
-      }
+      validateOtp(phone, otp)
     }
   };
 
-  const resetState = (e) => {
+  const resetState = () => {
     setSession(false)
     setAuthenticating(false)
     setShowOtpField(false)
@@ -78,6 +68,20 @@ const LoginScreen = (props) => {
     }
   }
 
+  useEffect(() => {
+    if(!currentUserModel.isLoading && currentUserModel.values.id) {
+      if(currentUserModel.values.name) {
+        redirectToApp()
+      } else {
+        navigation.navigate('ProfileUpdate')
+      }
+    }
+    if(!currentUserModel.isLoading && currentUserModel.error) {
+      resetState()
+      alert("Your session is expired. Please login again.")
+    }
+  }, [currentUserModel.isLoading, currentUserModel.error])
+
   const bootstrapApp = async () => {
     let userToken;
     try {
@@ -85,13 +89,7 @@ const LoginScreen = (props) => {
       if(userToken || auth.userToken) {
         let token = userToken ? userToken : auth.userToken
         addTokenToHeader(token)
-        try {
-          await props.getUser()
-          redirectToApp()
-        } catch (e) {
-          alert(props.user.error)
-          // console.log(props, e)
-        }
+        props.getUser()
       } else {
         setSession(false)
         setAuthenticating(false)
@@ -105,7 +103,7 @@ const LoginScreen = (props) => {
   useEffect(() => {
     setShowOtpField(false)
     if(phone) {
-      resetState("setShowOtpField")
+      resetState()
     }
     return () => {
       if(!auth.isLoading && auth.userToken) {
@@ -120,7 +118,7 @@ const LoginScreen = (props) => {
       storeSession()
     }
     if(!auth.isLoading && auth.error) {
-      resetState('alert')
+      resetState()
       alert(auth.error.message)
     }
     return () => {
@@ -232,7 +230,7 @@ const LoginScreen = (props) => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  user: state.currentUser
+  currentUserModel: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({

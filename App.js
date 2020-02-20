@@ -10,6 +10,10 @@ import { Provider } from 'react-redux';
 import store from './store';
 import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
+import Constants from 'expo-constants';
+import * as firebase from 'firebase';
+
+firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 const theme = { ...lightTheme, ...brandTheme };
 const instructions = Platform.select({

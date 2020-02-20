@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
 import { Card, List, Text } from '@ui-kitten/components';
-import BeautyImage from '../../assets/images/beautyImage.jpg'
 import ItemRow from './ItemRow';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -44,7 +43,7 @@ const ItemsList = (props) => {
   );
 
   const renderItemHeader = (info) => {
-    let image_source = info.item.image_source ? {uri : info.item.image_source} : BeautyImage
+    let image_source = info.item.image_source
     return (
       <ImageBackground
         style={styles.itemHeader}

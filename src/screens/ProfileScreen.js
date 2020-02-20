@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import ProfilePic from '../../assets/images/profilePic.jpeg';
 import { Text, Layout } from '@ui-kitten/components';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
 import { FontAwesome } from '@expo/vector-icons';
@@ -9,12 +8,14 @@ import { connect } from 'react-redux';
 import { fetchUser, updateUser } from '../../store/actions/userActions';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
 import _ from 'lodash';
+import ImagePickerView from '../components/ImagePicker';
 
 function ProfileScreen(props) {
   const { currentUserModel, getUser, updateUserDetails } = props
   const [ currentUserObject, updateCurrentUser ] = useState({...currentUserModel.values})
   const [ isEdit, setEdit ] = useState(false)
   const [ isLoading, setLoading ] = useState(false)
+  const [ isUploading, setUploding ] = useState(false)
 
   const updateProfile = () => {
     setLoading(true)
@@ -24,6 +25,11 @@ function ProfileScreen(props) {
       image_source: currentUserObject.image_source,
       email: currentUserObject.email
     }, _.isNil))
+  }
+
+  const imageUploaded = (uri) => {
+    updateCurrentUser({...currentUserObject, image_source: uri})
+    setUploding(false)
   }
 
   useLayoutEffect(() => {
@@ -59,9 +65,15 @@ function ProfileScreen(props) {
       <Layout style={{flex: 1, backgroundColor: "#F7F9FC", justifyContent: 'center', alignItems: 'center'}}>
         <Layout style={styles.container}>
           <Layout style={styles.profilePicContainer}>
-            <Layout style={styles.profilePic}>
-              <Image style={styles.profilePic} source={ProfilePic}/>
-            </Layout>
+            <ImagePickerView
+              styles={styles}
+              image={currentUserObject.image_source}
+              setImage={imageUploaded}
+              user_id={currentUserModel.values.id}
+              isEdit={isEdit}
+              isUploading={isUploading}
+              setUploding={setUploding}
+              />
           </Layout>
           <Layout style={{justifyContent: 'flex-end', alignItems: 'flex-end', width: 'auto', marginHorizontal: 40}}>
             {isEdit ? 
