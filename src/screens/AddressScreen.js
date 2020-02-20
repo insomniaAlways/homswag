@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
 import CustomHeader from '../components/customHeader';
@@ -11,11 +11,21 @@ import { FontAwesome } from '@expo/vector-icons';
 function AddressScreen(props) {
   const { address, getAddress, navigation, deleteSelected, setDefault } = props;
   const addresses = address.values
-  const [ isLoading, setLoading ] = useState(false)
+  const [ refreshing, setRefreshing ] = useState(false);
 
   useLayoutEffect(() => {
     getAddress()
   }, [])
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    async function fetchData() {
+      await props.getAddress()
+      setRefreshing(false)
+    }
+    fetchData()
+    return () => setRefreshing(false)
+  });
 
   const deleteRecord = (value) => {
     deleteSelected(value.id)
@@ -24,10 +34,6 @@ function AddressScreen(props) {
   const setDefaultAddress = (value) => {
     setDefault(value.id, true)
   }
-
-  useEffect(() => {
-    setLoading(address.isLoading)
-  }, [address.isLoading])
 
   const renderItem = ({ item, index }) => (
     <Layout style={{paddingHorizontal: 20, marginBottom: 10, paddingTop: 10, borderRadius: 10}}>
@@ -62,16 +68,17 @@ function AddressScreen(props) {
           contentContainerStyle={styles.addressList}
           showsVerticalScrollIndicator={false}
           data={address.values}
-          refreshing={false}
-          onRefresh={() => alert('hello')}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           renderItem={renderItem}
         />
       )
     } else {
       return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text>No Address found</Text>
-        </View>
+        <Layout style={{flex: 1,justifyContent: 'center', alignItems: 'center', marginBottom: 30}}>
+          <FontAwesome name="map-o" size={80} color="#d4d4d4" />
+          <Text style={{paddingTop: 10}}>No Address found.</Text>
+        </Layout>
       )
     }
   }

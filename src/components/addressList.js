@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
-import { Layout, List, Text, Modal, Spinner } from '@ui-kitten/components';
-import { isLoading } from 'expo-font';
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Layout, Text, Spinner } from '@ui-kitten/components';
+import { FontAwesome } from '@expo/vector-icons';
 
 const AddressList = function(props) {
   const { addresses, setSelectedAddress, setModal } = props
@@ -39,7 +39,10 @@ const AddressList = function(props) {
             <Text>Loading...</Text>
           </Layout>
         ) : 
-          <Text>No Address found</Text>
+          <Layout style={{flex: 1,justifyContent: 'center', alignItems: 'center', marginBottom: 30}}>
+            <FontAwesome name="map-o" size={80} color="#d4d4d4" />
+            <Text style={{paddingTop: 10}}>No Address found.</Text>
+          </Layout>
         }
       </View>
     )

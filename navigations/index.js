@@ -157,14 +157,14 @@ const DrawerNavigation = createDrawerNavigator({
       }
     }
   },
-  Referral: { 
-    screen: ReferralScreen,
-    navigationOptions: ({tintColor}) => {
-      return {
-        drawerIcon: <FontAwesome name="slideshare" size={18} color={tintColor}/>
-      }
-    }
-  },
+  // Referral: { 
+  //   screen: ReferralScreen,
+  //   navigationOptions: ({tintColor}) => {
+  //     return {
+  //       drawerIcon: <FontAwesome name="slideshare" size={18} color={tintColor}/>
+  //     }
+  //   }
+  // },
   About: {
     screen: AboutScreen,
     navigationOptions: ({tintColor}) => ({

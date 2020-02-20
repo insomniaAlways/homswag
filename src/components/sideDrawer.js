@@ -45,12 +45,6 @@ const SideDrawer = props => {
       </ImageBackground>
       <ScrollView showsVerticalScrollIndicator={false}>
         <DrawerItems {...props} labelStyle={{width: '100%'}}/>
-        <TouchableOpacity onPress={() => openWhatsApp()}>
-          <View style={styles.logout}>
-            <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>
-            <Text style={styles.logoutText}>Need Help?</Text>
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => logOut()}>
           <View style={styles.logout}>
             <MaterialCommunityIcons name="logout" size={18} style={{marginHorizontal: 16, width: 24, alignItems: 'center', opacity: 0.62, paddingLeft: 3}}/>

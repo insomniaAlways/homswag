@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import OrderItem from './orderItem';
 import { Layout, List, Text, Spinner } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import EmptyOrder from '../../assets/images/order_empty.png'
 
 const OrderList = function(props) {
   const { orders, navigation, orderModel } = props
@@ -38,7 +39,12 @@ const OrderList = function(props) {
       />
     )
   } else {
-    return <Text>No order found</Text>
+    return (
+      <Layout style={{flex: 1,justifyContent: 'center', alignItems: 'center', marginBottom: 30}}>
+        <Image source={EmptyOrder} style={{width: 80, height: 80}}/>
+        <Text>No order placed yet.</Text>
+      </Layout>
+    )
   }
 }
 

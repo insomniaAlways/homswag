@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ImageBackground } from 'react-native';
+import { StyleSheet, View, ImageBackground, Image } from 'react-native';
 import { Text, Card, List, Layout } from '@ui-kitten/components';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -53,9 +53,9 @@ const CartPromoItemList = (props) => {
   const renderItemHeader = (info) => {
     let image_source = info.item.image_source
     return (
-    <ImageBackground
+    <Image
       style={styles.itemHeader}
-      source={image_source}
+      source={{uri:image_source}}
     />
   )};
 
