@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { Text, Modal, Spinner, Layout } from '@ui-kitten/components';
-import { fetchItems } from '../../store/actions/itemActions';
 import { connect } from 'react-redux';
 import CartItemList from '../components/cartItemList';
 import { fetchCart } from '../../store/actions/cartAction';
-import DatePickerComponent from '../components/datePickerComponent';
 import PriceBreakDown from '../components/priceBreackDown';
-import SelectAddress from '../components/selectaddress';
 import DefaultStyles from '../style/customStyles';
 import AppointmentDetails from '../components/appointmentDetails';
 import CartPromoItemList from '../components/cartPromoItemList';
+import EmptyCart from '../../assets/images/empty_cart.png'
 
 function CartScreen(props) {
   const { navigation, cart, user, cartItem, appointment } = props;
@@ -59,9 +57,6 @@ function CartScreen(props) {
             </Layout>
           </ScrollView>
         </Layout>
-        {/* <Layout style={{borderTopWidth: 2, borderTopColor: '#eee', padding: 10, justifyContent: 'center', minHeight: 30, height: 100}}>
-          <SelectAddress navigation={navigation}/>
-        </Layout> */}
         <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
           <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => goToConfirmPage()}>
             <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
@@ -69,7 +64,10 @@ function CartScreen(props) {
         </Layout>
       </Layout> ) : (
         <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text>No item added</Text>
+          <Image source={EmptyCart} style={{height: 60, width: 60}}/>
+          <Layout style={{paddingTop: 10}}>
+            <Text>No item added</Text>
+          </Layout>
         </Layout>
      )}
       <Modal
