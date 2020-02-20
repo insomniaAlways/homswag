@@ -6,7 +6,7 @@ import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
 import { Icon } from '@ui-kitten/components';
 import ImageBackground from '../../../assets/images/image-background.jpg'
 import { connect } from 'react-redux';
-import { addHeader, register, validateToken } from '../../../store/actions/authenticationAction';
+import { addHeader, register, validateToken, onValidationSuccess } from '../../../store/actions/authenticationAction';
 import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
 import { Spinner } from '@ui-kitten/components';
@@ -16,7 +16,7 @@ const PhoneIcon = (style) => (
 );
 
 const LoginScreen = (props) => {
-  const { navigation, addTokenToHeader, registerUser, validateOtp, auth, currentUserModel } = props
+  const { navigation, addTokenToHeader, registerUser, validateOtp, auth, currentUserModel, restoreAuth } = props
   const [ isSessionAuthenticated, setSession ] = useState(false)
   const [ isSessionAuthenticating, setAuthenticating ] = useState(true)
   const [ phone, setPhone ] = useState();
@@ -86,6 +86,7 @@ const LoginScreen = (props) => {
     let userToken;
     try {
       userToken = await AsyncStorage.getItem('token');
+      restoreAuth(userToken)
       if(userToken) {
         let token = userToken ? userToken : auth.userToken
         addTokenToHeader(token)
@@ -238,6 +239,7 @@ const mapDispatchToProps = dispatch => ({
   registerUser: (phone) => dispatch(register(phone)),
   validateOtp: (phone, otp) => dispatch(validateToken(phone, otp)),
   getUser: () => dispatch(fetchUser()),
+  restoreAuth: (token) => dispatch(onValidationSuccess({token: token}))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen);
