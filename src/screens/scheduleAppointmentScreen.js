@@ -34,6 +34,7 @@ function ScheduleAppointmentScreen(props) {
 
   useEffect(() => {
     getAddress()
+    return () => setModal(false)
   }, [])
 
   useEffect(() => {
@@ -45,6 +46,7 @@ function ScheduleAppointmentScreen(props) {
         setSelectedAddress(addresses.values[0])
       }
     }
+    return () => setModal(false)
   }, [addresses.isLoading, addresses.values, addresses.values.length])
 
   const [ appointmentDetails, setAppointmentDetails ] = useState(defaultValues)
@@ -58,6 +60,7 @@ function ScheduleAppointmentScreen(props) {
       special_instruction: appointmentDetails.special_instruction,
       prefered_beautician: appointmentDetails.prefered_beautician
     })
+    return () => setModal(false)
   }, [currentUser, selectedAddress, addresses.isLoading])
 
   useEffect(() => {
