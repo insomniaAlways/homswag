@@ -43,14 +43,15 @@ function AddressScreen(props) {
       setLocationValue({...locationValue, formatedAddress: formatted_address, geometry: geometry.location, place_id: place_id})
       setLoading(false)
     }
+    return () => setLoading(false)
   },[location.isLoading])
 
   const onError = () => {
+    setLoading(false)
     alert("We need location service permission to fetch your current location")
   }
 
   const onRegionChange = (latitude, longitude) => {
-    setLoading(true)
     setCoodinates({
       latitude: latitude,
       longitude: longitude,
@@ -58,29 +59,38 @@ function AddressScreen(props) {
       longitudeDelta: 0.0101,
     })
     async function saveData() {
-      await getGeoCoding(latitude, longitude)
-      setCoodinatesLoaded(true)
-      setLoading(false)
+      alert('geoCoding api calling')
+      try {
+        await getGeoCoding(latitude, longitude)
+        alert('geoCoding api call finished')
+        setCoodinatesLoaded(true)
+        setLoading(false)
+      } catch(e) {
+        alert(e, location.error)
+        setLoading(false)
+      }
     }
     saveData()
   }
+
+  useEffect(() => {
+    if(location.error) {
+      alert(error)
+    }
+  }, [location.error])
 
   const debounceCall = _.debounce(onRegionChange, 500);
 
   useEffect(() => {
     if(!isCurrentLoactionLoaded) {
       async function getPemission() {
-        const { status } = await Permissions.askAsync(Permissions.LOCATION);
-        if (status === 'granted') {
-          return navigator.geolocation.getCurrentPosition(
-            ({coords}) => debounceCall(coords.latitude, coords.longitude),
-            onError, {enableHighAccuracy: true, maximumAge: 0});
-        } else {
-          return alert("We need location service permission to fetch your current location.")
-        }
+        return navigator.geolocation.getCurrentPosition(
+          ({coords}) => debounceCall(coords.latitude, coords.longitude),
+          onError, {enableHighAccuracy: true, maximumAge: 0});
       }
       getPemission()
     }
+    return () => setLoading(false)
   }, [])
 
   const save = async () => {
@@ -133,7 +143,7 @@ function AddressScreen(props) {
             disabled={false}/>
           <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity style={{width: 150, backgroundColor: brandColor, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, borderRadius: 20}} onPress={() => save()}>
-              <Text style={{color: '#fff', width: '100%', textAlign: 'center'}}>Save</Text>
+              <Text style={{color: '#fff', width: '100%', textAlign: 'center'}}>Save Address</Text>
             </TouchableOpacity>
           </View>
         </View>

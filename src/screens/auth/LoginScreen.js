@@ -56,7 +56,7 @@ const LoginScreen = (props) => {
   }
 
   const registerPhone = async () => {
-    if(phone) {
+    if(phone && (phone.length == 10)) {
       setShowOtpField(true)
       try {
         await registerUser(phone)

@@ -5,8 +5,14 @@ export const geoCoding = (latitude, longitude) => {
   return function(dispatch) {
     dispatch(fetchLocationInitiated())
     return getLocationDetails(latitude, longitude)
-    .then((response) => dispatch(fetchLocationSuccess(response.data)))
-    .catch((e) => dispatch(fetchLocationFailed(e)))
+    .then((response) => {
+      console.log(response.data)
+      dispatch(fetchLocationSuccess(response.data))
+    })
+    .catch((e) => {
+      console.log(e)
+      dispatch(fetchLocationFailed(e))
+    })
   }
 }
 

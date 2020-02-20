@@ -23,8 +23,7 @@
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "ios": {
       "bundleIdentifier": "com.capaz.homswag",
