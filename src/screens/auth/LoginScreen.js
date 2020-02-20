@@ -69,7 +69,7 @@ const LoginScreen = (props) => {
   }
 
   useEffect(() => {
-    if(!currentUserModel.isLoading && currentUserModel.values.id) {
+    if(!currentUserModel.isLoading && currentUserModel.values.id && auth.userToken) {
       if(currentUserModel.values.name) {
         redirectToApp()
       } else {
@@ -86,7 +86,7 @@ const LoginScreen = (props) => {
     let userToken;
     try {
       userToken = await AsyncStorage.getItem('token');
-      if(userToken || auth.userToken) {
+      if(userToken) {
         let token = userToken ? userToken : auth.userToken
         addTokenToHeader(token)
         props.getUser()
@@ -95,7 +95,7 @@ const LoginScreen = (props) => {
         setAuthenticating(false)
       }
     } catch (e) {
-      //TOdo
+      alert(e)
       resetState()
     }
   };
