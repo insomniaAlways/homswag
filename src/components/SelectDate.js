@@ -61,6 +61,7 @@ function SelectDate(props) {
       { isDatePickerVisible && <DateTimePicker value={date}
                     mode={mode}
                     is24Hour={true}
+                    minimumDate={new Date()}
                     display="default"
                     onChange={onSelectDate} />
         }

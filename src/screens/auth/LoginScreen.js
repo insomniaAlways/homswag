@@ -10,6 +10,8 @@ import { addHeader, register, validateToken, onValidationSuccess } from '../../.
 import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
 import { Spinner } from '@ui-kitten/components';
+import * as Animatable from 'react-native-animatable';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PhoneIcon = (style) => (
   <Icon {...style} name='phone'/>
@@ -156,73 +158,67 @@ const LoginScreen = (props) => {
         style={styles.container}
         source={ImageBackground}>
         {!isSessionAuthenticated && !isSessionAuthenticating ?
-        <View style={{flex: 1}}>
-          <View style={styles.headerContainer}>
-            <Text
-              category='h1'
-              status='control'>
-              Hello
-            </Text>
-            <Text
-              style={styles.signInLabel}
-              category='s1'
-              status='control'>
-              Please provide your phone number
-            </Text>
-          </View>
-          <View style={styles.formContainer}>
-            <Input
-              status='control'
-              placeholder='Phone Number'
-              icon={PhoneIcon}
-              maxLength={10}
-              keyboardType={'number-pad'}
-              value={phone}
-              onChangeText={setPhone}
-            />
-            {showOtpField && 
-              <Input
-                style={styles.passwordInput}
-                status='control'
-                placeholder='OTP'
-                keyboardType={'number-pad'}
-                value={otp}
-                onChangeText={setOtp}
-              />}
-          </View>
-          { isLoading ? 
-            <View style={styles.signInButtonContainer}>
-              <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', paddingVertical: 10}]}>
-                <Spinner status='primary'/>
+          <View style={{flex: 1}}>
+            <View style={styles.headerContainer}>
+              <Text
+                category='h1'
+                status='control'>
+                Hello
+              </Text>
+              <Text
+                style={styles.signInLabel}
+                category='s1'
+                status='control'>
+                Please provide your phone number
+              </Text>
+            </View>
+            <Animatable.View
+              duration={400}
+              style={styles.formContainer}
+              animation={"fadeInUp"}
+            >
+              <View style={styles.formContainer}>
+                <Input
+                  status='control'
+                  placeholder='Phone Number'
+                  icon={PhoneIcon}
+                  maxLength={10}
+                  keyboardType={'number-pad'}
+                  value={phone}
+                  onChangeText={setPhone}
+                />
+                {showOtpField && 
+                  <Input
+                    style={styles.passwordInput}
+                    status='control'
+                    placeholder='OTP'
+                    keyboardType={'number-pad'}
+                    value={otp}
+                    onChangeText={setOtp}
+                  />}
               </View>
-            </View> :
-            <View style={styles.signInButtonContainer}>
-              { showOtpField ? 
-                <Button
-                  style={styles.signInButton}
-                  status='control'
-                  size='medium'
-                  disabled={isLoading}
-                  onPress={onSubmit}>
-                  Submit
-                </Button> :
-                <Button
-                  style={styles.signInButton}
-                  status='control'
-                  size='medium'
-                  disabled={isLoading}
-                  onPress={registerPhone}>
-                  Continue
-                </Button>
-              }
-            </View> 
-
-          }
-        </View>
-        : 
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{color: '#fff', fontSize: 16}}>Loading..</Text>
-        </View>
+              { isLoading ? 
+                <View style={styles.signInButtonContainer}>
+                  <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
+                    <Spinner status='primary'/>
+                  </View>
+                </View> :
+                <View style={styles.signInButtonContainer}>            
+                  { showOtpField ? 
+                    <TouchableOpacity style={styles.signInButton} onPress={onSubmit} disabled={isLoading}>
+                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18, fontFamily: 'roboto-regular'}}>Submit</Text>
+                    </TouchableOpacity>:
+                    <TouchableOpacity style={styles.signInButton} onPress={registerPhone} disabled={isLoading}>
+                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18, fontFamily: 'roboto-regular'}}>Continue</Text>
+                    </TouchableOpacity>
+                  }
+              </View> 
+            }
+            </Animatable.View>
+          </View> : 
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#fff', fontSize: 16}}>Loading..</Text>
+          </View>
         }
       </ImageOverlay>
     </KeyboardAvoidingView>
@@ -265,7 +261,10 @@ const styles = StyleSheet.create({
   signInButton: {
     marginHorizontal: 16,
     marginBottom: 10,
-    width: '50%'
+    paddingVertical: 10,
+    width: 140,
+    backgroundColor: '#eee',
+    borderRadius: 10
   },
   signUpButton: {
     marginVertical: 12,

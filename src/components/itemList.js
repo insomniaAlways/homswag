@@ -23,10 +23,10 @@ const ItemsList = (props) => {
   const renderItemFooter = (info) => (
     <View>
       <View style={styles.itemFooter}>
-        <Text category='s1'>
+        <Text category='s1' style={{color: 'green'}}>
         <FontAwesome name="rupee" size={12} color="black" /> {info.item.price}
         </Text>
-        <Text category='s1' style={{textDecorationLine: 'line-through'}}>
+        <Text category='s1' style={{textDecorationLine: 'line-through', color: 'red'}}>
         <FontAwesome name="rupee" size={12} color="black" /> {info.item.mrp_price}
         </Text>
       </View>
@@ -65,6 +65,12 @@ const ItemsList = (props) => {
         category='c1'>
         {info.item.description}
       </Text>
+      {info.item.duration && 
+        <Text
+          category='c1'>
+          Duration: {info.item.duration} min
+        </Text>
+      }
     </Card>
   );
 
