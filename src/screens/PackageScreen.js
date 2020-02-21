@@ -5,18 +5,19 @@ import TabView from '../components/tabView';
 import { fetchCartItems } from '../../store/actions/cartItemAction';
 
 const PackageScreen = (props) => {
-  const { packages } = props
+  const { packages, networkAvailability } = props
   const selectedPackage = props.navigation.getParam('packageService', {})
 
   return (
-    <TabView tabs={packages.values} selectedTab={selectedPackage} ItemContainerComponent={PackageDetails} {...props}/>
+    <TabView tabs={packages.values} selectedTab={selectedPackage} ItemContainerComponent={PackageDetails} {...props} isOffline={networkAvailability.isOffline}/>
   )
 }
 
 const mapStateToProps = state => {
   return {
     packages: state.packages,
-    cartItemModel: state.cartItems
+    cartItemModel: state.cartItems,
+    networkAvailability: state.networkAvailability
   }
 }
 

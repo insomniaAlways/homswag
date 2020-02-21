@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 function AddToCartButton(props) {
-  const { setAdded } = props
+  const { setAdded, isOffline } = props
   const addItemToCart = () => {
     if(props.addToCart) {
       props.addToCart(props.item)
@@ -11,13 +11,21 @@ function AddToCartButton(props) {
       setAdded(true)
     }
   }
-  return (
-    <TouchableOpacity onPress={() => addItemToCart()}>
-      <View style={{ width: 70, padding: 5, borderRadius: 5, backgroundColor: '#d4d4d4' }}>
-        <Text style={{textAlign: 'center', color: 'black'}}>Add</Text>
+  if(isOffline) {
+    return (
+      <View style={{ width: 70, padding: 5, borderRadius: 5}}>
+        <Text style={{textAlign: 'center', color: 'grey'}}>Offline</Text>
       </View>
-    </TouchableOpacity>
-  )
+    )
+  } else {
+    return (
+      <TouchableOpacity onPress={() => addItemToCart()}>
+        <View style={{ width: 70, padding: 5, borderRadius: 5, backgroundColor: '#d4d4d4' }}>
+          <Text style={{textAlign: 'center', color: 'black'}}>Add</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
 }
 
 export default AddToCartButton;

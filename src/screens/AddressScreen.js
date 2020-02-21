@@ -6,16 +6,24 @@ import Constants from 'expo-constants';
 import CustomHeader from '../components/customHeader';
 import { fetchAddress, deleteAddresss, updateAddress } from '../../store/actions/addressActions';
 import { Layout, List, Text, Spinner } from '@ui-kitten/components';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 function AddressScreen(props) {
-  const { address, getAddress, navigation, deleteSelected, setDefault } = props;
-  const addresses = address.values
+  const { addressModel, getAddress, navigation, deleteSelected, setDefault, networkAvailability } = props;
+  const addresses = addressModel.values
   const [ refreshing, setRefreshing ] = useState(false);
 
   useLayoutEffect(() => {
-    getAddress()
+    if(!networkAvailability.isOffline) {
+      getAddress()
+    }
   }, [])
+
+  useEffect(() => {
+    if(!addressModel.isLoading && addressModel.error) {
+      alert(addressModel.error)
+    }
+  }, [addressModel.error])
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -48,7 +56,7 @@ function AddressScreen(props) {
         </Layout>
       </Layout>
       <Layout style={{flexDirection: 'row', justifyContent: 'flex-start', paddingHorizontal: 20, paddingVertical: 10}}>
-        {item.is_default ? 
+        {item.is_default || networkAvailability.isOffline ? 
           <View style={{marginRight: 30}}><Text style={styles.isDefaultTrue}>Set default</Text></View>:
           <TouchableOpacity onPress={() => setDefaultAddress(item)} style={{marginRight: 30}}><Text style={styles.isDefaultFalse}>Set default</Text></TouchableOpacity>
         }
@@ -67,7 +75,7 @@ function AddressScreen(props) {
         <List
           contentContainerStyle={styles.addressList}
           showsVerticalScrollIndicator={false}
-          data={address.values}
+          data={addressModel.values}
           refreshing={refreshing}
           onRefresh={onRefresh}
           renderItem={renderItem}
@@ -82,26 +90,38 @@ function AddressScreen(props) {
       )
     }
   }
-  return (
-    <View style={{flex: 1}}>
-      <CustomHeader {...props}/>
-      {address.isLoading ? (
-        <Layout style={styles.loaderContainer}>
-          <Spinner status='success' style={{height: 20, width: 20}}/>
-          <Text>Loading...</Text>
+  if(networkAvailability.isOffline) {
+    return (
+      <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <MaterialCommunityIcons name="wifi-strength-alert-outline" size={60} color='grey'/>
+        <Layout style={{paddingTop: 30, alignItems: 'center'}}>
+          <Text style={{fontSize: 22, fontFamily: 'roboto-medium'}}>Whoops!</Text>
+          <Text style={{fontFamily: 'roboto-light-italic'}}>No Internet connection</Text>
         </Layout>
-      ) : ( 
-        <SafeAreaView style={{flex: 1}}>
-          <AddressList />
-          <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-            <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddAddress', { previousRoute: 'Address' })}>
-              <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      )}
-    </View>
-  )
+      </Layout>
+    )
+  } else {
+    return (
+      <View style={{flex: 1}}>
+        <CustomHeader {...props}/>
+        {addressModel.isLoading ? (
+          <Layout style={styles.loaderContainer}>
+            <Spinner status='success' style={{height: 20, width: 20}}/>
+            <Text>Loading...</Text>
+          </Layout>
+        ) : ( 
+          <SafeAreaView style={{flex: 1}}>
+            <AddressList />
+            <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+              <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddAddress', { previousRoute: 'Address' })}>
+                <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        )}
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -160,7 +180,8 @@ const styles = StyleSheet.create({
 
 mapStateToProps = state => {
   return {
-    address: state.addresses
+    addressModel: state.addresses,
+    networkAvailability: state.networkAvailability
   }
 }
 

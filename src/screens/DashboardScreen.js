@@ -18,29 +18,35 @@ function Dashboard(props) {
   const [ refreshing, setRefreshing ] = useState(false);
 
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    async function fetchData() {
-      await props.getCart()
-      await props.getAllCartItems()
-      await props.getAllCategories()
-      await props.getUser()
-      await props.getAllItems()
-      await props.getPackages()
+    if(!props.networkAvailability.isOffline) {
+      setRefreshing(true);
+      async function fetchData() {
+        await props.getCart()
+        await props.getAllCartItems()
+        await props.getAllCategories()
+        await props.getUser()
+        await props.getAllItems()
+        await props.getPackages()
+        setRefreshing(false)
+      }
+      fetchData()
+    } else {
       setRefreshing(false)
     }
-    fetchData()
   }, [refreshing]);
 
   useEffect(() => {
-    async function fetchData() {
-      await props.getCart()
-      await props.getAllCartItems()
+    if(!props.networkAvailability.isOffline) {
+      async function fetchData() {
+        await props.getCart()
+        await props.getAllCartItems()
+      }
+      props.getAllCategories()
+      props.getUser()
+      props.getAllItems()
+      props.getPackages()
+      fetchData()
     }
-    props.getAllCategories()
-    props.getUser()
-    props.getAllItems()
-    props.getPackages()
-    fetchData()
   }, [props.navigation.isFocused])
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -81,7 +87,8 @@ mapStateToProps = state => {
   return {
     categories: state.categories,
     packages: state.packages,
-    cart: state.cart
+    cart: state.cart,
+    networkAvailability: state.networkAvailability
   }
 }
 

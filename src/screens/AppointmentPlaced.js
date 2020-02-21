@@ -6,6 +6,7 @@ import { Layout, Text } from '@ui-kitten/components';
 import { StyleSheet, BackHandler, Image } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import Tick from '../../assets/images/tick.png'
+import { brandColor } from '../style/customStyles';
 
 const resetAction = StackActions.reset({
   index: 0,
@@ -36,9 +37,9 @@ const AppointmentPlacedScreen = (props) => {
   return (
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#F7F9FC"}}>
       <Layout style={styles.content}>
-      <Layout style={{justifyContent: 'center'}}>
+      <Layout style={{justifyContent: 'center', marginBottom: 30}}>
         <Image
-          style={{width: 200, height: 250}}
+          style={{width: 160, height: 160}}
           source={Tick}
         />
       </Layout>
@@ -47,7 +48,7 @@ const AppointmentPlacedScreen = (props) => {
         <Text style={styles.fontFamily}>The appointment has successfully placed.</Text>
         <TouchableOpacity style={styles.button} onPress={() => handleBackButtonPressAndroid()}>
           <Layout style={styles.buttomView}>
-            <Text>Continue Surfing</Text>
+            <Text style={{color: '#fff'}}>Continue Surfing</Text>
           </Layout>
         </TouchableOpacity>
       </Layout>
@@ -94,9 +95,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 20
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+    backgroundColor: brandColor
   }
 })
 

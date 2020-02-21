@@ -6,7 +6,7 @@ import { Icon } from '@ui-kitten/components';
 import { fetchCartItems, updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 function ModifyButton(props) {
-  const { item, cartItem, quantity, updateCartItem, deleteCartItem } = props
+  const { item, cartItem, quantity, updateCartItem, deleteCartItem, isOffline } = props
 
   useEffect(() => {
     async function updateCT() {
@@ -54,27 +54,35 @@ function ModifyButton(props) {
     }
   }
 
-  return (
-    <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
-      <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
-        <TouchableOpacity onPress={decCount}>
-          <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
-            <Icon name='minus-outline' width={12} height={12} fill="#0D5618"/>
-          </View>
-        </TouchableOpacity>
+  if(isOffline) {
+    return (
+      <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems: 'center'}}>
+        <Text style={{textAlign: 'center', color: 'grey'}}>Offline</Text>
       </View>
-      <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-        <Text>{quantity}</Text>
+    )
+  } else {
+    return (
+      <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
+        <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+          <TouchableOpacity onPress={decCount}>
+            <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+              <Icon name='minus-outline' width={12} height={12} fill="#0D5618"/>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
+          <Text>{quantity}</Text>
+        </View>
+        <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+          <TouchableOpacity onPress={incCount}>
+            <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+              <Icon name='plus-outline' width={12} height={12} fill="#0D5618"/>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
-        <TouchableOpacity onPress={incCount}>
-          <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
-            <Icon name='plus-outline' width={12} height={12} fill="#0D5618"/>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </View>
-  )
+    )
+  }
 }
 
 const mapStateToProps = state => ({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { Text, Modal, Spinner, Layout } from '@ui-kitten/components';
 import { connect } from 'react-redux';
@@ -9,14 +9,30 @@ import DefaultStyles from '../style/customStyles';
 import AppointmentDetails from '../components/appointmentDetails';
 import CartPromoItemList from '../components/cartPromoItemList';
 import EmptyCart from '../../assets/images/empty_cart.png'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function CartScreen(props) {
-  const { navigation, cart, user, cartItem, appointment } = props;
+  const { navigation, cartModel, user, cartItemModel, appointment, networkAvailability } = props;
   const [ isLoading, setLoading ] = useState(false)
 
-  useEffect(() => {
-    props.getCart()
+  useLayoutEffect(() => {
+    if(!networkAvailability.isOffline) {
+      props.getCart()
+    }
   }, [])
+
+
+  useEffect(() => {
+    if(!cartItemModel.isLoading && cartItemModel.error) {
+      alert(cartItemModel.error)
+    }
+  }, [cartItemModel.error])
+
+  useEffect(() => {
+    if(!cartModel.isLoading && cartModel.error) {
+      alert(cartModel.error)
+    }
+  }, [cartModel.error])
 
   const goToConfirmPage = () => {
     if(appointment.defaultValues && appointment.defaultValues.selectedAddress && appointment.defaultValues.selectedAddress.id) {
@@ -27,73 +43,87 @@ function CartScreen(props) {
   }
 
   useEffect(() => {
-    if(cart.isLoading || cartItem.isLoading) {
+    if(cartModel.isLoading || cartItemModel.isLoading) {
       setLoading(true)
-    } else if(!cart.isLoading && !cartItem.isLoading){
+    } else if(!cartModel.isLoading && !cartItemModel.isLoading){
       setLoading(false)
     }
-  }, [cart.isLoading, cartItem.isLoading])
+  }, [cartModel.isLoading, cartItemModel.isLoading])
 
-  return (
-    <Layout style={{flex: 1}}>
-     {cartItem && cartItem.values && cartItem.values.length ? (
+  if(networkAvailability.isOffline) {
+    return (
+      <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <MaterialCommunityIcons name="wifi-strength-alert-outline" size={60} color='grey'/>
+        <Layout style={{paddingTop: 30, alignItems: 'center'}}>
+          <Text style={{fontSize: 22, fontFamily: 'roboto-medium'}}>Whoops!</Text>
+          <Text style={{fontFamily: 'roboto-light-italic'}}>No Internet connection</Text>
+        </Layout>
+      </Layout>
+    )
+  } else {
+    return (
       <Layout style={{flex: 1}}>
-        <Layout style={{flex: 14, backgroundColor: "#F7F9FC"}}>
-          <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: 'transparent'}}>
-            <Layout style={{marginVertical: 10, paddingVertical: 10, borderRadius: 20, marginHorizontal: 10, paddingHorizontal: 10}}>
-              <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
-              <CartItemList cart={cart.values} cartItems={cartItem.values} setLoading={setLoading}/>
-            </Layout>
-            <Layout style={{marginVertical: 10, paddingVertical: 20, borderRadius: 20, marginHorizontal: 10}}>
-              <AppointmentDetails bookingDetails={appointment.defaultValues} navigation={navigation}/>
-            </Layout>
-            <Layout style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingVertical: 10, paddingHorizontal: 10}}>
-              <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
-            </Layout>
-            <CartPromoItemList setLoading={setLoading}/>
-            <Layout style={{marginHorizontal: 10, marginBottom: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 10, paddingHorizontal: 10}}>
-              <Text style={{paddingTop: 10, paddingBottom: 10, fontWeight: "bold"}}>Price Breakdown: </Text>
-              <PriceBreakDown />
-            </Layout>
-          </ScrollView>
-        </Layout>
-        <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-          <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => goToConfirmPage()}>
-            <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
-          </TouchableOpacity>
-        </Layout>
-      </Layout> ) : (
-        <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Image source={EmptyCart} style={{height: 60, width: 60}}/>
-          <Layout style={{paddingTop: 10}}>
-            <Text>No item added</Text>
+       {cartItemModel && cartItemModel.values && cartItemModel.values.length ? (
+        <Layout style={{flex: 1}}>
+          <Layout style={{flex: 14, backgroundColor: "#F7F9FC"}}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: 'transparent'}}>
+              <Layout style={{marginVertical: 10, paddingVertical: 10, borderRadius: 20, marginHorizontal: 10, paddingHorizontal: 10}}>
+                <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
+                <CartItemList cart={cartModel.values} cartItems={cartItemModel.values} setLoading={setLoading}/>
+              </Layout>
+              <Layout style={{marginVertical: 10, paddingVertical: 20, borderRadius: 20, marginHorizontal: 10}}>
+                <AppointmentDetails bookingDetails={appointment.defaultValues} navigation={navigation}/>
+              </Layout>
+              <Layout style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingVertical: 10, paddingHorizontal: 10}}>
+                <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
+              </Layout>
+              <CartPromoItemList setLoading={setLoading}/>
+              <Layout style={{marginHorizontal: 10, marginBottom: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 10, paddingHorizontal: 10}}>
+                <Text style={{paddingTop: 10, paddingBottom: 10, fontWeight: "bold"}}>Price Breakdown: </Text>
+                <PriceBreakDown />
+              </Layout>
+            </ScrollView>
           </Layout>
-        </Layout>
-     )}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isLoading}
-        backdropStyle={styles.modal}
-        onBackdropPress={() => {
-          setLoading(false);
-        }}>
-          <Layout style={styles.modalContainer}>
-            <Layout style={styles.controlContainer}>
-              <Spinner status='control'/>
+          <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+            <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => goToConfirmPage()}>
+              <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Next</Text>
+            </TouchableOpacity>
+          </Layout>
+        </Layout> ) : (
+          <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={EmptyCart} style={{height: 60, width: 60}}/>
+            <Layout style={{paddingTop: 10}}>
+              <Text>No item added</Text>
             </Layout>
           </Layout>
-      </Modal>
-    </Layout>
-  );
+       )}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isLoading}
+          backdropStyle={styles.modal}
+          onBackdropPress={() => {
+            setLoading(false);
+          }}>
+            <Layout style={styles.modalContainer}>
+              <Layout style={styles.controlContainer}>
+                <Spinner status='control'/>
+              </Layout>
+            </Layout>
+        </Modal>
+      </Layout>
+    );
+  }
+
 }
 
 mapStateToProps = state => {
   return {
-    cart: state.cart,
-    cartItem: state.cartItems,
+    cartModel: state.cart,
+    cartItemModel: state.cartItems,
     user: state.user,
-    appointment: state.appointment
+    appointment: state.appointment,
+    networkAvailability: state.networkAvailability
   }
 }
 
@@ -113,8 +143,9 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    padding: 15,
-    color:'#fff'
+    justifyContent: 'center',
+    color:'#fff',
+    height: 55
   },
   countContainer: {
     alignItems: 'center',

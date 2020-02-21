@@ -111,6 +111,10 @@ export const currentUser = {
   error: null
 }
 
+export const networkAvailability = {
+  isOffline: false,
+}
+
 export const initialState = {
   items: items,
   categories: categories,
@@ -121,5 +125,6 @@ export const initialState = {
   packages: packages,
   appointment: appointment,
   session: session,
-  currentUser: currentUser
+  currentUser: currentUser,
+  networkAvailability: networkAvailability
 }

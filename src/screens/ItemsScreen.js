@@ -24,6 +24,13 @@ function Items(props) {
     }
   }, [category])
 
+
+  useEffect(() => {
+    if(!cartItemModel.isLoading && cartItemModel.error) {
+      alert(cartItemModel.error)
+    }
+  }, [cartItemModel.error])
+
   useEffect(() => {
     if(cartItemModel.values.length) {
       setShowButton(true)

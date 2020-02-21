@@ -1,32 +1,51 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, SafeAreaView, StyleSheet, Image } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { fetchAllOrder } from '../../store/actions/orderActions'
 import OrderList from '../components/orderList';
-import DefaultStyles from '../style/customStyles';
 import Constants from 'expo-constants';
-import CustomHeader from '../components/customHeader';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function OrderHistoryScreen(props) {
-  const { orderModel, getOrders, navigation } = props;
+  const { orderModel, getOrders, navigation, networkAvailability } = props;
 
   useLayoutEffect(() => {
-    getOrders()
+    if(!networkAvailability.isOffline) {
+      getOrders()
+    }
   }, [])
 
-  return (
-    <View style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
-        <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Orders: </Text></View>
-        {orderModel.isLoading ? 
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Loading..</Text>
-          </View> :
-          <OrderList orders={orderModel.values} navigation={navigation} orderModel={orderModel} getOrders={getOrders}/>
-        }
-      </SafeAreaView>
-    </View>
-  )
+  useEffect(() => {
+    if(!orderModel.isLoading && orderModel.error) {
+      alert(orderModel.error)
+    }
+  }, [orderModel.error])
+
+  if(networkAvailability.isOffline) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <MaterialCommunityIcons name="wifi-strength-alert-outline" size={60} color='grey'/>
+        <View style={{paddingTop: 30, alignItems: 'center'}}>
+          <Text style={{fontSize: 22, fontFamily: 'roboto-medium'}}>Whoops!</Text>
+          <Text style={{fontFamily: 'roboto-light-italic'}}>No Internet connection</Text>
+        </View>
+      </View>
+    )
+  } else {
+    return (
+      <View style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Orders: </Text></View>
+          {orderModel.isLoading ? 
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text>Loading..</Text>
+            </View> :
+            <OrderList orders={orderModel.values} navigation={navigation} orderModel={orderModel} getOrders={getOrders}/>
+          }
+        </SafeAreaView>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -38,7 +57,8 @@ const styles = StyleSheet.create({
 
 mapStateToProps = state => {
   return {
-    orderModel: state.orders
+    orderModel: state.orders,
+    networkAvailability: state.networkAvailability
   }
 }
 

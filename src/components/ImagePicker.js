@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
 import ProfilePicPlaceholder from '../../assets/images/profile_pic_placeholder.png'
 
 const ImagePickerView = (props) => {
-  const { image, setImage, user_id, isEdit, isUploading, setUploding } = props
+  const { image, setImage, user_id, isEdit, isUploading, setUploding, isOffline } = props
   const [ status, setStatus ] = useState()
   const [ progress, setProgress ] = useState()
 
@@ -18,7 +18,11 @@ const ImagePickerView = (props) => {
   }
 
   const startModule = () =>{
-    getPermissionAsync();
+    if(isOffline) {
+      alert('Seems like you are not connected to Internet')
+    } else {
+      getPermissionAsync();
+    }
   }
 
   const progressStatus = (snapshot) => {

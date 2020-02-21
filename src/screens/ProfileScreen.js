@@ -9,9 +9,10 @@ import { fetchUser, updateUser } from '../../store/actions/userActions';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
 import _ from 'lodash';
 import ImagePickerView from '../components/ImagePicker';
+import { brandLightBackdroundColor } from '../style/customStyles';
 
 function ProfileScreen(props) {
-  const { currentUserModel, getUser, updateUserDetails } = props
+  const { currentUserModel, getUser, updateUserDetails, networkAvailability } = props
   const [ currentUserObject, updateCurrentUser ] = useState({...currentUserModel.values})
   const [ isEdit, setEdit ] = useState(false)
   const [ isLoading, setLoading ] = useState(false)
@@ -33,10 +34,12 @@ function ProfileScreen(props) {
   }
 
   useLayoutEffect(() => {
-    async function fetchRecords() {
-      await getUser()
+    if(!networkAvailability.isOffline) {
+      async function fetchRecords() {
+        await getUser()
+      }
+      fetchRecords()
     }
-    fetchRecords()
   }, [])
 
   useEffect(() => {
@@ -71,6 +74,7 @@ function ProfileScreen(props) {
               setImage={imageUploaded}
               user_id={currentUserModel.values.id}
               isEdit={isEdit}
+              isOffline={networkAvailability.isOffline}
               isUploading={isUploading}
               setUploding={setUploding}
               />
@@ -168,11 +172,20 @@ function ProfileScreen(props) {
               </Layout> :
             <Layout>
               {isEdit ? 
-                <TouchableOpacity onPress={updateProfile}>
-                  <Layout style={styles.backButton}>
-                    <Text style={{color: "#fff"}}>Save</Text>
-                  </Layout>
-                </TouchableOpacity> :
+                <Layout>
+                  {networkAvailability.isOffline ? 
+                    <TouchableOpacity disabled={true}>
+                      <Layout style={[styles.backButton, {backgroundColor: brandLightBackdroundColor}]}>
+                        <Text style={{color: "#fff"}}>Save</Text>
+                      </Layout>
+                    </TouchableOpacity> :
+                    <TouchableOpacity onPress={updateProfile}>
+                      <Layout style={styles.backButton}>
+                        <Text style={{color: "#fff"}}>Save</Text>
+                      </Layout>
+                    </TouchableOpacity> 
+                  }
+                </Layout> :
                 <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
                   <Layout style={styles.backButton}>
                     <FontAwesome name="angle-right" size={20} color="white" />
@@ -265,6 +278,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   currentUserModel: state.currentUser,
+  networkAvailability: state.networkAvailability
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -13,18 +13,18 @@ import { connect } from 'react-redux';
 
 const SideDrawer = props => {
   const { navigation, signOut, currentUserModel } = props
-  const openWhatsApp = () => {
-    let url = `whatsapp://send?text=hello&phone=916366505567`
-    Linking.canOpenURL(url)
-    .then((supported) => {
-      if (!supported) {
-        console.log("Can't handle url: " + url);
-      } else {
-        return Linking.openURL(`whatsapp://send?text=hello&phone=916366505567`);
-      }
-    })
-    .catch((err) => console.error('An error occurred', err));
-  }
+  // const openWhatsApp = () => {
+  //   let url = `whatsapp://send?text=hello&phone=916366505567`
+  //   Linking.canOpenURL(url)
+  //   .then((supported) => {
+  //     if (!supported) {
+  //       console.log("Can't handle url: " + url);
+  //     } else {
+  //       return Linking.openURL(`whatsapp://send?text=hello&phone=916366505567`);
+  //     }
+  //   })
+  //   .catch((err) => console.error('An error occurred', err));
+  // }
 
   const logOut = () => {
     return AsyncStorage.removeItem('token')

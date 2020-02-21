@@ -11,7 +11,7 @@ import _ from 'lodash';
 import { FontAwesome } from '@expo/vector-icons';
 import { Label } from 'native-base';
 import * as Permissions from 'expo-permissions';
-import { brandColor } from '../style/customStyles';
+import { brandColor, brandLightBackdroundColor } from '../style/customStyles';
 import * as Location from 'expo-location';
 
 const initialRegion = {
@@ -31,7 +31,7 @@ const locationValueObject = {
 
 function AddressScreen(props) {
   const [ coordinates, setCoodinates ] = useState()
-  const { location, getGeoCoding, addNewAddress, getfetchAddress, navigation } = props
+  const { location, addNewAddress, getfetchAddress, navigation, networkAvailability } = props
   const previousScreen = navigation.getParam('previousRoute')
   const [ isCurrentLoactionLoaded, setCoodinatesLoaded ] = useState(false)
   const [ locationValue, setLocationValue ] = useState(locationValueObject)
@@ -56,14 +56,19 @@ function AddressScreen(props) {
     })
     async function saveData() {
       try {
-        const locationResponse = await Location.reverseGeocodeAsync({latitude, longitude})
-        let formatted_address = `${locationResponse[0].name}, ${locationResponse[0].street}, ${locationResponse[0].city}, ${locationResponse[0].postalCode}, ${locationResponse[0].region}, ${locationResponse[0].country}`
-        setGeocoding({
-          formatedAddress: formatted_address,
-          geometry: { latitude: latitude, longitude: longitude },
-        })
-        setCoodinatesLoaded(true)
-        setLoading(false)
+        if(networkAvailability.offline) {
+          setLoading(false)
+          alert('Seems like you are not connected to Internet')
+        } else {
+          const locationResponse = await Location.reverseGeocodeAsync({latitude, longitude})
+          let formatted_address = `${locationResponse[0].name}, ${locationResponse[0].street}, ${locationResponse[0].city}, ${locationResponse[0].postalCode}, ${locationResponse[0].region}, ${locationResponse[0].country}`
+          setGeocoding({
+            formatedAddress: formatted_address,
+            geometry: { latitude: latitude, longitude: longitude },
+          })
+          setCoodinatesLoaded(true)
+          setLoading(false)
+        }
       } catch(e) {
         alert(e, location.error)
         setLoading(false)
@@ -146,9 +151,14 @@ function AddressScreen(props) {
             itemKey={'landmark'}
             disabled={false}/>
           <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}}>
-            <TouchableOpacity style={{width: 150, backgroundColor: brandColor, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, borderRadius: 20}} onPress={() => save()}>
-              <Text style={{color: '#fff', width: '100%', textAlign: 'center'}}>Save Address</Text>
-            </TouchableOpacity>
+            {networkAvailability.offline ? 
+              <View style={{width: 150, backgroundColor: brandLightBackdroundColor, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, borderRadius: 20}}>
+                <Text style={{color: '#fff', width: '100%', textAlign: 'center'}}>Not connected to Internet</Text>
+              </View> :
+              <TouchableOpacity style={{width: 150, backgroundColor: brandColor, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, borderRadius: 20}} onPress={() => save()}>
+                <Text style={{color: '#fff', width: '100%', textAlign: 'center'}}>Save Address</Text>
+              </TouchableOpacity>
+            }
           </View>
         </View>
       </View>
@@ -171,7 +181,8 @@ function AddressScreen(props) {
 }
 
 const mapStateToProps = state => ({
-  location : state.location
+  location : state.location,
+  networkAvailability: state.networkAvailability
 })
 
 const mapDispatchToProps = dispatch => ({

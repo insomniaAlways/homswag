@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchCart } from '../../store/actions/cartAction';
 import { createOrder } from '../../store/actions/orderActions';
@@ -12,14 +12,17 @@ import ItemView from '../components/itemView';
 import { TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import { brandColor } from '../style/customStyles';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function ReviewOrderScreen (props) {
-  const { cart, order, getCart, placeOrder, appointment } = props
+  const { cart, order, getCart, placeOrder, appointment, networkAvailability } = props
   const [ isloading, setLoading ] = useState(false)
   const { cart_items, cart_total } = cart.values
 
-  useEffect(() => {
-    getCart()
+  useLayoutEffect(() => {
+    if(!networkAvailability.isOffline) {
+      getCart()
+    }
   }, [])
 
   const confirmBooking = async () => {
@@ -60,41 +63,54 @@ function ReviewOrderScreen (props) {
     }
   }, [cart.isloading, order.isloading])
 
-  return (
-    <Layout style={{flex: 1}}>
-      <ImageOverlay
-        style={styles.infoContainer}
-        imageBackgroundStyle={styles.imageBackgroundStyle}
-        source={Graphics}>
-      </ImageOverlay>
-      <Layout style={{flex: 4, backgroundColor: "#F7F9FC"}}>
-        <Layout style={styles.orderDetailsContainer}>
-          <ScrollView style={styles.orderDetailsScroller}>
-            <Layout style={{justifyContent: 'center', alignItems: 'center', paddingBottom: 10}}>
-              <Text style={{fontSize: 16, fontWeight: 'bold'}}>Appointment Summary</Text>
-            </Layout>
-            {cart_items.map(cartItem => (
-              <ItemView key={cartItem.id} item={cartItem.item} cartItem={cartItem}/>
-            ))}
-            <Layout style={{paddingVertical: 20, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10, borderTopWidth: 1, borderColor: '#eee'}}>
-              <Text style={{fontSize: 16}}>Total Payable Amount</Text>
-              <Text style={{fontSize: 16}}>{cart_total}</Text>
-            </Layout>
-          </ScrollView>
+  if(networkAvailability.isOffline) {
+    return (
+      <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <MaterialCommunityIcons name="wifi-strength-alert-outline" size={60} color='grey'/>
+        <Layout style={{paddingTop: 30, alignItems: 'center'}}>
+          <Text style={{fontSize: 22, fontFamily: 'roboto-medium'}}>Whoops!</Text>
+          <Text style={{fontFamily: 'roboto-light-italic'}}>No Internet connection</Text>
         </Layout>
       </Layout>
-      <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandColor}} onPress={() => confirmBooking()}>
-        <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Confirm</Text>
-      </TouchableOpacity>
-      <LoadingModal isloading={isloading} />
-    </Layout>
-  )
+    )
+  } else {
+    return (
+      <Layout style={{flex: 1}}>
+        <ImageOverlay
+          style={styles.infoContainer}
+          imageBackgroundStyle={styles.imageBackgroundStyle}
+          source={Graphics}>
+        </ImageOverlay>
+        <Layout style={{flex: 4, backgroundColor: "#F7F9FC"}}>
+          <Layout style={styles.orderDetailsContainer}>
+            <ScrollView style={styles.orderDetailsScroller}>
+              <Layout style={{justifyContent: 'center', alignItems: 'center', paddingBottom: 10}}>
+                <Text style={{fontSize: 16, fontWeight: 'bold'}}>Appointment Summary</Text>
+              </Layout>
+              {cart_items.map(cartItem => (
+                <ItemView key={cartItem.id} item={cartItem.item} cartItem={cartItem}/>
+              ))}
+              <Layout style={{paddingVertical: 20, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10, borderTopWidth: 1, borderColor: '#eee'}}>
+                <Text style={{fontSize: 16}}>Total Payable Amount</Text>
+                <Text style={{fontSize: 16}}>{cart_total}</Text>
+              </Layout>
+            </ScrollView>
+          </Layout>
+        </Layout>
+        <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandColor}} onPress={() => confirmBooking()}>
+          <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Confirm</Text>
+        </TouchableOpacity>
+        <LoadingModal isloading={isloading} />
+      </Layout>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
   cart: state.cart,
   order: state.orders,
-  appointment: state.appointment
+  appointment: state.appointment,
+  networkAvailability: state.networkAvailability
 })
 
 const mapDispatchToProps = dispatch => ({

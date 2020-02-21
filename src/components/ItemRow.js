@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { fetchCartItems, createCartItem } from '../../store/actions/cartItemAction';
 
 function ItemRow(props) {
-  const { item, cartItemModel, cart, addItemToCart, getCartItem, setShowButton } = props;
+  const { item, cartItemModel, cart, addItemToCart, getCartItem, setShowButton, networkAvailability } = props;
   const [ isAdded, setAdded ] = useState(false)
   const cartItems = cartItemModel.values
   const [ quantity, setQuantity ] = useState(0)
@@ -50,6 +50,7 @@ function ItemRow(props) {
           cartItems={cartItems}
           cartItem={isItemAdded()}
           quantity={quantity}
+          isOffline={networkAvailability.isOffline}
           setQuantity={setQuantity}
           removeCartItem={setAdded}/> : 
         <AddToCartButton
@@ -57,6 +58,7 @@ function ItemRow(props) {
           item={item}
           cart={cart}
           cartItems={cartItems}
+          isOffline={networkAvailability.isOffline}
           isAdded={isAdded}
           setAdded={addCartItem}/> 
         }
@@ -66,7 +68,8 @@ function ItemRow(props) {
 
 const mapStateToProps = state => {
   return  {
-    cartItemModel: state.cartItems
+    cartItemModel: state.cartItems,
+    networkAvailability: state.networkAvailability
   }
 }
 const mapDispatchToProps = dispatch => {

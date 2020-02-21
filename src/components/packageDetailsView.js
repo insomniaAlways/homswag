@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import DefaultStyles from '../style/customStyles';
@@ -9,12 +9,18 @@ import { createCartItem, deleteItem } from "../../store/actions/cartItemAction";
 import _ from 'lodash';
 
 const PackageDetails = (props) => {
-  const { tab: packageService, cartItemModel, addItemToCart, deletePackage } = props
+  const { tab: packageService, cartItemModel, addItemToCart, deletePackage, networkAvailability } = props
   const [ isAdded, setIsAdded ] = useState(false)
 
   const addPackageToCart = () => {
     addItemToCart(packageService.id, packageService.price, true)
   }
+
+  useEffect(() => {
+    if(!cartItemModel.isLoading && cartItemModel.error) {
+      alert(cartItemModel.error)
+    }
+  }, [cartItemModel.error])
 
   const removePackageFromCart = () => {
     let cartPackages = cartItemModel.values.filter((cartItem) => cartItem.is_package == true)
@@ -67,17 +73,21 @@ const PackageDetails = (props) => {
               <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 130, textAlign: 'center'}}>Loading..</Text>
             </View> :
             <View>
-              { isAdded ? 
-                <TouchableOpacity
-                  onPress={removePackageFromCart}
-                  style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5}]}>
-                  <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 170, textAlign: 'center'}}>Remove Package</Text>
-                </TouchableOpacity> :
-                <TouchableOpacity
-                  onPress={addPackageToCart}
-                  style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5}]}>
-                  <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 100, textAlign: 'center'}}>Book Now</Text>
-                </TouchableOpacity>
+              {!networkAvailability.isOffline &&
+                <View>
+                  { isAdded ? 
+                    <TouchableOpacity
+                      onPress={removePackageFromCart}
+                      style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5}]}>
+                      <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 170, textAlign: 'center'}}>Remove Package</Text>
+                    </TouchableOpacity> :
+                    <TouchableOpacity
+                      onPress={addPackageToCart}
+                      style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5}]}>
+                      <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 100, textAlign: 'center'}}>Book Now</Text>
+                    </TouchableOpacity>
+                  }
+                </View>
               }
             </View>
           }
@@ -87,13 +97,16 @@ const PackageDetails = (props) => {
   )
 }
 
+const mapStateToProps = state => ({
+  networkAvailability: state.networkAvailability
+})
 // const mapStateToProps = state => ({})
 const mapDispatchToProps = dispatch => ({
   addItemToCart: (package_id, package_price, is_package) => dispatch(createCartItem(package_id, package_price, is_package)),
   deletePackage: (cart_item_id) => dispatch(deleteItem(cart_item_id))
 })
 
-export default connect(null, mapDispatchToProps)(PackageDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(PackageDetails);
 
 const styles = StyleSheet.create({
   container: {

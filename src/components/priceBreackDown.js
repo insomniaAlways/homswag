@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
-import DefaultStyles from '../style/customStyles';
+import { View, Text, StyleSheet } from 'react-native';
+import { brandLightBackdroundColor, brandColor } from '../style/customStyles';
 import { connect } from 'react-redux';
 import { fetchCart } from '../../store/actions/cartAction';
 import { FontAwesome } from '@expo/vector-icons';
@@ -30,16 +30,16 @@ function PriceBreakDown(props) {
         <Text>Total discount</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{cart.discount_amount}</Text>
+          <Text>{cart.cart_total - cart.item_total_price}</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
+      {/* <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
         <Text>Taxes</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
           <Text>{cart.taxes}</Text>
         </View>
-      </View>
+      </View> */}
       <View style={{borderColor: '#eee', borderWidth: .5}}></View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5, paddingTop: 5}}>
         <Text>Total</Text>
@@ -48,8 +48,8 @@ function PriceBreakDown(props) {
           <Text>{cart.cart_total}</Text>
         </View>
       </View>
-      <View style={[{padding: 10, alignItems: 'center', marginLeft: 30, marginRight: 30, marginTop: 10, borderRadius: 50 }, DefaultStyles.brandBackgroundColor]}>
-        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {cart.total_saved}</Text>
+      <View style={styles.totalSaveContainer}>
+        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {cart.cart_total - cart.item_total_price}</Text>
       </View>
     </View>
   )
@@ -69,3 +69,17 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PriceBreakDown);
+
+const styles = StyleSheet.create({
+  totalSaveContainer: {
+    padding: 10,
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 10,
+    borderRadius: 50,
+    backgroundColor: brandLightBackdroundColor,
+    borderWidth: 1,
+    borderColor: brandColor
+  }
+})

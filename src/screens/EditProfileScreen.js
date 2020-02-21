@@ -5,22 +5,24 @@ import PlaceHolderTextInput from '../components/placeHolderTextInput';
 import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { connect } from 'react-redux';
-import { brandColor } from '../style/customStyles';
+import { brandColor, brandLightBackdroundColor } from '../style/customStyles';
 import { fetchUser, updateUser } from '../../store/actions/userActions';
 import ImagePickerView from '../components/ImagePicker';
 
 function UpdateProfileScreen(props) {
-  const { currentUserModel, getUser, updateUserDetails, navigation } = props
+  const { currentUserModel, getUser, updateUserDetails, navigation, networkAvailability } = props
   const [ name, setName ] = useState()
   const [ isLoading, setLoading ] = useState(false)
   const [ image, setImage ] = useState()
   const [ isUploading, setUploding ] = useState(false)
 
   const updateProfile = async () => {
-    setLoading(true)
-    await updateUserDetails({ name: name, image_source: image})
-    setLoading(false)
-    navigation.navigate('App')
+    if(!networkAvailability.isOffline) {
+      setLoading(true)
+      await updateUserDetails({ name: name, image_source: image})
+      setLoading(false)
+      navigation.navigate('App')
+    }
   }
 
   const imageUploaded = (uri) => {
@@ -37,7 +39,9 @@ function UpdateProfileScreen(props) {
   }, [currentUserModel.isLoading])
 
   useLayoutEffect(() => {
-    getUser()
+    if(!networkAvailability.isOffline) {
+      getUser()
+    }
   }, [])
 
   return (
@@ -47,6 +51,7 @@ function UpdateProfileScreen(props) {
         <ImagePickerView 
           styles={styles} 
           image={image} 
+          isOffline={networkAvailability.isOffline}
           setImage={imageUploaded} 
           user_id={currentUserModel.values.id} 
           isEdit={true}
@@ -81,9 +86,16 @@ function UpdateProfileScreen(props) {
             <TouchableOpacity style={[styles.button, {paddingHorizontal: 40}]} disabled={true}>
               <Text style={{color: '#fff', fontFamily: 'roboto-regular'}}>Loading...</Text>
             </TouchableOpacity>:
-            <TouchableOpacity onPress={updateProfile} style={styles.button}>
-              <Text style={{color: '#fff', fontFamily: 'roboto-regular'}}>Save & Continue</Text>
-            </TouchableOpacity>
+            <Layout>
+              {networkAvailability.isOffline ? 
+                <TouchableOpacity style={[styles.button, {backgroundColor: brandLightBackdroundColor}]} disabled={true}>
+                  <Text style={{color: '#fff', fontFamily: 'roboto-regular'}}>Save & Continue</Text>
+                </TouchableOpacity> :
+                <TouchableOpacity onPress={updateProfile} style={styles.button}>
+                  <Text style={{color: '#fff', fontFamily: 'roboto-regular'}}>Save & Continue</Text>
+                </TouchableOpacity>
+              }  
+            </Layout>
           }
         </Layout>
       </Layout>
@@ -168,7 +180,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  currentUserModel: state.currentUser
+  currentUserModel: state.currentUser,
+  networkAvailability: state.networkAvailability
 })
 
 const mapDispatchToProps = dispatch => ({

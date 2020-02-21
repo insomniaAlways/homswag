@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { Icon, Layout } from '@ui-kitten/components';
 import Moment from 'react-moment';
@@ -9,7 +9,7 @@ import { updateOrder } from '../../store/actions/orderActions';
 const OrderDetails = function(props) {
   const order = props.navigation.getParam('order');
   const [ showModal, setShowModal ] = useState(false)
-  const { orderModel } = props
+  const { orderModel, networkAvailability } = props
   const statusCode = orderModel.statusCode
   const [ currentOrder, setCurrentOrder ] = useState(order)
   const [ status, setStatus ] = useState(statusCode.find((code) => code.id == currentOrder.status))
@@ -24,6 +24,12 @@ const OrderDetails = function(props) {
     await props.updateOrderStatus(order.id, 3)
     setShowModal(false)
   }
+
+  useEffect(() => {
+    if(!orderModel.isLoading && orderModel.error) {
+      alert(orderModel.error)
+    }
+  }, [orderModel.error])
 
   const renderModalElement = () => (
     <Layout
@@ -124,9 +130,12 @@ const OrderDetails = function(props) {
         </Layout>
         {(status.id != 3 && status.id != 4 && status.id != 5) ? 
           <Layout style={{marginTop: 30}}>
-            <TouchableOpacity onPress={() => setShowModal(true)} style={{width: 150}}>
-              <Text style={{color: 'red'}}>Cancel Appointment</Text>
-            </TouchableOpacity>
+            {networkAvailability.isOffline ?
+              <Layout><Text>Not connected to Internet</Text></Layout>:
+              <TouchableOpacity onPress={() => setShowModal(true)} style={{width: 150}}>
+                <Text style={{color: 'red'}}>Cancel Appointment</Text>
+              </TouchableOpacity>
+            }
           </Layout> : null }
       </Layout>
       <Modal
@@ -144,7 +153,8 @@ const OrderDetails = function(props) {
 
 const mapStateToProps = state => ({
   currentUser: state.currentUser.values,
-  orderModel: state.orders
+  orderModel: state.orders,
+  networkAvailability: state.networkAvailability
 })
 
 const mapDispatchToProp = dispatch => ({

@@ -19,11 +19,6 @@ function AppointmentDetails(props) {
     }
   }, [appointment.defaultValues.selectedAddress])
 
-  const onSelectDate = (event, selectDate = date) => {
-    setDatePickeVisibility(false)
-    setDate(selectDate);
-  }
-
   return (
     <TouchableOpacity onPress={() => navigation.navigate('BookAppointment')}>
       <Layout style={{justifyContent: 'center', alignItems: 'center', borderRadius: 20}}>

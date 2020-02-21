@@ -12,6 +12,7 @@ import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
 import Constants from 'expo-constants';
 import * as firebase from 'firebase';
+import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
 
 firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
@@ -51,7 +52,10 @@ function App () {
     
     const unsubscribe = NetInfo.addEventListener(state => {
       if(!state.isConnected) {
+        store.dispatch(onNetworkUnAvailable())
         alert('Seems like you are not connected to Internet')
+      } else {
+        store.dispatch(onNetworkAvailable())
       }
     });
     
