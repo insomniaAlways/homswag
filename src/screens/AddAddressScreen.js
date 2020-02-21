@@ -12,6 +12,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Label } from 'native-base';
 import * as Permissions from 'expo-permissions';
 import { brandColor } from '../style/customStyles';
+import * as Location from 'expo-location';
 
 const initialRegion = {
   latitude: 12.97194,
@@ -35,16 +36,11 @@ function AddressScreen(props) {
   const [ isCurrentLoactionLoaded, setCoodinatesLoaded ] = useState(false)
   const [ locationValue, setLocationValue ] = useState(locationValueObject)
   const [ isLoading, setLoading ] = useState(false)
-  
-  useEffect(() => {
-    if(!location.isLoading && location.values && location.values.results && location.values.results.length) {
-      let address = location.values.results[0]
-      let { formatted_address, geometry, place_id } = address
-      setLocationValue({...locationValue, formatedAddress: formatted_address, geometry: geometry.location, place_id: place_id})
-      setLoading(false)
-    }
-    return () => setLoading(false)
-  },[location.isLoading])
+
+  const setGeocoding = ({formatedAddress, geometry}) => {
+    setLocationValue({...locationValue, formatedAddress: formatedAddress, geometry: geometry})
+    setLoading(false)
+  }
 
   const onError = () => {
     setLoading(false)
@@ -59,10 +55,13 @@ function AddressScreen(props) {
       longitudeDelta: 0.0101,
     })
     async function saveData() {
-      alert('geoCoding api calling')
       try {
-        await getGeoCoding(latitude, longitude)
-        alert('geoCoding api call finished')
+        const locationResponse = await Location.reverseGeocodeAsync({latitude, longitude})
+        let formatted_address = `${locationResponse[0].name}, ${locationResponse[0].street}, ${locationResponse[0].city}, ${locationResponse[0].postalCode}, ${locationResponse[0].region}, ${locationResponse[0].country}`
+        setGeocoding({
+          formatedAddress: formatted_address,
+          geometry: { latitude: latitude, longitude: longitude },
+        })
         setCoodinatesLoaded(true)
         setLoading(false)
       } catch(e) {
@@ -84,9 +83,14 @@ function AddressScreen(props) {
   useEffect(() => {
     if(!isCurrentLoactionLoaded) {
       async function getPemission() {
-        return navigator.geolocation.getCurrentPosition(
-          ({coords}) => debounceCall(coords.latitude, coords.longitude),
-          onError, {enableHighAccuracy: true, maximumAge: 0});
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+          onError()
+        } else {
+          return navigator.geolocation.getCurrentPosition(
+            ({coords}) => debounceCall(coords.latitude, coords.longitude),
+            onError, {enableHighAccuracy: true, maximumAge: 0});
+        }
       }
       getPemission()
     }

@@ -29,14 +29,14 @@
       "bundleIdentifier": "com.capaz.homswag",
       "supportsTablet": false,
       "config": {
-        "googleMapsApiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"
+        "googleMapsApiKey": "AIzaSyCgz8jG03p1OFzrRAh3fZ45jx3X8j783lQ"
       }
     },
     "android": {
       "package": "com.capaz.homswag",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBBHMzPB0P6siZwRPhArt15t-0QFjRAQJA"
+          "apiKey": "AIzaSyCgz8jG03p1OFzrRAh3fZ45jx3X8j783lQ"
         }
       }
     },
