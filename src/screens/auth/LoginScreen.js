@@ -18,7 +18,7 @@ const PhoneIcon = (style) => (
 );
 
 const LoginScreen = (props) => {
-  const { navigation, addTokenToHeader, registerUser, validateOtp, auth, currentUserModel, restoreAuth } = props
+  const { navigation, addTokenToHeader, registerUser, validateOtp, auth, currentUserModel, restoreAuth, networkAvailability } = props
   const [ isSessionAuthenticated, setSession ] = useState(false)
   const [ isSessionAuthenticating, setAuthenticating ] = useState(true)
   const [ phone, setPhone ] = useState();
@@ -46,9 +46,13 @@ const LoginScreen = (props) => {
   }
 
   const onSubmit = async () => {
-    if(phone && otp) {
-      setLoading(true)
-      validateOtp(phone, otp)
+    if(networkAvailability.isOffline) {
+      alert('Seems like you are not connected to Internet')
+    } else {
+      if(phone && otp) {
+        setLoading(true)
+        validateOtp(phone, otp)
+      }
     }
   };
 
@@ -67,17 +71,21 @@ const LoginScreen = (props) => {
   }
 
   const registerPhone = async () => {
-    if(phone && (phone.length == 10)) {
-      setShowOtpField(true)
-      try {
-        await registerUser(phone)
+    if(networkAvailability.isOffline) {
+      alert('Seems like you are not connected to Internet')
+    } else {
+      if(phone && (phone.length == 10)) {
         setShowOtpField(true)
-        resendTimer = setTimeout(() => {
-          enableResend(true)
-        }, 5000)
-      }
-      catch(e) {
-        resetState()
+        try {
+          await registerUser(phone)
+          setShowOtpField(true)
+          resendTimer = setTimeout(() => {
+            enableResend(true)
+          }, 5000)
+        }
+        catch(e) {
+          resetState()
+        }
       }
     }
   }
@@ -249,7 +257,8 @@ const LoginScreen = (props) => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  currentUserModel: state.currentUser
+  currentUserModel: state.currentUser,
+  networkAvailability: state.networkAvailability
 })
 
 const mapDispatchToProps = dispatch => ({
