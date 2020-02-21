@@ -39,8 +39,6 @@ function Items(props) {
       }
   }, [cartItemModel.values.length])
 
-  // console.log('cartItemModel', cartItemModel)
-
   return (
     <Layout style={{flex: 1}}>
       { category.hasSubCategory ?

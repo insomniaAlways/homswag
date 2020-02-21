@@ -10,7 +10,7 @@ function ContactScreen(props) {
     Linking.canOpenURL(url)
     .then((supported) => {
       if (!supported) {
-        console.log("Can't handle url: " + url);
+        alert(url)
       } else {
         return Linking.openURL(url);
       }

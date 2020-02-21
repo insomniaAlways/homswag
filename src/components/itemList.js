@@ -34,10 +34,12 @@ const ItemsList = (props) => {
         item={info.item}
         cartItems={cartItems}
         cart={cart}
+        refreshing={refreshing}
         getCartItems={getCartItems}
         isAdded={isAdded}
         setAdded={setAdded}
         setShowButton={setShowButton}
+        {...props}
         style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}/>
     </View>
   );

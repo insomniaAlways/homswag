@@ -9,12 +9,14 @@ const CartItemRow = (props) => {
   const { cartItem, updateCartItem, deleteCartItem, cartItemModel } = props
   const data = cartItem.is_package ? cartItem.package : cartItem.item
   const [ quantity, setQuantity ] = useState()
+  const [ isLoading, setLoading ] = useState(false)
 
   useEffect(() => {
     async function updateCT() {
       if(quantity) {
         let totalPrice = (+data.price * parseInt(quantity))
         await updateCartItem(cartItem.id, quantity, totalPrice)
+        setLoading(false)
       }
     }
     updateCT()
@@ -25,12 +27,15 @@ const CartItemRow = (props) => {
   }, [])
 
   const incCount = () => {
+    setLoading(true)
     setQuantity(cartItem.quantity + 1)
   }
 
   const decCount = () => {
+    setLoading(true)
     if(cartItem.quantity == 1) {
       deleteCartItem(cartItem.id)
+      setLoading(false)
     } else {
       setQuantity(cartItem.quantity - 1)
     }
@@ -49,7 +54,7 @@ const CartItemRow = (props) => {
         </View>
       </View>
       <View style={{flex: 2, justifyContent: 'center'}}>
-        {cartItemModel.isLoading ?
+        {isLoading ?
           <View style={{width: 90, alignItems: 'center'}}><Text>Loading..</Text></View>:
           <View style={{width: 90, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center'}}>
             <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
