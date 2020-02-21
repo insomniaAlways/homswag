@@ -25,6 +25,8 @@ const LoginScreen = (props) => {
   const [ otp, setOtp ] = useState();
   const [ showOtpField, setShowOtpField ] = useState(false);
   const [ isLoading, setLoading ] = useState(false)
+  const [ isResendEnable, enableResend ] = useState(false)
+  let resendTimer;
   
   const storeSession = async () => {
     let token
@@ -50,11 +52,18 @@ const LoginScreen = (props) => {
     }
   };
 
-  const resetState = () => {
+  const resetState = (skipOtp=false) => {
     setSession(false)
     setAuthenticating(false)
-    setShowOtpField(false)
     setLoading(false)
+    if(!skipOtp) {
+      setShowOtpField(false)
+      clearTimeout(resendTimer)
+      resendTimer = setTimeout(() => {
+        enableResend(true)
+      }, 5000)
+      enableResend(false)
+    }
   }
 
   const registerPhone = async () => {
@@ -63,6 +72,9 @@ const LoginScreen = (props) => {
       try {
         await registerUser(phone)
         setShowOtpField(true)
+        resendTimer = setTimeout(() => {
+          enableResend(true)
+        }, 5000)
       }
       catch(e) {
         resetState()
@@ -105,6 +117,8 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     setShowOtpField(false)
+    clearTimeout(resendTimer)
+    enableResend(false)
     if(phone) {
       resetState()
     }
@@ -121,7 +135,7 @@ const LoginScreen = (props) => {
       storeSession()
     }
     if(!auth.isLoading && auth.error) {
-      resetState()
+      resetState(true)
       alert(auth.error.message)
     }
     return () => {
@@ -195,7 +209,15 @@ const LoginScreen = (props) => {
                     keyboardType={'number-pad'}
                     value={otp}
                     onChangeText={setOtp}
-                  />}
+                  />
+                  }
+                {showOtpField && 
+                  <View style={{flexDirection: 'row', justifyContent: 'flex-end', width: '100%', paddingRight: 10}}>
+                    <TouchableOpacity onPress={registerPhone} disabled={!isResendEnable}>
+                      <Text style={isResendEnable ? {color: '#fff'} : {color: '#d4d4d4'}}>Resend OTP</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
               </View>
               { isLoading ? 
                 <View style={styles.signInButtonContainer}>
@@ -206,10 +228,10 @@ const LoginScreen = (props) => {
                 <View style={styles.signInButtonContainer}>            
                   { showOtpField ? 
                     <TouchableOpacity style={styles.signInButton} onPress={onSubmit} disabled={isLoading}>
-                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18, fontFamily: 'roboto-regular'}}>Submit</Text>
+                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Submit</Text>
                     </TouchableOpacity>:
-                    <TouchableOpacity style={styles.signInButton} onPress={registerPhone} disabled={isLoading}>
-                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18, fontFamily: 'roboto-regular'}}>Continue</Text>
+                    <TouchableOpacity style={[styles.signInButton]} onPress={registerPhone} disabled={isLoading || !phone || (phone && phone.length < 10)}>
+                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Continue</Text>
                     </TouchableOpacity>
                   }
               </View> 
