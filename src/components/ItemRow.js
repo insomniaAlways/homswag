@@ -7,8 +7,9 @@ import _ from 'lodash';
 import { fetchCartItems, createCartItem } from '../../store/actions/cartItemAction';
 
 function ItemRow(props) {
-  const { item, cartItemModel, cart, addItemToCart, getCartItem, setShowButton, networkAvailability } = props;
+  const { item, cartItemModel, cart, addItemToCart, setShowButton, networkAvailability } = props;
   const [ isAdded, setAdded ] = useState(false)
+  const [ selectedCartItem, setSelectedCartItem ] = useState()
   const cartItems = cartItemModel.values
 
   const isItemAdded = () => {
@@ -28,6 +29,8 @@ function ItemRow(props) {
   useLayoutEffect(() => {
     if(isItemAdded()) {
       setAdded(true)
+      let ct = isItemAdded()
+      setSelectedCartItem(ct)
     } else {
       setAdded(false)
     }
@@ -42,7 +45,7 @@ function ItemRow(props) {
           cart={cart}
           refreshing={props.refreshing}
           cartItems={cartItems}
-          cartItem={isItemAdded()}
+          cartItem={selectedCartItem}
           navigation={props.navigation}
           isOffline={networkAvailability.isOffline}
           removeCartItem={setAdded}/> : 

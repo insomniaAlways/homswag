@@ -10,7 +10,7 @@ function ModifyButton(props) {
   const [ isLoading, setLoading ] = useState(false)
 
   const init = (initialCount) => {
-    return {count: cartItem ? cartItem.quantity : initialCount};
+    return {count: initialCount};
   }
 
   function reducer(state, action) {
@@ -23,12 +23,15 @@ function ModifyButton(props) {
         setLoading(true)
         return {count: state.count - 1};
       }
+      case 'reset': {
+        init(action.payload)
+      }
       default:
         throw new Error();
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, 1, init);
+  const [state, dispatch] = useReducer(reducer, cartItem ? cartItem.quantity : 1, init);
 
   useEffect(() => {
     async function updateCT() {
@@ -82,6 +85,7 @@ function ModifyButton(props) {
 
 const mapStateToProps = state => ({
   cartItemModel: state.cartItems,
+  cartModel: state.cart
 })
 
 mapDispatchToProps = dispatch => {
