@@ -22,11 +22,11 @@ function Dashboard(props) {
       setRefreshing(true);
       async function fetchData() {
         await props.getCart()
-        await props.getAllCartItems()
         await props.getAllCategories()
         await props.getUser()
         await props.getAllItems()
         await props.getPackages()
+        await props.getAllCartItems()
         setRefreshing(false)
       }
       fetchData()
