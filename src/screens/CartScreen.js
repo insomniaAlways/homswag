@@ -12,8 +12,7 @@ import EmptyCart from '../../assets/images/empty_cart.png'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function CartScreen(props) {
-  const { navigation, cartModel, user, cartItemModel, appointment, networkAvailability } = props;
-  const [ isLoading, setLoading ] = useState(false)
+  const { navigation, cartModel, cartItemModel, appointment, networkAvailability } = props;
 
   useLayoutEffect(() => {
     if(!networkAvailability.isOffline) {
@@ -42,14 +41,6 @@ function CartScreen(props) {
     }
   }
 
-  useEffect(() => {
-    if(cartModel.isLoading || cartItemModel.isLoading) {
-      setLoading(true)
-    } else if(!cartModel.isLoading && !cartItemModel.isLoading){
-      setLoading(false)
-    }
-  }, [cartModel.isLoading, cartItemModel.isLoading])
-
   if(networkAvailability.isOffline) {
     return (
       <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -69,7 +60,7 @@ function CartScreen(props) {
             <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: 'transparent'}}>
               <Layout style={{marginVertical: 10, paddingVertical: 10, borderRadius: 20, marginHorizontal: 10, paddingHorizontal: 10}}>
                 <Text style={{padding: 10, fontWeight: 'bold'}}>Added Items: </Text>
-                <CartItemList cart={cartModel.values} cartItems={cartItemModel.values} setLoading={setLoading}/>
+                <CartItemList cart={cartModel.values} cartItems={cartItemModel.values}/>
               </Layout>
               <Layout style={{marginVertical: 10, paddingVertical: 20, borderRadius: 20, marginHorizontal: 10}}>
                 <AppointmentDetails bookingDetails={appointment.defaultValues} navigation={navigation}/>
@@ -77,7 +68,7 @@ function CartScreen(props) {
               <Layout style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingVertical: 10, paddingHorizontal: 10}}>
                 <Text style={{paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>People also search for:</Text>
               </Layout>
-              <CartPromoItemList setLoading={setLoading}/>
+              <CartPromoItemList />
               <Layout style={{marginHorizontal: 10, marginBottom: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 10, paddingHorizontal: 10}}>
                 <Text style={{paddingTop: 10, paddingBottom: 10, fontWeight: "bold"}}>Price Breakdown: </Text>
                 <PriceBreakDown />
@@ -97,20 +88,6 @@ function CartScreen(props) {
             </Layout>
           </Layout>
        )}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isLoading}
-          backdropStyle={styles.modal}
-          onBackdropPress={() => {
-            setLoading(false);
-          }}>
-            <Layout style={styles.modalContainer}>
-              <Layout style={styles.controlContainer}>
-                <Spinner status='control'/>
-              </Layout>
-            </Layout>
-        </Modal>
       </Layout>
     );
   }

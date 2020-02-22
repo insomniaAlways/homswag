@@ -7,7 +7,6 @@ import { FontAwesome } from '@expo/vector-icons';
 
 function PriceBreakDown(props) {
   const { cart, cartItems } = props;
-  // const { discount_amount, taxes, cart_total, total_saved } = cart;
 
   useEffect(() => {
     props.getCartData()
@@ -30,16 +29,9 @@ function PriceBreakDown(props) {
         <Text>Total discount</Text>
         <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
           <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{cart.cart_total - cart.item_total_price}</Text>
+          <Text>{cart.item_total_price - cart.cart_total}</Text>
         </View>
       </View>
-      {/* <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5}}>
-        <Text>Taxes</Text>
-        <View style={{flexDirection: 'row', width: 70, justifyContent: 'space-between'}}>
-          <Text>:  <FontAwesome name="rupee" size={12} color="black" /></Text>
-          <Text>{cart.taxes}</Text>
-        </View>
-      </View> */}
       <View style={{borderColor: '#eee', borderWidth: .5}}></View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft:10, paddingBottom: 5, paddingTop: 5}}>
         <Text>Total</Text>
@@ -49,7 +41,7 @@ function PriceBreakDown(props) {
         </View>
       </View>
       <View style={styles.totalSaveContainer}>
-        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {cart.cart_total - cart.item_total_price}</Text>
+        <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {cart.item_total_price - cart.cart_total}</Text>
       </View>
     </View>
   )

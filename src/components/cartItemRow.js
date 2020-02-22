@@ -1,13 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { Icon, Text } from '@ui-kitten/components';
-import ModifyButton from './itemModifyButton';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Icon } from '@ui-kitten/components';
 import { FontAwesome } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 const CartItemRow = (props) => {
-  const { cart, cartItem, setLoading } = props
+  const { cartItem, updateCartItem, deleteCartItem, cartItemModel } = props
   const data = cartItem.is_package ? cartItem.package : cartItem.item
-  const [ quantity, setQuantity ] = useState(cartItem.quantity)
+  const [ quantity, setQuantity ] = useState()
+  const [ isLoading, setLoading ] = useState(false)
+
+  useEffect(() => {
+    async function updateCT() {
+      if(quantity) {
+        let totalPrice = (+data.price * parseInt(quantity))
+        await updateCartItem(cartItem.id, quantity, totalPrice)
+        setLoading(false)
+      }
+    }
+    updateCT()
+  }, [quantity])
+
+  useEffect(() => {
+    setQuantity(cartItem.quantity)
+  }, [])
+
+  const incCount = () => {
+    setLoading(true)
+    setQuantity(cartItem.quantity + 1)
+  }
+
+  const decCount = () => {
+    setLoading(true)
+    if(cartItem.quantity == 1) {
+      deleteCartItem(cartItem.id)
+      setLoading(false)
+    } else {
+      setQuantity(cartItem.quantity - 1)
+    }
+  }
 
   return (
     <View style={{flex: 1, flexDirection: 'row', paddingLeft: 10, paddingBottom: 10}}>
@@ -22,9 +54,28 @@ const CartItemRow = (props) => {
         </View>
       </View>
       <View style={{flex: 2, justifyContent: 'center'}}>
-        <View style={{width: 90}}>
-          <ModifyButton cartItem={cartItem} cart={cart} item={data} quantity={quantity} setLoading={setLoading} setQuantity={setQuantity}/>
-        </View>
+        {isLoading ?
+          <View style={{width: 90, alignItems: 'center'}}><Text>Loading..</Text></View>:
+          <View style={{width: 90, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center'}}>
+            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+              <TouchableOpacity onPress={decCount}>
+                <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+                  <Icon name='minus-outline' width={12} height={12} fill="#0D5618"/>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
+              <Text>{quantity}</Text>
+            </View>
+            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+              <TouchableOpacity onPress={incCount}>
+                <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+                  <Icon name='plus-outline' width={12} height={12} fill="#0D5618"/>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        }
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -35,4 +86,13 @@ const CartItemRow = (props) => {
   )
 };
 
-export default CartItemRow;
+const mapStateToProps = state => ({
+  cartItemModel: state.cartItems
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateCartItem: (cart_item_id, quantity, totalPrice) => dispatch(updateItem(cart_item_id, quantity, totalPrice)),
+  deleteCartItem: (cart_item_id) => dispatch(deleteItem(cart_item_id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartItemRow);
