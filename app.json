@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#fff"
+      "backgroundColor": "#FFFFFF"
     },
     "icon": "./assets/images/icon.png",
     "extra": {
@@ -47,6 +47,16 @@
       }
     },
     "description": "WIP project for Homswag.",
-    "githubUrl": "https://github.com/insomniaAlways/homswag.git"
+    "githubUrl": "https://github.com/insomniaAlways/homswag.git",
+    "notification": {
+      "icon": "./assets/images/icon.png",
+      "color": "#FFFFFF",
+      "androidMode": "default"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 120000
+    }
   }
 }
