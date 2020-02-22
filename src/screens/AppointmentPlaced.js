@@ -37,15 +37,17 @@ const AppointmentPlacedScreen = (props) => {
   return (
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#F7F9FC"}}>
       <Layout style={styles.content}>
-      <Layout style={{justifyContent: 'center', marginBottom: 30}}>
-        <Image
-          style={{width: 160, height: 160}}
-          source={Tick}
-        />
-      </Layout>
-        <Text style={styles.fontFamily}>All Right!</Text>
-        <Text style={styles.fontFamily}>Sit back and relax.</Text>
-        <Text style={styles.fontFamily}>The appointment has successfully placed.</Text>
+        <Layout style={{justifyContent: 'center', marginBottom: 30}}>
+          <Image
+            style={{width: 160, height: 160}}
+            source={Tick}
+          />
+        </Layout>
+        <Layout style={{height: 200, alignItems: 'center'}}>
+          <Text style={styles.fontFamily}>All Right!</Text>
+          <Text style={styles.fontFamily}>Sit back and relax.</Text>
+          <Text style={styles.fontFamily}>The appointment has successfully placed.</Text>
+        </Layout>
         <TouchableOpacity style={styles.button} onPress={() => handleBackButtonPressAndroid()}>
           <Layout style={styles.buttomView}>
             <Text style={{color: '#fff'}}>Continue Surfing</Text>
@@ -66,7 +68,7 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = StyleSheet.create({
   content : {
-    height: '70%',
+    // height: '50%',
     width: '80%',
     backgroundColor: '#FDFDFD',
     shadowColor: "#000",

@@ -21,10 +21,10 @@ function ContactScreen(props) {
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'android') {
-      number = 'tel:${+1234567890}';
+      number = 'tel:${+916366505567}';
     }
     else {
-      number = 'telprompt:${+1234567890}';
+      number = 'telprompt:${+916366505567}';
     }
     chechAccessibity(number);
   };

@@ -11,13 +11,13 @@ import Constants from 'expo-constants';
 import ItemView from '../components/itemView';
 import { TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import { brandColor } from '../style/customStyles';
+import { brandColor, brandLightBackdroundColor } from '../style/customStyles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function ReviewOrderScreen (props) {
   const { cart, order, getCart, placeOrder, appointment, networkAvailability } = props
   const [ isloading, setLoading ] = useState(false)
-  const { cart_items, cart_total } = cart.values
+  const { cart_items, cart_total, item_total_price } = cart.values
 
   useLayoutEffect(() => {
     if(!networkAvailability.isOffline) {
@@ -96,6 +96,9 @@ function ReviewOrderScreen (props) {
               </Layout>
             </ScrollView>
           </Layout>
+          <Layout style={styles.totalSaveContainer}>
+            <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {item_total_price - cart_total}</Text>
+          </Layout>
         </Layout>
         <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandColor}} onPress={() => confirmBooking()}>
           <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Confirm</Text>
@@ -138,5 +141,16 @@ const styles = StyleSheet.create({
   },
   orderDetailsScroller: {
     // flex: 1,
+  },
+  totalSaveContainer: {
+    padding: 10,
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 10,
+    borderRadius: 50,
+    backgroundColor: brandLightBackdroundColor,
+    borderWidth: 1,
+    borderColor: brandColor
   }
 })

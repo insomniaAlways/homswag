@@ -35,7 +35,7 @@ function OrderHistoryScreen(props) {
     return (
       <View style={{flex: 1}}>
         <SafeAreaView style={{flex: 1}}>
-          <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Orders: </Text></View>
+          <View style={{padding: 10, paddingLeft: 20}}><Text style={{fontSize: 16, fontWeight: 'bold'}}>My Appointments: </Text></View>
           {orderModel.isLoading ? 
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Text>Loading..</Text>

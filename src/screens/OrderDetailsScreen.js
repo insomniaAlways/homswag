@@ -85,7 +85,7 @@ const OrderDetails = function(props) {
     <Layout style={{flex: 1, paddingLeft: 10, paddingRight: 10, margin: 10, borderRadius: 20}}>
       <Layout style={{padding: 10}}>
         <Layout style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Order No: {order.id}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Appointment No: {order.id}</Text>
           {status && status.color && 
             <Text>Status:
               <Text style={{color: status.color}}>  {status.name}</Text>
