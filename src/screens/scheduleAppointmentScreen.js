@@ -4,7 +4,6 @@ import SelectDate from '../components/SelectDate';
 import SelectTimeSlot from '../components/selectTimeSlot';
 import BookingDetails from '../components/bookingDetails';
 import DefaultStyles, { brandColor } from '../style/customStyles';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import Modal from "react-native-modal";
 import AddressList from '../components/addressList';

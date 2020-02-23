@@ -90,6 +90,15 @@ function ReviewOrderScreen (props) {
           style={styles.infoContainer}
           imageBackgroundStyle={styles.imageBackgroundStyle}
           source={Graphics}>
+          <Layout style={{backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
+            <Text style={{color: '#fff', fontSize: 18}}>You can pay us by UPI OR Cash after services</Text>
+            <Layout style={{flexDirection: 'row', padding: 10, borderRadius: 5, backgroundColor: 'transparent'}}>
+              <Text style={{fontFamily: 'roboto-medium', color: '#fff'}}>Note: </Text>
+              <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '90%', color: '#fff'}}>
+                If any cancellation or reschedule Appointment after the confirmation is mandatory in prior to 2 Hours, Appreciate you cooperation on the same.
+              </Text>
+            </Layout>
+          </Layout>
         </ImageOverlay>
         <Layout style={{flex: 4, backgroundColor: "#F7F9FC"}}>
           <Layout style={styles.orderDetailsContainer}>
@@ -136,7 +145,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(ReviewOrderScreen);
 const styles = StyleSheet.create({
   infoContainer: {
     flex: 2,
-    paddingTop: Constants.statusBarHeight
+    paddingTop: Constants.statusBarHeight,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   imageBackgroundStyle: {
   },

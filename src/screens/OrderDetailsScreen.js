@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { updateOrder } from '../../store/actions/orderActions';
+import moment from 'moment';
 
 const OrderDetails = function(props) {
   const order = props.navigation.getParam('order');
@@ -13,11 +14,20 @@ const OrderDetails = function(props) {
   const statusCode = orderModel.statusCode
   const [ currentOrder, setCurrentOrder ] = useState(order)
   const [ status, setStatus ] = useState(statusCode.find((code) => code.id == currentOrder.status))
+  const [ enableCancel, setCancelEnable ] = useState(false)
 
   useEffect(() => {
     let co = orderModel.values.find((o) => o.id == currentOrder.id)
     let s = statusCode.find((code) => code.id == co.status)
     setStatus(s)
+    if(currentOrder && currentOrder.confirm_from) {
+      let isBefore = moment().isBefore(moment(currentOrder.confirm_from).subtract(2, 'hours'))
+      if(isBefore) {
+        setCancelEnable(true)
+      } else {
+        setCancelEnable(false)
+      }
+    }
   }, [currentOrder, orderModel.isLoading])
 
   const cancelOrder = async () => {
@@ -93,7 +103,7 @@ const OrderDetails = function(props) {
           }
         </Layout>
         <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{marginRight: 10}}>Placed on: </Text>
+          <Text style={{marginRight: 10, fontFamily: 'roboto-medium'}}>Placed on: </Text>
           <Moment element={Text}
               date={order.created_at}
               format="DD/MM/YYYY"
@@ -106,20 +116,20 @@ const OrderDetails = function(props) {
       </Layout>
       <Layout style={{padding: 10}}>
         <Layout style={{flexDirection: "row", justifyContent: 'space-between'}}>
-          <Text>Total Amount</Text>
+          <Text style={{fontFamily: 'roboto-medium'}}>Total Amount</Text>
           <Text><FontAwesome name="rupee" size={12} color="black" /> {order.order_total}</Text>
         </Layout>
         <Layout style={{flexDirection: "row", justifyContent: 'space-between'}}>
-          <Text>Total Paid</Text>
+          <Text style={{fontFamily: 'roboto-medium'}}>Total Paid</Text>
           <Text><FontAwesome name="rupee" size={12} color="black" /> {order.total_paid}</Text>
         </Layout>
         <Layout style={{marginTop: 10}}>
-          <Text>Updates sent to:</Text>
+          <Text style={{fontFamily: 'roboto-medium'}}>Updates sent to:</Text>
           <Text>{props.currentUser.phone}</Text>
           {props.currentUser.email ? <Text>{props.currentUser.email}</Text> : null}
         </Layout>
         <Layout style={{marginTop: 10}}>
-          <Text>Appointment Details: </Text>
+          <Text style={{fontFamily: 'roboto-medium'}}>Appointment Details: </Text>
           <Layout style={{flexDirection: "row", justifyContent: 'space-between'}}>
             <Text>Booked for</Text>
             <Moment element={Text}
@@ -128,7 +138,19 @@ const OrderDetails = function(props) {
             />
           </Layout>
         </Layout>
-        {(status.id != 3 && status.id != 4 && status.id != 5) ? 
+        {order.confirm_from && 
+          <Layout style={{marginTop: 10}}>
+            <Text style={{fontFamily: 'roboto-medium'}}>Confirm Appointment Details: </Text>
+            <Layout style={{flexDirection: "row", justifyContent: 'space-between'}}>
+              <Text>Confirmed for</Text>
+              <Moment element={Text}
+                date={order.confirm_from}
+                format="hh:mm A, DD/MM/YYYY"
+              />
+            </Layout>
+          </Layout>
+        }
+        {(status.id != 3 && status.id != 4 && status.id != 5 && enableCancel) ? 
           <Layout style={{marginTop: 30}}>
             {networkAvailability.isOffline ?
               <Layout><Text>Not connected to Internet</Text></Layout>:
