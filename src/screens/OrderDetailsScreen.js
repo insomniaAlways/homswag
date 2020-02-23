@@ -15,12 +15,14 @@ const OrderDetails = function(props) {
   const [ currentOrder, setCurrentOrder ] = useState(order)
   const [ status, setStatus ] = useState(statusCode.find((code) => code.id == currentOrder.status))
   const [ enableCancel, setCancelEnable ] = useState(false)
+  const [ showConfirmFrom, setConfirmFrom ] = useState(false)
 
   useEffect(() => {
     let co = orderModel.values.find((o) => o.id == currentOrder.id)
     let s = statusCode.find((code) => code.id == co.status)
     setStatus(s)
     if(currentOrder && currentOrder.confirm_from) {
+      setConfirmFrom(true)
       let isBefore = moment().isBefore(moment(currentOrder.confirm_from).subtract(2, 'hours'))
       if(isBefore) {
         setCancelEnable(true)
@@ -106,7 +108,7 @@ const OrderDetails = function(props) {
           <Text style={{marginRight: 10, fontFamily: 'roboto-medium'}}>Placed on: </Text>
           <Moment element={Text}
               date={order.created_at}
-              format="DD/MM/YYYY"
+              format="hh:mm, DD/MM/YYYY"
               style={{fontSize: 12, width: '100%', textAlign: 'left'}}
             />
         </Layout>
@@ -138,18 +140,17 @@ const OrderDetails = function(props) {
             />
           </Layout>
         </Layout>
-        {order.confirm_from && 
+        { showConfirmFrom &&
           <Layout style={{marginTop: 10}}>
             <Text style={{fontFamily: 'roboto-medium'}}>Confirm Appointment Details: </Text>
             <Layout style={{flexDirection: "row", justifyContent: 'space-between'}}>
               <Text>Confirmed for</Text>
               <Moment element={Text}
-                date={order.confirm_from}
+                date={currentOrder.confirm_from}
                 format="hh:mm A, DD/MM/YYYY"
               />
             </Layout>
-          </Layout>
-        }
+          </Layout> }
         {(status.id != 3 && status.id != 4 && status.id != 5 && enableCancel) ? 
           <Layout style={{marginTop: 30}}>
             {networkAvailability.isOffline ?
