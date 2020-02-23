@@ -67,6 +67,18 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 120000
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "capaz",
+            "project": "homswag",
+            "authToken": "5d0fd750b7de4a6c8bcad01317032c8b9c3a019e47534ce99fe0e5b8f344b814"
+          }
+        }
+      ]
     }
   }
 }
