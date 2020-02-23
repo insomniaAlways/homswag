@@ -65,9 +65,6 @@ function App () {
         store.dispatch(onNetworkAvailable())
       }
     });
-    
-    // To unsubscribe to these update, just use:
-    // unsubscribe();
   })
   
   return (

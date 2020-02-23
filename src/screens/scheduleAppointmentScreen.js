@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, View, Text, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import { Button, View, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import SelectDate from '../components/SelectDate';
 import SelectTimeSlot from '../components/selectTimeSlot';
 import BookingDetails from '../components/bookingDetails';
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Modal from "react-native-modal";
 import AddressList from '../components/addressList';
 import { fetchAddress } from '../../store/actions/addressActions';
-import { Layout } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
 import { updateAppointmentState } from '../../store/actions/appointmentActions';
 import _ from 'lodash';
@@ -78,8 +78,8 @@ function ScheduleAppointmentScreen(props) {
   };
 
   return (
-    <KeyboardAvoidingView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 10, marginBottom: 50}}>
+    <KeyboardAvoidingView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <View style={{flex: 1, padding: 10, }}>
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
@@ -99,6 +99,14 @@ function ScheduleAppointmentScreen(props) {
             goToAddAddress={goToAddAddress}
             navigation={props.navigation}
             />
+        </View>
+        <View style={{height: 100, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row' ,marginHorizontal: 20, marginVertical: 20, borderWidth: 1, borderColor: '#a9d5de', padding: 10, borderRadius: 5, backgroundColor: '#f8ffff'}}>
+            <Text style={{fontFamily: 'roboto-medium', color: '#0e566c'}}>Note: </Text>
+            <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '90%', color: '#276f86'}}>
+              This is your only slot booking comfirmation. Our CSR shall call you confirming your Appoinment schedule.
+            </Text>
+          </View>
         </View>
       </View>
       <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
