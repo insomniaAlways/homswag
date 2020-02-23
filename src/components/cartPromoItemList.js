@@ -69,11 +69,6 @@ const CartPromoItemList = (props) => {
         <Text category='s1'>
           {info.item.name}
         </Text>
-        <Text
-          appearance='hint'
-          category='c1'>
-          {info.item.description}
-        </Text>
       </Layout>
     </Card>
   );

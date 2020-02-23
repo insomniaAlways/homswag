@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Button, TouchableOpacity, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
 import CategoryList from '../components/categoryList';
@@ -10,7 +10,6 @@ import { fetchAllItems } from '../../store/actions/itemActions';
 import { fetchPackages } from '../../store/actions/packageActions';
 import OfferView from '../components/offerView';
 import PromoView from '../components/promoView';
-import TabViews from '../components/tabs';
 import * as Animatable from 'react-native-animatable';
 import { Spinner } from '@ui-kitten/components';
 
