@@ -15,7 +15,7 @@ import { brandColor, brandLightBackdroundColor } from '../style/customStyles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function ReviewOrderScreen (props) {
-  const { cart, order, getCart, placeOrder, appointment, networkAvailability } = props
+  const { cart, orderModel, getCart, placeOrder, appointment, networkAvailability } = props
   const [ isloading, setLoading ] = useState(false)
   const { cart_items, cart_total, item_total_price } = cart.values
 
@@ -24,6 +24,12 @@ function ReviewOrderScreen (props) {
       getCart()
     }
   }, [])
+
+  useEffect(() => {
+    if(!orderModel.isloading && orderModel.error) {
+      alert(orderModel.error)
+    }
+  }, [orderModel.error])
 
   const confirmBooking = async () => {
     setLoading(true)
@@ -41,27 +47,31 @@ function ReviewOrderScreen (props) {
       from = moment(from).add(15, 'hours').toISOString()
       to = moment(from).add(18, 'hours').toISOString()
     }
-    let order = await placeOrder({
-      "payment_method": 1,
-      "from": from,
-      "to": to,
-      "address_id": appointmentDetails.selectedAddress.id,
-      "total_paid": 0, //need to change when online payment
-      "status": 1,
-      "special_instruction": appointmentDetails.special_instruction,
-      "preferred_beautician": appointmentDetails.prefered_beautician
-    })
-    setLoading(false)
-    props.navigation.navigate('OrderComplete', { order: order.payload.currentValue })
+    try {
+      let order = await placeOrder({
+        "payment_method": 1,
+        "from": from,
+        "to": to,
+        "address_id": appointmentDetails.selectedAddress.id,
+        "total_paid": 0, //need to change when online payment
+        "status": 1,
+        "special_instruction": appointmentDetails.special_instruction,
+        "preferred_beautician": appointmentDetails.prefered_beautician
+      })
+      setLoading(false)
+      props.navigation.navigate('OrderComplete', { order: order.payload.currentValue })
+    } catch(e) {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
-    if(cart.isloading || order.isloading) {
+    if(cart.isloading || orderModel.isloading) {
       setLoading(true)
     } else {
       setLoading(false)
     }
-  }, [cart.isloading, order.isloading])
+  }, [cart.isloading, orderModel.isloading])
 
   if(networkAvailability.isOffline) {
     return (
@@ -111,7 +121,7 @@ function ReviewOrderScreen (props) {
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  order: state.orders,
+  orderModel: state.orders,
   appointment: state.appointment,
   networkAvailability: state.networkAvailability
 })
