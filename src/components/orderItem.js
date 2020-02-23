@@ -29,7 +29,7 @@ const OrderItem = function(props) {
       <Layout style={{paddingLeft: 10, paddingRight: 10, borderWidth: 1, borderColor: "#eee", margin: 10, borderBottomWidth: 3, borderRadius: 20}}>
         <View style={{padding: 10}}>
           <Layout style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Order No: {order.id}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Appointment No: {order.id}</Text>
             <Text style={{color: status.color}}>  {status.name}</Text>
           </Layout>
           <Moment element={Text}

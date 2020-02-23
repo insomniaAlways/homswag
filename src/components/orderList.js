@@ -42,7 +42,7 @@ const OrderList = function(props) {
     return (
       <Layout style={{flex: 1,justifyContent: 'center', alignItems: 'center', marginBottom: 30}}>
         <Image source={EmptyOrder} style={{width: 80, height: 80}}/>
-        <Text>No order placed yet.</Text>
+        <Text>No Appointment placed yet.</Text>
       </Layout>
     )
   }

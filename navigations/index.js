@@ -99,19 +99,18 @@ const OrderStackNavigator = createStackNavigator({
   OrderList: {
     screen: OrderHistoryScreen,
     navigationOptions: () => ({
-      title: `Orders`,
+      title: `Appointments`,
     }),
   },
   OrderDetails: {
     screen: OrderDetails,
     navigationOptions: () => ({
-      title: `Order Details`,
+      title: `Appointment Detials`,
     }),
   }
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
-    title: navigation.state.routeName,
     headerStyle: DefaultStyles.brandBackgroundColor,
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -153,6 +152,7 @@ const DrawerNavigation = createDrawerNavigator({
     screen: OrderStackNavigator,
     navigationOptions: ({tintColor}) => {
       return {
+        title: `Appointments`,
         drawerIcon: <FontAwesome name="reorder" size={18} color={tintColor}/>
       }
     }

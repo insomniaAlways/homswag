@@ -47,11 +47,11 @@ export const orders = {
   values: [],
   currentValue: {},
   statusCode: [
-    { id: 1, name: 'Order Placed', color: 'green' },
-    { id: 2, name: 'Order Confirmed', color: 'green' },
-    { id: 3, name: 'Order Canceled', color: 'red' },
+    { id: 1, name: 'Appointment Placed', color: 'green' },
+    { id: 2, name: 'Appointment Confirmed', color: 'green' },
+    { id: 3, name: 'Appointment Canceled', color: 'red' },
     { id: 4, name: 'In Progress', color: 'rgb(52, 117, 211)' },
-    { id: 5, name: 'Order Complete', color: 'rgb(52, 117, 211)' },
+    { id: 5, name: 'Appointment Complete', color: 'rgb(52, 117, 211)' },
   ],
   error: null
 }

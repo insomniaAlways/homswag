@@ -1,12 +1,27 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import { View, Text, TouchableOpacity } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import DefaultStyles from '../style/customStyles';
-import { ImageOverlay } from "./imageOverlay";
 import { StyleSheet } from 'react-native';
 import { connect } from "react-redux";
 import { createCartItem, deleteItem } from "../../store/actions/cartItemAction";
 import _ from 'lodash';
+import { Layout } from '@ui-kitten/components';
+
+const ItemContainer = ({item, index}) => {
+  if(index == 0 && item.image_source) {
+    return (
+      <Layout style={{marginHorizontal: 10, borderTopRightRadius: 30, borderTopLeftRadius: 30, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: -10}}>
+        <Image source={{uri: item.image_source}} style={{width: '100%', height: 200, borderTopRightRadius: 30, borderTopLeftRadius: 30, borderBottomLeftRadius: 10, borderBottomRightRadius: 10}}/>
+      </Layout>
+    )
+  } else if(item.image_source) {
+    return (
+      <Layout style={{marginHorizontal: 10, borderTopRightRadius: 30, borderTopLeftRadius: 30, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: 5}}>
+        <Image source={{uri: item.image_source}} style={{width: '100%', height: 200, borderTopRightRadius: 30, borderTopLeftRadius: 30, borderBottomLeftRadius: 10, borderBottomRightRadius: 10}}/>
+      </Layout>
+    )
+  }
+}
 
 const PackageDetails = (props) => {
   const { tab: packageService, cartItemModel, addItemToCart, deletePackage, networkAvailability } = props
@@ -46,61 +61,42 @@ const PackageDetails = (props) => {
   }
 
   return (
-    <ImageOverlay
-      style={styles.container}
-      source={{uri: packageService.background_image_source}}>
-      <View style={{flex: 1, padding: 20, justifyContent: 'center', paddingTop: 0}}>
-        <View>
-          <Text style={{fontSize: 30, textAlign: 'center', color: '#fff', fontFamily: 'roboto-bold-italic'}}>
-            <FontAwesome name="rupee" size={30} color="#fff" />
-            <Text> {packageService.price}</Text>
-          </Text>
-        </View>
-        <View style={{marginTop: 10}}>
-          {packageService.items.map((item, index) => {
-            return (
-              <View key={index} style={{padding: 10}}>
-                <Text style={{textAlign: 'center', fontSize: 24, color: '#fff', fontFamily: 'roboto-light-italic'}}>{item.name}</Text>
-                <Text style={{color: '#fff'}}>{cartItemModel.isLoading}</Text>
-              </View>
-            )
-          })}
-        </View>
-        <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
-          {cartItemModel.isLoading ? 
-            <View
-              style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5, backgroundColor: 'grey'}]}>
-              <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 130, textAlign: 'center'}}>Loading..</Text>
-            </View> :
-            <View>
-              {!networkAvailability.isOffline &&
-                <View>
-                  { isAdded ? 
-                    <TouchableOpacity
-                      onPress={removePackageFromCart}
-                      style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5}]}>
-                      <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 170, textAlign: 'center'}}>Remove Package</Text>
-                    </TouchableOpacity> :
-                    <TouchableOpacity
-                      onPress={addPackageToCart}
-                      style={[DefaultStyles.brandBackgroundColor, {paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10, borderRadius: 5}]}>
-                      <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16, width: 100, textAlign: 'center'}}>Book Now</Text>
-                    </TouchableOpacity>
-                  }
-                </View>
+    <Layout style={{flex: 1}}>
+      <ScrollView style={{paddingBottom: 20}}>
+        <Image source={{uri: packageService.poster_image_source}} style={{width: '100%', height: 250}}/>
+        {packageService.items.map((item, index) => <ItemContainer key={index} item={item} index={index} />)}
+      </ScrollView>
+      { cartItemModel.isLoading ? 
+        <Layout style={[styles.button, {height: 55, backgroundColor: 'grey'}]}>
+          <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Loading..</Text>
+        </Layout> :
+        <Layout>
+          {!networkAvailability.isOffline &&
+            <Layout>
+              { isAdded ? 
+                <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+                  <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={removePackageFromCart}>
+                    <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Remove Package</Text>
+                  </TouchableOpacity>
+                </Layout> :
+                <Layout style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
+                  <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={addPackageToCart}>
+                    <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Book Now</Text>
+                  </TouchableOpacity>
+                </Layout>
               }
-            </View>
+            </Layout>
           }
-        </View>
-      </View>
-    </ImageOverlay>
+        </Layout>
+      }
+    </Layout>
   )
 }
 
 const mapStateToProps = state => ({
   networkAvailability: state.networkAvailability
 })
-// const mapStateToProps = state => ({})
+
 const mapDispatchToProps = dispatch => ({
   addItemToCart: (package_id, package_price, is_package) => dispatch(createCartItem(package_id, package_price, is_package)),
   deletePackage: (cart_item_id) => dispatch(deleteItem(cart_item_id))
@@ -111,5 +107,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(PackageDetails);
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color:'#fff',
+    height: 55
   }
 })
