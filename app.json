@@ -24,6 +24,9 @@
         "messagingSenderId": "385989703905",
         "appId": "1:385989703905:web:36b14827016cf8a9e3dfa0",
         "measurementId": "G-88DTQ95208"
+      },
+      "sentry": {
+        "dsnKey": "https://16e35b4da8db4096b2298db1fb8049f0@sentry.io/2787983"
       }
     },
     "entryPoint": "node_modules/expo/AppEntry.js",
