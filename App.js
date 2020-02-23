@@ -13,6 +13,13 @@ import NetInfo from '@react-native-community/netinfo';
 import Constants from 'expo-constants';
 import * as firebase from 'firebase';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
+import * as Sentry from 'sentry-expo';
+
+Sentry.init({
+  dsn: 'https://16e35b4da8db4096b2298db1fb8049f0@sentry.io/2787983',
+  enableInExpoDevelopment: true,
+  debug: true
+});
 
 firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
