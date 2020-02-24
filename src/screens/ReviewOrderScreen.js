@@ -116,10 +116,14 @@ function ReviewOrderScreen (props) {
             <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {item_total_price - cart_total}</Text>
           </Layout>
         </Layout>
-        <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandColor}} onPress={() => confirmBooking()}>
-          <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Book Appointment</Text>
-        </TouchableOpacity>
-        <LoadingModal isloading={isloading} />
+        { isloading ?
+          <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandLightBackdroundColor}} disabled={true}>
+            <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Booking...</Text>
+          </TouchableOpacity> :
+          <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandColor}} onPress={() => confirmBooking()}>
+            <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Book Appointment</Text>
+          </TouchableOpacity>
+        }
       </Layout>
     )
   }
