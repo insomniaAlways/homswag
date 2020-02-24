@@ -29,6 +29,8 @@ const OrderDetails = function(props) {
       } else {
         setCancelEnable(false)
       }
+    } else {
+      setCancelEnable(true)
     }
   }, [currentOrder, orderModel.isLoading])
 

@@ -34,18 +34,15 @@ function ReviewOrderScreen (props) {
   const confirmBooking = async () => {
     setLoading(true)
     let appointmentDetails = appointment.defaultValues
-    moment().subtract(1, 'days').startOf('day').toDate()
-    let from = moment(appointmentDetails.from).startOf('day')
-    let to = moment(appointmentDetails.from).startOf('day')
     if(appointmentDetails.slot.type == 1) {
-      from = moment(from).add(9, 'hours').toISOString()
-      to = moment(from).add(12, 'hours').toISOString()
+      from = moment(appointmentDetails.from).startOf('days').add(9, 'hours').toISOString()
+      to = moment(appointmentDetails.from).startOf('days').add(12, 'hours').toISOString()
     } else if (appointmentDetails.slot.type == 2) {
-      from = moment(from).add(12, 'hours').toISOString()
-      to = moment(from).add(15, 'hours').toISOString()
+      from = moment(appointmentDetails.from).startOf('days').add(12, 'hours').toISOString()
+      to = moment(appointmentDetails.from).startOf('days').add(15, 'hours').toISOString()
     } else {
-      from = moment(from).add(15, 'hours').toISOString()
-      to = moment(from).add(18, 'hours').toISOString()
+      from = moment(appointmentDetails.from).startOf('days').add(15, 'hours').toISOString()
+      to = moment(appointmentDetails.from).startOf('days').add(18, 'hours').toISOString()
     }
     try {
       let order = await placeOrder({
@@ -120,7 +117,7 @@ function ReviewOrderScreen (props) {
           </Layout>
         </Layout>
         <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandColor}} onPress={() => confirmBooking()}>
-          <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Confirm</Text>
+          <Text style={{width: '100%', textAlign: 'center', color: '#fff', fontSize: 16, fontWeight: 'bold'}}>Book Appointment</Text>
         </TouchableOpacity>
         <LoadingModal isloading={isloading} />
       </Layout>

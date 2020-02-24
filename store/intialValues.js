@@ -74,8 +74,8 @@ export const appointment = {
   slot: 1,
   slots: [
     { type: 1, value: "9AM - 12PM" },
-    { type: 2, value: "12AM - 3PM" },
-    { type: 3, value: "3AM - 6PM" }
+    { type: 2, value: "12PM - 3PM" },
+    { type: 3, value: "3PM - 6PM" }
   ],
   defaultValues: {
     from: moment().toDate(),
