@@ -1,11 +1,9 @@
-import React, { Component, useLayoutEffect } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { ApplicationProvider, Layout, Text, IconRegistry } from '@ui-kitten/components';
+import React, { useLayoutEffect } from 'react';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { mapping, light as lightTheme } from '@eva-design/eva';
 import { brandTheme } from './src/style/custom-theme';
 import AppContainer from './navigations/index';
-import { NativeModules } from 'react-native'
 import { Provider } from 'react-redux';
 import store from './store';
 import * as Font from 'expo-font';
@@ -16,7 +14,7 @@ import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networ
 import * as Sentry from 'sentry-expo';
 
 Sentry.init({
-  dsn: 'https://16e35b4da8db4096b2298db1fb8049f0@sentry.io/2787983',
+  dsn: Constants.manifest.extra.sentry.dsnKey,
   enableInExpoDevelopment: true,
   debug: true
 });
@@ -24,14 +22,6 @@ Sentry.init({
 firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 const theme = { ...lightTheme, ...brandTheme };
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
-});
-
-// if (__DEV__) {
-// NativeModules.DevSettings.setIsDebuggingRemotely(true)
-// }
 
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
