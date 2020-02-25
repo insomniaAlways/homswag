@@ -42,8 +42,8 @@ function ContactScreen(props) {
       <View style={{flex: 3, justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 40, paddingRight: 40}}>
         <Text style={{fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>About HomSwag</Text>
         <Text style={{textAlign: 'center', marginTop: 10, fontStyle: 'italic'}}>
-          HomSwag we have lunch professional salon services at home with very enthusiastic and Professionally educated teams
-          from known academy VIDAL SASSOON And well experienced from industry, lunched with all salon services.
+          Homswag, we want to make Beauty and Grooming experience as convenient as possible at your own comfort where we connect you with our Best Beauty Professional to have great salon experience at Home.
+          We are currently serving in Bangalore, connect with us for Hair, Beauty, Waxing, Facial, Manicure, Pedicure,Spa,Hair Texture And Hair Protein Services.
         </Text>
         <Text style={{fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center', marginTop: 30}}>Contact details</Text>
         <View style={{flexDirection: 'row', width: "70%", marginTop: 10}}>
