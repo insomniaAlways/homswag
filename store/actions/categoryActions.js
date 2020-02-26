@@ -6,7 +6,7 @@ export const fetchCategories = () => {
     dispatch(onStart())
     return findAll('category')
     .then((response) => dispatch(onSuccess(response.data)))
-    .catch((e) => dispatch(onError(e)))
+    .catch((e) => dispatch(onError(e.response.data)))
   }
 }
 
