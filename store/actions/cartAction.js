@@ -7,7 +7,7 @@ export const fetchCart = () => {
     dispatch(onStart())
     return findRecord('cart')
     .then((response) => dispatch(onSuccess(response.data)))
-    .catch((e) => dispatch(onError(e)))
+    .catch((e) => dispatch(onError(e.response.data)))
   }
 }
 

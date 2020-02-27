@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import FloatingInput from '../components/input-helpers.js/floatingInput';
 import { connect } from 'react-redux';
-import { geoCoding } from '../../store/actions/locationActions';
+import { geoCoding, getPlace } from '../../store/actions/locationActions';
 import { creatNew, fetchAddress } from '../../store/actions/addressActions';
 import { Modal, Spinner, Layout, Text } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView'
@@ -31,7 +31,7 @@ const locationValueObject = {
 
 function AddressScreen(props) {
   const [ coordinates, setCoodinates ] = useState()
-  const { location, addNewAddress, getfetchAddress, navigation, networkAvailability } = props
+  const { location, addNewAddress, getfetchAddress, navigation, networkAvailability, getGeoCoding, getPlaceDetails } = props
   const previousScreen = navigation.getParam('previousRoute')
   const [ isCurrentLoactionLoaded, setCoodinatesLoaded ] = useState(false)
   const [ locationValue, setLocationValue ] = useState(locationValueObject)
@@ -78,7 +78,7 @@ function AddressScreen(props) {
   }
 
   useEffect(() => {
-    if(location.error) {
+    if(location && location.error) {
       alert(error)
     }
   }, [location.error])
@@ -92,9 +92,9 @@ function AddressScreen(props) {
         if (status !== 'granted') {
           onError()
         } else {
-          return navigator.geolocation.getCurrentPosition(
-            ({coords}) => debounceCall(coords.latitude, coords.longitude),
-            onError, {enableHighAccuracy: true, maximumAge: 0});
+          // return navigator.geolocation.getCurrentPosition(
+          //   ({coords}) => debounceCall(coords.latitude, coords.longitude),
+          //   onError, {enableHighAccuracy: true, maximumAge: 0});
         }
       }
       getPemission()
@@ -104,10 +104,16 @@ function AddressScreen(props) {
 
   const save = async () => {
     setLoading(true)
-    await addNewAddress({address: locationValue})
-    await getfetchAddress()
-    setLoading(false)
-    navigation.navigate(previousScreen)
+    try {
+      let geoCoding = await getGeoCoding(locationValue.geometry.latitude, locationValue.geometry.longitude)
+      await addNewAddress({address: {...locationValue, place_id: geoCoding.place_id, place_url: geoCoding.place_url}})
+      await getfetchAddress()
+      setLoading(false)
+      navigation.navigate(previousScreen)
+    } catch(e) {
+      alert(e)
+      setLoading(false)
+    }
   }
 
   return (
@@ -188,7 +194,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getGeoCoding: (latitude, longitude) => dispatch(geoCoding(latitude, longitude)),
   addNewAddress: (locationValue) => dispatch(creatNew(locationValue)),
-  getfetchAddress: () => dispatch(fetchAddress())
+  getfetchAddress: () => dispatch(fetchAddress()),
+  getPlaceDetails: (place_id) => dispatch(getPlace(place_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddressScreen);

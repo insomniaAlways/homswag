@@ -27,7 +27,8 @@
       },
       "sentry": {
         "dsnKey": "https://16e35b4da8db4096b2298db1fb8049f0@sentry.io/2787983"
-      }
+      },
+      "webAPIKey": "AIzaSyApkhSbe8ZmEV7781U3r47_diV9fX0yHFQ"
     },
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [

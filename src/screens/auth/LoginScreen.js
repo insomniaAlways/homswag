@@ -31,10 +31,14 @@ const LoginScreen = (props) => {
   const storeSession = async () => {
     let token
     try {
-      await AsyncStorage.setItem('token', auth.userToken);
-      token = await AsyncStorage.getItem('token')
-      if(token) {
-        props.getUser()
+      if(auth.userToken) {
+        await AsyncStorage.setItem('token', auth.userToken);
+        token = await AsyncStorage.getItem('token')
+        if(token) {
+          props.getUser()
+        }
+      } else {
+        alert('Something went wrong, Please try again')
       }
     } catch (e) {
       resetState()

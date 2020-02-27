@@ -7,7 +7,7 @@ export const fetchItems = (category_id) => {
     dispatch(onStart())
     return findAll('item', query)
     .then((response) => dispatch(onSuccess(response.data)))
-    .catch((e) => dispatch(e))
+    .catch((e) => dispatch(e.response.data))
   }
 }
 
@@ -16,7 +16,7 @@ export const fetchAllItems = () => {
     dispatch(onStart())
     return findAll('item')
     .then((response) => dispatch(onSuccess(response.data)))
-    .catch((e) => dispatch(e))
+    .catch((e) => dispatch(e.response.data))
   }
 }
 

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 // const host = "http://192.168.0.105:1337/api/v1/";
 const host = "https://homswag.herokuapp.com/api/v1";
 export const organization = "organization_id=2"
@@ -86,8 +85,13 @@ export function deleteRecord(type, id, payload) {
 }
 
 export function getLocationDetails(latitude, longitude) {
-  let key = Constants.manifest.android.config.googleMaps.apiKey
+  let key = Constants.manifest.extra.webAPIKey
   return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`)
+}
+
+export function getPlaceDetails(place_id) {
+  let key = Constants.manifest.extra.webAPIKey
+  return axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${key}`)
 }
 
 export default axiosInstance;

@@ -52,7 +52,7 @@ function ScheduleAppointmentScreen(props) {
 
   useEffect(() => {
     updateAppointment({
-      ...defaultValues,
+      ...appointmentDetails,
       appointment_for: currentUser.values.name,
       phone_number: currentUser.values.phone,
       selectedAddress: selectedAddress,
@@ -102,8 +102,9 @@ function ScheduleAppointmentScreen(props) {
         <View style={{height: 100, justifyContent: 'center', alignItems: 'center'}}>
           <View style={{flexDirection: 'row' ,marginHorizontal: 20, marginVertical: 20, borderWidth: 1, borderColor: '#a9d5de', padding: 10, borderRadius: 5, backgroundColor: '#f8ffff'}}>
             <Text style={{fontFamily: 'roboto-medium', color: '#0e566c'}}>Note: </Text>
-            <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '90%', color: '#276f86'}}>
-              This is your only slot booking comfirmation. Our CSR shall call you confirming your Appoinment schedule.
+            <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '90%', color: '#276f86', minHeight: 60}}>
+              This is your only slot booking comfirmation.
+              Our CSR shall call you confirming your Appoinment schedule.
             </Text>
           </View>
         </View>
