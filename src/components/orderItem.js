@@ -24,14 +24,15 @@ const OrderItem = function(props) {
       return <Text>Item no found</Text>
     }
   }
+  
   return (
     <TouchableOpacity onPress={() => props.navigation.navigate('OrderDetails', {order: order})}>
       <Layout style={{paddingLeft: 10, paddingRight: 10, borderWidth: 1, borderColor: "#eee", margin: 10, borderBottomWidth: 3, borderRadius: 20}}>
         <View style={{padding: 10}}>
           <Layout style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 14, width: '40%'}}>Appointment No: {order.id}</Text>
-            <Text style={{color: status.color}}>  {status.name}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 14, width: '100%'}}>Appointment No: {order.id}</Text>
           </Layout>
+          <Text style={{color: status.color, width: '100%', textAlign: 'right'}}>  {status.name}</Text>
           <Moment element={Text}
               date={order.created_at}
               format="DD/MM/YYYY"
