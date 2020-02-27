@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 17566,
-  "expoServerNgrokUrl": "https://5m-u8i.trdp30.homswag.exp.direct",
-  "packagerNgrokUrl": "https://packager.5m-u8i.trdp30.homswag.exp.direct",
-  "ngrokPid": 17583,
+  "packagerPid": 25483,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
