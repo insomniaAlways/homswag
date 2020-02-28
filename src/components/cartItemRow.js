@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 const CartItemRow = (props) => {
-  const { cartItem, updateCartItem, deleteCartItem, cartItemModel } = props
+  const { cartItem, updateCartItem, deleteCartItem } = props
   const data = cartItem.is_package ? cartItem.package : cartItem.item
   const [ quantity, setQuantity ] = useState()
   const [ isLoading, setLoading ] = useState(false)
@@ -27,12 +27,17 @@ const CartItemRow = (props) => {
       }
     }
     updateCT()
-    return () => setLoading(false)
+    return () => {
+      setLoading(false)
+    }
   }, [quantity])
 
   useEffect(() => {
     setQuantity(cartItem.quantity)
-    return () => setLoading(false)
+    setLoading(false)
+    return () => {
+      setLoading(false)
+    }
   }, [])
 
   const incCount = () => {
@@ -43,14 +48,8 @@ const CartItemRow = (props) => {
   const decCount = async () => {
     setLoading(true)
     if(cartItem.quantity == 1) {
-      try {
-        await deleteCartItem(cartItem.id)
-      } catch(e) {
-        alert(e)
-        setLoading(false)
-      } finally {
-        setLoading(false)
-      }
+      deleteCartItem(cartItem.id)
+      setTimeout(() => setLoading(false), 300)
     } else {
       setQuantity(cartItem.quantity - 1)
     }
@@ -80,7 +79,7 @@ const CartItemRow = (props) => {
               </TouchableOpacity>
             </View>
             <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-              <Text>{quantity}</Text>
+              <Text>{cartItem.quantity}</Text>
             </View>
             <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
               <TouchableOpacity onPress={incCount}>
