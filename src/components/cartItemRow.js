@@ -78,7 +78,7 @@ const CartItemRow = (props) => {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
+            <View style={{flex: 1, height: 27, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
               <Text>{cartItem.quantity}</Text>
             </View>
             <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>

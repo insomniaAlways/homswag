@@ -69,21 +69,21 @@ function ModifyButton(props) {
     return (
       <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
         {isLoading ?
-          <View style={{width: 90, alignItems: 'center', height: 27, justifyContent: 'center'}}><Text>Loading..</Text></View>:
-          <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
-            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+          <View style={{width: 90, alignItems: 'center', height: 30, justifyContent: 'center'}}><Text>Loading..</Text></View>:
+          <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center'}}>
+            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1, height: 30}}>
               <TouchableOpacity onPress={() => dispatch({type: 'decrement'})}>
-                <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{alignItems: 'center', justifyContent: 'center', height: 30}}>
                   <Icon name='minus-outline' width={12} height={12} fill="#0D5618"/>
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1, height: 30}}>
               <Text>{cartItem.quantity}</Text>
             </View>
-            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1, height: 30}}>
               <TouchableOpacity onPress={() => dispatch({type: 'increment'})}>
-                <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{alignItems: 'center', justifyContent: 'center', height: 30}}>
                   <Icon name='plus-outline' width={12} height={12} fill="#0D5618"/>
                 </View>
               </TouchableOpacity>
