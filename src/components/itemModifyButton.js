@@ -17,11 +17,11 @@ function ModifyButton(props) {
     switch (action.type) {
       case 'increment': {
         setLoading(true)
-        return {count: state.count + 1};
+        return {count: cartItem.quantity + 1};
       }
       case 'decrement': {
         setLoading(true)
-        return {count: state.count - 1};
+        return {count: cartItem.quantity - 1};
       }
       case 'reset': {
         init(action.payload)
@@ -36,11 +36,23 @@ function ModifyButton(props) {
   useEffect(() => {
     async function updateCT() {
       if(state.count == 0) {
-        await deleteCartItem(cartItem.id)
-        props.removeCartItem(false)
+        try {
+          await deleteCartItem(cartItem.id)
+          props.removeCartItem(false)
+        } catch(e) {
+          alert(e)
+          setLoading(false)
+        }
       } else if(cartItem && state.count && state.count >= 1) {
         let totalPrice = (+item.price * parseInt(state.count))
-        await updateCartItem(cartItem.id, state.count, totalPrice)
+        try {
+          await updateCartItem(cartItem.id, state.count, totalPrice)
+          setLoading(false)
+        } catch(e) {
+          alert(e)
+          setLoading(false)
+        }
+      } else {
         setLoading(false)
       }
     }
@@ -67,7 +79,7 @@ function ModifyButton(props) {
               </TouchableOpacity>
             </View>
             <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-              <Text>{state.count}</Text>
+              <Text>{cartItem.quantity}</Text>
             </View>
             <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
               <TouchableOpacity onPress={() => dispatch({type: 'increment'})}>

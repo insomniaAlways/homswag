@@ -15,11 +15,19 @@ const CartItemRow = (props) => {
     async function updateCT() {
       if(quantity) {
         let totalPrice = (+data.price * parseInt(quantity))
-        await updateCartItem(cartItem.id, quantity, totalPrice)
+        try {
+          await updateCartItem(cartItem.id, quantity, totalPrice)
+          setLoading(false)
+        } catch(e) {
+          alert(e)
+          setLoading(false)
+        }
+      } else {
         setLoading(false)
       }
     }
     updateCT()
+    return () => setLoading(false)
   }, [quantity])
 
   useEffect(() => {
@@ -35,7 +43,14 @@ const CartItemRow = (props) => {
   const decCount = async () => {
     setLoading(true)
     if(cartItem.quantity == 1) {
-      await deleteCartItem(cartItem.id)
+      try {
+        await deleteCartItem(cartItem.id)
+      } catch(e) {
+        alert(e)
+        setLoading(false)
+      } finally {
+        setLoading(false)
+      }
     } else {
       setQuantity(cartItem.quantity - 1)
     }
