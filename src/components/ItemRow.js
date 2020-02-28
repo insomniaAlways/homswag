@@ -7,23 +7,20 @@ import _ from 'lodash';
 import { fetchCartItems, createCartItem } from '../../store/actions/cartItemAction';
 
 function ItemRow(props) {
-  const { item, cartItemModel, cart, addItemToCart, setShowButton, networkAvailability } = props;
+  const { item, cartItemModel, cart, addItemToCart, networkAvailability } = props;
   const [ isAdded, setAdded ] = useState(false)
   const [ selectedCartItem, setSelectedCartItem ] = useState()
   const cartItems = cartItemModel.values
+  const [ isLoading, setLoading ] = useState(false)
 
   const isItemAdded = () => {
     return _.find(cartItems, ['item.id', item.id])
   }
 
-  const create = () => {
-    addItemToCart(item.id, (+item.price * 1))
-  }
-
-  const addCartItem = () => {
-    setAdded(true)
-    create()
-    setShowButton(true)
+  const create = async () => {
+    await addItemToCart(item.id, (+item.price * 1))
+    isItemAdded()
+    setLoading(false)
   }
 
   useLayoutEffect(() => {
@@ -56,7 +53,9 @@ function ItemRow(props) {
           cartItems={cartItems}
           isOffline={networkAvailability.isOffline}
           isAdded={isAdded}
-          setAdded={addCartItem}/> 
+          isLoading={isLoading}
+          setLoading={setLoading}
+          setAdded={create}/> 
         }
     </View>
   )

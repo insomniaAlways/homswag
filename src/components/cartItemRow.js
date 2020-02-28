@@ -24,6 +24,7 @@ const CartItemRow = (props) => {
 
   useEffect(() => {
     setQuantity(cartItem.quantity)
+    return () => setLoading(false)
   }, [])
 
   const incCount = () => {
@@ -31,11 +32,10 @@ const CartItemRow = (props) => {
     setQuantity(cartItem.quantity + 1)
   }
 
-  const decCount = () => {
+  const decCount = async () => {
     setLoading(true)
     if(cartItem.quantity == 1) {
-      deleteCartItem(cartItem.id)
-      setLoading(false)
+      await deleteCartItem(cartItem.id)
     } else {
       setQuantity(cartItem.quantity - 1)
     }

@@ -13,6 +13,7 @@ const CartPromoItemList = (props) => {
   const { cartItem, getCart, items, getCartItem, creatNewCartItem } = props
   const cartItemLength = cartItem.values.length
   const defaultList = _.take(items, (defaultLength + cartItemLength))
+  const [ isLoading, setLoading ] = useState(false)
 
   const isItemAdded = (item) => {
     return _.find(cartItem.values, ['item.id', item.id])
@@ -22,6 +23,7 @@ const CartPromoItemList = (props) => {
     let newCartItem = await creatNewCartItem(item.id, (+item.price * 1))
     getCartItem()
     getCart()
+    setLoading(false)
   }
 
   const renderItemFooter = (info) => (
@@ -35,7 +37,7 @@ const CartPromoItemList = (props) => {
         </Text>
       </View>
       <View style={{justifyContent:'center', alignItems: 'center'}}>
-        <AddToCartButton addToCart={addToCart} item={info.item}/>
+        <AddToCartButton addToCart={addToCart} item={info.item} setLoading={setLoading} isLoading={isLoading}/>
       </View>
     </View>
   );

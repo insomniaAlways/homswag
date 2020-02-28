@@ -7,7 +7,7 @@ import { fetchCart } from '../../store/actions/cartAction';
 import CartItemRow from './cartItemRow';
 
 const ItemsList = (props) => {
-  const { cartItem, getCart, setLoading } = props
+  const { cartItem, getCart } = props
   const cartItems = _.sortBy(cartItem.values, 'id')
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const ItemsList = (props) => {
   }, [cartItem.isLoading])
 
   if(cartItems && Array.isArray(cartItems) && cartItems.length) {
-    return cartItems.map((ct, index) => <CartItemRow index={index} cartItem={ct} key={index} setLoading={setLoading}/>)
+    return cartItems.map((ct, index) => <CartItemRow index={index} cartItem={ct} key={index} />)
   } else {
     return (<View><Text>Something went worng</Text></View>)
   }
