@@ -79,7 +79,7 @@ const PackageDetails = (props) => {
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView style={{paddingBottom: 20}}>
+      <ScrollView style={{paddingBottom: 20}} showsVerticalScrollIndicator={false}>
         <Image source={{uri: packageService.poster_image_source}} style={{width: screenWidth, height: 260}}/>
         <ItemContainer items={packageService.items} packageService={packageService}/>
       </ScrollView>
