@@ -69,7 +69,7 @@ function Dashboard(props) {
             </Animatable.View>
           }
         </View>
-        <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
+        <View style={{height: 260, paddingTop: 10, paddingBottom: 10}}>
           <PromoView />
         </View>
         <View style={{marginBottom: 50, marginTop: 10, padding: 20, borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#ABDAF6", marginLeft: 20, marginRight: 20}}>

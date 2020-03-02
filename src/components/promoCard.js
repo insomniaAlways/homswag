@@ -3,9 +3,9 @@ import { View, Text, Image } from 'react-native';
 
 function PromoCard({ style, source }) {
   return (
-    <View style={[{height: '100%', width: 200, marginRight: 10}, style]}>
+    <View style={[{paddingBottom: 10, paddingHorizontal: 10, borderRadius: 10}, style]}>
       <Image 
-        style={{height: "100%", width: "100%", borderRadius: 10}}
+        style={{height: 220, width: 250, borderRadius: 10}}
         source={source}
       />
     </View>

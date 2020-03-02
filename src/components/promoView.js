@@ -7,9 +7,8 @@ import Promo3 from '../../assets/images/promo3.png';
 import Promo4 from '../../assets/images/promo4.png';
 
 function PromoView() {
-  let number = 1033
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{backgroundColor: "#F7F9FC", paddingVertical: 10}}>
       <PromoCard source={Promo1} style={{marginLeft: 10}}/>
       <PromoCard source={Promo2}/>
       <PromoCard source={Promo3}/>
