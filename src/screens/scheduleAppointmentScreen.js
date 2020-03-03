@@ -15,7 +15,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 function ScheduleAppointmentScreen(props) {
-  const { appointment, addresses, getAddress, currentUser, updateAppointment } = props
+  const { appointment, addresses, getAddress, currentUserModel, updateAppointment } = props
   const [ openAddressModal, setModal ] = useState(false)
   const [ scrollOffset, setScrollOffset ] = useState(0)
   const [ date, setDate ] = useState(new Date())
@@ -35,8 +35,13 @@ function ScheduleAppointmentScreen(props) {
   const save = () => {
     updateAppointment({
       ...appointmentDetails,
+      appointment_for: currentUserModel.values.name,
+      phone_number: currentUserModel.values.phone,
       from: moment(date).toISOString(),
-      date: moment(date).toISOString()
+      date: moment(date).toISOString(),
+      selectedAddress: selectedAddress,
+      special_instruction: specialInstruction,
+      prefered_beautician: preferedBeautician
     })
     props.navigation.navigate('Cart', { bookingDetails: appointmentDetails})
   }
@@ -63,14 +68,14 @@ function ScheduleAppointmentScreen(props) {
   useEffect(() => {
     updateAppointment({
       ...appointmentDetails,
-      appointment_for: currentUser.values.name,
-      phone_number: currentUser.values.phone,
+      appointment_for: currentUserModel.values.name,
+      phone_number: currentUserModel.values.phone,
       selectedAddress: selectedAddress,
       special_instruction: appointmentDetails.special_instruction,
       prefered_beautician: appointmentDetails.prefered_beautician
     })
     return () => setModal(false)
-  }, [currentUser, selectedAddress, addresses.isLoading])
+  }, [currentUserModel, selectedAddress, addresses.isLoading])
 
   useEffect(() => {
     setAppointmentDetails({...appointment.defaultValues})
@@ -99,14 +104,15 @@ function ScheduleAppointmentScreen(props) {
         <View style={{marginTop: 10}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Fill Details:</Text>
           <BookingDetails
-            appointmentDetails={appointmentDetails}
-            setAppointmentDetails={setAppointmentDetails}
-            openAddressModal={openAddressModal}
             selectedAddress={selectedAddress}
             setModal={setModal}
             isAddressLoading={addresses.isLoading}
             goToAddAddress={goToAddAddress}
-            navigation={props.navigation}
+            specialInstruction={specialInstruction}
+            setInstruction={setInstruction}
+            preferedBeautician={preferedBeautician}
+            setBeautician={setBeautician}
+            currentUser={currentUserModel.values}
             />
         </View>
         <View style={{height: 100, justifyContent: 'center', alignItems: 'center'}}>
@@ -163,7 +169,7 @@ function ScheduleAppointmentScreen(props) {
 const mapPropsToState = state => ({
   appointment: state.appointment,
   addresses: state.addresses,
-  currentUser: state.currentUser
+  currentUserModel: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => {
