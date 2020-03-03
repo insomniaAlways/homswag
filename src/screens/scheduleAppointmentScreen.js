@@ -12,12 +12,18 @@ import { Layout, Text } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
 import { updateAppointmentState } from '../../store/actions/appointmentActions';
 import _ from 'lodash';
+import moment from 'moment';
 
 function ScheduleAppointmentScreen(props) {
   const { appointment, addresses, getAddress, currentUser, updateAppointment } = props
   const [ openAddressModal, setModal ] = useState(false)
   const [ scrollOffset, setScrollOffset ] = useState(0)
+  const [ date, setDate ] = useState(new Date())
+  const [ selectedSlot, setSlot ] = useState()
   const [ selectedAddress, setSelectedAddress ] = useState()
+  const [ specialInstruction, setInstruction ] = useState()
+  const [ preferedBeautician, setBeautician ] = useState()
+
   let scrollViewRef;
   const { defaultValues, slots } = appointment
 
@@ -27,7 +33,11 @@ function ScheduleAppointmentScreen(props) {
   }
 
   const save = () => {
-    updateAppointment(appointmentDetails)
+    updateAppointment({
+      ...appointmentDetails,
+      from: moment(date).toISOString(),
+      date: moment(date).toISOString()
+    })
     props.navigation.navigate('Cart', { bookingDetails: appointmentDetails})
   }
 
@@ -48,7 +58,7 @@ function ScheduleAppointmentScreen(props) {
     return () => setModal(false)
   }, [addresses.isLoading, addresses.values, addresses.values.length])
 
-  const [ appointmentDetails, setAppointmentDetails ] = useState(defaultValues)
+  const [ appointmentDetails, setAppointmentDetails ] = useState({...defaultValues})
 
   useEffect(() => {
     updateAppointment({
@@ -82,7 +92,7 @@ function ScheduleAppointmentScreen(props) {
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
-            <SelectDate appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
+            <SelectDate date={date} setDate={setDate} />
             <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={slots}/>
           </View>
         </View>

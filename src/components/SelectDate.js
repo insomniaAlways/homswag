@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import moment from 'moment';
 import DateButton from './helpers/date-button';
@@ -10,18 +10,7 @@ const dateButtons = [
 ]
 
 function SelectDate(props) {
-  const [ date, setDate ] = useState()
-  const { appointmentDetails, setAppointmentDetails } = props
-
-  useEffect(() => {
-    if(appointmentDetails && setAppointmentDetails ) {
-      setAppointmentDetails({
-        ...appointmentDetails,
-        from: moment(date).toDate(),
-        date: moment(date).toDate()
-      })
-    }
-  }, [date])
+  const { date, setDate } = props
 
   return (
     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', margin: 10}}>
@@ -29,8 +18,6 @@ function SelectDate(props) {
         <DateButton
           key={index}
           date={date}
-          appointmentDetails={appointmentDetails}
-          setAppointmentDetails={setAppointmentDetails}
           type={dateButton.type}
           title={dateButton.title}
           value={dateButton.value}

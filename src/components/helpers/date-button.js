@@ -12,7 +12,7 @@ const isIOS = Platform.OS === 'ios'
 const mode ='date'
 
 function DateButton (props) {
-  const { title, value, type, date, setDate, appointmentDetails } = props
+  const { title, value, type, date, setDate } = props
   const [ isDisabled, setDisable ] = useState(false)
   const [ isDateSelected, setDateSelected ] = useState(false)
   const [ isDatePickerVisible, enableDatePicker ] = useState(false)
@@ -25,16 +25,16 @@ function DateButton (props) {
   })
 
   useEffect(() => {
-    if(appointmentDetails && appointmentDetails.date) {
-      if(moment(appointmentDetails.date).isSame(value, 'day')) {
+    if(date) {
+      if(moment(date).isSame(value, 'day')) {
         setSelected(true)
-      } else if(type == 3 && moment(appointmentDetails.date).isAfter(moment().add(1, 'd'), 'day')) {
+      } else if(type == 3 && moment(date).isAfter(moment().add(1, 'd'), 'day')) {
         setSelected(true)
       } else {
         setSelected(false)
       }
     }
-  }, [appointmentDetails.date])
+  }, [date])
 
   const onButtonClick = (date) => {
     setDate(date)
@@ -45,6 +45,12 @@ function DateButton (props) {
     onButtonClick(moment(selectDate).toDate())
     setDateSelected(true)
   }
+
+  useEffect(() => {
+    if(isDisabled) {
+      onButtonClick(moment().add(1, 'd').toDate())
+    }
+  }, [isDisabled])
 
   if(isDisabled) {
     return (
