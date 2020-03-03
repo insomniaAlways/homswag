@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, View, StyleSheet, Text, Platform} from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Text, Platform } from 'react-native';
 import { Dimensions } from 'react-native';
 import moment from 'moment';
 import Moment from 'react-moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import IOSDateButton from './ios-date-button';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -40,13 +41,7 @@ function DateButton (props) {
     )
   } else if(isIOS && type == 3) {
     return (
-      <View>
-        <TouchableOpacity style={styles.container} onPress={() => onButtonClick(value)}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>{title}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <IOSDateButton onSelectDate={onSelectDate} mode={mode} {...props}/>
     )
   } else if(type == 3 && !isIOS) {
     return (
@@ -64,7 +59,7 @@ function DateButton (props) {
             </Text>
           </View>
         </TouchableOpacity>
-        {isDatePickerVisible &&
+        { isDatePickerVisible &&
           <DateTimePicker mode={mode} value={date ? date : new Date()} is24Hour={true} minimumDate={new Date()} display="default" onChange={onSelectDate} />}
       </View>
     )
