@@ -12,7 +12,7 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const mode ='date'
 
 function IOSDateButton (props) {
-  const { title, date, onSelectDate } = props
+  const { title, date, onSelectDate, isSelected } = props
   const [ isDatePickerVisible, enableDatePicker ] = useState(false)
   const [ isDateSelected, setDateSelected ] = useState(false)
   const [ selectedDate, setSelectedDate ] = useState()
@@ -34,8 +34,8 @@ function IOSDateButton (props) {
   return (
     <View>
       <TouchableOpacity style={styles.container} onPress={() => enableDatePicker(true)}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>
+        <View style={isSelected ? styles.selectedButton : styles.button}>
+          <Text style={isSelected ? styles.selectedButtonText : styles.buttonText}>
             { !isDateSelected ? title :
               <Moment element={Text}
                 date={date}
@@ -95,8 +95,21 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 
+  selectedButton: {
+    width: (screenWidth - 60)/3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "green",
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+
   buttonText: {
     color: '#000'
+  },
+
+  selectedButtonText: {
+    color: '#fff'
   },
 
   modalContainer: {

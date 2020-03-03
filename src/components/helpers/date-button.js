@@ -12,16 +12,29 @@ const isIOS = Platform.OS === 'ios'
 const mode ='date'
 
 function DateButton (props) {
-  const { title, value, type, date, setDate } = props
+  const { title, value, type, date, setDate, appointmentDetails } = props
   const [ isDisabled, setDisable ] = useState(false)
   const [ isDateSelected, setDateSelected ] = useState(false)
   const [ isDatePickerVisible, enableDatePicker ] = useState(false)
+  const [ isSelected, setSelected ] = useState(false)
 
   useEffect(() => {
     if(type == 1 && moment().isAfter(moment().startOf('days').add(17, 'hours'))) {
       setDisable(true)
     }
   })
+
+  useEffect(() => {
+    if(appointmentDetails && appointmentDetails.date) {
+      if(moment(appointmentDetails.date).isSame(value, 'day')) {
+        setSelected(true)
+      } else if(type == 3 && moment(appointmentDetails.date).isAfter(moment().add(1, 'd'), 'day')) {
+        setSelected(true)
+      } else {
+        setSelected(false)
+      }
+    }
+  }, [appointmentDetails.date])
 
   const onButtonClick = (date) => {
     setDate(date)
@@ -41,14 +54,14 @@ function DateButton (props) {
     )
   } else if(isIOS && type == 3) {
     return (
-      <IOSDateButton onSelectDate={onSelectDate} mode={mode} {...props}/>
+      <IOSDateButton onSelectDate={onSelectDate} mode={mode} {...props} isSelected={isSelected} />
     )
   } else if(type == 3 && !isIOS) {
     return (
       <View>
         <TouchableOpacity style={styles.container} onPress={() => enableDatePicker(true)}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>
+          <View style={isSelected ? styles.selectedButton : styles.button}>
+            <Text style={isSelected ? styles.selectedButtonText : styles.buttonText}>
               { !isDateSelected ? title :
                 <Moment element={Text}
                   date={date}
@@ -66,8 +79,8 @@ function DateButton (props) {
   } else {
     return (
       <TouchableOpacity style={styles.container} onPress={() => onButtonClick(value)}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>{title}</Text>
+        <View style={isSelected ? styles.selectedButton : styles.button}>
+          <Text style={isSelected ? styles.selectedButtonText : styles.buttonText}>{title}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -90,8 +103,21 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 
+  selectedButton: {
+    width: (screenWidth - 60)/3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "green",
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+
   buttonText: {
     color: '#000'
+  },
+
+  selectedButtonText: {
+    color: '#fff'
   },
 
   disableButton: {
