@@ -82,7 +82,7 @@ function ScheduleAppointmentScreen(props) {
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
             <SelectDate date={date} setDate={setDate} />
-            <SelectTimeSlot selectedSlot={selectedSlot} setSlot={setSlot} slots={slots}/>
+            <SelectTimeSlot date={date} selectedSlot={selectedSlot} setSlot={setSlot} slots={slots}/>
           </View>
         </View>
         <View style={{marginTop: 10}}>
