@@ -6,7 +6,7 @@ import DateButton from './helpers/date-button';
 const dateButtons = [
   {type: 1, title: 'Today', value: moment().toDate()},
   {type: 2, title: 'Tomorrow', value: moment().add(1, 'days').toDate()},
-  {type: 3, title: 'Select Date', value: null }
+  {type: 3, title: 'Select Date', value: moment().add(2, 'days').toDate()}
 ]
 
 function SelectDate(props) {

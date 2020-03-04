@@ -36,8 +36,8 @@ function TimeSlotButton (props) {
   if(isDisabled) {
     return (
       <View key={timeSlot.type} style={timeSlot.type == 3 ? styles.isLastButtonContainer : styles.buttonContainer}>
-        <View style={styles.button}>
-          <Text style={{color: 'black'}}>{timeSlot.value}</Text>
+        <View style={[styles.button, styles.disableButton]}>
+          <Text style={styles.disableButtonText}>{timeSlot.value}</Text>
         </View>
       </View>
     )
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: "#eee",
     marginRight: 10,
+    borderRadius: 8
   },
   selectedButtonContainer: {
     flex: 1,
@@ -85,25 +86,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: "green",
     marginRight: 10,
+    borderRadius: 8
   },
   isLastButtonContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "#eee",
-    marginRight: 0
+    marginRight: 0,
+    borderRadius: 8
   },
   isSelectedLastButtonContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "green",
-    marginRight: 0
+    marginRight: 0,
+    borderRadius: 8
   },
   button: {
     alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 10,
-    width: '100%'
+    width: '100%',
+    borderRadius: 8
+  },
+  disableButton: {
+    backgroundColor: '#eeeeee',
+    borderWidth: 1,
+    borderColor: '#d4d4d4'
+  },
+  disableButtonText: {
+    color: 'rgba(0,0,0, 0.4)'
   }
 })

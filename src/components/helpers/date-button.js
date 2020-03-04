@@ -54,8 +54,8 @@ function DateButton (props) {
 
   if(isDisabled) {
     return (
-      <View style={[styles.button, styles.container]}>
-        <Text style={styles.buttonText}>{title}</Text>
+      <View style={[styles.button, styles.container, styles.disableButton]}>
+        <Text style={[styles.buttonText, styles.disableButtonText]}>{title}</Text>
       </View>
     )
   } else if(isIOS && type == 3) {
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
     paddingTop: 10,
     paddingBottom: 10,
+    borderRadius: 8
   },
 
   selectedButton: {
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     paddingTop: 10,
     paddingBottom: 10,
+    borderRadius: 8
   },
 
   buttonText: {
@@ -127,10 +129,12 @@ const styles = StyleSheet.create({
   },
 
   disableButton: {
-
+    backgroundColor: '#eeeeee',
+    borderWidth: 1,
+    borderColor: '#d4d4d4'
   },
 
   disableButtonText: {
-
+    color: 'rgba(0,0,0, 0.4)'
   }
 })

@@ -32,19 +32,65 @@ function ScheduleAppointmentScreen(props) {
     props.navigation.navigate('AddAddress', { previousRoute: 'BookAppointment' })
   }
 
+  const isValidateSlot = () => {
+    if(selectedSlot && selectedSlot.type) {
+      if(moment().isSame(moment(date), 'days')) {
+        let cutOffTime = moment().startOf('days').add(selectedSlot.to - 1, 'hours')
+        let isAfter = moment().isSameOrAfter(cutOffTime)
+        console.log(cutOffTime.format('HH:mm, DD/MM'), isAfter, moment().format('HH:mm, DD/MM'), selectedSlot.to )
+        switch (selectedSlot.type) {
+          case 1: {
+            if(isAfter) {
+              if(moment().isSameOrAfter(moment().startOf('days').add(17, 'hours'))) {
+                alert('Please select a time slot.')
+              } else {
+                alert('You cannot schedule for the selected time slot.')
+              }
+              return false
+            } else {
+              return true
+            }
+          }
+          case 2: {
+            if(isAfter) {
+              alert('You cannot schedule for the selected time slot.')
+              return false
+            } else {
+              return true
+            }
+          }
+          case 3: {
+            if(isAfter) {
+              alert('You cannot schedule for the selected time slot for today')
+              return false
+            } else {
+              return true
+            }
+          }
+        }      
+      } else {
+        return true
+      }
+    } else {
+      alert('Please select a timeslot')
+    }
+  }
+
   const save = () => {
-    updateAppointment({
-      ...appointmentModel.defaultValues,
-      appointment_for: currentUserModel.values.name,
-      phone_number: currentUserModel.values.phone,
-      from: moment(date).toISOString(),
-      date: moment(date).toISOString(),
-      slot: selectedSlot,
-      selectedAddress: selectedAddress,
-      special_instruction: specialInstruction,
-      prefered_beautician: preferedBeautician
-    })
-    props.navigation.navigate('Cart')
+    if(isValidateSlot()) {
+      updateAppointment({
+        ...appointmentModel.defaultValues,
+        appointment_for: currentUserModel.values.name,
+        phone_number: currentUserModel.values.phone,
+        from: moment(date).toISOString(),
+        date: moment(date).toISOString(),
+        slot: selectedSlot,
+        selectedAddress: selectedAddress,
+        special_instruction: specialInstruction,
+        prefered_beautician: preferedBeautician
+      })
+      props.navigation.navigate('Cart')
+    }
   }
 
   useEffect(() => {
