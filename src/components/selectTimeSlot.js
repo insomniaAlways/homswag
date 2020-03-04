@@ -1,22 +1,31 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
+
+function TimeSlotButton (props) {
+  const { selectedSlot, setSlot, timeSlot } = props
+  return (
+    <View
+      key={timeSlot.type}
+      style={selectedSlot.type == timeSlot.type ?
+        (timeSlot.type == 3 ? styles.isSelectedLastButtonContainer : styles.selectedButtonContainer) :
+        (timeSlot.type == 3 ? styles.isLastButtonContainer : styles.buttonContainer)}
+      >
+      <TouchableOpacity style={styles.button} onPress={() => setSlot(timeSlot)}>
+        <Text style={selectedSlot.type == timeSlot.type ? {color: 'white'} : {color: 'black'}}>{timeSlot.value}</Text>
+      </TouchableOpacity>
+    </View>
+  )
+  return (<View></View>)
+}
+
 function SelectTimeSlot(props) {
-  const { appointmentDetails, setAppointmentDetails, slots } = props
+  const { slots } = props
 
   return (
     <View style={{flexDirection: 'row', justifyContent: 'center', margin: 10}}>
-      { slots.map(timeSlot => (
-        <View
-          key={timeSlot.type}
-          style={appointmentDetails.slot.type == timeSlot.type ?
-           (timeSlot.type == 3 ? styles.isSelectedLastButtonContainer : styles.selectedButtonContainer) :
-           (timeSlot.type == 3 ? styles.isLastButtonContainer : styles.buttonContainer)}
-          >
-          <TouchableOpacity style={styles.button} onPress={() => setAppointmentDetails({...appointmentDetails, slot: timeSlot})}>
-            <Text style={appointmentDetails.slot.type == timeSlot.type ? {color: 'white'} : {color: 'black'}}>{timeSlot.value}</Text>
-          </TouchableOpacity>
-        </View>
+      { slots.map((timeSlot, index) => (
+        <TimeSlotButton key={index} timeSlot={timeSlot} {...props}/>
       ))}
     </View>
   )
