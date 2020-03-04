@@ -12,6 +12,8 @@ import { AsyncStorage } from 'react-native';
 import { Spinner } from '@ui-kitten/components';
 import * as Animatable from 'react-native-animatable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import LoginForm from '../../components/helpers/loginForm';
+import LoginButtons from '../../components/helpers/loginButtons';
 
 const PhoneIcon = (style) => (
   <Icon {...style} name='phone'/>
@@ -80,6 +82,7 @@ const LoginScreen = (props) => {
     } else {
       if(phone && (phone.length == 10)) {
         setShowOtpField(true)
+        setSession(false)
         try {
           await registerUser(phone)
           setShowOtpField(true)
@@ -177,7 +180,7 @@ const LoginScreen = (props) => {
       }
     }
   }, [showOtpField])
-
+  
   return (
     <KeyboardAvoidingView>
       <ImageOverlay
@@ -203,50 +206,30 @@ const LoginScreen = (props) => {
               style={styles.formContainer}
               animation={"fadeInUp"}
             >
-              <View style={styles.formContainer}>
-                <Input
-                  status='control'
-                  placeholder='Phone Number'
-                  icon={PhoneIcon}
-                  maxLength={10}
-                  keyboardType={'number-pad'}
-                  value={phone}
-                  onChangeText={setPhone}
-                />
-                {showOtpField && 
-                  <Input
-                    style={styles.passwordInput}
-                    status='control'
-                    placeholder='OTP'
-                    keyboardType={'number-pad'}
-                    value={otp}
-                    onChangeText={setOtp}
-                  />
-                  }
-                {showOtpField && 
-                  <View style={{flexDirection: 'row', justifyContent: 'flex-end', width: '100%', paddingRight: 10}}>
-                    <TouchableOpacity onPress={registerPhone} disabled={!isResendEnable}>
-                      <Text style={isResendEnable ? {color: '#fff'} : {color: '#d4d4d4'}}>Resend OTP</Text>
-                    </TouchableOpacity>
-                  </View>
-                }
-              </View>
+              <LoginForm
+                phone={phone}
+                setPhone={setPhone}
+                otp={otp}
+                setOtp={setOtp}
+                showOtpField={showOtpField}
+                registerPhone={registerPhone}
+                setShowOtpField={setShowOtpField}
+                isResendEnable={isResendEnable}
+                enableResend={enableResend}
+              />
               { isLoading ? 
                 <View style={styles.signInButtonContainer}>
                   <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
                     <Spinner status='primary'/>
                   </View>
                 </View> :
-                <View style={styles.signInButtonContainer}>            
-                  { showOtpField ? 
-                    <TouchableOpacity style={styles.signInButton} onPress={onSubmit} disabled={isLoading}>
-                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Submit</Text>
-                    </TouchableOpacity>:
-                    <TouchableOpacity style={[styles.signInButton]} onPress={registerPhone} disabled={isLoading || !phone || (phone && phone.length < 10)}>
-                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Continue</Text>
-                    </TouchableOpacity>
-                  }
-              </View> 
+                <LoginButtons
+                  phone={phone}
+                  otp={otp}
+                  networkAvailability={networkAvailability}
+                  showOtpField={showOtpField}
+                  setShowOtpField={setShowOtpField}
+                />
             }
             </Animatable.View>
           </View> : 
