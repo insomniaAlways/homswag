@@ -37,7 +37,6 @@ function ScheduleAppointmentScreen(props) {
       if(moment().isSame(moment(date), 'days')) {
         let cutOffTime = moment().startOf('days').add(selectedSlot.to - 1, 'hours')
         let isAfter = moment().isSameOrAfter(cutOffTime)
-        console.log(cutOffTime.format('HH:mm, DD/MM'), isAfter, moment().format('HH:mm, DD/MM'), selectedSlot.to )
         switch (selectedSlot.type) {
           case 1: {
             if(isAfter) {
