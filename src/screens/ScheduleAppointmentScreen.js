@@ -12,14 +12,20 @@ import { Layout, Text } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView';
 import { updateAppointmentState } from '../../store/actions/appointmentActions';
 import _ from 'lodash';
+import moment from 'moment';
 
 function ScheduleAppointmentScreen(props) {
-  const { appointment, addresses, getAddress, currentUser, updateAppointment } = props
+  const { appointmentModel, addresses, getAddress, currentUserModel, updateAppointment } = props
   const [ openAddressModal, setModal ] = useState(false)
   const [ scrollOffset, setScrollOffset ] = useState(0)
+  const [ date, setDate ] = useState(new Date())
   const [ selectedAddress, setSelectedAddress ] = useState()
+  const [ specialInstruction, setInstruction ] = useState()
+  const [ preferedBeautician, setBeautician ] = useState()
+  
   let scrollViewRef;
-  const { defaultValues, slots } = appointment
+  const { defaultValues, slots } = appointmentModel
+  const [ selectedSlot, setSlot ] = useState(defaultValues.slot)
 
   const goToAddAddress = () => {
     setModal(false)
@@ -27,8 +33,18 @@ function ScheduleAppointmentScreen(props) {
   }
 
   const save = () => {
-    updateAppointment(appointmentDetails)
-    props.navigation.navigate('Cart', { bookingDetails: appointmentDetails})
+    updateAppointment({
+      ...appointmentModel.defaultValues,
+      appointment_for: currentUserModel.values.name,
+      phone_number: currentUserModel.values.phone,
+      from: moment(date).toISOString(),
+      date: moment(date).toISOString(),
+      slot: selectedSlot,
+      selectedAddress: selectedAddress,
+      special_instruction: specialInstruction,
+      prefered_beautician: preferedBeautician
+    })
+    props.navigation.navigate('Cart')
   }
 
   useEffect(() => {
@@ -48,23 +64,6 @@ function ScheduleAppointmentScreen(props) {
     return () => setModal(false)
   }, [addresses.isLoading, addresses.values, addresses.values.length])
 
-  const [ appointmentDetails, setAppointmentDetails ] = useState(defaultValues)
-
-  useEffect(() => {
-    updateAppointment({
-      ...appointmentDetails,
-      appointment_for: currentUser.values.name,
-      phone_number: currentUser.values.phone,
-      selectedAddress: selectedAddress,
-      special_instruction: appointmentDetails.special_instruction,
-      prefered_beautician: appointmentDetails.prefered_beautician
-    })
-    return () => setModal(false)
-  }, [currentUser, selectedAddress, addresses.isLoading])
-
-  useEffect(() => {
-    setAppointmentDetails({...appointment.defaultValues})
-  }, [appointment.defaultValues])
 
   const handleOnScroll = event => {
     setScrollOffset(event.nativeEvent.contentOffset.y)
@@ -82,21 +81,22 @@ function ScheduleAppointmentScreen(props) {
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Select Date and Time: </Text>
           <View>
-            <SelectDate appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails}/>
-            <SelectTimeSlot appointmentDetails={appointmentDetails} setAppointmentDetails={setAppointmentDetails} slots={slots}/>
+            <SelectDate date={date} setDate={setDate} />
+            <SelectTimeSlot date={date} selectedSlot={selectedSlot} setSlot={setSlot} slots={slots}/>
           </View>
         </View>
         <View style={{marginTop: 10}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Fill Details:</Text>
           <BookingDetails
-            appointmentDetails={appointmentDetails}
-            setAppointmentDetails={setAppointmentDetails}
-            openAddressModal={openAddressModal}
             selectedAddress={selectedAddress}
             setModal={setModal}
             isAddressLoading={addresses.isLoading}
             goToAddAddress={goToAddAddress}
-            navigation={props.navigation}
+            specialInstruction={specialInstruction}
+            setInstruction={setInstruction}
+            preferedBeautician={preferedBeautician}
+            setBeautician={setBeautician}
+            currentUser={currentUserModel.values}
             />
         </View>
         <View style={{height: 100, justifyContent: 'center', alignItems: 'center'}}>
@@ -151,9 +151,9 @@ function ScheduleAppointmentScreen(props) {
 }
 
 const mapPropsToState = state => ({
-  appointment: state.appointment,
+  appointmentModel: state.appointment,
   addresses: state.addresses,
-  currentUser: state.currentUser
+  currentUserModel: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => {
