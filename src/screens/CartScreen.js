@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
-import { Text, Modal, Spinner, Layout } from '@ui-kitten/components';
+import { Text, Layout } from '@ui-kitten/components';
 import { connect } from 'react-redux';
 import CartItemList from '../components/cartItemList';
 import { fetchCart } from '../../store/actions/cartAction';
@@ -10,6 +10,7 @@ import AppointmentDetails from '../components/appointmentDetails';
 import CartPromoItemList from '../components/cartPromoItemList';
 import EmptyCart from '../../assets/images/empty_cart.png'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import moment from 'moment'
 
 function CartScreen(props) {
   const { navigation, cartModel, cartItemModel, appointment, networkAvailability } = props;
@@ -33,11 +34,58 @@ function CartScreen(props) {
     }
   }, [cartModel.error])
 
-  const goToConfirmPage = () => {
-    if(appointment.defaultValues && appointment.defaultValues.selectedAddress && appointment.defaultValues.selectedAddress.id) {
-      return navigation.navigate('ConfirmAppointment')
+  const isValidateSlot = () => {
+    if(appointment.defaultValues.slot && appointment.defaultValues.slot.type) {
+      if(moment().isSame(moment(appointment.defaultValues.date), 'days')) {
+        let cutOffTime = moment().startOf('days').add(appointment.defaultValues.slot.to - 1, 'hours')
+        let isAfter = moment().isSameOrAfter(cutOffTime)
+        switch (appointment.defaultValues.slot.type) {
+          case 1: {
+            if(isAfter) {
+              if(moment().isSameOrAfter(moment().startOf('days').add(17, 'hours'))) {
+                alert('Please select a valid time slot.')
+              } else {
+                alert('You cannot schedule for the selected time slot.')
+              }
+              return false
+            } else {
+              return true
+            }
+          }
+          case 2: {
+            if(isAfter) {
+              alert('You cannot schedule for the selected time slot.')
+              return false
+            } else {
+              return true
+            }
+          }
+          case 3: {
+            if(isAfter) {
+              alert('You cannot schedule for the selected time slot for today')
+              return false
+            } else {
+              return true
+            }
+          }
+        }      
+      } else {
+        return true
+      }
     } else {
-      return alert('Please select an address')
+      return false
+    }
+  }
+
+  const goToConfirmPage = () => {
+    if(isValidateSlot()) {
+      if(appointment.defaultValues && appointment.defaultValues.selectedAddress && appointment.defaultValues.selectedAddress.id) {
+        return navigation.navigate('ConfirmAppointment')
+      } else {
+        return alert('Please select an address')
+      }
+    } else {
+      return alert('Please select a valid timeslot')
     }
   }
 
