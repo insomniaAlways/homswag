@@ -100,6 +100,7 @@ const LoginScreen = (props) => {
   useEffect(() => {
     if(!currentUserModel.isLoading && currentUserModel.values.id && auth.userToken) {
       if(currentUserModel.values.name) {
+        setSession(true)
         redirectToApp()
       } else {
         navigation.navigate('ProfileUpdate')
@@ -139,7 +140,7 @@ const LoginScreen = (props) => {
     }
     return () => {
       if(!auth.isLoading && auth.userToken) {
-        setSession(true)
+        // setSession(true)
         setAuthenticating(false)
       }
     }
@@ -155,7 +156,7 @@ const LoginScreen = (props) => {
     }
     return () => {
       if(!auth.isLoading && auth.userToken) {
-        setSession(true)
+        // setSession(true)
         setAuthenticating(false)
       }
     }
@@ -165,7 +166,7 @@ const LoginScreen = (props) => {
     bootstrapApp();
     return () => {
       if(!auth.isLoading && auth.userToken) {
-        setSession(true)
+        // setSession(true)
         setAuthenticating(false)
       }
     }
@@ -175,7 +176,7 @@ const LoginScreen = (props) => {
     setOtp();
     return () => {
       if(!auth.isLoading && auth.userToken) {
-        setSession(true)
+        // setSession(true)
         setAuthenticating(false)
       }
     }
