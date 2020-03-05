@@ -73,7 +73,7 @@ function CartScreen(props) {
         return true
       }
     } else {
-      alert('Please select a timeslot')
+      return false
     }
   }
 
@@ -85,7 +85,7 @@ function CartScreen(props) {
         return alert('Please select an address')
       }
     } else {
-
+      return alert('Please select a valid timeslot')
     }
   }
 
