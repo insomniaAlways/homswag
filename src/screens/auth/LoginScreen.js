@@ -52,7 +52,11 @@ const LoginScreen = (props) => {
         startLoginProcess()
       }
     } catch (e) {
-      alert(e)
+      if(typeof(e) == "string" && e.includes('JSON')) {
+        alert('Your session has expired, Please Login again')
+      } else {
+        alert(e)
+      }
       setLoading(false)
     }
   }
@@ -106,6 +110,7 @@ const LoginScreen = (props) => {
       authenticate(authModel.userToken, authModel.refreshToken)
     } else if(!authModel.isLoading && authModel.error) {
       setButtonLoading(false)
+      setLoading(false)
       if(authModel.error && authModel.error.message) {
         alert(authModel.error.message)
       } else {
