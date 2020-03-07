@@ -1,190 +1,156 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, View, ImageStyle } from 'react-native';
-import { Button, Input, Text } from '@ui-kitten/components';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
-import { Icon } from '@ui-kitten/components';
 import ImageBackground from '../../../assets/images/image-background.jpg'
 import { connect } from 'react-redux';
-import { addHeader, register, validateToken, onValidationSuccess } from '../../../store/actions/authenticationAction';
+import { register, validatedAuthToken } from '../../../store/actions/authenticationAction';
+import { setSessionUnauthenticated, setSessionAuthenticated } from '../../../store/actions/sessionActions';
 import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
 import { Spinner } from '@ui-kitten/components';
 import * as Animatable from 'react-native-animatable';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
-const PhoneIcon = (style) => (
-  <Icon {...style} name='phone'/>
-);
+import LoginForm from '../../components/helpers/loginForm';
+import LoginButtons from '../../components/helpers/loginButtons';
 
 const LoginScreen = (props) => {
-  const { navigation, addTokenToHeader, registerUser, validateOtp, auth, currentUserModel, restoreAuth, networkAvailability } = props
-  const [ isSessionAuthenticated, setSession ] = useState(false)
-  const [ isSessionAuthenticating, setAuthenticating ] = useState(true)
+  const { navigation,
+    registerUser,
+    currentUserModel,
+    networkAvailability,
+    unAuthenticate,
+    authenticate,
+    getUser,
+    authModel,
+    session,
+    validateCurrentToken } = props
   const [ phone, setPhone ] = useState();
   const [ otp, setOtp ] = useState();
   const [ showOtpField, setShowOtpField ] = useState(false);
-  const [ isLoading, setLoading ] = useState(false)
+  const [ isLoading, setLoading ] = useState(true)
+  const [ isButtonLoading, setButtonLoading ] = useState(false)
   const [ isResendEnable, enableResend ] = useState(false)
   let resendTimer;
-  
-  const storeSession = async () => {
-    let token
-    try {
-      if(auth.userToken) {
-        await AsyncStorage.setItem('token', auth.userToken);
-        token = await AsyncStorage.getItem('token')
-        if(token) {
-          props.getUser()
-        }
-      } else {
-        alert('Something went wrong, Please try again')
-      }
-    } catch (e) {
-      resetState()
-    }
-  };
 
-  const redirectToApp = () =>  {
-    navigation.navigate('App')
+  //  ------------------ : Methods: ---------------------
+
+  //called when first time login and after logout
+  const startLoginProcess = async () => {
+    setLoading(false)
+    await unAuthenticate()
   }
 
-  const onSubmit = async () => {
-    if(networkAvailability.isOffline) {
-      alert('Seems like you are not connected to Internet')
-    } else {
-      if(phone && otp) {
-        setLoading(true)
-        validateOtp(phone, otp)
+  //while application load
+  const checkAuthentication = async () => {
+    try {
+      let token = await AsyncStorage.getItem('token')
+      let tokenObject = JSON.parse(token)
+      if(tokenObject && tokenObject.authToken && tokenObject.refreshToken) {
+        validateCurrentToken(tokenObject.authToken, tokenObject.refreshToken)
+      } else {
+        startLoginProcess()
       }
+    } catch (e) {
+      if(typeof(e) == "string" && e.includes('JSON')) {
+        alert('Your session has expired, Please Login again')
+      } else {
+        alert(e)
+      }
+      setLoading(false)
     }
-  };
+  }
 
-  const resetState = (skipOtp=false) => {
-    setSession(false)
-    setAuthenticating(false)
-    setLoading(false)
-    if(!skipOtp) {
-      setShowOtpField(false)
-      clearTimeout(resendTimer)
-      resendTimer = setTimeout(() => {
-        enableResend(true)
-      }, 5000)
-      enableResend(false)
+  //should called while session is authenticated and current user data loaded
+  const redirectTo = () => {
+    if(currentUserModel.values && currentUserModel.values.name) {
+      navigation.navigate('App')
+    } else if (currentUserModel.values && !currentUserModel.values.name) {
+      navigation.navigate('ProfileUpdate')
     }
+    setButtonLoading(false)
+    setLoading(false)
   }
 
   const registerPhone = async () => {
     if(networkAvailability.isOffline) {
       alert('Seems like you are not connected to Internet')
     } else {
-      if(phone && (phone.length == 10)) {
-        setShowOtpField(true)
+      if(phone && phone.length == 10) {
+        setButtonLoading(true)
         try {
           await registerUser(phone)
           setShowOtpField(true)
+          setButtonLoading(false)
           resendTimer = setTimeout(() => {
             enableResend(true)
-          }, 5000)
+            clearTimeout(resendTimer)
+          }, 5000);
+        } catch(e) {
+          setButtonLoading(false)
+          alert(e)
         }
-        catch(e) {
-          resetState()
-        }
+      } else {
+        alert("Please provide a valid phone number")
       }
     }
   }
 
-  useEffect(() => {
-    if(!currentUserModel.isLoading && currentUserModel.values.id && auth.userToken) {
-      if(currentUserModel.values.name) {
-        setSession(true)
-        redirectToApp()
-      } else {
-        navigation.navigate('ProfileUpdate')
-      }
-    }
-    if(!currentUserModel.isLoading && currentUserModel.error) {
-      resetState()
-      alert("Your session is expired. Please login again.")
-    }
-  }, [currentUserModel.isLoading, currentUserModel.error])
+  //  ------------------- : END: -----------------------
 
-  const bootstrapApp = async () => {
-    let userToken;
-    try {
-      userToken = await AsyncStorage.getItem('token');
-      restoreAuth(userToken)
-      if(userToken) {
-        let token = userToken ? userToken : auth.userToken
-        addTokenToHeader(token)
-        props.getUser()
-      } else {
-        setSession(false)
-        setAuthenticating(false)
-      }
-    } catch (e) {
-      alert(e)
-      resetState()
-    }
-  };
-
-  useEffect(() => {
-    setShowOtpField(false)
-    clearTimeout(resendTimer)
-    enableResend(false)
-    if(phone) {
-      resetState()
-    }
-    return () => {
-      if(!auth.isLoading && auth.userToken) {
-        // setSession(true)
-        setAuthenticating(false)
-      }
-    }
-  }, [phone])
-
-  useEffect(() => {
-    if(!auth.isLoading && auth.userToken) {
-      storeSession()
-    }
-    if(!auth.isLoading && auth.error) {
-      resetState(true)
-      alert(auth.error.message)
-    }
-    return () => {
-      if(!auth.isLoading && auth.userToken) {
-        // setSession(true)
-        setAuthenticating(false)
-      }
-    }
-  }, [auth.isLoading, auth.isSignOut, auth.userToken, auth.error])
+  // ------------------- : Hooks : ---------------------
 
   useLayoutEffect(() => {
-    bootstrapApp();
-    return () => {
-      if(!auth.isLoading && auth.userToken) {
-        // setSession(true)
-        setAuthenticating(false)
-      }
-    }
+    checkAuthentication()
   }, [])
 
+  //trigger when otp validation succeed
   useEffect(() => {
-    setOtp();
-    return () => {
-      if(!auth.isLoading && auth.userToken) {
-        // setSession(true)
-        setAuthenticating(false)
+    if(!authModel.isLoading && authModel.userToken && authModel.refreshToken) {
+      authenticate(authModel.userToken, authModel.refreshToken)
+    } else if(!authModel.isLoading && authModel.error) {
+      setButtonLoading(false)
+      setLoading(false)
+      if(authModel.error && authModel.error.message) {
+        alert(authModel.error.message)
+      } else {
+        alert(authModel.error)
       }
     }
-  }, [showOtpField])
+  }, [authModel.isLoading, authModel.userToken])
+
+  //trigger after session is authenticated
+  useEffect(() => {
+    if(session.isSessionAuthenticated) {
+      getUser()
+    }
+  }, [session.isSessionAuthenticated])
+
+  //trigger after only session get authenticated
+  //Should responsible for redirection
+  useEffect(() => {
+    if(session.isSessionAuthenticated) {
+      if(!currentUserModel.isLoading && currentUserModel.values && currentUserModel.values.id) {
+        redirectTo()
+      } else if(!currentUserModel.isLoading && currentUserModel.error) {
+        setButtonLoading(false)
+        if(currentUserModel.error && currentUserModel.error.message) {
+          alert(currentUserModel.error.message)
+        } else {
+          alert(currentUserModel.error)
+        }
+      }
+    }
+  }, [currentUserModel.isLoading, currentUserModel.values, currentUserModel.error])
+
+  // -------------------: END : ---------------------
 
   return (
     <KeyboardAvoidingView>
       <ImageOverlay
         style={styles.container}
         source={ImageBackground}>
-        {!isSessionAuthenticated && !isSessionAuthenticating ?
+        {!isLoading?
           <View style={{flex: 1}}>
             <View style={styles.headerContainer}>
               <Text
@@ -204,50 +170,36 @@ const LoginScreen = (props) => {
               style={styles.formContainer}
               animation={"fadeInUp"}
             >
-              <View style={styles.formContainer}>
-                <Input
-                  status='control'
-                  placeholder='Phone Number'
-                  icon={PhoneIcon}
-                  maxLength={10}
-                  keyboardType={'number-pad'}
-                  value={phone}
-                  onChangeText={setPhone}
-                />
-                {showOtpField && 
-                  <Input
-                    style={styles.passwordInput}
-                    status='control'
-                    placeholder='OTP'
-                    keyboardType={'number-pad'}
-                    value={otp}
-                    onChangeText={setOtp}
-                  />
-                  }
-                {showOtpField && 
-                  <View style={{flexDirection: 'row', justifyContent: 'flex-end', width: '100%', paddingRight: 10}}>
-                    <TouchableOpacity onPress={registerPhone} disabled={!isResendEnable}>
-                      <Text style={isResendEnable ? {color: '#fff'} : {color: '#d4d4d4'}}>Resend OTP</Text>
-                    </TouchableOpacity>
-                  </View>
-                }
-              </View>
+              <LoginForm
+                phone={phone}
+                setPhone={setPhone}
+                otp={otp}
+                setOtp={setOtp}
+                showOtpField={showOtpField}
+                registerPhone={registerPhone}
+                setShowOtpField={setShowOtpField}
+                isResendEnable={isResendEnable}
+                enableResend={enableResend}
+              />
               { isLoading ? 
                 <View style={styles.signInButtonContainer}>
                   <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
                     <Spinner status='primary'/>
                   </View>
                 </View> :
-                <View style={styles.signInButtonContainer}>            
-                  { showOtpField ? 
-                    <TouchableOpacity style={styles.signInButton} onPress={onSubmit} disabled={isLoading}>
-                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Submit</Text>
-                    </TouchableOpacity>:
-                    <TouchableOpacity style={[styles.signInButton]} onPress={registerPhone} disabled={isLoading || !phone || (phone && phone.length < 10)}>
-                      <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Continue</Text>
-                    </TouchableOpacity>
-                  }
-              </View> 
+                <LoginButtons
+                  phone={phone}
+                  otp={otp}
+                  resendTimer={resendTimer}
+                  networkAvailability={networkAvailability}
+                  showOtpField={showOtpField}
+                  isButtonLoading={isButtonLoading}
+                  setButtonLoading={setButtonLoading}
+                  enableResend={enableResend}
+                  setOtp={setOtp}
+                  registerPhone={registerPhone}
+                  setShowOtpField={setShowOtpField}
+                />
             }
             </Animatable.View>
           </View> : 
@@ -261,17 +213,18 @@ const LoginScreen = (props) => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  authModel: state.auth,
   currentUserModel: state.currentUser,
-  networkAvailability: state.networkAvailability
+  networkAvailability: state.networkAvailability,
+  session: state.session
 })
 
 const mapDispatchToProps = dispatch => ({
-  addTokenToHeader: (token) => dispatch(addHeader(token)),
   registerUser: (phone) => dispatch(register(phone)),
-  validateOtp: (phone, otp) => dispatch(validateToken(phone, otp)),
   getUser: () => dispatch(fetchUser()),
-  restoreAuth: (token) => dispatch(onValidationSuccess({token: token}))
+  unAuthenticate: () => dispatch(setSessionUnauthenticated()),
+  authenticate: (token, refreshToken) => dispatch(setSessionAuthenticated(token, refreshToken)),
+  validateCurrentToken: (authToken, refreshToken) => dispatch(validatedAuthToken(authToken, refreshToken))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen);
@@ -318,5 +271,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
-
 });

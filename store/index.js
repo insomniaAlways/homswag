@@ -8,6 +8,7 @@ import orderReducers from './reducers/orderReducers';
 import addressReducers from './reducers/addressReducers';
 import packageReducers from './reducers/packageReducers';
 import appointmentReducers from './reducers/appointmentReducers';
+import sessionReducers from './reducers/sessionReducers';
 import { initialState } from './intialValues';
 import locationReducers from './reducers/locationReducers';
 import userReducers from './reducers/userReducers';
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   location: locationReducers,
   appointment: appointmentReducers,
   currentUser: userReducers,
-  networkAvailability: networkReducers
+  networkAvailability: networkReducers,
+  session: sessionReducers
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
