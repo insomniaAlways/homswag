@@ -28,7 +28,9 @@ const SideDrawer = props => {
     <View style={{flex: 1}}>
       <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
         <View style={styles.profilePic}>
-          <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/>
+          {currentUserModel.values.image_source ?
+          <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/> :
+          <View style={styles.profilePic}></View> }
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.name}>Hello, {currentUserModel.values.name}</Text>

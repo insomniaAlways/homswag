@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { Image, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -115,7 +115,7 @@ const ImagePickerView = (props) => {
           }
         </Layout> :
         <TouchableOpacity onPress={startModule}>
-          <ImageBackground style={props.styles.profilePicPlaceHolder} source={ProfilePicPlaceholder}>
+          <ImageBackground style={styles.profilePicPlaceHolder} source={ProfilePicPlaceholder}>
             <Layout style={{paddingBottom: 10, paddingRight: 10, backgroundColor: 'transparent'}}>
               <FontAwesome name="camera" size={24} />
             </Layout>
@@ -127,3 +127,18 @@ const ImagePickerView = (props) => {
 }
 
 export default ImagePickerView;
+
+const styles = StyleSheet.create({
+  profilePicPlaceHolder: {
+    height: 140,
+    width: 140,
+    borderRadius: 70,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2, },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+})

@@ -6,7 +6,6 @@ import { Layout, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../components/imageOverlay';
 import Graphics from '../../assets/images/order_confirm_background.png'
 import { StyleSheet, ScrollView } from 'react-native';
-import LoadingModal from '../components/loadingModal';
 import Constants from 'expo-constants';
 import ItemView from '../components/itemView';
 import { TouchableOpacity } from 'react-native';
@@ -34,6 +33,7 @@ function ReviewOrderScreen (props) {
   const confirmBooking = async () => {
     setLoading(true)
     let appointmentDetails = appointment.defaultValues
+    let from, to;
     if(appointmentDetails.slot.type == 1) {
       from = moment(appointmentDetails.from).startOf('days').add(9, 'hours').toISOString()
       to = moment(appointmentDetails.from).startOf('days').add(12, 'hours').toISOString()
@@ -112,7 +112,7 @@ function ReviewOrderScreen (props) {
             </Layout>
             <Layout style={{flexDirection: 'row' ,marginHorizontal: 30, marginVertical: 28, borderWidth: 1, borderColor: '#a9d5de', padding: 10, borderRadius: 5, backgroundColor: '#f8ffff'}}>
               <Text style={{fontFamily: 'roboto-medium', color: '#0e566c'}}>Note: </Text>
-              <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '90%', color: '#276f86', minHeight: 70}}>
+              <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '88%', color: '#276f86', minHeight: 70}}>
                 If any cancellation or reschedule Appointment after the confirmation is mandatory in prior to 2 Hours, Appreciate you cooperation on the same.
               </Text>
             </Layout>
