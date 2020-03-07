@@ -95,6 +95,7 @@ export const authModel = {
   isLoading: false,
   isSignOut: false,
   userToken: null,
+  refreshToken: null,
   error: null
 }
 
@@ -103,7 +104,6 @@ export const session = {
   isSessionExpired: false,
   isSessionAuthenticated: false,
   isSessionUnauthenticated: true,
-  token: null,
   error: null
 }
 

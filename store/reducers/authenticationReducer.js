@@ -6,7 +6,8 @@ const authReducers = (state = authModel, action) => {
     case FETCH_STORED_TOKEN : {
       return {
         ...state,
-        userToken: action.payload.token
+        userToken: action.payload.token,
+        refreshToken: action.payload.refreshToken,
       }
     }
     case VALIDATION_INITIATED: {
@@ -15,6 +16,7 @@ const authReducers = (state = authModel, action) => {
         isLoading: true,
         isSignOut: true,
         userToken: null,
+        refreshToken: null,
         error: null
       };
     }
@@ -24,6 +26,7 @@ const authReducers = (state = authModel, action) => {
         isLoading: false,
         isSignOut: false,
         userToken: action.payload.token,
+        refreshToken: action.payload.refreshToken,
         error: null
       };
     }
@@ -33,6 +36,7 @@ const authReducers = (state = authModel, action) => {
         isLoading: false,
         isSignOut: true,
         userToken: null,
+        refreshToken: null,
         error: action.error
       };
     }
@@ -41,6 +45,7 @@ const authReducers = (state = authModel, action) => {
         isLoading: false,
         isSignOut: true,
         userToken: null,
+        refreshToken: null,
         error: null
       };
     }
@@ -49,6 +54,7 @@ const authReducers = (state = authModel, action) => {
         ...state,
         isLoading: true,
         userToken: null,
+        refreshToken: null,
         isSignOut: true,
         error: null
       }
@@ -58,6 +64,7 @@ const authReducers = (state = authModel, action) => {
         ...state,
         isLoading: false,
         userToken: null,
+        refreshToken: null,
         isSignOut: true,
         error: null
       }
@@ -67,6 +74,7 @@ const authReducers = (state = authModel, action) => {
         ...state,
         isLoading: false,
         userToken: null,
+        refreshToken: null,
         isSignOut: true,
         error: action.error
       }

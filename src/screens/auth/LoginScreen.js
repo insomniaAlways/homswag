@@ -35,8 +35,8 @@ const LoginScreen = (props) => {
   const [ isResendEnable, enableResend ] = useState(false)
   let resendTimer;
 
-  console.log('sessionModel', session.token)
-  console.log('auth', authModel.userToken)
+  console.log('sessionModel', session)
+  console.log('auth', authModel)
 
   //  ------------------ : Methods: ---------------------
 
@@ -49,8 +49,9 @@ const LoginScreen = (props) => {
   const checkAuthentication = async () => {
     try {
       let token = await AsyncStorage.getItem('token')
-      console.log('login token', token)
-      // if(token) {
+      let tokenObject = JSON.parse(token)
+      console.log('login token', tokenObject)
+      // if(tokenObject.authToken && tokenObject.refreshToken) {
 
       // } else {
         startLoginProcess()
@@ -101,17 +102,23 @@ const LoginScreen = (props) => {
 
   //trigger when otp validation succeed
   useEffect(() => {
-    if(!authModel.isLoading && authModel.userToken) {
-      authenticate(authModel.userToken)
+    if(!authModel.isLoading && authModel.userToken && authModel.refreshToken) {
+      authenticate(authModel.userToken, authModel.refreshToken)
+    } else if(!authModel.isLoading && authModel.error) {
+      if(authModel.error && authModel.error.message) {
+        alert(authModel.error.message)
+      } else {
+        alert(authModel.error)
+      }
     }
   }, [authModel.isLoading, authModel.userToken])
 
   //trigger after session is authenticated
   useEffect(() => {
-    if(session.isSessionAuthenticated && session.token) {
+    if(session.isSessionAuthenticated) {
       getUser()
     }
-  }, [session.isSessionAuthenticated, session.token])
+  }, [session.isSessionAuthenticated])
 
   //trigger after only session get authenticated
   //Should responsible for redirection
@@ -119,8 +126,12 @@ const LoginScreen = (props) => {
     if(session.isSessionAuthenticated) {
       if(!currentUserModel.isLoading && currentUserModel.values && currentUserModel.values.id) {
         redirectTo()
-      } else if(currentUserModel.error) {
-        alert(currentUserModel.error)
+      } else if(!currentUserModel.isLoading && currentUserModel.error) {
+        if(currentUserModel.error && currentUserModel.error.message) {
+          alert(currentUserModel.error.message)
+        } else {
+          alert(currentUserModel.error)
+        }
       }
     }
   }, [currentUserModel.isLoading, currentUserModel.values, currentUserModel.error])
@@ -205,7 +216,7 @@ const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(fetchUser()),
   restoreAuth: (token) => dispatch(onValidationSuccess({token: token})),
   unAuthenticate: () => dispatch(setSessionUnauthenticated()),
-  authenticate: (token) => dispatch(setSessionAuthenticated(token))
+  authenticate: (token, refreshToken) => dispatch(setSessionAuthenticated(token, refreshToken))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen);

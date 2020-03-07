@@ -20,7 +20,6 @@ const sessionReducers = (state = session, action) => {
         isSessionExpired: false,
         isSessionAuthenticated: true,
         isSessionUnauthenticated: false,
-        token: action.token,
         error: null
       }
     }
@@ -31,7 +30,6 @@ const sessionReducers = (state = session, action) => {
         isSessionExpired: false,
         isSessionAuthenticated: false,
         isSessionUnauthenticated: true,
-        token: null,
         error: null
       }
     }
@@ -49,7 +47,6 @@ const sessionReducers = (state = session, action) => {
         isSessionExpired: false,
         isSessionAuthenticated: false,
         isSessionUnauthenticated: true,
-        token: null,
         error: null
       }
     }
