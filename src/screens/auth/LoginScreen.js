@@ -32,7 +32,7 @@ const LoginScreen = (props) => {
   const [ phone, setPhone ] = useState();
   const [ otp, setOtp ] = useState();
   const [ showOtpField, setShowOtpField ] = useState(false);
-  const [ isLoading, setLoading ] = useState(false)
+  const [ isLoading, setLoading ] = useState(true)
   const [ isResendEnable, enableResend ] = useState(false)
   let resendTimer;
 
@@ -44,6 +44,7 @@ const LoginScreen = (props) => {
 
   //called when first time login and after logout
   const startLoginProcess = async () => {
+    setLoading(false)
     await unAuthenticate()
   }
 
@@ -59,6 +60,7 @@ const LoginScreen = (props) => {
       }
     } catch (e) {
       alert(e)
+      setLoading(false)
     }
   }
 
@@ -69,6 +71,7 @@ const LoginScreen = (props) => {
     } else if (currentUserModel.values && !currentUserModel.values.name) {
       navigation.navigate('ProfileUpdate')
     }
+    setLoading(false)
   }
 
   const registerPhone = async () => {
@@ -144,7 +147,7 @@ const LoginScreen = (props) => {
       <ImageOverlay
         style={styles.container}
         source={ImageBackground}>
-        {!session.isUpdating ?
+        {!isLoading?
           <View style={{flex: 1}}>
             <View style={styles.headerContainer}>
               <Text
