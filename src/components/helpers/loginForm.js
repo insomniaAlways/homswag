@@ -8,7 +8,7 @@ const PhoneIcon = (style) => (
 );
 
 function LoginForm(props) {
-  const { phone, setPhone, otp, setOtp, showOtpField, setShowOtpField, isResendEnable, enableResend } = props
+  const { phone, setPhone, otp, setOtp, showOtpField, setShowOtpField, isResendEnable, enableResend, registerPhone } = props
 
   return (
     <View style={styles.formContainer}>

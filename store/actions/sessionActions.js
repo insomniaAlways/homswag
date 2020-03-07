@@ -1,10 +1,10 @@
-import { SESSION_AUTHENTICATING, SESSION_UNAUTHENTICATED, SESSION_UNAUTHENTICATION_FAILED, SESSION_UNAUTHENTICATING } from '../actionTypes';
+import { SESSION_AUTHENTICATED, SESSION_AUTHENTICATING, SESSION_AUTHENTICATION_FAILED, SESSION_UNAUTHENTICATED, SESSION_UNAUTHENTICATION_FAILED, SESSION_UNAUTHENTICATING } from '../actionTypes';
 import { AsyncStorage } from 'react-native';
 
 export const setSessionAuthenticated = (token) => {
   return async function(dispatch) {
-    dispatch(settingSessionAuthenticating())
     try {
+      dispatch(settingSessionAuthenticating())
       await AsyncStorage.setItem('token', token)
       return dispatch(setSessionAuthenticatedSuccess(token))
     } catch (error) {
@@ -33,7 +33,6 @@ const setSessionAuthenticationFailed = (error) => {
     error: error
   }
 }
-
 
 export const setSessionUnauthenticated = () => {
   return async function(dispatch) {

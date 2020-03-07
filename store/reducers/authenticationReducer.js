@@ -1,8 +1,14 @@
-import { VALIDATION_INITIATED, VALIDATION_SUCCESS, SIGN_OUT, VALIDATION_FAILED, ON_LOGIN_INITIATED, ON_LOGIN_SUCCESS, ON_LOGIN_FAILED } from '../actionTypes';
-import { userToken } from '../intialValues';
+import { VALIDATION_INITIATED, VALIDATION_SUCCESS, SIGN_OUT, VALIDATION_FAILED, ON_LOGIN_INITIATED, ON_LOGIN_SUCCESS, ON_LOGIN_FAILED, FETCH_STORED_TOKEN } from '../actionTypes';
+import { authModel } from '../intialValues';
 
-const authReducers = (state = userToken, action) => {
+const authReducers = (state = authModel, action) => {
   switch (action.type) {
+    case FETCH_STORED_TOKEN : {
+      return {
+        ...state,
+        userToken: action.payload.token
+      }
+    }
     case VALIDATION_INITIATED: {
       return {
         ...state,

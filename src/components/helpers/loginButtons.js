@@ -5,38 +5,18 @@ import { connect } from 'react-redux';
 import { register, validateToken } from '../../../store/actions/authenticationAction';
 
 function LoginButtons(props) {
-  const { phone, otp, showOtpField, setShowOtpField, registerUser, validatedOtp, networkAvailability } = props
+  const { phone,
+    otp,
+    showOtpField,
+    registerPhone,
+    validatedOtp,
+    networkAvailability,
+    setShowOtpField,
+    resendTimer,
+    enableResend } = props
   const [ isLoading, setLoading ] = useState(false)
   const [ isRegisterButtonEnable, setRegisterEnable ] = useState(false)
   const [ isOtpButtonEnable, setOtpEnable ] = useState(false)
-
-  const resetAll = (isOtp = false) => {
-    setLoading(false)
-    setRegisterEnable(false)
-    if(isOtp) {
-      setOtpEnable(false)
-    }
-  }
-
-  const registerPhone = async () => {
-    if(networkAvailability.isOffline) {
-      alert('Seems like you are not connected to Internet')
-    } else {
-      if(phone && phone.length == 10) {
-        try {
-          setLoading(true)
-          await registerUser(phone)
-          setShowOtpField(true)
-          setOtpEnable(false)
-          setLoading(false)
-        } catch(e) {
-          setLoading(false)
-          alert(e)
-          resetAll()
-        }
-      }
-    }
-  }
 
   const onSubmit = async () => {
     if(networkAvailability.isOffline) {
@@ -44,11 +24,8 @@ function LoginButtons(props) {
     } else {
       if(phone && phone.length == 10 && otp && otp.length) {
         try {
-          setLoading(true)
           await validatedOtp(phone, otp)
-          setLoading(false)
         } catch(e) {
-          setLoading(false)
           alert(e)
         }
       }
@@ -60,16 +37,19 @@ function LoginButtons(props) {
       setRegisterEnable(true)
     } else {
       setRegisterEnable(false)
+      setShowOtpField(false)
+      clearTimeout(resendTimer)
+      enableResend(false)
     }
   }, [phone])
-console.log(phone)
+
   useEffect(() => {
     if(otp && otp.length > 0 && isRegisterButtonEnable) {
       setOtpEnable(true)
     } else {
       setOtpEnable(false)
     }
-  }, [otp])
+  }, [otp, phone])
 
   if(isLoading) {
     <View style={styles.signInButtonContainer}>
@@ -81,10 +61,10 @@ console.log(phone)
     return (
       <View style={styles.signInButtonContainer}>            
         { showOtpField ? 
-          <TouchableOpacity style={styles.signInButton} onPress={onSubmit} disabled={!isRegisterButtonEnable}>
+          <TouchableOpacity style={styles.signInButton} onPress={onSubmit} disabled={!isOtpButtonEnable}>
             <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Submit</Text>
           </TouchableOpacity>:
-          <TouchableOpacity style={[styles.signInButton]} onPress={registerPhone} disabled={!isOtpButtonEnable}>
+          <TouchableOpacity style={[styles.signInButton]} onPress={registerPhone} disabled={!isRegisterButtonEnable}>
             <Text style={{textAlign: 'center', width: '100%', fontSize: 18}}>Continue</Text>
           </TouchableOpacity>
         }

@@ -91,7 +91,7 @@ export const appointment = {
   error: null
 }
 
-export const userToken = {
+export const authModel = {
   isLoading: false,
   isSignOut: false,
   userToken: null,
@@ -99,6 +99,7 @@ export const userToken = {
 }
 
 export const session = {
+  isUpdating: false,
   isSessionExpired: false,
   isSessionAuthenticated: false,
   isSessionUnauthenticated: true,

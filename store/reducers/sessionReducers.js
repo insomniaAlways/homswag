@@ -6,6 +6,7 @@ const sessionReducers = (state = session, action) => {
     case SESSION_AUTHENTICATING: {
       return {
         ...state,
+        isUpdating: true,
         isSessionExpired: false,
         isSessionAuthenticated: false,
         isSessionUnauthenticated: true,
@@ -15,31 +16,36 @@ const sessionReducers = (state = session, action) => {
     case SESSION_AUTHENTICATED: {
       return {
         ...state,
+        isUpdating: false,
         isSessionExpired: false,
         isSessionAuthenticated: true,
         isSessionUnauthenticated: false,
-        token: token,
-        error: action.error
+        token: action.token,
+        error: null
       }
     }
     case SESSION_AUTHENTICATION_FAILED: {
       return {
         ...state,
+        isUpdating: false,
         isSessionExpired: false,
         isSessionAuthenticated: false,
         isSessionUnauthenticated: true,
+        token: null,
         error: null
       }
     }
     case SESSION_UNAUTHENTICATING: {
       return {
         ...state,
+        isUpdating: true,
         error: null
       }
     }
     case SESSION_UNAUTHENTICATED: {
       return {
         ...state,
+        isUpdating: false,
         isSessionExpired: false,
         isSessionAuthenticated: false,
         isSessionUnauthenticated: true,
@@ -50,10 +56,14 @@ const sessionReducers = (state = session, action) => {
     case SESSION_UNAUTHENTICATION_FAILED: {
       return {
         ...state,
+        isUpdating: false,
         isSessionUnauthenticated: false,
         error: action.error
       }
     }
+    default: {
+      return state
+    };
   }
 }
 
