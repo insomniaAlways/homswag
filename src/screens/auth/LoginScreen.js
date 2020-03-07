@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, View, ImageStyle } from 'react-native';
-import { Button, Input, Text } from '@ui-kitten/components';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
-import { Icon } from '@ui-kitten/components';
 import ImageBackground from '../../../assets/images/image-background.jpg'
 import { connect } from 'react-redux';
-import { addHeader, register, validateToken, onValidationSuccess, validatedAuthToken } from '../../../store/actions/authenticationAction';
+import { register, validatedAuthToken } from '../../../store/actions/authenticationAction';
 import { setSessionUnauthenticated, setSessionAuthenticated } from '../../../store/actions/sessionActions';
 import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
@@ -17,11 +16,8 @@ import LoginButtons from '../../components/helpers/loginButtons';
 
 const LoginScreen = (props) => {
   const { navigation,
-    addTokenToHeader,
     registerUser,
-    validateOtp,
     currentUserModel,
-    restoreAuth,
     networkAvailability,
     unAuthenticate,
     authenticate,
@@ -33,12 +29,9 @@ const LoginScreen = (props) => {
   const [ otp, setOtp ] = useState();
   const [ showOtpField, setShowOtpField ] = useState(false);
   const [ isLoading, setLoading ] = useState(true)
+  const [ isButtonLoading, setButtonLoading ] = useState(false)
   const [ isResendEnable, enableResend ] = useState(false)
   let resendTimer;
-
-  console.log('sessionModel', session.isUpdating)
-  console.log('auth', authModel.isLoading)
-  console.log('currentUserModel', currentUserModel.isLoading)
 
   //  ------------------ : Methods: ---------------------
 
@@ -71,6 +64,7 @@ const LoginScreen = (props) => {
     } else if (currentUserModel.values && !currentUserModel.values.name) {
       navigation.navigate('ProfileUpdate')
     }
+    setButtonLoading(false)
     setLoading(false)
   }
 
@@ -79,15 +73,17 @@ const LoginScreen = (props) => {
       alert('Seems like you are not connected to Internet')
     } else {
       if(phone && phone.length == 10) {
+        setButtonLoading(true)
         try {
           await registerUser(phone)
           setShowOtpField(true)
+          setButtonLoading(false)
           resendTimer = setTimeout(() => {
             enableResend(true)
             clearTimeout(resendTimer)
           }, 5000);
         } catch(e) {
-          setLoading(false)
+          setButtonLoading(false)
           alert(e)
         }
       } else {
@@ -109,6 +105,7 @@ const LoginScreen = (props) => {
     if(!authModel.isLoading && authModel.userToken && authModel.refreshToken) {
       authenticate(authModel.userToken, authModel.refreshToken)
     } else if(!authModel.isLoading && authModel.error) {
+      setButtonLoading(false)
       if(authModel.error && authModel.error.message) {
         alert(authModel.error.message)
       } else {
@@ -131,6 +128,7 @@ const LoginScreen = (props) => {
       if(!currentUserModel.isLoading && currentUserModel.values && currentUserModel.values.id) {
         redirectTo()
       } else if(!currentUserModel.isLoading && currentUserModel.error) {
+        setButtonLoading(false)
         if(currentUserModel.error && currentUserModel.error.message) {
           alert(currentUserModel.error.message)
         } else {
@@ -190,7 +188,10 @@ const LoginScreen = (props) => {
                   resendTimer={resendTimer}
                   networkAvailability={networkAvailability}
                   showOtpField={showOtpField}
+                  isButtonLoading={isButtonLoading}
+                  setButtonLoading={setButtonLoading}
                   enableResend={enableResend}
+                  setOtp={setOtp}
                   registerPhone={registerPhone}
                   setShowOtpField={setShowOtpField}
                 />
@@ -214,11 +215,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addTokenToHeader: (token) => dispatch(addHeader(token)),
   registerUser: (phone) => dispatch(register(phone)),
-  validateOtp: (phone, otp) => dispatch(validateToken(phone, otp)),
   getUser: () => dispatch(fetchUser()),
-  restoreAuth: (token) => dispatch(onValidationSuccess({token: token})),
   unAuthenticate: () => dispatch(setSessionUnauthenticated()),
   authenticate: (token, refreshToken) => dispatch(setSessionAuthenticated(token, refreshToken)),
   validateCurrentToken: (authToken, refreshToken) => dispatch(validatedAuthToken(authToken, refreshToken))

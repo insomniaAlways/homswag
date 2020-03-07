@@ -13,8 +13,10 @@ function LoginButtons(props) {
     networkAvailability,
     setShowOtpField,
     resendTimer,
-    enableResend } = props
-  const [ isLoading, setLoading ] = useState(false)
+    enableResend,
+    isButtonLoading,
+    setOtp,
+    setButtonLoading } = props
   const [ isRegisterButtonEnable, setRegisterEnable ] = useState(false)
   const [ isOtpButtonEnable, setOtpEnable ] = useState(false)
 
@@ -24,8 +26,10 @@ function LoginButtons(props) {
     } else {
       if(phone && phone.length == 10 && otp && otp.length) {
         try {
+          setButtonLoading(true)
           await validatedOtp(phone, otp)
         } catch(e) {
+          setButtonLoading(false)
           alert(e)
         }
       }
@@ -38,6 +42,7 @@ function LoginButtons(props) {
     } else {
       setRegisterEnable(false)
       setShowOtpField(false)
+      setOtp('')
       clearTimeout(resendTimer)
       enableResend(false)
     }
@@ -51,12 +56,14 @@ function LoginButtons(props) {
     }
   }, [otp, phone])
 
-  if(isLoading) {
-    <View style={styles.signInButtonContainer}>
-      <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
-        <Spinner status='primary'/>
+  if(isButtonLoading) {
+    return (
+      <View style={styles.signInButtonContainer}>
+        <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
+          <Spinner status='primary'/>
+        </View>
       </View>
-    </View>
+    )
   } else {
     return (
       <View style={styles.signInButtonContainer}>            
