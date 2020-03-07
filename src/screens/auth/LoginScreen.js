@@ -6,7 +6,7 @@ import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
 import { Icon } from '@ui-kitten/components';
 import ImageBackground from '../../../assets/images/image-background.jpg'
 import { connect } from 'react-redux';
-import { addHeader, register, validateToken, onValidationSuccess } from '../../../store/actions/authenticationAction';
+import { addHeader, register, validateToken, onValidationSuccess, validatedAuthToken } from '../../../store/actions/authenticationAction';
 import { setSessionUnauthenticated, setSessionAuthenticated } from '../../../store/actions/sessionActions';
 import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
@@ -27,7 +27,8 @@ const LoginScreen = (props) => {
     authenticate,
     getUser,
     authModel,
-    session } = props
+    session,
+    validateCurrentToken } = props
   const [ phone, setPhone ] = useState();
   const [ otp, setOtp ] = useState();
   const [ showOtpField, setShowOtpField ] = useState(false);
@@ -35,8 +36,9 @@ const LoginScreen = (props) => {
   const [ isResendEnable, enableResend ] = useState(false)
   let resendTimer;
 
-  console.log('sessionModel', session)
-  console.log('auth', authModel)
+  console.log('sessionModel', session.isUpdating)
+  console.log('auth', authModel.isLoading)
+  console.log('currentUserModel', currentUserModel.isLoading)
 
   //  ------------------ : Methods: ---------------------
 
@@ -50,12 +52,11 @@ const LoginScreen = (props) => {
     try {
       let token = await AsyncStorage.getItem('token')
       let tokenObject = JSON.parse(token)
-      console.log('login token', tokenObject)
-      // if(tokenObject.authToken && tokenObject.refreshToken) {
-
-      // } else {
+      if(tokenObject && tokenObject.authToken && tokenObject.refreshToken) {
+        validateCurrentToken(tokenObject.authToken, tokenObject.refreshToken)
+      } else {
         startLoginProcess()
-      // }
+      }
     } catch (e) {
       alert(e)
     }
@@ -216,7 +217,8 @@ const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(fetchUser()),
   restoreAuth: (token) => dispatch(onValidationSuccess({token: token})),
   unAuthenticate: () => dispatch(setSessionUnauthenticated()),
-  authenticate: (token, refreshToken) => dispatch(setSessionAuthenticated(token, refreshToken))
+  authenticate: (token, refreshToken) => dispatch(setSessionAuthenticated(token, refreshToken)),
+  validateCurrentToken: (authToken, refreshToken) => dispatch(validatedAuthToken(authToken, refreshToken))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen);

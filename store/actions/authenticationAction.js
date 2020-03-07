@@ -1,4 +1,10 @@
-import { VALIDATION_INITIATED, VALIDATION_SUCCESS, SIGN_OUT, VALIDATION_FAILED, ON_LOGIN_INITIATED, ON_LOGIN_SUCCESS, ON_LOGIN_FAILED } from '../actionTypes';
+import { VALIDATION_INITIATED,
+  VALIDATION_SUCCESS,
+  SIGN_OUT,
+  VALIDATION_FAILED,
+  ON_LOGIN_INITIATED,
+  ON_LOGIN_SUCCESS,
+  ON_LOGIN_FAILED } from '../actionTypes';
 import { createRecord, initializeAxiosHeader } from '../asyncActions/index';
 
 export const register = (phone) => {
@@ -72,5 +78,19 @@ export const onValidationError = (error) => {
 export const onSigout = () => {
   return {
     type: SIGN_OUT
+  }
+}
+
+export const validatedAuthToken = (authToken, refreshToken) => {
+  return function (dispatch) {
+    dispatch(onValidationStart())
+    return createRecord('token', {token: authToken, refresh_token: refreshToken})
+    .then((res) => {
+      if(res && res.data && res.data.token) {
+        dispatch(addHeader(res.data.token))
+        return dispatch(onValidationSuccess(res.data))
+      }
+    })
+    .catch(e => dispatch(onValidationError(e.response.data)))
   }
 }

@@ -26,7 +26,7 @@ const authReducers = (state = authModel, action) => {
         isLoading: false,
         isSignOut: false,
         userToken: action.payload.token,
-        refreshToken: action.payload.refreshToken,
+        refreshToken: action.payload.refresh_token,
         error: null
       };
     }
