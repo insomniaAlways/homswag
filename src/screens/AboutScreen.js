@@ -22,8 +22,7 @@ function ContactScreen(props) {
     let number = '';
     if (Platform.OS === 'android') {
       number = 'tel:${+916366505567}';
-    }
-    else {
+    } else {
       number = 'telprompt:${+916366505567}';
     }
     chechAccessibity(number);

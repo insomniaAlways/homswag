@@ -6,7 +6,6 @@ import { Layout, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../components/imageOverlay';
 import Graphics from '../../assets/images/order_confirm_background.png'
 import { StyleSheet, ScrollView } from 'react-native';
-import LoadingModal from '../components/loadingModal';
 import Constants from 'expo-constants';
 import ItemView from '../components/itemView';
 import { TouchableOpacity } from 'react-native';
@@ -34,6 +33,7 @@ function ReviewOrderScreen (props) {
   const confirmBooking = async () => {
     setLoading(true)
     let appointmentDetails = appointment.defaultValues
+    let from, to;
     if(appointmentDetails.slot.type == 1) {
       from = moment(appointmentDetails.from).startOf('days').add(9, 'hours').toISOString()
       to = moment(appointmentDetails.from).startOf('days').add(12, 'hours').toISOString()
@@ -89,32 +89,34 @@ function ReviewOrderScreen (props) {
           source={Graphics}>
           <Layout style={{backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
             <Text style={{color: '#fff', fontSize: 18}}>You can pay us by UPI OR Cash after services</Text>
-            <Layout style={{flexDirection: 'row', padding: 10, borderRadius: 5, backgroundColor: 'transparent'}}>
-              <Text style={{fontFamily: 'roboto-medium', color: '#fff'}}>Note: </Text>
-              <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '90%', color: '#fff'}}>
-                If any cancellation or reschedule Appointment after the confirmation is mandatory in prior to 2 Hours, Appreciate you cooperation on the same.
-              </Text>
-            </Layout>
           </Layout>
         </ImageOverlay>
         <Layout style={{flex: 4, backgroundColor: "#F7F9FC"}}>
-          <Layout style={styles.orderDetailsContainer}>
-            <ScrollView style={styles.orderDetailsScroller}>
-              <Layout style={{justifyContent: 'center', alignItems: 'center', paddingBottom: 10}}>
-                <Text style={{fontSize: 16, fontWeight: 'bold'}}>Appointment Summary</Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Layout style={styles.orderDetailsContainer}>
+              <Layout style={styles.orderDetailsScroller}>
+                <Layout style={{justifyContent: 'center', alignItems: 'center', paddingBottom: 10}}>
+                  <Text style={{fontSize: 16, fontWeight: 'bold'}}>Appointment Summary</Text>
+                </Layout>
+                {cart_items.map(cartItem => (
+                  <ItemView key={cartItem.id} item={cartItem.item} cartItem={cartItem}/>
+                ))}
+                <Layout style={{paddingVertical: 20, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10, borderTopWidth: 1, borderColor: '#eee'}}>
+                  <Text style={{fontSize: 16}}>Total Payable Amount</Text>
+                  <Text style={{fontSize: 16}}>{cart_total}</Text>
+                </Layout>
               </Layout>
-              {cart_items.map(cartItem => (
-                <ItemView key={cartItem.id} item={cartItem.item} cartItem={cartItem}/>
-              ))}
-              <Layout style={{paddingVertical: 20, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10, borderTopWidth: 1, borderColor: '#eee'}}>
-                <Text style={{fontSize: 16}}>Total Payable Amount</Text>
-                <Text style={{fontSize: 16}}>{cart_total}</Text>
-              </Layout>
-            </ScrollView>
-          </Layout>
-          <Layout style={styles.totalSaveContainer}>
-            <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {item_total_price - cart_total}</Text>
-          </Layout>
+            </Layout>
+            <Layout style={styles.totalSaveContainer}>
+              <Text style={{color: "#fff", fontWeight: "bold", width: '100%', textAlign: 'center'}}>You saved total Rs. {item_total_price - cart_total}</Text>
+            </Layout>
+            <Layout style={{flexDirection: 'row' ,marginHorizontal: 30, marginVertical: 28, borderWidth: 1, borderColor: '#a9d5de', padding: 10, borderRadius: 5, backgroundColor: '#f8ffff'}}>
+              <Text style={{fontFamily: 'roboto-medium', color: '#0e566c'}}>Note: </Text>
+              <Text style={{fontFamily: 'roboto-regular', fontSize: 14, alignItems: 'center', width: '88%', color: '#276f86', minHeight: 70}}>
+                If any cancellation or reschedule Appointment after the confirmation is mandatory in prior to 2 Hours, Appreciate you cooperation on the same.
+              </Text>
+            </Layout>
+          </ScrollView>
         </Layout>
         { isloading ?
           <TouchableOpacity style={{height: 57, justifyContent: 'center', alignItems: 'center', backgroundColor: brandLightBackdroundColor}} disabled={true}>

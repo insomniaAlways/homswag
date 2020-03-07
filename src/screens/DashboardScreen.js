@@ -20,13 +20,18 @@ function Dashboard(props) {
     if(!props.networkAvailability.isOffline) {
       setRefreshing(true);
       async function fetchData() {
-        await props.getCart()
-        await props.getAllCategories()
-        await props.getUser()
-        await props.getAllItems()
-        await props.getPackages()
-        await props.getAllCartItems()
-        setRefreshing(false)
+        try {
+          await props.getCart()
+          await props.getAllCategories()
+          await props.getUser()
+          await props.getAllItems()
+          await props.getPackages()
+          await props.getAllCartItems()
+          setRefreshing(false)
+        } catch (e) {
+          alert(e)
+          setRefreshing(false)
+        }
       }
       fetchData()
     } else {
@@ -37,16 +42,21 @@ function Dashboard(props) {
   useEffect(() => {
     if(!props.networkAvailability.isOffline) {
       async function fetchData() {
-        await props.getCart()
-        await props.getAllCartItems()
+        try {
+          props.getAllCategories()
+          await props.getUser()
+          props.getAllItems()
+          props.getPackages()
+          await props.getCart()
+          await props.getAllCartItems()
+        } catch (e) {
+          alert(e)
+        }
       }
-      props.getAllCategories()
-      props.getUser()
-      props.getAllItems()
-      props.getPackages()
       fetchData()
     }
   }, [props.navigation.isFocused])
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false} refreshControl={
@@ -69,7 +79,7 @@ function Dashboard(props) {
             </Animatable.View>
           }
         </View>
-        <View style={{height: 230, paddingTop: 10, paddingBottom: 10}}>
+        <View style={{height: 260, paddingTop: 10, paddingBottom: 10}}>
           <PromoView />
         </View>
         <View style={{marginBottom: 50, marginTop: 10, padding: 20, borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#ABDAF6", marginLeft: 20, marginRight: 20}}>

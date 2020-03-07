@@ -1,23 +1,22 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components';
 import { connect } from 'react-redux';
-import { fetchCart } from '../../store/actions/cartAction';
 import { Badge } from 'react-native-elements';
 
 function CartButton(props) {
   const { navigate } = props.navigation
-  const { cartItems } = props
+  const { cartItemModel } = props
   let totalCartItem = 0
-  if(cartItems && Array.isArray(cartItems)) {
-    totalCartItem = cartItems.length
+  if(cartItemModel && !cartItemModel.isLoading  && cartItemModel.values && Array.isArray(cartItemModel.values)) {
+    totalCartItem = cartItemModel.values.length
   }
 
   useEffect(() => {
-    if(cartItems && Array.isArray(cartItems) && cartItems.length) {
-      totalCartItem = cartItems.length
+    if(cartItemModel && !cartItemModel.isLoading && cartItemModel.values && Array.isArray(cartItemModel.values) && cartItemModel.values.length) {
+      totalCartItem = cartItemModel.values.length
     }
-  }, [cartItems.length])
+  }, [cartItemModel.isLoading, cartItemModel.values.length])
   
   return (
     <TouchableOpacity onPress={() => navigate('Cart')}>
@@ -33,14 +32,8 @@ function CartButton(props) {
 
 mapStateToProps = state => {
   return {
-    cart: state.cart,
-    cartItems: state.cartItems.values && Array.isArray(state.cartItems.values) ? state.cartItems.values : []
+    cartItemModel: state.cartItems
   }
 }
 
-mapDispatchToProps = dispatch => {
-  return {
-    getCart: ()=> dispatch(fetchCart()),
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(CartButton);
+export default connect(mapStateToProps)(CartButton);

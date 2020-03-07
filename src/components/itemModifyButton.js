@@ -17,11 +17,11 @@ function ModifyButton(props) {
     switch (action.type) {
       case 'increment': {
         setLoading(true)
-        return {count: state.count + 1};
+        return {count: cartItem.quantity + 1};
       }
       case 'decrement': {
         setLoading(true)
-        return {count: state.count - 1};
+        return {count: cartItem.quantity - 1};
       }
       case 'reset': {
         init(action.payload)
@@ -36,11 +36,23 @@ function ModifyButton(props) {
   useEffect(() => {
     async function updateCT() {
       if(state.count == 0) {
-        await deleteCartItem(cartItem.id)
-        props.removeCartItem(false)
+        try {
+          await deleteCartItem(cartItem.id)
+          props.removeCartItem(false)
+        } catch(e) {
+          alert(e)
+          setLoading(false)
+        }
       } else if(cartItem && state.count && state.count >= 1) {
         let totalPrice = (+item.price * parseInt(state.count))
-        await updateCartItem(cartItem.id, state.count, totalPrice)
+        try {
+          await updateCartItem(cartItem.id, state.count, totalPrice)
+          setLoading(false)
+        } catch(e) {
+          alert(e)
+          setLoading(false)
+        }
+      } else {
         setLoading(false)
       }
     }
@@ -57,21 +69,21 @@ function ModifyButton(props) {
     return (
       <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
         {isLoading ?
-          <View style={{width: 90, alignItems: 'center', height: 27, justifyContent: 'center'}}><Text>Loading..</Text></View>:
-          <View style={{flexDirection: 'row',justifyContent:'space-between', alignItems: 'center'}}>
-            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+          <View style={{width: 90, alignItems: 'center', height: 30, justifyContent: 'center'}}><Text>Loading..</Text></View>:
+          <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center'}}>
+            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1, height: 30}}>
               <TouchableOpacity onPress={() => dispatch({type: 'decrement'})}>
-                <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{alignItems: 'center', justifyContent: 'center', height: 30}}>
                   <Icon name='minus-outline' width={12} height={12} fill="#0D5618"/>
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-              <Text>{state.count}</Text>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1, height: 30}}>
+              <Text>{cartItem.quantity}</Text>
             </View>
-            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
+            <View style={{flex: 1, borderColor: '#eee', borderWidth: 1, height: 30}}>
               <TouchableOpacity onPress={() => dispatch({type: 'increment'})}>
-                <View style={{height: 25, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{alignItems: 'center', justifyContent: 'center', height: 30}}>
                   <Icon name='plus-outline' width={12} height={12} fill="#0D5618"/>
                 </View>
               </TouchableOpacity>

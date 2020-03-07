@@ -7,6 +7,7 @@ import { createCartItem, deleteItem } from "../../store/actions/cartItemAction";
 import _ from 'lodash';
 import { Layout, Text } from '@ui-kitten/components';
 import { Dimensions } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -15,29 +16,40 @@ const ItemContainer = ({items, packageService}) => {
   if(packageService.description) {
     showDescription = true
   }
-    return (
-      <Layout style={{paddingHorizontal: 20, paddingVertical: 20}}>
-        { showDescription ?
-          <Layout style={{paddingTop: 10, paddingBottom: 10, paddingRight: 10}}>
-            <Text style={{fontSize: 16}}>{packageService.description}</Text>
-          </Layout> : null
-        }
-        <Text style={{fontFamily: 'roboto-medium', fontSize: 18}}>Items</Text>
-        {items.map((item, index) => (
-          <Layout key={index} style={{paddingHorizontal: 10, paddingVertical: 10}}>
-            <Layout>
-              <Layout style={{flexDirection: 'row'}}>
-                <Image source={{uri: item.image_source}} style={{width: 60, height: 40}}/>
-                <Layout style={{marginLeft: 10, width: '75%'}}>
-                  <Text>{item.name}</Text>
-                  <Text category='c1'>{item.description}</Text>
-                </Layout>
+  return (
+    <Layout style={{paddingHorizontal: 20, paddingVertical: 20}}>
+      <Layout style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 10, alignItems: 'center'}}>
+        <Text style={{fontSize: 24, fontFamily: 'roboto-medium-italic', paddingTop: 5}}>Package Price:</Text>
+        <Text style={{fontSize: 24, fontFamily: 'roboto-medium-italic', paddingTop: 5, textDecorationLine: 'line-through', color: 'red', marginLeft: 10}}>
+          <FontAwesome name="rupee" size={20} color="black" />
+          {packageService.mrp_price}
+        </Text>
+        <Text style={{fontSize: 24, fontFamily: 'roboto-medium-italic', paddingTop: 5, color: 'green', marginLeft: 10}}>
+          <FontAwesome name="rupee" size={20} color="black" />
+          {packageService.price}
+        </Text>
+      </Layout>
+      { showDescription ?
+        <Layout style={{paddingBottom: 10, paddingRight: 10}}>
+          <Text style={{fontSize: 16}}>{packageService.description}</Text>
+        </Layout> : null
+      }
+      <Text style={{fontFamily: 'roboto-medium', fontSize: 18}}>Items</Text>
+      {items.map((item, index) => (
+        <Layout key={index} style={{paddingHorizontal: 10, paddingVertical: 10}}>
+          <Layout>
+            <Layout style={{flexDirection: 'row'}}>
+              <Image source={{uri: item.image_source}} style={{width: 60, height: 40}}/>
+              <Layout style={{marginLeft: 10, width: '75%'}}>
+                <Text>{item.name}</Text>
+                <Text category='c1'>{item.description}</Text>
               </Layout>
             </Layout>
           </Layout>
-        ))}
-      </Layout>
-    )
+        </Layout>
+      ))}
+    </Layout>
+  )
 }
 
 const PackageDetails = (props) => {
@@ -79,7 +91,7 @@ const PackageDetails = (props) => {
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView style={{paddingBottom: 20}}>
+      <ScrollView style={{paddingBottom: 20}} showsVerticalScrollIndicator={false}>
         <Image source={{uri: packageService.poster_image_source}} style={{width: screenWidth, height: 260}}/>
         <ItemContainer items={packageService.items} packageService={packageService}/>
       </ScrollView>

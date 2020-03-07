@@ -48,7 +48,11 @@ const cartItemReducers = (state = cartItems, action) => {
       let values = state.values.slice()
       let updatedValues = values.map((value) => {
         if(value.id == action.payload.id) {
-          return action.payload
+          return {
+            ...value,
+            ...action.payload,
+            quantity: action.payload.quantity
+          }
         } else {
           return value
         }

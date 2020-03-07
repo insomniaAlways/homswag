@@ -6,30 +6,21 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileBackground from '../../assets/images/blue-wave.jpg';
 import Constants from 'expo-constants';
-import { Linking } from 'expo';
-import { AsyncStorage } from 'react-native';
 import { onSigout } from '../../store/actions/authenticationAction';
 import { connect } from 'react-redux';
+import { setSessionUnauthenticated } from '../../store/actions/sessionActions';
 
 const SideDrawer = props => {
-  const { navigation, signOut, currentUserModel } = props
-  // const openWhatsApp = () => {
-  //   let url = `whatsapp://send?text=hello&phone=916366505567`
-  //   Linking.canOpenURL(url)
-  //   .then((supported) => {
-  //     if (!supported) {
-  //       console.log("Can't handle url: " + url);
-  //     } else {
-  //       return Linking.openURL(`whatsapp://send?text=hello&phone=916366505567`);
-  //     }
-  //   })
-  //   .catch((err) => console.error('An error occurred', err));
-  // }
+  const { navigation, signOut, currentUserModel, unAuthenticate } = props
 
-  const logOut = () => {
-    return AsyncStorage.removeItem('token')
-    .then(() => signOut())
-    .then(() => navigation.navigate('Auth'))
+  const logOut = async () => {
+    try {
+      await unAuthenticate()
+      signOut()
+      navigation.navigate('Auth')
+    } catch(e) {
+      alert(e)
+    }
   }
 
   return (
@@ -37,7 +28,9 @@ const SideDrawer = props => {
     <View style={{flex: 1}}>
       <ImageBackground source={ProfileBackground} style={styles.profilePicContainer}>
         <View style={styles.profilePic}>
-          <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/>
+          {currentUserModel.values.image_source ?
+          <Image style={styles.profilePic} source={{uri: currentUserModel.values.image_source}}/> :
+          <View style={styles.profilePic}></View> }
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.name}>Hello, {currentUserModel.values.name}</Text>
@@ -130,6 +123,7 @@ const mapStatetoProps = state => ({
   currentUserModel: state.currentUser
 })
 const mapDispatchToProps = dispatch => ({
-  signOut: () => dispatch(onSigout())
+  signOut: () => dispatch(onSigout()),
+  unAuthenticate: () => dispatch(setSessionUnauthenticated())
 })
 export default connect(mapStatetoProps, mapDispatchToProps)(SideDrawer);

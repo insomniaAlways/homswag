@@ -91,18 +91,19 @@ export const appointment = {
   error: null
 }
 
-export const userToken = {
+export const authModel = {
   isLoading: false,
   isSignOut: false,
   userToken: null,
+  refreshToken: null,
   error: null
 }
 
 export const session = {
+  isUpdating: false,
   isSessionExpired: false,
   isSessionAuthenticated: false,
   isSessionUnauthenticated: true,
-  token: null,
   error: null
 }
 

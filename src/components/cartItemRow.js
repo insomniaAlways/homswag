@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { updateItem, deleteItem } from '../../store/actions/cartItemAction';
 
 const CartItemRow = (props) => {
-  const { cartItem, updateCartItem, deleteCartItem, cartItemModel } = props
+  const { cartItem, updateCartItem, deleteCartItem } = props
   const data = cartItem.is_package ? cartItem.package : cartItem.item
   const [ quantity, setQuantity ] = useState()
   const [ isLoading, setLoading ] = useState(false)
@@ -15,15 +15,29 @@ const CartItemRow = (props) => {
     async function updateCT() {
       if(quantity) {
         let totalPrice = (+data.price * parseInt(quantity))
-        await updateCartItem(cartItem.id, quantity, totalPrice)
+        try {
+          await updateCartItem(cartItem.id, quantity, totalPrice)
+          setLoading(false)
+        } catch(e) {
+          alert(e)
+          setLoading(false)
+        }
+      } else {
         setLoading(false)
       }
     }
     updateCT()
+    return () => {
+      setLoading(false)
+    }
   }, [quantity])
 
   useEffect(() => {
     setQuantity(cartItem.quantity)
+    setLoading(false)
+    return () => {
+      setLoading(false)
+    }
   }, [])
 
   const incCount = () => {
@@ -31,11 +45,11 @@ const CartItemRow = (props) => {
     setQuantity(cartItem.quantity + 1)
   }
 
-  const decCount = () => {
+  const decCount = async () => {
     setLoading(true)
     if(cartItem.quantity == 1) {
       deleteCartItem(cartItem.id)
-      setLoading(false)
+      setTimeout(() => setLoading(false), 300)
     } else {
       setQuantity(cartItem.quantity - 1)
     }
@@ -64,8 +78,8 @@ const CartItemRow = (props) => {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 1, height: 25, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
-              <Text>{quantity}</Text>
+            <View style={{flex: 1, height: 27, alignItems: 'center', justifyContent: 'center', borderTopColor: '#eee', borderTopWidth: 1, borderBottomColor: '#eee', borderBottomWidth: 1}}>
+              <Text>{cartItem.quantity}</Text>
             </View>
             <View style={{flex: 1, borderColor: '#eee', borderWidth: 1}}>
               <TouchableOpacity onPress={incCount}>

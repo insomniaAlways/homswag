@@ -1,17 +1,25 @@
-import React, { useState, useLayoutEffect } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PlaceHolderTextInput from './placeHolderTextInput';
 import { brandColor } from '../style/customStyles';
 
 function BookingDetails(props) {
-  const { appointmentDetails, setAppointmentDetails, setModal, selectedAddress, goToAddAddress, isAddressLoading } = props
-  const { appointment_for, phone_number, special_instruction, prefered_beautician} = appointmentDetails
+  const {
+    setModal,
+    selectedAddress,
+    goToAddAddress,
+    isAddressLoading,
+    specialInstruction,
+    setInstruction,
+    preferedBeautician,
+    setBeautician,
+    currentUser } = props
   let address = selectedAddress && selectedAddress.address ? selectedAddress.address.formatedAddress : selectedAddress
 
   return (
     <View style={{padding: 10}}>
-      <PlaceHolderTextInput placeholder="Name" styles={{margin: 10}} value={appointment_for} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="appointment_for" disabled={true}/>
-      <PlaceHolderTextInput placeholder="Phone Number" styles={{margin: 10}} value={phone_number} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="phone_number" disabled={true}/>
+      <PlaceHolderTextInput placeholder="Name" styles={{margin: 10}} value={currentUser.name} disabled={true}/>
+      <PlaceHolderTextInput placeholder="Phone Number" styles={{margin: 10}} value={currentUser.phone} disabled={true}/>
         { isAddressLoading ? 
           <View style={styles.addressContainer}>
             <Text style={styles.addressLoading}>Loading...</Text>
@@ -20,8 +28,16 @@ function BookingDetails(props) {
           <View style={styles.addressContainer}>
             <View style={{width: '80%', paddingBottom: 10}}>
               <Text style={styles.addressText}>{address}</Text>
-              {selectedAddress.address.localAddress ? <Text style={styles.addressText}>{selectedAddress.address.localAddress}</Text> : null }
-              {selectedAddress.address.landmark ? <Text style={styles.addressText}>{selectedAddress.address.landmark}</Text> : null}
+              {selectedAddress.address.localAddress || selectedAddress.address.landmark ? 
+                <View>
+                  <Text style={styles.addressText}>
+                    {selectedAddress.address.localAddress ? selectedAddress.address.localAddress : null }
+                  </Text>
+                  <Text style={styles.addressText}>
+                    {selectedAddress.address.landmark ? selectedAddress.address.landmark : null}
+                  </Text>
+                </View> : null
+              }
             </View>
             <TouchableOpacity style={styles.addressChangeButton} onPress={() => setModal(true)}>
               <Text style={styles.addressChangeText}>Change</Text>
@@ -33,8 +49,8 @@ function BookingDetails(props) {
             </TouchableOpacity>
           </View>
         )}
-      <PlaceHolderTextInput placeholder="Special Instruction" styles={{margin: 10}} value={special_instruction} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="special_instruction"/>
-      <PlaceHolderTextInput placeholder="Prefered Beautician" styles={{margin: 10}} value={prefered_beautician} setValue={setAppointmentDetails} previousState={appointmentDetails} itemKey="prefered_beautician"/>
+      <PlaceHolderTextInput placeholder="Special Instruction" styles={{margin: 10}} value={specialInstruction} setValue={setInstruction} />
+      <PlaceHolderTextInput placeholder="Prefered Beautician" styles={{margin: 10}} value={preferedBeautician} setValue={setBeautician} />
     </View>
   )
 }
