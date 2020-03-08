@@ -76,7 +76,7 @@ function App () {
 
     const fontAssets = cacheFonts();
 
-    await Promise.all([...imageAssets, ...fontAssets]);
+    return await Promise.all([...imageAssets, ...fontAssets]);
   }
 
   const onError = (e) => {
