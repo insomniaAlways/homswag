@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
 import { Input, Text } from '@ui-kitten/components';
 import { Icon } from '@ui-kitten/components';
 
@@ -8,33 +8,40 @@ const PhoneIcon = (style) => (
 );
 
 function LoginForm(props) {
-  const { phone, setPhone, otp, setOtp, showOtpField, setShowOtpField, isResendEnable, enableResend, registerPhone } = props
+  const { phone, setPhone, otp, setOtp, showOtpField, isResendEnable, registerPhone } = props
 
   return (
     <View style={styles.formContainer}>
+      <Text style={{width: '100%', textAlign: 'left', marginBottom: 10, fontSize: 18, fontWeight: 'bold', color: '#fff', paddingLeft: 0}}>
+        Login or Signup:
+      </Text>
       <Input
         status='control'
         placeholder='Phone Number'
+        style={styles.inputBox}
         icon={PhoneIcon}
         maxLength={10}
+        textStyle={{color: "#fff", fontSize: 18, fontWeight: 'bold'}}
         keyboardType={'number-pad'}
         value={phone}
         onChangeText={(text) => setPhone(text)}
+        placeholderTextColor={{color: '#000'}}
       />
       {showOtpField && 
         <Input
-          style={styles.passwordInput}
+          style={[styles.inputBox, styles.passwordInput]}
           status='control'
           placeholder='OTP'
           keyboardType={'number-pad'}
           value={otp}
           onChangeText={(text) => setOtp(text)}
-        />
+          textStyle={{color: "#fff", fontSize: 18, fontWeight: 'bold'}}
+          placeholderTextColor={{color: '#000'}}/>
         }
       {showOtpField && 
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', width: '100%', paddingRight: 10}}>
           <TouchableOpacity onPress={registerPhone} disabled={!isResendEnable}>
-            <Text style={isResendEnable ? {color: '#fff'} : {color: '#d4d4d4'}}>Resend OTP</Text>
+            <Text style={isResendEnable ? {color: '#fff', fontWeight: 'bold'} : {color: '#d4d4d4', fontWeight: 'bold'}}>Resend OTP</Text>
           </TouchableOpacity>
         </View>
       }
@@ -58,6 +65,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 16,
+  },
+  inputBox: {
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    fontSize: 20,
+    borderRadius: 20,
   },
   signInLabel: {
     marginTop: 16,

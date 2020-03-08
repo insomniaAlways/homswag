@@ -11,8 +11,8 @@ export const ImageOverlay = (props) => {
   return (
     <ImageBackground
       {...imageBackgroundProps}
-      style={imageBackgroundStyle}>
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: overlayColor || DEFAULT_OVERLAY_COLOR }]}/>
+      style={{width: '100%', height: '100%'}}>
+      {/* <View style={[StyleSheet.absoluteFill, { backgroundColor: overlayColor || DEFAULT_OVERLAY_COLOR }]}/> */}
       {children}
     </ImageBackground>
   );
