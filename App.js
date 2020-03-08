@@ -80,7 +80,7 @@ function App () {
   }
 
   const onError = (e) => {
-    console.log(e)
+    Sentry.captureException(e)
   }
   // -----------------------: End Methods :-----------------------
 
