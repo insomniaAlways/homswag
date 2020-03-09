@@ -152,7 +152,7 @@ const LoginScreen = (props) => {
       source={ImageBackground}>
       <View style={{flex: 1}}>
         <View style={styles.headerContainer}>
-          <Image source={Logo} style={{width: 180, height: 180}}/>
+          <View style={{width: 180, height: 180}}></View>
         </View>
         {!isLoading?
           <Animatable.View
