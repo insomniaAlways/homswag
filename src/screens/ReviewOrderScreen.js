@@ -5,7 +5,7 @@ import { createOrder } from '../../store/actions/orderActions';
 import { Layout, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../components/imageOverlay';
 import Graphics from '../../assets/images/order_confirm_background.png'
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import Constants from 'expo-constants';
 import ItemView from '../components/itemView';
 import { TouchableOpacity } from 'react-native';
@@ -83,14 +83,14 @@ function ReviewOrderScreen (props) {
   } else {
     return (
       <Layout style={{flex: 1}}>
-        <ImageOverlay
+        <ImageBackground
           style={styles.infoContainer}
           imageBackgroundStyle={styles.imageBackgroundStyle}
           source={Graphics}>
           <Layout style={{backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10}}>
             <Text style={{color: '#fff', fontSize: 18}}>You can pay us by UPI OR Cash after services</Text>
           </Layout>
-        </ImageOverlay>
+        </ImageBackground>
         <Layout style={{flex: 4, backgroundColor: "#F7F9FC"}}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Layout style={styles.orderDetailsContainer}>
@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
   },
   orderDetailsContainer: {
-    // flex:1,
     marginHorizontal: 20,
     marginVertical: 20,
     borderRadius: 20,
@@ -164,7 +163,6 @@ const styles = StyleSheet.create({
     borderRadius: 20 
   },
   orderDetailsScroller: {
-    // flex: 1,
   },
   totalSaveContainer: {
     padding: 10,

@@ -8,7 +8,15 @@
     "sdkVersion": "36.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#8157D2"
+    },
+    "assetBundlePatterns": [
+      "assets/images/*"
+    ],
     "extra": {
       "firebaseConfig": {
         "apiKey": "AIzaSyAJ_W6Ba26Cblw3m7Q1rTEOOoQc7bi8Lds",
@@ -46,7 +54,7 @@
         }
       },
       "versionCode": 1,
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/images/logo.png",
       "backgroundColor": "#FFFFFF",
       "permissions": [
         "READ_CALENDAR",
@@ -58,7 +66,7 @@
     "description": "WIP project for Homswag.",
     "githubUrl": "https://github.com/insomniaAlways/homswag.git",
     "notification": {
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/images/logo.png",
       "color": "#FFFFFF",
       "androidMode": "default"
     },

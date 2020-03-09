@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { Text, Spinner } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
-import ImageBackground from '../../../assets/images/image-background.jpg'
+import ImageBackground from '../../../assets/images/login_background.jpg'
+import Logo from '../../../assets/images/logo_512*512.png'
 import { connect } from 'react-redux';
 import { register, validatedAuthToken } from '../../../store/actions/authenticationAction';
 import { setSessionUnauthenticated, setSessionAuthenticated } from '../../../store/actions/sessionActions';
 import { fetchUser } from '../../../store/actions/userActions'
 import { AsyncStorage } from 'react-native';
-import { Spinner } from '@ui-kitten/components';
 import * as Animatable from 'react-native-animatable';
 import LoginForm from '../../components/helpers/loginForm';
 import LoginButtons from '../../components/helpers/loginButtons';
+import Constants from 'expo-constants';
 
 const LoginScreen = (props) => {
   const { navigation,
@@ -146,69 +147,62 @@ const LoginScreen = (props) => {
   // -------------------: END : ---------------------
 
   return (
-    <KeyboardAvoidingView>
-      <ImageOverlay
-        style={styles.container}
-        source={ImageBackground}>
+    <ImageOverlay
+      style={styles.container}
+      source={ImageBackground}>
+      <View style={{flex: 1}}>
+        <View style={styles.headerContainer}>
+          <Image source={Logo} style={{width: 180, height: 180}}/>
+        </View>
         {!isLoading?
-          <View style={{flex: 1}}>
-            <View style={styles.headerContainer}>
-              <Text
-                category='h1'
-                status='control'>
-                Hello
-              </Text>
-              <Text
-                style={styles.signInLabel}
-                category='s1'
-                status='control'>
-                Please provide your phone number
-              </Text>
-            </View>
-            <Animatable.View
-              duration={400}
-              style={styles.formContainer}
-              animation={"fadeInUp"}
-            >
-              <LoginForm
-                phone={phone}
-                setPhone={setPhone}
-                otp={otp}
-                setOtp={setOtp}
-                showOtpField={showOtpField}
-                registerPhone={registerPhone}
-                setShowOtpField={setShowOtpField}
-                isResendEnable={isResendEnable}
-                enableResend={enableResend}
-              />
-              { isLoading ? 
-                <View style={styles.signInButtonContainer}>
-                  <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
-                    <Spinner status='primary'/>
-                  </View>
-                </View> :
-                <LoginButtons
+          <Animatable.View
+            duration={400}
+            style={styles.formContainer}
+            animation={"fadeInUp"}
+          >
+            <View style={styles.formContent}>
+              <KeyboardAvoidingView>
+                <LoginForm
                   phone={phone}
+                  setPhone={setPhone}
                   otp={otp}
-                  resendTimer={resendTimer}
-                  networkAvailability={networkAvailability}
-                  showOtpField={showOtpField}
-                  isButtonLoading={isButtonLoading}
-                  setButtonLoading={setButtonLoading}
-                  enableResend={enableResend}
                   setOtp={setOtp}
+                  showOtpField={showOtpField}
                   registerPhone={registerPhone}
                   setShowOtpField={setShowOtpField}
+                  isResendEnable={isResendEnable}
+                  enableResend={enableResend}
                 />
-            }
-            </Animatable.View>
-          </View> : 
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#fff', fontSize: 16}}>Loading..</Text>
+                { isLoading ? 
+                  <View style={styles.signInButtonContainer}>
+                    <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
+                      <Spinner status='primary'/>
+                    </View>
+                  </View> :
+                  <LoginButtons
+                    phone={phone}
+                    otp={otp}
+                    resendTimer={resendTimer}
+                    networkAvailability={networkAvailability}
+                    showOtpField={showOtpField}
+                    isButtonLoading={isButtonLoading}
+                    setButtonLoading={setButtonLoading}
+                    enableResend={enableResend}
+                    setOtp={setOtp}
+                    registerPhone={registerPhone}
+                    setShowOtpField={setShowOtpField}
+                  />
+                }
+              </KeyboardAvoidingView>
+            </View>
+          </Animatable.View> : 
+          <View style={[{top: '39%', alignItems: 'center', position: 'absolute'}, styles.container]}>
+            <Spinner status='primary'/>
+            <Text style={{color: '#000', fontSize: 20, fontWeight: 'bold', marginTop: 10}}>Loading...</Text>
           </View>
         }
-      </ImageOverlay>
-    </KeyboardAvoidingView>
+      </View>
+    </ImageOverlay>
   );
 };
 
@@ -231,18 +225,34 @@ export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    paddingTop: Constants.statusBarHeight + 60
   },
   headerContainer: {
+    paddingTop: Constants.statusBarHeight + 40,
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 216,
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     paddingHorizontal: 16,
+    paddingTop:40
+  },
+  formContent: {
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 16,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
   },
   signInLabel: {
     marginTop: 16,
