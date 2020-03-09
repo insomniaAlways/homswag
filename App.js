@@ -12,7 +12,7 @@ import Constants from 'expo-constants';
 import * as firebase from 'firebase';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
 import * as Sentry from 'sentry-expo';
-import { AppLoading } from 'expo';
+import { AppLoading, SplashScreen } from 'expo';
 import { useState } from 'react';
 import { Asset } from 'expo-asset';
 
@@ -79,7 +79,13 @@ function App () {
     return await Promise.all([...imageAssets, ...fontAssets]);
   }
 
+  const onFinish = () => {
+    setLoaded(true)
+    SplashScreen.hide()
+  }
+
   const onError = (e) => {
+    SplashScreen.hide()
     Sentry.captureException(e)
   }
   // -----------------------: End Methods :-----------------------
@@ -87,6 +93,7 @@ function App () {
   // ---------------------------: Hooks :-------------------------
 
   useLayoutEffect(() => {
+    SplashScreen.preventAutoHide()
     const unsubscribe = NetInfo.addEventListener(state => {
       if(!state.isConnected) {
         store.dispatch(onNetworkUnAvailable())
@@ -112,7 +119,7 @@ function App () {
     return (
       <AppLoading
         startAsync={cacheResourcesAsync}
-        onFinish={() => setLoaded(true)}
+        onFinish={onFinish}
         onError={onError}
       />
     );
