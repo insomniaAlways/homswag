@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 2683,
-  "ngrokPid": 2694,
+  "packagerPort": 19005,
+  "packagerPid": 8677,
+  "ngrokPid": 8688,
   "webpackServerPort": null,
-  "expoServerNgrokUrl": "https://gs-ijk.trdp30.homswag.exp.direct",
-  "packagerNgrokUrl": "https://packager.gs-ijk.trdp30.homswag.exp.direct"
+  "expoServerNgrokUrl": "https://t6-q58.trdp30.homswag.exp.direct",
+  "packagerNgrokUrl": "https://packager.t6-q58.trdp30.homswag.exp.direct"
 }
