@@ -62,7 +62,7 @@ function Dashboard(props) {
       <ScrollView showsVerticalScrollIndicator={false} refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true}/>
         }>
-        <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
+        <View style={{height: 260, paddingTop: 10, paddingBottom: 10}}>
           <OfferView packages={props.packages} navigation={props.navigation}/>
         </View>
         <Text style={{paddingLeft: 20, paddingBottom: 0, paddingTop: 10}}>What would you like to do?</Text>
