@@ -55,7 +55,7 @@
       },
       "versionCode": 1,
       "icon": "./assets/images/logo.png",
-      "backgroundColor": "#FFFFFF",
+      "backgroundColor": "#8157D2",
       "permissions": [
         "READ_CALENDAR",
         "READ_EXTERNAL_STORAGE",
@@ -67,7 +67,7 @@
     "githubUrl": "https://github.com/insomniaAlways/homswag.git",
     "notification": {
       "icon": "./assets/images/logo.png",
-      "color": "#FFFFFF",
+      "color": "#8157D2",
       "androidMode": "default"
     },
     "updates": {
