@@ -10,12 +10,13 @@
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
-      "image": "./assets/images/drawable-xxxhdpi/splash.png",
+      "image": "./assets/images/drawable-mdpi/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#8157D2"
     },
     "assetBundlePatterns": [
-      "assets/images/*"
+      "assets/images/*",
+      "assets/font/*"
     ],
     "extra": {
       "firebaseConfig": {
@@ -82,7 +83,7 @@
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 120000
+      "fallbackToCacheTimeout": 60000
     },
     "hooks": {
       "postPublish": [

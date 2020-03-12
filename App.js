@@ -26,17 +26,17 @@ firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 const theme = { ...lightTheme, ...brandTheme };
 
-XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
-    GLOBAL.originalXMLHttpRequest :
-    GLOBAL.XMLHttpRequest;
+// XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+//     GLOBAL.originalXMLHttpRequest :
+//     GLOBAL.XMLHttpRequest;
 
-  // fetch logger
-global._fetch = fetch;
-global.fetch = function (uri, options, ...args) {
-  return global._fetch(uri, options, ...args).then((response) => {
-    return response;
-  });
-};
+//   // fetch logger
+// global._fetch = fetch;
+// global.fetch = function (uri, options, ...args) {
+//   return global._fetch(uri, options, ...args).then((response) => {
+//     return response;
+//   });
+// };
 
 function App () {
   const [ isLoaded, setLoaded ] = useState(false)
@@ -52,31 +52,20 @@ function App () {
       }
     });
   }
-  
-  function cacheFonts() {
-    // 'roboto-bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
-    // 'roboto-bold-italic': require('./assets/fonts/Roboto/Roboto-BoldItalic.ttf'),
-    // 'sans-serif': require('./assets/fonts/Roboto/Roboto-Italic.ttf'),
-    let allFont = {
-      'roboto-light-italic': require('./assets/fonts/Roboto/Roboto-LightItalic.ttf'),
-      'roboto-medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
-      'roboto-medium-italic': require('./assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
-      'roboto-regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-    }
-    return [Font.loadAsync(allFont)];
-  }
 
   const cacheResourcesAsync = async () => {
     const imageAssets = cacheImages([
       require('./assets/images/login_background.png'),
       require('./assets/images/logo_rounded_512*512.png'),
     ]);
-    // require('./assets/images/splash.png'),
-    // require('./assets/images/logo.png'),
-
-    const fontAssets = cacheFonts();
-
-    return await Promise.all([...imageAssets, ...fontAssets]);
+    let allFont = {
+      'roboto-bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
+      'roboto-light-italic': require('./assets/fonts/Roboto/Roboto-LightItalic.ttf'),
+      'roboto-medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
+      'roboto-medium-italic': require('./assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
+      'roboto-regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+    }
+    return Font.loadAsync(allFont)
   }
 
   const onFinish = () => {
@@ -93,7 +82,7 @@ function App () {
   // ---------------------------: Hooks :-------------------------
 
   useLayoutEffect(() => {
-    SplashScreen.preventAutoHide()
+    cacheResourcesAsync()
     const unsubscribe = NetInfo.addEventListener(state => {
       if(!state.isConnected) {
         store.dispatch(onNetworkUnAvailable())
@@ -106,7 +95,7 @@ function App () {
 
   // ------------------------: End Hooks :------------------------
 
-  if(isLoaded) {
+  // if(isLoaded) {
     return (
       <Provider store={store}>
         <IconRegistry icons={EvaIconsPack} />
@@ -115,15 +104,15 @@ function App () {
         </ApplicationProvider>
       </Provider>
     );
-  } else {
-    return (
-      <AppLoading
-        startAsync={cacheResourcesAsync}
-        onFinish={onFinish}
-        onError={onError}
-      />
-    );
-  }
+  // } else {
+  //   return (
+  //     <AppLoading
+  //       startAsync={cacheResourcesAsync}
+  //       onFinish={onFinish}
+  //       onError={onError}
+  //     />
+  //   );
+  // }
 }
 
 export default App;
