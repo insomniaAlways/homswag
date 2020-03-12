@@ -3,8 +3,8 @@ import { StyleSheet, View, Image, Dimensions } from 'react-native';
 import { Text, Spinner } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
-import ImageBackground from '../../../assets/images/login_background.jpg'
-import Logo from '../../../assets/images/logo_512*512.png'
+import ImageBackground from '../../../assets/images/login_background.png'
+import Logo from '../../../assets/images/logo_rounded_512*512.png'
 import { connect } from 'react-redux';
 import { register, validatedAuthToken } from '../../../store/actions/authenticationAction';
 import { setSessionUnauthenticated, setSessionAuthenticated } from '../../../store/actions/sessionActions';

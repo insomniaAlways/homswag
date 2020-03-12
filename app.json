@@ -10,7 +10,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/drawable-xxxhdpi/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#8157D2"
     },
@@ -61,7 +61,16 @@
         "READ_EXTERNAL_STORAGE",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "splash": {
+        "backgroundColor": "#8157D2",
+        "resizeMode": "native",
+        "mdpi": "./assets/images/drawable-mdpi/splash.png",
+        "hdpi": "./assets/images/drawable-hdpi/splash.png",
+        "xhdpi": "./assets/images/drawable-xhdpi/splash.png",
+        "xxhdpi": "./assets/images/drawable-xxhdpi/splash.png",
+        "xxxhdpi": "./assets/images/drawable-xxxhdpi/splash.png"
+      }
     },
     "description": "WIP project for Homswag.",
     "githubUrl": "https://github.com/insomniaAlways/homswag.git",

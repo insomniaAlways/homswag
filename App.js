@@ -54,10 +54,10 @@ function App () {
   }
   
   function cacheFonts() {
+    // 'roboto-bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
+    // 'roboto-bold-italic': require('./assets/fonts/Roboto/Roboto-BoldItalic.ttf'),
+    // 'sans-serif': require('./assets/fonts/Roboto/Roboto-Italic.ttf'),
     let allFont = {
-      'roboto-bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
-      'roboto-bold-italic': require('./assets/fonts/Roboto/Roboto-BoldItalic.ttf'),
-      'sans-serif': require('./assets/fonts/Roboto/Roboto-Italic.ttf'),
       'roboto-light-italic': require('./assets/fonts/Roboto/Roboto-LightItalic.ttf'),
       'roboto-medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
       'roboto-medium-italic': require('./assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
@@ -68,11 +68,11 @@ function App () {
 
   const cacheResourcesAsync = async () => {
     const imageAssets = cacheImages([
-      require('./assets/images/splash.png'),
-      require('./assets/images/login_background.jpg'),
-      require('./assets/images/logo_512*512.png'),
-      require('./assets/images/logo.png'),
+      require('./assets/images/login_background.png'),
+      require('./assets/images/logo_rounded_512*512.png'),
     ]);
+    // require('./assets/images/splash.png'),
+    // require('./assets/images/logo.png'),
 
     const fontAssets = cacheFonts();
 
