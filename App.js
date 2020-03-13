@@ -12,9 +12,7 @@ import Constants from 'expo-constants';
 import * as firebase from 'firebase';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
 import * as Sentry from 'sentry-expo';
-import { AppLoading, SplashScreen } from 'expo';
 import { useState } from 'react';
-import { Asset } from 'expo-asset';
 
 Sentry.init({
   dsn: Constants.manifest.extra.sentry.dsnKey,
@@ -26,40 +24,25 @@ firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 const theme = { ...lightTheme, ...brandTheme };
 
-// XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
-//     GLOBAL.originalXMLHttpRequest :
-//     GLOBAL.XMLHttpRequest;
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+    GLOBAL.originalXMLHttpRequest :
+    GLOBAL.XMLHttpRequest;
 
-//   // fetch logger
-// global._fetch = fetch;
-// global.fetch = function (uri, options, ...args) {
-//   return global._fetch(uri, options, ...args).then((response) => {
-//     return response;
-//   });
-// };
+  // fetch logger
+global._fetch = fetch;
+global.fetch = function (uri, options, ...args) {
+  return global._fetch(uri, options, ...args).then((response) => {
+    return response;
+  });
+};
 
 function App () {
   const [ isLoaded, setLoaded ] = useState(false)
 
   // -----------------------: Methods :-----------------------
 
-  function cacheImages(images) {
-    return images.map(image => {
-      if (typeof image === 'string') {
-        return Image.prefetch(image);
-      } else {
-        return Asset.fromModule(image).downloadAsync();
-      }
-    });
-  }
-
   const cacheResourcesAsync = async () => {
-    const imageAssets = cacheImages([
-      require('./assets/images/login_background.png'),
-      require('./assets/images/logo_rounded_512*512.png'),
-    ]);
     let allFont = {
-      'roboto-bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
       'roboto-light-italic': require('./assets/fonts/Roboto/Roboto-LightItalic.ttf'),
       'roboto-medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
       'roboto-medium-italic': require('./assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
@@ -68,15 +51,6 @@ function App () {
     return Font.loadAsync(allFont)
   }
 
-  const onFinish = () => {
-    setLoaded(true)
-    SplashScreen.hide()
-  }
-
-  const onError = (e) => {
-    SplashScreen.hide()
-    Sentry.captureException(e)
-  }
   // -----------------------: End Methods :-----------------------
 
   // ---------------------------: Hooks :-------------------------
@@ -95,24 +69,14 @@ function App () {
 
   // ------------------------: End Hooks :------------------------
 
-  // if(isLoaded) {
-    return (
-      <Provider store={store}>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider mapping={mapping} theme={theme}>
-          <AppContainer />
-        </ApplicationProvider>
-      </Provider>
-    );
-  // } else {
-  //   return (
-  //     <AppLoading
-  //       startAsync={cacheResourcesAsync}
-  //       onFinish={onFinish}
-  //       onError={onError}
-  //     />
-  //   );
-  // }
+  return (
+    <Provider store={store}>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider mapping={mapping} theme={theme}>
+        <AppContainer />
+      </ApplicationProvider>
+    </Provider>
+  );
 }
 
 export default App;
