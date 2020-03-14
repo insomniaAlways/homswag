@@ -13,6 +13,7 @@ import * as firebase from 'firebase';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
 import * as Sentry from 'sentry-expo';
 import { useState } from 'react';
+import moment from 'moment';
 
 Sentry.init({
   dsn: Constants.manifest.extra.sentry.dsnKey,
@@ -37,8 +38,6 @@ global.fetch = function (uri, options, ...args) {
 };
 
 function App () {
-  const [ isLoaded, setLoaded ] = useState(false)
-
   // -----------------------: Methods :-----------------------
 
   const cacheResourcesAsync = async () => {
@@ -56,6 +55,7 @@ function App () {
   // ---------------------------: Hooks :-------------------------
 
   useLayoutEffect(() => {
+    Sentry.captureMessage(`App load ${moment().unix()}`);
     cacheResourcesAsync()
     const unsubscribe = NetInfo.addEventListener(state => {
       if(!state.isConnected) {
@@ -65,7 +65,7 @@ function App () {
         store.dispatch(onNetworkAvailable())
       }
     });
-  })
+  }, [])
 
   // ------------------------: End Hooks :------------------------
 

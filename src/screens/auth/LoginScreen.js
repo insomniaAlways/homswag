@@ -14,6 +14,8 @@ import * as Animatable from 'react-native-animatable';
 import LoginForm from '../../components/helpers/loginForm';
 import LoginButtons from '../../components/helpers/loginButtons';
 import Constants from 'expo-constants';
+import moment from 'moment';
+import * as Sentry from 'sentry-expo';
 
 const LoginScreen = (props) => {
   const { navigation,
@@ -102,6 +104,7 @@ const LoginScreen = (props) => {
   // ------------------- : Hooks : ---------------------
 
   useLayoutEffect(() => {
+    Sentry.captureMessage(`Login screen load on: ${moment().unix()}`);
     checkAuthentication()
   }, [])
 
@@ -123,6 +126,7 @@ const LoginScreen = (props) => {
   //trigger after session is authenticated
   useEffect(() => {
     if(session.isSessionAuthenticated) {
+      Sentry.captureMessage(`Get User called on ${moment().unix()}`);
       getUser()
     }
   }, [session.isSessionAuthenticated])
@@ -132,6 +136,7 @@ const LoginScreen = (props) => {
   useEffect(() => {
     if(session.isSessionAuthenticated) {
       if(!currentUserModel.isLoading && currentUserModel.values && currentUserModel.values.id) {
+        Sentry.captureMessage(`Redirect To called on: ${moment().unix()}`);
         redirectTo()
       } else if(!currentUserModel.isLoading && currentUserModel.error) {
         setButtonLoading(false)

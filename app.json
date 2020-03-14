@@ -6,7 +6,7 @@
     "slug": "expo-template-bare",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
@@ -54,7 +54,7 @@
           "apiKey": "AIzaSyCgz8jG03p1OFzrRAh3fZ45jx3X8j783lQ"
         }
       },
-      "versionCode": 2,
+      "versionCode": 3,
       "icon": "./assets/images/logo.png",
       "backgroundColor": "#8157D2",
       "permissions": [
