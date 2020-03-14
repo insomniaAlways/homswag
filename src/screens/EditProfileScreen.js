@@ -1,8 +1,7 @@
 import React, { useLayoutEffect, useState, useEffect } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Layout } from '@ui-kitten/components';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
-import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { connect } from 'react-redux';
 import { brandColor, brandLightBackdroundColor } from '../style/customStyles';
@@ -17,11 +16,15 @@ function UpdateProfileScreen(props) {
   const [ isUploading, setUploding ] = useState(false)
 
   const updateProfile = async () => {
-    if(!networkAvailability.isOffline) {
+    if(networkAvailability.isOffline) {
+      alert("Seems like you are not connected to internet")
+    } else if(name && typeof(name) == "string" && name.length > 0) {
       setLoading(true)
       await updateUserDetails({ name: name, image_source: image})
       setLoading(false)
       navigation.navigate('App')
+    } else {
+      alert("Please enter your name. Thank You!")
     }
   }
 
