@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as Animatable from 'react-native-animatable';
-import Accordion from 'react-native-collapsible/Accordion';
+// import Accordion from 'react-native-collapsible/Accordion';
 
 export default function AccordionView (props) {
   const { content, activeSection, setActiveSection } = props
