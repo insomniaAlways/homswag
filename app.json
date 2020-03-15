@@ -82,7 +82,7 @@
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 60000
+      "fallbackToCacheTimeout": 0
     },
     "hooks": {
       "postPublish": [

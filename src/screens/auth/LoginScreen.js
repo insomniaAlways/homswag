@@ -147,7 +147,7 @@ const LoginScreen = (props) => {
         }
       }
     }
-  }, [currentUserModel.isLoading, currentUserModel.values, currentUserModel.error])
+  }, [currentUserModel])
 
   // -------------------: END : ---------------------
 

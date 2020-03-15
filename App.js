@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useEffect } from 'react';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { mapping, light as lightTheme } from '@eva-design/eva';
@@ -8,20 +8,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
-import Constants from 'expo-constants';
-import * as firebase from 'firebase';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
-import * as Sentry from 'sentry-expo';
-import { useState } from 'react';
-import moment from 'moment';
-
-Sentry.init({
-  dsn: Constants.manifest.extra.sentry.dsnKey,
-  enableInExpoDevelopment: true,
-  debug: true
-});
-
-firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 const theme = { ...lightTheme, ...brandTheme };
 
@@ -38,6 +25,7 @@ global.fetch = function (uri, options, ...args) {
 };
 
 function App () {
+
   // -----------------------: Methods :-----------------------
 
   const cacheResourcesAsync = async () => {
@@ -55,8 +43,10 @@ function App () {
   // ---------------------------: Hooks :-------------------------
 
   useLayoutEffect(() => {
-    Sentry.captureMessage(`App load ${moment().unix()}`);
     cacheResourcesAsync()
+  }, [])
+  
+  useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       if(!state.isConnected) {
         store.dispatch(onNetworkUnAvailable())
@@ -64,7 +54,7 @@ function App () {
       } else {
         store.dispatch(onNetworkAvailable())
       }
-    });
+    })
   }, [])
 
   // ------------------------: End Hooks :------------------------
