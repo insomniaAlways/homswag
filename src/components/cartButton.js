@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity, View, StyleSheet } from 'react-native';
-import { Icon, Text } from '@ui-kitten/components';
+import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { Feather } from '@expo/vector-icons';
 
 function CartButton(props) {
   const { navigate } = props.navigation
@@ -19,7 +19,7 @@ function CartButton(props) {
   
   return (
     <TouchableOpacity onPress={() => navigate('Cart')}>
-      <Icon name='shopping-cart-outline' width={32} height={32} fill='#FFF' />
+      <Feather name='shopping-cart' size={32} color={'#FFF'} />
       <View style={styles.badge}>
         <Text style={styles.badgeText}>{totalCartItem}</Text>
       </View>
