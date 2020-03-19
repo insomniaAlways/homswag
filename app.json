@@ -5,7 +5,7 @@
     "name": "Homswag",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
@@ -53,7 +53,7 @@
           "apiKey": "AIzaSyCgz8jG03p1OFzrRAh3fZ45jx3X8j783lQ"
         }
       },
-      "versionCode": 3,
+      "versionCode": 4,
       "icon": "./assets/images/logo.png",
       "backgroundColor": "#8157D2",
       "permissions": [
