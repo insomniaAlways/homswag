@@ -34,8 +34,6 @@ const LoginScreen = (props) => {
   const [ isButtonLoading, setButtonLoading ] = useState(false)
   const [ isResendEnable, enableResend ] = useState(false)
   let resendTimer;
-  let a = 0
-console.log(moment().format('mm:ss, SS'), moment().millisecond())
   //  ------------------ : Methods: ---------------------
 
   //called when first time login and after logout

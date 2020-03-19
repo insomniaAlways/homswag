@@ -1,12 +1,10 @@
-import React, { useLayoutEffect, useEffect } from 'react';
-import { brandTheme } from './src/style/custom-theme';
+import React, { useEffect } from 'react';
 import AppContainer from './navigations/index';
 import { Provider } from 'react-redux';
 import store from './store';
 import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
-import moment from 'moment';
 
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
@@ -21,8 +19,6 @@ global.fetch = function (uri, options, ...args) {
 };
 
 function App () {
-  console.log('appjs load', moment().format('mm:ss, SS'))
-
   // -----------------------: Methods :-----------------------
 
   const cacheResourcesAsync = async () => {

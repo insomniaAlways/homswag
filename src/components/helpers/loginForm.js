@@ -34,7 +34,6 @@ function LoginForm(props) {
             onChangeText={(text) => setOtp(text)}
             placeholderTextColor='#FFFFFF'
           />
-          <FontAwesome name="phone" size={24} color={"#FFFFFF"} style={styles.inputIcon}/>
         </View>
         }
       {showOtpField && 
