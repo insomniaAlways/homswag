@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Image, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
+import { View, Image, TouchableOpacity, ImageBackground, StyleSheet, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Text, Layout } from '@ui-kitten/components';
 import { FontAwesome } from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import ProfilePicPlaceholder from '../../assets/images/profile_pic_placeholder.png'
@@ -94,35 +93,35 @@ const ImagePickerView = (props) => {
   };
 
   return (
-    <Layout style={props.styles.profilePicContainer}>
+    <View style={props.styles.profilePicContainer}>
       { image ?
-        <Layout>
-          <Layout style={props.styles.profilePic}>
+        <View>
+          <View style={props.styles.profilePic}>
             <Image style={props.styles.profilePic} source={{uri: image}}/>
-          </Layout>
+          </View>
           { isEdit &&
-            <Layout style={{paddingTop: 5}}>
+            <View style={{paddingTop: 5}}>
             { isUploading ?
-              <Layout style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontFamily: 'roboto-light-italic', fontSize: 12}}>{progress}%</Text>
                 <Text style={{fontFamily: 'roboto-light-italic', fontSize: 12}}>Uploading...</Text>
-              </Layout> :
+              </View> :
               <TouchableOpacity onPress={startModule} style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text>Change</Text>
               </TouchableOpacity>
             }
-            </Layout> 
+            </View> 
           }
-        </Layout> :
+        </View> :
         <TouchableOpacity onPress={startModule}>
           <ImageBackground style={styles.profilePicPlaceHolder} source={ProfilePicPlaceholder}>
-            <Layout style={{paddingBottom: 10, paddingRight: 10, backgroundColor: 'transparent'}}>
+            <View style={{paddingBottom: 10, paddingRight: 10, backgroundColor: 'transparent'}}>
               <FontAwesome name="camera" size={24} />
-            </Layout>
+            </View>
           </ImageBackground>
         </TouchableOpacity>
       }
-    </Layout>
+    </View>
   )
 }
 

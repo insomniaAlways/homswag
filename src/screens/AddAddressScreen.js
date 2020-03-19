@@ -1,11 +1,10 @@
 import React, { useState, useEffect }from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ActivityIndicator, Modal, Text } from 'react-native';
 import MapView from 'react-native-maps';
 import FloatingInput from '../components/input-helpers.js/floatingInput';
 import { connect } from 'react-redux';
 import { geoCoding, getPlace } from '../../store/actions/locationActions';
 import { creatNew, fetchAddress } from '../../store/actions/addressActions';
-import { Modal, Spinner, Layout, Text } from '@ui-kitten/components';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidView'
 import _ from 'lodash';
 import { FontAwesome } from '@expo/vector-icons';
@@ -172,15 +171,15 @@ function AddressScreen(props) {
         animationType="slide"
         transparent={true}
         visible={isLoading}
-        backdropStyle={styles.modal}
-        onBackdropPress={() => {
-          return false
+        presentationStyle={'overFullScreen'}
+        onRequestClose={() => {
+          return false;
         }}>
-          <Layout style={styles.modalContainer}>
-            <Layout style={styles.controlContainer}>
-              <Spinner status='control'/>
-            </Layout>
-          </Layout>
+        <View style={styles.modalContainer}>
+          <View style={styles.controlContainer}>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </View>
+        </View>
       </Modal>
     </KeyboardAvoidingView>
   )
@@ -204,7 +203,8 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)'
   },
   modal: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',

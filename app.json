@@ -5,12 +5,11 @@
     "name": "Homswag",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
-    "sdkVersion": "36.0.0",
     "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
-      "image": "./assets/images/drawable-xxhdpi/splash.png",
+      "image": "./assets/images/drawable-xhdpi/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#8157D2"
     },
@@ -83,7 +82,7 @@
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 60000
+      "fallbackToCacheTimeout": 0
     },
     "hooks": {
       "postPublish": [
