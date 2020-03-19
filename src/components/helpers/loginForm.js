@@ -24,7 +24,7 @@ function LoginForm(props) {
         <FontAwesome name="phone" size={24} color={"#FFFFFF"} style={styles.inputIcon}/>
       </View>
       {showOtpField && 
-        <View style={styles.inputContainer}>
+        <View style={[styles.inputContainer, { marginTop: 10}]}>
           <TextInput 
             style={styles.inputBox}
             placeholder='OTP'

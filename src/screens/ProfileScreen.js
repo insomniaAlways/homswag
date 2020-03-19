@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Text, Layout } from '@ui-kitten/components';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import PlaceHolderTextInput from '../components/placeHolderTextInput';
 import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
@@ -19,13 +18,17 @@ function ProfileScreen(props) {
   const [ isUploading, setUploding ] = useState(false)
 
   const updateProfile = () => {
-    setLoading(true)
-    updateUserDetails(_.omitBy({
-      name: currentUserObject.name,
-      alt_phone: currentUserObject.alt_phone,
-      image_source: currentUserObject.image_source,
-      email: currentUserObject.email
-    }, _.isNil))
+    if(currentUserObject.name && typeof(currentUserObject.name) == "string" && currentUserObject.name.length > 0) {
+      setLoading(true)
+      updateUserDetails(_.omitBy({
+        name: currentUserObject.name,
+        alt_phone: currentUserObject.alt_phone,
+        image_source: currentUserObject.image_source,
+        email: currentUserObject.email
+      }, _.isNil))
+    } else {
+      alert("Please enter your name. Thank You!")
+    }
   }
 
   const imageUploaded = (uri) => {
@@ -65,9 +68,9 @@ function ProfileScreen(props) {
 
   return (
     <KeyboardAvoidingView>
-      <Layout style={{flex: 1, backgroundColor: "#F7F9FC", justifyContent: 'center', alignItems: 'center'}}>
-        <Layout style={styles.container}>
-          <Layout style={styles.profilePicContainer}>
+      <View style={{flex: 1, backgroundColor: "#F7F9FC", justifyContent: 'center', alignItems: 'center'}}>
+        <View style={styles.container}>
+          <View style={styles.profilePicContainer}>
             <ImagePickerView
               styles={styles}
               image={currentUserObject.image_source}
@@ -78,8 +81,8 @@ function ProfileScreen(props) {
               isUploading={isUploading}
               setUploding={setUploding}
               />
-          </Layout>
-          <Layout style={{justifyContent: 'flex-end', alignItems: 'flex-end', width: 'auto', marginHorizontal: 40}}>
+          </View>
+          <View style={{justifyContent: 'flex-end', alignItems: 'flex-end', width: 'auto', marginHorizontal: 40}}>
             {isEdit ? 
               <TouchableOpacity onPress={() => cancelEdit()}>
                 <Text>Cancel</Text>
@@ -88,10 +91,10 @@ function ProfileScreen(props) {
                 <Text>Edit</Text>
               </TouchableOpacity>
             }
-          </Layout>
+          </View>
           {isEdit ? 
-            <Layout style={styles.detialsContainer}>
-              <Layout style={styles.item}>
+            <View style={styles.detialsContainer}>
+              <View style={styles.item}>
                 <Text style={styles.label}>Name :</Text>
                 <PlaceHolderTextInput
                   placeholder="Name"
@@ -102,12 +105,12 @@ function ProfileScreen(props) {
                   previousState={currentUserObject}
                   itemKey="name"
                   editable={!isLoading}/>
-              </Layout>
-              <Layout style={styles.item}>
+              </View>
+              <View style={styles.item}>
                 <Text style={styles.label}>Phone :</Text>
                 <Text style={[styles.placeholderInput, styles.field]}>{currentUserObject.phone}</Text>
-              </Layout>
-              <Layout style={styles.item}>
+              </View>
+              <View style={styles.item}>
                 <Text style={styles.label}>Alt. Phone :</Text>
                 <PlaceHolderTextInput
                   placeholder="Alternate Phone"
@@ -120,8 +123,8 @@ function ProfileScreen(props) {
                   previousState={currentUserObject}
                   itemKey="alt_phone"
                   editable={!isLoading}/>
-              </Layout>
-              <Layout style={styles.item}>
+              </View>
+              <View style={styles.item}>
                 <Text style={styles.label}>Email :</Text>
                 <PlaceHolderTextInput
                   placeholder="Email"
@@ -132,70 +135,70 @@ function ProfileScreen(props) {
                   previousState={currentUserObject}
                   itemKey="email"
                   editable={!isLoading}/>
-              </Layout>
-            </Layout> :
-            <Layout style={styles.detialsContainer}>
-              <Layout style={styles.item}>
+              </View>
+            </View> :
+            <View style={styles.detialsContainer}>
+              <View style={styles.item}>
                 <Text style={styles.label}>Name :</Text>
                 {currentUserObject.name ? 
                   <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.name}</Text>:
                   <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
                 }
-              </Layout>
-              <Layout style={styles.item}>
+              </View>
+              <View style={styles.item}>
                 <Text style={styles.label}>Phone :</Text>
                 <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.phone}</Text>
-              </Layout>
-              <Layout style={styles.item}>
+              </View>
+              <View style={styles.item}>
                 <Text style={styles.label}>Alt. Phone :</Text>
                 {currentUserObject.alt_phone ? 
                   <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.alt_phone}</Text> :
                   <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
                 }
-              </Layout>
-              <Layout style={styles.item}>
+              </View>
+              <View style={styles.item}>
                 <Text style={styles.label}>Email :</Text>
                 {currentUserObject.email ? 
                   <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.email}</Text> :
                   <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
                 }
-              </Layout>
-            </Layout>
+              </View>
+            </View>
           }
-        </Layout>
-        <Layout style={styles.backButtonContainer}>
+        </View>
+        <View style={styles.backButtonContainer}>
           {isLoading ? 
-            <Layout>
-                <Layout style={styles.backButton}>
+            <View>
+                <View style={styles.backButton}>
                   <Text style={{color: "#fff"}}>Saving..</Text>
-                </Layout>
-              </Layout> :
-            <Layout>
+                </View>
+              </View> :
+            <View>
               {isEdit ? 
-                <Layout>
+                <View>
                   {networkAvailability.isOffline ? 
                     <TouchableOpacity disabled={true}>
-                      <Layout style={[styles.backButton, {backgroundColor: brandLightBackdroundColor}]}>
+                      <View style={[styles.backButton, {backgroundColor: brandLightBackdroundColor}]}>
                         <Text style={{color: "#fff"}}>Save</Text>
-                      </Layout>
+                      </View>
                     </TouchableOpacity> :
                     <TouchableOpacity onPress={updateProfile}>
-                      <Layout style={styles.backButton}>
+                      <View style={styles.backButton}>
                         <Text style={{color: "#fff"}}>Save</Text>
-                      </Layout>
+                      </View>
                     </TouchableOpacity> 
                   }
-                </Layout> :
+                </View> :
                 <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-                  <Layout style={styles.backButton}>
+                  <View style={styles.backButton}>
                     <FontAwesome name="angle-right" size={20} color="white" />
-                  </Layout>
+                  </View>
                 </TouchableOpacity>
               }
-            </Layout>
+            </View>
           }
-        </Layout>
-      </Layout>
+        </View>
+      </View>
     </KeyboardAvoidingView>
   )
 }
@@ -209,6 +212,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingBottom: 30,
     shadowColor: "#000",
+    backgroundColor: '#FFFFFF',
     shadowOffset: { width: 0, height: 2, },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
