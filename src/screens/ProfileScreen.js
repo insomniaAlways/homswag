@@ -68,103 +68,105 @@ function ProfileScreen(props) {
 
   return (
     <KeyboardAvoidingView>
-      <View style={{flex: 1, backgroundColor: "#F7F9FC", justifyContent: 'center', alignItems: 'center'}}>
-        <View style={styles.container}>
-          <View style={styles.profilePicContainer}>
-            <ImagePickerView
-              styles={styles}
-              image={currentUserObject.image_source}
-              setImage={imageUploaded}
-              user_id={currentUserModel.values.id}
-              isEdit={isEdit}
-              isOffline={networkAvailability.isOffline}
-              isUploading={isUploading}
-              setUploding={setUploding}
-              />
-          </View>
-          <View style={{justifyContent: 'flex-end', alignItems: 'flex-end', width: 'auto', marginHorizontal: 40}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#F7F9FC"}}>
+        <View style={{backgroundColor: "#F7F9FC", justifyContent: 'center', alignItems: 'center'}}>
+          <View style={styles.container}>
+            <View style={styles.profilePicContainer}>
+              <ImagePickerView
+                styles={styles}
+                image={currentUserObject.image_source}
+                setImage={imageUploaded}
+                user_id={currentUserModel.values.id}
+                isEdit={isEdit}
+                isOffline={networkAvailability.isOffline}
+                isUploading={isUploading}
+                setUploding={setUploding}
+                />
+            </View>
+            <View style={{justifyContent: 'flex-end', alignItems: 'flex-end', width: 'auto', marginHorizontal: 40}}>
+              {isEdit ? 
+                <TouchableOpacity onPress={() => cancelEdit()}>
+                  <Text>Cancel</Text>
+                </TouchableOpacity>:
+                <TouchableOpacity onPress={() => setEdit(true)}>
+                  <Text>Edit</Text>
+                </TouchableOpacity>
+              }
+            </View>
             {isEdit ? 
-              <TouchableOpacity onPress={() => cancelEdit()}>
-                <Text>Cancel</Text>
-              </TouchableOpacity>:
-              <TouchableOpacity onPress={() => setEdit(true)}>
-                <Text>Edit</Text>
-              </TouchableOpacity>
+              <View style={styles.detialsContainer}>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Name :</Text>
+                  <PlaceHolderTextInput
+                    placeholder="Name"
+                    containerStyle={styles.placeholderInput}
+                    styles={styles.field}
+                    value={currentUserObject.name}
+                    setValue={updateCurrentUser}
+                    previousState={currentUserObject}
+                    itemKey="name"
+                    editable={!isLoading}/>
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Phone :</Text>
+                  <Text style={[styles.placeholderInput, styles.field]}>{currentUserObject.phone}</Text>
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Alt. Phone :</Text>
+                  <PlaceHolderTextInput
+                    placeholder="Alternate Phone"
+                    containerStyle={styles.placeholderInput}
+                    styles={styles.field}
+                    value={currentUserObject.alt_phone}
+                    setValue={updateCurrentUser}
+                    keyboardType={'number-pad'}
+                    maxLength={10}
+                    previousState={currentUserObject}
+                    itemKey="alt_phone"
+                    editable={!isLoading}/>
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Email :</Text>
+                  <PlaceHolderTextInput
+                    placeholder="Email"
+                    containerStyle={styles.placeholderInput}
+                    styles={styles.field}
+                    value={currentUserObject.email}
+                    setValue={updateCurrentUser}
+                    previousState={currentUserObject}
+                    itemKey="email"
+                    editable={!isLoading}/>
+                </View>
+              </View> :
+              <View style={styles.detialsContainer}>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Name :</Text>
+                  {currentUserObject.name ? 
+                    <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.name}</Text>:
+                    <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
+                  }
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Phone :</Text>
+                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.phone}</Text>
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Alt. Phone :</Text>
+                  {currentUserObject.alt_phone ? 
+                    <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.alt_phone}</Text> :
+                    <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
+                  }
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.label}>Email :</Text>
+                  {currentUserObject.email ? 
+                    <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.email}</Text> :
+                    <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
+                  }
+                </View>
+              </View>
             }
           </View>
-          {isEdit ? 
-            <View style={styles.detialsContainer}>
-              <View style={styles.item}>
-                <Text style={styles.label}>Name :</Text>
-                <PlaceHolderTextInput
-                  placeholder="Name"
-                  containerStyle={styles.placeholderInput}
-                  styles={styles.field}
-                  value={currentUserObject.name}
-                  setValue={updateCurrentUser}
-                  previousState={currentUserObject}
-                  itemKey="name"
-                  editable={!isLoading}/>
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.label}>Phone :</Text>
-                <Text style={[styles.placeholderInput, styles.field]}>{currentUserObject.phone}</Text>
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.label}>Alt. Phone :</Text>
-                <PlaceHolderTextInput
-                  placeholder="Alternate Phone"
-                  containerStyle={styles.placeholderInput}
-                  styles={styles.field}
-                  value={currentUserObject.alt_phone}
-                  setValue={updateCurrentUser}
-                  keyboardType={'number-pad'}
-                  maxLength={10}
-                  previousState={currentUserObject}
-                  itemKey="alt_phone"
-                  editable={!isLoading}/>
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.label}>Email :</Text>
-                <PlaceHolderTextInput
-                  placeholder="Email"
-                  containerStyle={styles.placeholderInput}
-                  styles={styles.field}
-                  value={currentUserObject.email}
-                  setValue={updateCurrentUser}
-                  previousState={currentUserObject}
-                  itemKey="email"
-                  editable={!isLoading}/>
-              </View>
-            </View> :
-            <View style={styles.detialsContainer}>
-              <View style={styles.item}>
-                <Text style={styles.label}>Name :</Text>
-                {currentUserObject.name ? 
-                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.name}</Text>:
-                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
-                }
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.label}>Phone :</Text>
-                <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.phone}</Text>
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.label}>Alt. Phone :</Text>
-                {currentUserObject.alt_phone ? 
-                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.alt_phone}</Text> :
-                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
-                }
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.label}>Email :</Text>
-                {currentUserObject.email ? 
-                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyMediumItalic]}>{currentUserObject.email}</Text> :
-                  <Text style={[styles.placeholderInput, styles.field, styles.textFontFamilyLightItalic]}>Not Available</Text>
-                }
-              </View>
-            </View>
-          }
         </View>
         <View style={styles.backButtonContainer}>
           {isLoading ? 

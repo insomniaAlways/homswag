@@ -31,7 +31,7 @@ const AddressList = function(props) {
     )
   } else {
     return (
-      <View style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}, props.style]}>
+      <View style={[{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFFFFF'}, props.style]}>
         { addresses.isLoading ? (
           <View style={styles.loaderContainer}>
             <ActivityIndicator size="large" color="#0000ff" />
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   addressList: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FFFFFF'
   }
 })

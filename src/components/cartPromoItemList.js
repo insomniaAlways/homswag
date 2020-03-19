@@ -78,7 +78,7 @@ const CartPromoItemList = (props) => {
     <FlatList
       data={itemList}
       horizontal={true}
-      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
       renderItem={renderProductItem}
       keyExtractor={item => `${item.id}`}
     />
