@@ -1,7 +1,4 @@
 import React, { useLayoutEffect, useEffect } from 'react';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { mapping, light as lightTheme } from '@eva-design/eva';
 import { brandTheme } from './src/style/custom-theme';
 import AppContainer from './navigations/index';
 import { Provider } from 'react-redux';
@@ -10,8 +7,6 @@ import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
 import moment from 'moment';
-
-const theme = { ...lightTheme, ...brandTheme };
 
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
@@ -60,10 +55,7 @@ function App () {
 
   return (
     <Provider store={store}>
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider mapping={mapping} theme={theme}>
-        <AppContainer />
-      </ApplicationProvider>
+      <AppContainer />
     </Provider>
   );
 }
