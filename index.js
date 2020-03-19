@@ -9,7 +9,7 @@ firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 Sentry.init({
   dsn: Constants.manifest.extra.sentry.dsnKey,
-  enableInExpoDevelopment: true,
+  enableInExpoDevelopment: false,
   debug: true
 });
 
