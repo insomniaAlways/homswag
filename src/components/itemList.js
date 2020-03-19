@@ -59,12 +59,16 @@ const ItemsList = (props) => {
         {renderItemHeader(info)}
       </View>
       <View style={styles.itemCardBody}>
-        <Text style={styles.itemNameText}>
-          {info.item.name}
-        </Text>
-        <Text style={styles.itemNameDescription}>
-          {info.item.description}
-        </Text>
+        <View style={{minHeight: 50}}>
+          <Text style={styles.itemNameText}>
+            {info.item.name}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.itemNameDescription}>
+            {info.item.description}
+          </Text>
+        </View>
         {info.item.duration && 
           <Text style={styles.itemNameDescription2}>
             Duration: {info.item.duration} min
