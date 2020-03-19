@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, View, Image, Dimensions, Text } from 'react-native';
-// import { Text, Spinner } from '@ui-kitten/components';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Image, Dimensions, Text, ActivityIndicator } from 'react-native';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
 import ImageBackground from '../../../assets/images/login_background.png'
@@ -182,7 +181,7 @@ console.log(moment().format('mm:ss, SS'), moment().millisecond())
                 { isLoading ? 
                   <View style={styles.signInButtonContainer}>
                     <View style={[styles.signInButton, {justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}]}>
-                      {/* <Spinner status='primary'/> */}
+                      <ActivityIndicator size="small" color="#0000ff" />
                     </View>
                   </View> :
                   <LoginButtons
@@ -203,7 +202,7 @@ console.log(moment().format('mm:ss, SS'), moment().millisecond())
             </View>
           </Animatable.View> : 
           <View style={[{top: '39%', alignItems: 'center', position: 'absolute'}, styles.container]}>
-            {/* <Spinner status='primary'/> */}
+            <ActivityIndicator size="large" color="#0000ff" />
             <Text style={{color: '#000', fontSize: 20, fontWeight: 'bold', marginTop: 10}}>Loading...</Text>
           </View>
         }
