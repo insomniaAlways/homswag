@@ -5,17 +5,17 @@
     "name": "Homswag",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
-    "sdkVersion": "36.0.0",
-    "version": "1.0.0",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/drawable-xhdpi/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#8157D2"
     },
     "assetBundlePatterns": [
-      "assets/images/*"
+      "assets/images/*",
+      "assets/font/*"
     ],
     "extra": {
       "firebaseConfig": {
@@ -53,27 +53,36 @@
           "apiKey": "AIzaSyCgz8jG03p1OFzrRAh3fZ45jx3X8j783lQ"
         }
       },
-      "versionCode": 1,
+      "versionCode": 4,
       "icon": "./assets/images/logo.png",
-      "backgroundColor": "#FFFFFF",
+      "backgroundColor": "#8157D2",
       "permissions": [
         "READ_CALENDAR",
         "READ_EXTERNAL_STORAGE",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "splash": {
+        "backgroundColor": "#8157D2",
+        "resizeMode": "cover",
+        "mdpi": "./assets/images/drawable-mdpi/splash.png",
+        "hdpi": "./assets/images/drawable-hdpi/splash.png",
+        "xhdpi": "./assets/images/drawable-xhdpi/splash.png",
+        "xxhdpi": "./assets/images/drawable-xxhdpi/splash.png",
+        "xxxhdpi": "./assets/images/drawable-xxxhdpi/splash.png"
+      }
     },
-    "description": "WIP project for Homswag.",
+    "description": "Homswag",
     "githubUrl": "https://github.com/insomniaAlways/homswag.git",
     "notification": {
       "icon": "./assets/images/logo.png",
-      "color": "#FFFFFF",
+      "color": "#8157D2",
       "androidMode": "default"
     },
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 120000
+      "fallbackToCacheTimeout": 0
     },
     "hooks": {
       "postPublish": [

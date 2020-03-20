@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView, RefreshControl, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../store/actions/index';
 import CategoryList from '../components/categoryList';
@@ -11,7 +11,6 @@ import { fetchPackages } from '../../store/actions/packageActions';
 import OfferView from '../components/offerView';
 import PromoView from '../components/promoView';
 import * as Animatable from 'react-native-animatable';
-import { Spinner } from '@ui-kitten/components';
 
 function Dashboard(props) {
   const [ refreshing, setRefreshing ] = useState(false);
@@ -62,14 +61,14 @@ function Dashboard(props) {
       <ScrollView showsVerticalScrollIndicator={false} refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} enabled={true}/>
         }>
-        <View style={{height: 200, paddingTop: 10, paddingBottom: 10}}>
+        <View style={{height: 260, paddingTop: 10, paddingBottom: 10}}>
           <OfferView packages={props.packages} navigation={props.navigation}/>
         </View>
         <Text style={{paddingLeft: 20, paddingBottom: 0, paddingTop: 10}}>What would you like to do?</Text>
         <View style={{paddingLeft: 25, paddingRight: 25, paddingTop: 10, paddingBottom: 10}}>
           {props.categories.isLoading ? 
             <View style={{height: 600, justifyContent: 'center', alignItems: 'center'}}>
-              <Spinner status='info'/>
+              <ActivityIndicator size="small" color="#0000ff" />
             </View> : 
             <Animatable.View
               duration={800}
