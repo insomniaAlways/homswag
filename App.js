@@ -5,6 +5,17 @@ import store from './store';
 import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
 import { onNetworkAvailable, onNetworkUnAvailable } from './store/actions/networkActions';
+import * as firebase from 'firebase';
+import * as Sentry from 'sentry-expo';
+import Constants from 'expo-constants';
+
+firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
+
+Sentry.init({
+  dsn: Constants.manifest.extra.sentry.dsnKey,
+  enableInExpoDevelopment: true,
+  debug: true
+});
 
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :

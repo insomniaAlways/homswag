@@ -48,6 +48,7 @@ const LoginScreen = (props) => {
       let token = await AsyncStorage.getItem('token')
       let tokenObject = JSON.parse(token)
       if(tokenObject && tokenObject.authToken && tokenObject.refreshToken) {
+        Sentry.captureMessage(`Refresh token initiated on: ${moment().unix()}`);
         validateCurrentToken(tokenObject.authToken, tokenObject.refreshToken)
       } else {
         startLoginProcess()
@@ -109,6 +110,7 @@ const LoginScreen = (props) => {
   //trigger when otp validation succeed
   useEffect(() => {
     if(!authModel.isLoading && authModel.userToken && authModel.refreshToken) {
+      Sentry.captureMessage(`User authentication initiated on: ${moment().unix()}`);
       authenticate(authModel.userToken, authModel.refreshToken)
     } else if(!authModel.isLoading && authModel.error) {
       setButtonLoading(false)
@@ -124,7 +126,7 @@ const LoginScreen = (props) => {
   //trigger after session is authenticated
   useEffect(() => {
     if(session.isSessionAuthenticated) {
-      Sentry.captureMessage(`Get User called on ${moment().unix()}`);
+      Sentry.captureMessage(`Get User initiated on ${moment().unix()}`);
       getUser()
     }
   }, [session.isSessionAuthenticated])
@@ -134,7 +136,7 @@ const LoginScreen = (props) => {
   useEffect(() => {
     if(session.isSessionAuthenticated) {
       if(!currentUserModel.isLoading && currentUserModel.values && currentUserModel.values.id) {
-        Sentry.captureMessage(`Redirect To called on: ${moment().unix()}`);
+        Sentry.captureMessage(`Redirection initiated no: ${moment().unix()}`);
         redirectTo()
       } else if(!currentUserModel.isLoading && currentUserModel.error) {
         setButtonLoading(false)
