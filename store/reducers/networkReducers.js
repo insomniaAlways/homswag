@@ -17,10 +17,7 @@ const networkReducers = (state = networkAvailability, action) => {
       }
     }
     default: {
-      return {
-        ...state,
-        isOffline: false
-      }
+      return state
     }
   }
 }

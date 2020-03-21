@@ -13,8 +13,8 @@ firebase.initializeApp(Constants.manifest.extra.firebaseConfig);
 
 Sentry.init({
   dsn: Constants.manifest.extra.sentry.dsnKey,
-  enableInExpoDevelopment: true,
-  debug: true
+  enableInExpoDevelopment: false,
+  debug: false
 });
 
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?

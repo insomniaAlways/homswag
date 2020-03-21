@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { StyleSheet, View, Image, Dimensions, Text, ActivityIndicator } from 'react-native';
 import { ImageOverlay } from '../../components/imageOverlay';
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidView';
@@ -15,6 +15,22 @@ import LoginButtons from '../../components/helpers/loginButtons';
 import Constants from 'expo-constants';
 import moment from 'moment';
 import * as Sentry from 'sentry-expo';
+
+// function useTraceUpdate(props) {
+//   const prev = useRef(props);
+//   useEffect(() => {
+//     const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+//       if (prev.current[k] !== v) {
+//         ps[k] = [prev.current[k], v];
+//       }
+//       return ps;
+//     }, {});
+//     if (Object.keys(changedProps).length > 0) {
+//       console.log('Changed props:', changedProps);
+//     }
+//     prev.current = props;
+//   });
+// }
 
 const LoginScreen = (props) => {
   const { navigation,
@@ -37,19 +53,23 @@ const LoginScreen = (props) => {
   //  ------------------ : Methods: ---------------------
 
   //called when first time login and after logout
-  const startLoginProcess = async () => {
+  const startLoginProcess = () => {
     setLoading(false)
-    await unAuthenticate()
+    unAuthenticate()
   }
 
   //while application load
   const checkAuthentication = async () => {
     try {
       let token = await AsyncStorage.getItem('token')
-      let tokenObject = JSON.parse(token)
-      if(tokenObject && tokenObject.authToken && tokenObject.refreshToken) {
-        Sentry.captureMessage(`Refresh token initiated on: ${moment().unix()}`);
-        validateCurrentToken(tokenObject.authToken, tokenObject.refreshToken)
+      if(token) {
+        let tokenObject = JSON.parse(token)
+        if(tokenObject && tokenObject.authToken && tokenObject.refreshToken) {
+          validateCurrentToken(tokenObject.authToken, tokenObject.refreshToken)
+          Sentry.captureMessage(`Refresh token initiated on: ${moment().unix()}`);
+        } else {
+          startLoginProcess()
+        }
       } else {
         startLoginProcess()
       }
@@ -102,16 +122,16 @@ const LoginScreen = (props) => {
 
   // ------------------- : Hooks : ---------------------
 
-  useEffect(() => {
-    Sentry.captureMessage(`Login screen load on: ${moment().unix()}`);
+  useLayoutEffect(() => {
     checkAuthentication()
+    Sentry.captureMessage(`Login screen load on: ${moment().unix()}`);
   }, [])
 
   //trigger when otp validation succeed
   useEffect(() => {
     if(!authModel.isLoading && authModel.userToken && authModel.refreshToken) {
-      Sentry.captureMessage(`User authentication initiated on: ${moment().unix()}`);
       authenticate(authModel.userToken, authModel.refreshToken)
+      Sentry.captureMessage(`User authentication initiated on: ${moment().unix()}`);
     } else if(!authModel.isLoading && authModel.error) {
       setButtonLoading(false)
       setLoading(false)
@@ -126,8 +146,8 @@ const LoginScreen = (props) => {
   //trigger after session is authenticated
   useEffect(() => {
     if(session.isSessionAuthenticated) {
-      Sentry.captureMessage(`Get User initiated on ${moment().unix()}`);
       getUser()
+      Sentry.captureMessage(`Get User initiated on ${moment().unix()}`);
     }
   }, [session.isSessionAuthenticated])
 
@@ -136,8 +156,8 @@ const LoginScreen = (props) => {
   useEffect(() => {
     if(session.isSessionAuthenticated) {
       if(!currentUserModel.isLoading && currentUserModel.values && currentUserModel.values.id) {
-        Sentry.captureMessage(`Redirection initiated no: ${moment().unix()}`);
         redirectTo()
+        Sentry.captureMessage(`Redirection initiated no: ${moment().unix()}`);
       } else if(!currentUserModel.isLoading && currentUserModel.error) {
         setButtonLoading(false)
         if(currentUserModel.error && currentUserModel.error.message) {
