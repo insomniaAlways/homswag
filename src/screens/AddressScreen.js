@@ -103,24 +103,26 @@ function AddressScreen(props) {
     )
   } else {
     return (
-      <View style={{flex: 1}}>
-        <CustomHeader {...props}/>
-        {addressModel.isLoading ? (
-          <View style={styles.loaderContainer}>
-            <ActivityIndicator size={'small'} color={"#0000ff"} />
-            <Text>Loading...</Text>
-          </View>
-        ) : ( 
-          <SafeAreaView style={{flex: 1}}>
-            <AddressList />
-            <View style={[{height: 55}, DefaultStyles.brandBackgroundColor]}>
-              <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddAddress', { previousRoute: 'Address' })}>
-                <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
-              </TouchableOpacity>
+      // <SafeAreaView style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: "#F7F9FC"}}>
+          <CustomHeader {...props}/>
+          {addressModel.isLoading ? (
+            <View style={styles.loaderContainer}>
+              <ActivityIndicator size={'small'} color={"#0000ff"} />
+              <Text>Loading...</Text>
             </View>
-          </SafeAreaView>
-        )}
-      </View>
+          ) : ( 
+            <View style={{flex: 1}}>
+              <AddressList />
+              <View style={[{height: 55, position: 'absolute', bottom: 0, width: '100%'}, DefaultStyles.brandBackgroundColor]}>
+                <TouchableOpacity style={[styles.button, DefaultStyles.brandColorButton]} onPress={() => navigation.navigate('AddNewAddress', { previousRoute: 'Address' })}>
+                  <Text style={{color:'#fff', fontSize: 18, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>Add new Address</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </View>
+      // </SafeAreaView>
     )
   }
 }

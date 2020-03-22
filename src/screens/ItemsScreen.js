@@ -39,7 +39,7 @@ function Items(props) {
   }, [cartItemModel.values.length])
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: "#F7F9FC"}}>
       { category.hasSubCategory ?
         <DynamicTabs
           category={category}
