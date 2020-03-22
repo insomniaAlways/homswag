@@ -103,9 +103,8 @@ function AddressScreen(props) {
     )
   } else {
     return (
-      // <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
         <View style={{flex: 1, backgroundColor: "#F7F9FC"}}>
-          <CustomHeader {...props}/>
           {addressModel.isLoading ? (
             <View style={styles.loaderContainer}>
               <ActivityIndicator size={'small'} color={"#0000ff"} />
@@ -122,7 +121,7 @@ function AddressScreen(props) {
             </View>
           )}
         </View>
-      // </SafeAreaView>
+      </SafeAreaView>
     )
   }
 }
